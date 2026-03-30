@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import config from '@/payload.config'
 import './styles.css'
 import Hero from './components/mainPage/Hero'
+import HowItWorks from './components/mainPage/HowItWorks'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -17,6 +18,9 @@ export default async function HomePage() {
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
-    <Hero />
+    <>
+      <Hero />
+      <HowItWorks />
+    </>
   )
 }

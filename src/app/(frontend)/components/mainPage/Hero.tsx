@@ -6,7 +6,7 @@ import arrow_side from "@public/icon/arrow_side.svg";
 const Hero = () => {
     return (
         <section className="mx-auto mt-5 max-w-[1288px] grid grid-cols-1 gap-5 px-6 md:grid-cols-2">
-            <div className="rounded-[20px] bg-[#22354A] px-8 py-12">
+            <div className="rounded-[20px] bg-[#22354A] pl-8 pr-7 py-12">
                 <div>
                     <h1 className="text-[56px] font-semibold leading-[125%] text-white">
                         Професійні апарати вакуумного масажу V-NRG
