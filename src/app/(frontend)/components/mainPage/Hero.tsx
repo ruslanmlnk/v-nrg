@@ -1,15 +1,20 @@
-import Image from 'next/image';
+import Image from "next/image";
 
-import hero_bg from '@public/assets/hero.png';
-import arrow_side from '@public/icon/arrow_side.svg';
+import hero_bg from "@public/assets/hero.png";
+import arrow_side from "@public/icon/arrow_side.svg";
 
 const Hero = () => {
     return (
-        <div className="max-w-[1288px] px-6 flex gap-5 mx-auto mt-5">
-            <div className='bg-[#22354A] rounded-[20px] py-12 px-8 flex-1 min-w-0'>
+        <section className="mx-auto mt-5 max-w-[1288px] grid grid-cols-1 gap-5 px-6 md:grid-cols-2">
+            <div className="rounded-[20px] bg-[#22354A] px-8 py-12">
                 <div>
-                    <h1 className='text-white text-[56px] font-semibold leading-[125%]'>Професійні апарати вакуумного масажу V-NRG</h1>
-                    <p className='text-white text-[18px] leading-[165%] mt-4'>Допомагають працювати з болем, набряками та станом шкіри.Швидкий запуск у роботу, навчання та підтримка від виробника</p>
+                    <h1 className="text-[56px] font-semibold leading-[125%] text-white">
+                        Професійні апарати вакуумного масажу V-NRG
+                    </h1>
+                    <p className="mt-4 text-[18px] leading-[165%] text-white font-medium">
+                        Допомагають працювати з болем, набряками та станом шкіри. Швидкий запуск у роботу,
+                        навчання та підтримка від виробника
+                    </p>
                 </div>
                 <button className='relative mt-[164px] bg-white text-[#22354A] px-6 py-3 rounded-[40px] flex items-center h-[54px]'>
                     <div className='text-[18px] text-medium leading-[125%]'>Отримати консультацію</div>
@@ -18,11 +23,11 @@ const Hero = () => {
                     </div>
                 </button>
             </div>
-            <div className='rounded-[20px] relative overflow-hidden flex-1 min-w-0'>
+            <div className='rounded-[20px] relative overflow-hidden'>
                 <Image src={hero_bg} alt="arrow" fill />
             </div>
-        </div>
+        </section>
     );
-}
+};
 
 export default Hero;
