@@ -28,6 +28,9 @@
       ],
       "@payload-config": [
         "./src/payload.config.ts"
+      ],
+      "@public/*": [
+        "./src/app/(frontend)/public/*"
       ]
     },
     "target": "ES2022"

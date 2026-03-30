@@ -16,6 +16,6 @@ export default async function HomePage() {
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
-    <div className='w-[10px] h-[10px] block bg-red text-red'>qw </div>
+    <div></div>
   )
 }
