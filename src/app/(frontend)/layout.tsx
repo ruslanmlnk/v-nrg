@@ -1,7 +1,7 @@
 import React from 'react'
 import { Google_Sans } from 'next/font/google'
 import './styles.css'
-import Header from './components/mainPage/Header'
+import Header from './components/Header'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -20,7 +20,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={googleSans.className}>
-        <Header/>
+        <Header />
         <main>{children}</main>
       </body>
     </html>
