@@ -1,7 +1,7 @@
 export const navLinks = [
-    { href: "#", label: "Каталог", hasArrow: true },
-    { href: "#", label: "Про бренд" },
-    { href: "#", label: "Навчання" },
-    { href: "#", label: "Відгуки" },
-    { href: "#", label: "Блог" },
-];
+  { href: '/catalog', label: 'Каталог', hasArrow: true },
+  { href: '/about', label: 'Про бренд' },
+  { href: '/training', label: 'Навчання' },
+  { href: '/review', label: 'Відгуки' },
+  { href: '#', label: 'Блог' },
+]
