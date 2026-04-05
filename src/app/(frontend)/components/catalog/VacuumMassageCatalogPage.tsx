@@ -1,79 +1,42 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'motion/react'
+import { useState, type ReactNode } from 'react'
 
-import logo from '@public/logo.svg'
-import catalogVacuum from '@public/assets/catalog/catalog-vacuum.jpg'
-import catalogEquipment from '@public/assets/catalog/catalog-equipment.jpg'
+import SiteFooter from '../SiteFooter'
+import { featuredCatalogProducts, formatPrice } from '../../data/products'
+import { useCommerce } from '../providers/CommerceProvider'
 
-type ProductCard = {
-  details: string
-  href: string
-  image: typeof catalogVacuum
-  isHighlighted?: boolean
-  price: string
-  title: string
-}
-
-const products: ProductCard[] = [
-  {
-    details: '18 маніпул · 800 Вт',
-    href: '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro',
-    image: catalogVacuum,
-    isHighlighted: true,
-    price: '68 000 ₴',
-    title: 'V-NRG 18 PRO',
-  },
-  {
-    details: '18 маніпул · 800 Вт',
-    href: '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro',
-    image: catalogEquipment,
-    price: '68 000 ₴',
-    title: 'V-NRG 18 PRO',
-  },
-  {
-    details: '18 маніпул · 800 Вт',
-    href: '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro',
-    image: catalogEquipment,
-    price: '68 000 ₴',
-    title: 'V-NRG 18 PRO',
-  },
-  {
-    details: '18 маніпул · 800 Вт',
-    href: '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro',
-    image: catalogEquipment,
-    price: '68 000 ₴',
-    title: 'V-NRG 18 PRO',
-  },
-  {
-    details: '18 маніпул · 800 Вт',
-    href: '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro',
-    image: catalogEquipment,
-    price: '68 000 ₴',
-    title: 'V-NRG 18 PRO',
-  },
-  {
-    details: '18 маніпул · 800 Вт',
-    href: '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro',
-    image: catalogEquipment,
-    price: '68 000 ₴',
-    title: 'V-NRG 18 PRO',
-  },
-] as const
-
-const footerCatalogLinks = [
-  'Апарати вакуумного масажу',
-  'Апарати фізіотерапії',
-  'Комплектуючі (маніпули / насадки, фільтри, шланги)',
-  'Витратні матеріали',
-  'Аксесуари',
-  'Стільці для масажу',
-]
-
-const footerInfoLinks = ['Про V-NRG', 'Доставка та оплата', 'Гарантія та сервіс', 'Навчання', 'Відгуки', 'Блог']
-
-const footerLegalLinks = ['Політика конфіденційності', 'Умови користування', 'Публічна оферта']
+const footerCopyTitle = 'Професійні апарати вакуумного масажу V-NRG'
+const footerCopyBody =
+  'Апарати вакуумного масажу V-NRG — це інноваційне обладнання європейської якості для салонів краси, спа-центрів та приватних кабінетів. Наша продукція сертифікована згідно з міжнародними стандартами CE та ISO 9001:2015.'
+const footerCopyTitleSecondary = 'Переваги вакуумного масажу'
+const footerCopyBodySecondary =
+  'Вакуумний масаж ефективно стимулює кровообіг, покращує лімфодренаж, зменшує прояви целюліту та сприяє корекції фігури. Процедури з використанням апаратів V-NRG дозволяють досягти видимих результатів вже після 3-5 сеансів.'
 
 export default function VacuumMassageCatalogPage() {
+  const { addToCart, isInCompare, toggleCompare } = useCommerce()
+  const [sharedProductId, setSharedProductId] = useState<string | null>(null)
+
+  const handleShare = async (title: string, href: string, productId: string) => {
+    const shareUrl = typeof window === 'undefined' ? href : `${window.location.origin}${href}`
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url: shareUrl })
+      } else {
+        await navigator.clipboard.writeText(shareUrl)
+      }
+
+      setSharedProductId(productId)
+      window.setTimeout(() => setSharedProductId(null), 1800)
+    } catch {
+      setSharedProductId(null)
+    }
+  }
+
   return (
     <div className="pt-5">
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
@@ -86,9 +49,7 @@ export default function VacuumMassageCatalogPage() {
               <span>/</span>
               <span className="text-[#4FACF5]">Апарати вакуумного масажу</span>
             </div>
-            <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">
-              Апарати вакуумного масажу
-            </h1>
+            <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">Апарати вакуумного масажу</h1>
           </div>
         </section>
 
@@ -106,7 +67,7 @@ export default function VacuumMassageCatalogPage() {
             </label>
 
             <FilterSection title="Всі товари">
-              <RadioOption label="Апарати вакуумного масажу" count="(3)" checked />
+              <RadioOption label="Апарати вакуумного масажу" count="(6)" checked />
               <RadioOption label="Апарати фізіотерапії" count="(3)" />
               <RadioOption label="Комплектуючі" count="(3)" />
               <RadioOption label="Розхідники" count="(3)" />
@@ -115,50 +76,25 @@ export default function VacuumMassageCatalogPage() {
             </FilterSection>
 
             <FilterSection title="Модель">
-              <CheckboxOption label="V-NRG 18 PRO" count="(1)" checked />
-              <CheckboxOption label="V-NRG 36 PRO" count="(2)" />
+              <CheckboxOption label="V-NRG 18 PRO" count="(3)" checked />
+              <CheckboxOption label="V-NRG 36 PRO" count="(3)" checked />
             </FilterSection>
 
             <FilterSection title="Кількість маніпул">
-              <CheckboxOption label="18" count="(1)" checked />
-              <CheckboxOption label="36" count="(2)" />
-            </FilterSection>
-
-            <FilterSection title="Ціна">
-              <div className="flex flex-col gap-4">
-                <div className="relative h-2 rounded-full bg-[#D5E0E8]">
-                  <div className="absolute left-0 right-[18%] top-0 h-2 rounded-full bg-[#4FACF5]" />
-                  <span className="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border-4 border-[#4FACF5] bg-white" />
-                  <span className="absolute right-[18%] top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border-4 border-[#4FACF5] bg-white" />
-                </div>
-                <div className="flex items-center justify-between text-[18px] font-medium leading-[165%] text-[#B7CAD1]">
-                  <span>0 грн</span>
-                  <span>100 000 грн</span>
-                </div>
-              </div>
-            </FilterSection>
-
-            <FilterSection title="Товари з акціями">
-              <CheckboxOption label="Акція" count="(3)" checked />
+              <CheckboxOption label="18" count="(3)" checked />
+              <CheckboxOption label="36" count="(3)" checked />
             </FilterSection>
 
             <FilterSection title="Потужність">
-              <CheckboxOption label="до 500 Вт" count="(1)" />
-              <CheckboxOption label="до 1000 Вт" count="(1)" checked />
-              <CheckboxOption label="понад 1000 Вт" count="(1)" />
-            </FilterSection>
-
-            <FilterSection title="Призначення">
-              <CheckboxOption label="Тіло" count="(1)" checked />
-              <CheckboxOption label="Обличчя" count="(1)" />
-              <CheckboxOption label="Комбіноване" count="(1)" />
+              <CheckboxOption label="до 1000 Вт" count="(3)" checked />
+              <CheckboxOption label="понад 1000 Вт" count="(3)" checked />
             </FilterSection>
           </aside>
 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-4 rounded-[20px] bg-white px-6 py-4 shadow-[0_20px_60px_rgba(34,53,74,0.04)] sm:flex-row sm:items-center sm:justify-between">
               <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                Знайдено: <span className="font-bold text-[#4FACF5]">5</span> товарів
+                Знайдено: <span className="font-bold text-[#4FACF5]">6</span> товарів
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -190,63 +126,75 @@ export default function VacuumMassageCatalogPage() {
             </div>
 
             <div className="grid gap-5 lg:grid-cols-2">
-              {products.map((product, index) => (
-                <Link
-                  key={`${product.title}-${index}`}
-                  href={product.href}
-                  className="flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
+              {featuredCatalogProducts.map((product, index) => (
+                <motion.article
+                  key={`${product.id}-${index}`}
+                  initial={{ opacity: 0, y: 22 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ delay: index * 0.04, duration: 0.28 }}
+                  className="overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
                 >
-                  <div
-                    className={`relative h-[300px] overflow-hidden rounded-[20px] ${
-                      product.isHighlighted ? 'ring-2 ring-[#4FACF5]' : ''
-                    }`}
-                  >
-                    <Image
-                      src={product.image}
-                      alt={product.title}
-                      fill
-                      sizes="(min-width: 1024px) 400px, 100vw"
-                      className="object-cover"
-                    />
+                  <div className="relative h-[300px] overflow-hidden rounded-[20px] bg-white">
+                    <div className="absolute right-5 top-5 z-10 flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => toggleCompare(product.id)}
+                        aria-label={`Додати ${product.title} до порівняння`}
+                        className={`flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white shadow-[0_12px_30px_rgba(34,53,74,0.12)] transition-colors ${
+                          isInCompare(product.id) ? 'text-[#4FACF5]' : 'text-[#22354A]'
+                        }`}
+                      >
+                        <CompareIcon />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => void handleShare(product.title, product.href, `${product.id}-${index}`)}
+                        aria-label={`Поділитися ${product.title}`}
+                        className={`flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white shadow-[0_12px_30px_rgba(34,53,74,0.12)] transition-colors ${
+                          sharedProductId === `${product.id}-${index}` ? 'text-[#4FACF5]' : 'text-[#22354A]'
+                        }`}
+                      >
+                        <ShareIcon />
+                      </button>
+                    </div>
+
+                    <Link href={product.href}>
+                      <Image src={product.catalogImage} alt={product.title} fill sizes="(min-width: 1024px) 400px, 100vw" className="object-cover" />
+                    </Link>
                   </div>
 
                   <div className="flex flex-col gap-4 px-8 py-6">
                     <div className="flex flex-col gap-2">
-                      <h3
-                        className={`text-[24px] font-medium leading-[145%] ${
-                          product.isHighlighted ? 'text-[#4FACF5]' : 'text-[#22354A]'
-                        }`}
-                      >
+                      <h3 className={`text-[24px] font-medium leading-[145%] ${index === 0 ? 'text-[#4FACF5]' : 'text-[#22354A]'}`}>
                         {product.title}
                       </h3>
-                      <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                        {product.details}
-                      </p>
+                      <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">{product.details}</p>
                     </div>
 
                     <div className="flex items-center justify-between gap-4">
-                      <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">{product.price}</div>
-                      <CartIcon />
+                      <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">{formatPrice(product.price)}</div>
+                      <button
+                        type="button"
+                        onClick={() => addToCart(product.id)}
+                        aria-label={`Додати ${product.title} до кошика`}
+                        className="text-[#4FACF5] transition-opacity hover:opacity-70"
+                      >
+                        <CartIcon />
+                      </button>
                     </div>
 
-                    <div
-                      className={`text-[18px] leading-[145%] ${
-                        product.isHighlighted
-                          ? 'font-bold text-[#4FACF5]'
-                          : 'font-medium text-[#4FACF5]'
-                      }`}
-                    >
+                    <Link href={product.href} className={`text-[18px] leading-[145%] ${index === 0 ? 'font-bold text-[#4FACF5]' : 'font-medium text-[#4FACF5]'}`}>
                       Детальніше
-                    </div>
+                    </Link>
                   </div>
-                </Link>
+                </motion.article>
               ))}
             </div>
 
             <div className="flex flex-col gap-4 rounded-[24px] bg-white px-8 py-6 shadow-[0_20px_60px_rgba(34,53,74,0.04)] sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                Показано 1-6 із 22 товарів
-              </div>
+              <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">Показано 1-6 із 6 товарів</div>
 
               <div className="flex items-center gap-2.5">
                 <button
@@ -259,8 +207,6 @@ export default function VacuumMassageCatalogPage() {
 
                 <div className="flex items-center gap-[5px]">
                   <PaginationNumber active>1</PaginationNumber>
-                  <PaginationNumber>2</PaginationNumber>
-                  <PaginationNumber>3</PaginationNumber>
                 </div>
 
                 <button
@@ -278,31 +224,17 @@ export default function VacuumMassageCatalogPage() {
         <section className="rounded-[20px] bg-white px-8 py-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">
-                Професійні апарати вакуумного масажу V-NRG
-              </h2>
-              <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                Апарати вакуумного масажу V-NRG — це інноваційне обладнання європейської якості для
-                салонів краси, спа-центрів та приватних кабінетів. Наша продукція сертифікована
-                згідно з міжнародними стандартами CE та ISO 9001:2015.
-              </p>
+              <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">{footerCopyTitle}</h2>
+              <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">{footerCopyBody}</p>
             </div>
 
             <div className="flex flex-col gap-4">
-              <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">
-                Переваги вакуумного масажу
-              </h2>
-              <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                Вакуумний масаж ефективно стимулює кровообіг, покращує лімфодренаж, зменшує прояви
-                целюліту та сприяє корекції фігури. Процедури з використанням апаратів V-NRG
-                дозволяють досягти видимих результатів вже після 3-5 сеансів.
-              </p>
+              <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">{footerCopyTitleSecondary}</h2>
+              <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">{footerCopyBodySecondary}</p>
             </div>
 
             <button type="button" className="flex items-center self-start">
-              <span className="rounded-[40px] bg-[#22354A] px-6 py-3 text-[18px] font-medium leading-[165%] text-white">
-                Читати все
-              </span>
+              <span className="rounded-[40px] bg-[#22354A] px-6 py-3 text-[18px] font-medium leading-[165%] text-white">Читати все</span>
               <span className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#4FACF5]">
                 <ReadMoreArrow />
               </span>
@@ -311,72 +243,7 @@ export default function VacuumMassageCatalogPage() {
         </section>
       </div>
 
-      <footer className="rounded-t-[48px] bg-[#22354A] px-6 py-[100px] pb-[48px] text-white">
-        <div className="mx-auto flex max-w-[1288px] flex-col gap-14">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
-            <div className="flex flex-col gap-6">
-              <Image src={logo} alt="V-NRG" className="h-auto w-[108px]" />
-              <p className="max-w-[373px] text-[16px] font-normal leading-[165%] text-white">
-                Професійне обладнання для вакуумного масажу. Більше 20 країн довіряють нашій якості
-              </p>
-              <div className="flex flex-col gap-4">
-                <div className="text-[18px] font-bold leading-[165%] text-white">Ми в соцмережах:</div>
-                <div className="flex items-center gap-3">
-                  <SocialLink href="#" label="Instagram">
-                    <InstagramIcon />
-                  </SocialLink>
-                  <SocialLink href="#" label="Facebook">
-                    <FacebookIcon />
-                  </SocialLink>
-                </div>
-              </div>
-            </div>
-
-            <FooterColumn title="Каталог" links={footerCatalogLinks} />
-            <FooterColumn title="Інформація" links={footerInfoLinks} />
-
-            <div className="flex flex-col gap-8">
-              <div className="flex flex-col gap-4">
-                <h3 className="text-[24px] font-medium leading-[145%] text-white">Зв&apos;яжіться з нами</h3>
-                <div className="flex flex-col gap-4 text-[16px] font-medium leading-[165%] text-white">
-                  <div className="flex items-center gap-4">
-                    <span>+38 (097) 546-88-20</span>
-                    <div className="flex items-center gap-3">
-                      <SocialLink href="#" label="Telegram">
-                        <TelegramIcon />
-                      </SocialLink>
-                      <SocialLink href="#" label="WhatsApp">
-                        <WhatsappIcon />
-                      </SocialLink>
-                    </div>
-                  </div>
-                  <span>0870758@gmail.com</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <h3 className="text-[24px] font-medium leading-[145%] text-white">Адреса</h3>
-                <p className="text-[16px] font-medium leading-[165%] text-white">
-                  м. Бровари, вул. Підприємницька, 22
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-6 border-t border-white/20 pt-10 lg:flex-row lg:items-center lg:justify-between">
-            <div className="text-[16px] font-medium leading-[165%] text-white">
-              © 2026 V-NRG. Всі права захищені.
-            </div>
-            <div className="flex flex-wrap items-center gap-8 text-[16px] font-medium leading-[165%] text-white">
-              {footerLegalLinks.map((item) => (
-                <Link key={item} href="#">
-                  {item}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
@@ -385,7 +252,7 @@ function FilterSection({
   children,
   title,
 }: {
-  children: React.ReactNode
+  children: ReactNode
   title: string
 }) {
   return (
@@ -444,62 +311,19 @@ function PaginationNumber({
   children,
 }: {
   active?: boolean
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
-    <div
-      className={`flex h-[42px] w-[42px] items-center justify-center rounded-[10px] text-[16px] font-medium leading-[145%] ${
-        active ? 'bg-[#4FACF5] text-white' : 'bg-[#F5F8F9] text-[#22354A]'
-      }`}
-    >
+    <div className={`flex h-[42px] w-[42px] items-center justify-center rounded-[10px] text-[16px] font-medium leading-[145%] ${active ? 'bg-[#4FACF5] text-white' : 'bg-[#F5F8F9] text-[#22354A]'}`}>
       {children}
     </div>
-  )
-}
-
-function FooterColumn({ links, title }: { links: string[]; title: string }) {
-  return (
-    <div className="flex flex-col gap-4">
-      <h3 className="text-[24px] font-medium leading-[145%] text-white">{title}</h3>
-      <div className="flex flex-col gap-4">
-        {links.map((item) => (
-          <Link key={item} href="#" className="text-[16px] font-medium leading-[165%] text-white">
-            {item}
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function SocialLink({
-  children,
-  href,
-  label,
-}: {
-  children: React.ReactNode
-  href: string
-  label: string
-}) {
-  return (
-    <Link
-      href={href}
-      aria-label={label}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#4FACF5]"
-    >
-      {children}
-    </Link>
   )
 }
 
 function SearchIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8.25 14.25C11.5637 14.25 14.25 11.5637 14.25 8.25C14.25 4.93629 11.5637 2.25 8.25 2.25C4.93629 2.25 2.25 4.93629 2.25 8.25C2.25 11.5637 4.93629 14.25 8.25 14.25Z"
-        stroke="#22354A"
-        strokeWidth="1.5"
-      />
+      <path d="M8.25 14.25C11.5637 14.25 14.25 11.5637 14.25 8.25C14.25 4.93629 11.5637 2.25 8.25 2.25C4.93629 2.25 2.25 4.93629 2.25 8.25C2.25 11.5637 4.93629 14.25 8.25 14.25Z" stroke="#22354A" strokeWidth="1.5" />
       <path d="M12.75 12.75L15.75 15.75" stroke="#22354A" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
@@ -582,6 +406,29 @@ function CartIcon() {
   )
 }
 
+function CompareIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 8H21" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M7 14H17" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M7 20H21" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <circle cx="19" cy="14" r="2.5" fill="currentColor" />
+    </svg>
+  )
+}
+
+function ShareIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="14" r="2.5" fill="currentColor" />
+      <circle cx="20" cy="8" r="2.5" fill="currentColor" />
+      <circle cx="20" cy="20" r="2.5" fill="currentColor" />
+      <path d="M10.2 12.9L17.8 9.1" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M10.2 15.1L17.8 18.9" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 function PaginationArrow({ direction }: { direction: 'left' | 'right' }) {
   const path =
     direction === 'left'
@@ -600,41 +447,6 @@ function ReadMoreArrow() {
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12.769 0C12.5085 0 12.2587 0.10346 12.0746 0.28762C11.8904 0.47178 11.787 0.721555 11.787 0.981997V24.5499C11.787 24.8104 11.8904 25.0601 12.0746 25.2443C12.2587 25.4285 12.5085 25.5319 12.769 25.5319C13.0294 25.5319 13.2792 25.4285 13.4633 25.2443C13.6475 25.0601 13.751 24.8104 13.751 24.5499V0.981997C13.751 0.721555 13.6475 0.47178 13.4633 0.28762C13.2792 0.10346 13.0294 0 12.769 0Z" fill="white" />
       <path d="M4.2192 16.0001C4.03531 16.1842 3.93202 16.4338 3.93202 16.694C3.93202 16.9543 4.03531 17.2038 4.2192 17.388L12.0751 25.2439C12.2593 25.4278 12.5089 25.5311 12.7691 25.5311C13.0293 25.5311 13.2789 25.4278 13.463 25.2439L21.319 17.388C21.4925 17.2018 21.5869 16.9556 21.5824 16.7012C21.5779 16.4468 21.4749 16.2041 21.2949 16.0241C21.115 15.8442 20.8723 15.7412 20.6179 15.7367C20.3635 15.7322 20.1173 15.8266 19.9311 16.0001L12.7691 23.1621L5.60709 16.0001C5.42297 15.8162 5.17338 15.7129 4.91315 15.7129C4.65292 15.7129 4.40333 15.8162 4.2192 16.0001Z" fill="white" />
-    </svg>
-  )
-}
-
-function InstagramIcon() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1.5" y="1.5" width="14" height="14" rx="4" stroke="white" strokeWidth="1.4" />
-      <circle cx="8.5" cy="8.5" r="3.2" stroke="white" strokeWidth="1.4" />
-      <circle cx="12.4" cy="4.6" r="0.9" fill="white" />
-    </svg>
-  )
-}
-
-function FacebookIcon() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9.2 15.8V9.5H11.3L11.6 7.1H9.2V5.6C9.2 4.9 9.4 4.4 10.4 4.4H11.7V2.2C11.1 2.1 10.5 2.1 9.9 2.1C7.9 2.1 6.7 3.3 6.7 5.5V7.1H4.7V9.5H6.7V15.8H9.2Z" fill="white" />
-    </svg>
-  )
-}
-
-function TelegramIcon() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M14.8 2.1L2.3 6.4C1.7 6.6 1.7 7.5 2.3 7.7L5.5 8.9L12.5 4.6L7.2 9.3L8.2 13.5C8.3 13.9 8.8 14.1 9.1 13.8L10.9 12.1L13.8 14.2C14.2 14.5 14.8 14.3 14.9 13.7L16.5 2.9C16.6 2.3 15.4 1.9 14.8 2.1Z" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function WhatsappIcon() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.5 2.3C5.2 2.3 2.6 4.9 2.6 8.1C2.6 9.3 3 10.4 3.7 11.4L3 14.4L6.1 13.6C6.9 14.1 7.7 14.3 8.5 14.3C11.8 14.3 14.4 11.7 14.4 8.5C14.4 5.3 11.8 2.3 8.5 2.3Z" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6.6 6.2C6.8 5.9 7 5.9 7.2 5.9C7.4 5.9 7.6 6 7.7 6.3L8.2 7.4C8.3 7.6 8.2 7.8 8.1 7.9L7.7 8.3C8.1 9 8.7 9.6 9.4 10L9.8 9.6C9.9 9.5 10.1 9.4 10.3 9.5L11.4 10C11.7 10.1 11.8 10.3 11.8 10.5C11.8 10.7 11.7 10.9 11.4 11.1C11.1 11.3 10.8 11.4 10.5 11.4C9.1 11.3 6.9 9.1 6.7 7.7C6.6 7.3 6.6 6.8 6.6 6.2Z" fill="white" />
     </svg>
   )
 }

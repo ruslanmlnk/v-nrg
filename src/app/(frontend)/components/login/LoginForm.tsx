@@ -1,20 +1,48 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useState, type FormEvent } from 'react'
+
+import { useCommerce } from '../providers/CommerceProvider'
 
 const inputClasses =
   'h-[55px] w-full rounded-[14px] border border-[#EFF3F7] bg-[#F5F8F9] px-4 text-[16px] font-medium leading-[165%] text-[#22354A] outline-none transition-colors placeholder:text-[#B7CAD1] focus:border-[#4FACF5]'
 
 export default function LoginForm() {
+  const router = useRouter()
+  const { signIn } = useCommerce()
   const [showPassword, setShowPassword] = useState(false)
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+  })
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (!formState.email.trim() || !formState.password.trim()) {
+      return
+    }
+
+    signIn()
+    router.push('/account')
+  }
 
   return (
     <div className="w-full rounded-[20px] bg-white p-8 shadow-[0_24px_64px_rgba(34,53,74,0.08)]">
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <label className="flex flex-col gap-3">
           <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">Email</span>
-          <input type="email" placeholder="Введіть ваш email" className={inputClasses} autoComplete="email" />
+          <input
+            required
+            type="email"
+            value={formState.email}
+            onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
+            placeholder="Введіть ваш email"
+            className={inputClasses}
+            autoComplete="email"
+          />
         </label>
 
         <label className="flex flex-col gap-3">
@@ -22,7 +50,10 @@ export default function LoginForm() {
 
           <span className="relative block">
             <input
+              required
               type={showPassword ? 'text' : 'password'}
+              value={formState.password}
+              onChange={(event) => setFormState((current) => ({ ...current, password: event.target.value }))}
               placeholder="12345"
               className={`${inputClasses} pr-12`}
               autoComplete="current-password"
@@ -40,7 +71,7 @@ export default function LoginForm() {
         </label>
 
         <div className="flex justify-end">
-          <Link href="#" className="text-[14px] font-medium leading-[165%] text-[#4FACF5] md:text-[16px]">
+          <Link href="/info?topic=password-recovery" className="text-[14px] font-medium leading-[165%] text-[#4FACF5] md:text-[16px]">
             Забули пароль?
           </Link>
         </div>

@@ -1,47 +1,53 @@
-import Link from "next/link";
-import Image from "next/image"
+'use client'
 
-import phone_icon from "@public/icon/header/phone.svg";
-import lang_icon from "@public/icon/header/global.svg";
-import card_icon from "@public/icon/header/card.svg";
-import arrow_icon from "@public/icon/header/arrow.svg";
+import Image from 'next/image'
 
-import NavBar from './NavBar';
-const Header = () => {
-    return (
-        <header className="mx-auto mt-5 max-w-[1288px] px-6 text-white">
-            <div className="flex items-center justify-between rounded-[20px] bg-[#22354A] px-6 py-[11.8px] leading-[26px]">
-                <div className="flex items-center gap-[25px]">
-                    <div className="flex items-center gap-[8px]">
-                        <Image src={phone_icon} alt="Phone icon" width={16} height={16} />
-                        <div className="font-medium">0-800-123-456</div>
-                    </div>
-                    <div className="uppercase">Безкоштовна доставка від 5000 грн</div>
-                </div>
+import arrowIcon from '@public/icon/header/arrow.svg'
+import cardIcon from '@public/icon/header/card.svg'
+import langIcon from '@public/icon/header/global.svg'
+import phoneIcon from '@public/icon/header/phone.svg'
 
-                <div className="flex items-center gap-[25px]">
-                    <div className="flex cursor-pointer items-center">
-                        <Image src={lang_icon} alt="Language icon" />
-                        <div className="ml-[6px] mr-[8px]">UA</div>
-                        <Image src={arrow_icon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
-                    </div>
+import NavBar from './NavBar'
+import { useCommerce } from './providers/CommerceProvider'
 
-                    <div className="flex cursor-pointer items-center">
-                        <Image src={card_icon} alt="Currency icon" />
-                        <div className="ml-[6px] mr-[8px]">₴ UAH</div>
-                        <Image src={arrow_icon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
-                    </div>
+export default function Header() {
+  const { openDealerModal } = useCommerce()
 
-                    <Link href="#" className="font-bold uppercase text-[#4FACF5]">
-                        Стати дилером
-                    </Link>
-                </div>
-            </div>
+  return (
+    <header className="mx-auto mt-5 max-w-[1288px] px-6 text-white">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[20px] bg-[#22354A] px-6 py-[11.8px] leading-[26px]">
+        <div className="flex flex-wrap items-center gap-[25px]">
+          <div className="flex items-center gap-[8px]">
+            <Image src={phoneIcon} alt="Phone icon" width={16} height={16} />
+            <div className="font-medium">0-800-123-456</div>
+          </div>
+          <div className="uppercase text-[#D5E0E8]">Безкоштовна доставка від 5000 грн</div>
+        </div>
 
-            <NavBar />
+        <div className="flex flex-wrap items-center gap-[25px]">
+          <div className="flex cursor-pointer items-center">
+            <Image src={langIcon} alt="Language icon" />
+            <div className="ml-[6px] mr-[8px]">UA</div>
+            <Image src={arrowIcon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
+          </div>
 
-        </header>
-    );
-};
+          <div className="flex cursor-pointer items-center">
+            <Image src={cardIcon} alt="Currency icon" />
+            <div className="ml-[6px] mr-[8px]">₴ UAH</div>
+            <Image src={arrowIcon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
+          </div>
 
-export default Header;
+          <button
+            type="button"
+            onClick={openDealerModal}
+            className="font-bold uppercase text-[#4FACF5]"
+          >
+            Стати дилером
+          </button>
+        </div>
+      </div>
+
+      <NavBar />
+    </header>
+  )
+}

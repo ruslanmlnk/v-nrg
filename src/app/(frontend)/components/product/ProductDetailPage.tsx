@@ -18,14 +18,17 @@ import productThumbImage from '@public/assets/product/product-thumb.jpg'
 
 import FaqSection from '../FaqSection'
 import SiteFooter from '../SiteFooter'
+import { useCommerce } from '../providers/CommerceProvider'
 import BeforeAfterSlider from '../ui/BeforeAfterSlider'
+import { formatPrice, productsMap, type ProductId } from '../../data/products'
 
 const productHref = '/catalog/aparaty-vakuumnoho-masazhu/v-nrg-18-pro'
 
 const productCards = Array.from({ length: 3 }, () => ({
   details: '18 маніпул · 800 Вт',
   href: productHref,
-  price: '68 000 ₴',
+  price: 68000,
+  productId: 'v-nrg-18-pro' as ProductId,
   title: 'V-NRG 18 PRO',
 }))
 
@@ -129,15 +132,17 @@ const productTabs = [
 ] as const
 
 export default function ProductDetailPage() {
+  const product = productsMap['v-nrg-18-pro']
+  const { addToCart, isInCompare, toggleCompare } = useCommerce()
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
   const [activeReviewPage, setActiveReviewPage] = useState(0)
   const [activeTabId, setActiveTabId] = useState<(typeof productTabs)[number]['id']>('description')
-  const [isCompared, setIsCompared] = useState(false)
   const [isShareActive, setIsShareActive] = useState(false)
   const [quantity, setQuantity] = useState(1)
 
   const activeGalleryItem = productGallery[activeGalleryIndex] ?? productGallery[0]
   const activeTab = productTabs.find((tab) => tab.id === activeTabId) ?? productTabs[0]
+  const isCompared = isInCompare(product.id)
   const partnerReviewPages = chunkItems(partnerReviews, 2)
   const visiblePartnerReviews = partnerReviewPages[activeReviewPage] ?? partnerReviewPages[0] ?? []
 
@@ -225,7 +230,7 @@ export default function ProductDetailPage() {
                     <button
                       type="button"
                       aria-label="Порівняти товар"
-                      onClick={() => setIsCompared((current) => !current)}
+                      onClick={() => toggleCompare(product.id)}
                       className={`transition-colors hover:opacity-70 ${isCompared ? 'text-[#4FACF5]' : 'text-[#22354A]'}`}
                     >
                       <CompareIcon />
@@ -246,7 +251,7 @@ export default function ProductDetailPage() {
                   <span className="text-[18px] font-bold leading-[145%] text-[#22354A]">4.8/5</span>
                 </div>
 
-                <div className="text-[28px] font-bold leading-[145%] text-[#22354A]">68 000 ₴</div>
+                <div className="text-[28px] font-bold leading-[145%] text-[#22354A]">{formatPrice(product.price)}</div>
 
                 <div className="flex flex-wrap items-center gap-4">
                   <div className="flex h-[50px] items-center gap-3 rounded-[11px] border border-[#D5E0E8] bg-white px-[18px]">
@@ -271,12 +276,13 @@ export default function ProductDetailPage() {
                     </div>
                   </div>
 
-                  <Link
-                    href="tel:+380975468820"
+                  <button
+                    type="button"
+                    onClick={() => addToCart(product.id, quantity)}
                     className="flex h-[50px] min-w-[200px] items-center justify-center rounded-[40px] bg-[#4FACF5] px-6 text-[18px] font-medium leading-[145%] text-white transition-opacity hover:opacity-90"
                   >
                     Купити
-                  </Link>
+                  </button>
 
                   <Link
                     href="mailto:0870758@gmail.com?subject=Оплата%20частинами%20V-NRG%2018%20PRO"
@@ -622,13 +628,17 @@ function ProductCard({
   details,
   href,
   price,
+  productId,
   title,
 }: {
   details: string
   href: string
-  price: string
+  price: number
+  productId: ProductId
   title: string
 }) {
+  const { addToCart } = useCommerce()
+
   return (
     <Link href={href} className="flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]">
       <div className="relative h-[300px] overflow-hidden rounded-[20px] bg-white">
@@ -640,8 +650,18 @@ function ProductCard({
           <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">{details}</p>
         </div>
         <div className="flex items-center justify-between gap-4">
-          <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">{price}</div>
-          <CartIcon />
+          <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">{formatPrice(price)}</div>
+          <button
+            type="button"
+            aria-label={`Додати ${title} до кошика`}
+            onClick={(event) => {
+              event.preventDefault()
+              addToCart(productId)
+            }}
+            className="text-[#4FACF5] transition-opacity hover:opacity-70"
+          >
+            <CartIcon />
+          </button>
         </div>
         <div className="text-[18px] font-medium leading-[145%] text-[#4FACF5]">Детальніше</div>
       </div>

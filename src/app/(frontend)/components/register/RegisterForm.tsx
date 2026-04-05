@@ -1,31 +1,82 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useState, type FormEvent } from 'react'
+
+import { useCommerce } from '../providers/CommerceProvider'
 
 const inputClasses =
   'h-[55px] w-full rounded-[14px] border border-[#EFF3F7] bg-[#F5F8F9] px-4 text-[16px] font-medium leading-[165%] text-[#22354A] outline-none transition-colors placeholder:text-[#B7CAD1] focus:border-[#4FACF5]'
 
 export default function RegisterForm() {
+  const router = useRouter()
+  const { signIn } = useCommerce()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [error, setError] = useState('')
+  const [formState, setFormState] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    passwordConfirmation: '',
+    phone: '',
+  })
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (formState.password !== formState.passwordConfirmation) {
+      setError('Паролі не співпадають')
+      return
+    }
+
+    setError('')
+    signIn()
+    router.push('/account')
+  }
 
   return (
     <div className="w-full rounded-[20px] bg-white p-8 shadow-[0_24px_64px_rgba(34,53,74,0.08)]">
-      <form className="flex flex-col gap-4" noValidate>
+      <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
         <label className="flex flex-col gap-3">
           <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">Ім&apos;я *</span>
-          <input type="text" placeholder="Введіть ваше ім&apos;я" className={inputClasses} autoComplete="given-name" />
+          <input
+            required
+            type="text"
+            value={formState.firstName}
+            onChange={(event) => setFormState((current) => ({ ...current, firstName: event.target.value }))}
+            placeholder="Введіть ваше ім&apos;я"
+            className={inputClasses}
+            autoComplete="given-name"
+          />
         </label>
 
         <label className="flex flex-col gap-3">
           <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">Прізвище *</span>
-          <input type="text" placeholder="Введіть ваше прізвище" className={inputClasses} autoComplete="family-name" />
+          <input
+            required
+            type="text"
+            value={formState.lastName}
+            onChange={(event) => setFormState((current) => ({ ...current, lastName: event.target.value }))}
+            placeholder="Введіть ваше прізвище"
+            className={inputClasses}
+            autoComplete="family-name"
+          />
         </label>
 
         <label className="flex flex-col gap-3">
           <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">Email *</span>
-          <input type="email" placeholder="Введіть ваш email" className={inputClasses} autoComplete="email" />
+          <input
+            required
+            type="email"
+            value={formState.email}
+            onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
+            placeholder="Введіть ваш email"
+            className={inputClasses}
+            autoComplete="email"
+          />
         </label>
 
         <label className="flex flex-col gap-3">
@@ -35,7 +86,16 @@ export default function RegisterForm() {
             <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
               +380
             </span>
-            <input type="tel" placeholder="" className={`${inputClasses} pl-[68px]`} autoComplete="tel" inputMode="tel" />
+            <input
+              required
+              type="tel"
+              value={formState.phone}
+              onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))}
+              placeholder=""
+              className={`${inputClasses} pl-[68px]`}
+              autoComplete="tel"
+              inputMode="tel"
+            />
           </span>
         </label>
 
@@ -44,7 +104,10 @@ export default function RegisterForm() {
 
           <span className="relative block">
             <input
+              required
               type={showPassword ? 'text' : 'password'}
+              value={formState.password}
+              onChange={(event) => setFormState((current) => ({ ...current, password: event.target.value }))}
               placeholder="12345"
               className={`${inputClasses} pr-12`}
               autoComplete="new-password"
@@ -66,7 +129,12 @@ export default function RegisterForm() {
 
           <span className="relative block">
             <input
+              required
               type={showConfirmPassword ? 'text' : 'password'}
+              value={formState.passwordConfirmation}
+              onChange={(event) =>
+                setFormState((current) => ({ ...current, passwordConfirmation: event.target.value }))
+              }
               placeholder="12345"
               className={`${inputClasses} pr-12`}
               autoComplete="new-password"
@@ -93,6 +161,8 @@ export default function RegisterForm() {
             <ArrowIcon />
           </span>
         </button>
+
+        {error ? <p className="text-[14px] font-medium leading-[165%] text-[#D94F4F]">{error}</p> : null}
       </form>
 
       <p className="mt-6 text-center text-[16px] font-medium leading-[165%] text-[#22354A]">

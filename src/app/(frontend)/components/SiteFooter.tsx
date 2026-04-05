@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,25 +8,26 @@ import logo from '@public/logo.svg'
 const catalogLinks = [
   { href: '/catalog/aparaty-vakuumnoho-masazhu', label: 'Апарати вакуумного масажу' },
   { href: '/catalog', label: 'Апарати фізіотерапії' },
-  { href: '#', label: 'Комплектуючі (маніпули / насадки, фільтри, шланги)' },
-  { href: '#', label: 'Витратні матеріали' },
-  { href: '#', label: 'Аксесуари' },
-  { href: '#', label: 'Стільці для масажу' },
+  { href: '/info?topic=components', label: 'Комплектуючі (маніпули / насадки, фільтри, шланги)' },
+  { href: '/info?topic=materials', label: 'Витратні матеріали' },
+  { href: '/info?topic=accessories', label: 'Аксесуари' },
+  { href: '/info?topic=chairs', label: 'Стільці для масажу' },
 ]
 
 const infoLinks = [
   { href: '/about', label: 'Про V-NRG' },
-  { href: '#', label: 'Доставка та оплата' },
-  { href: '#', label: 'Гарантія та сервіс' },
+  { href: '/info?topic=delivery', label: 'Доставка та оплата' },
+  { href: '/info?topic=warranty', label: 'Гарантія та сервіс' },
   { href: '/training', label: 'Навчання' },
   { href: '/review', label: 'Відгуки' },
-  { href: '#', label: 'Блог' },
+  { href: '/contacts', label: 'Контакти' },
+  { href: '/dealer', label: 'Стати дилером' },
 ]
 
 const legalLinks = [
-  { href: '#', label: 'Політика конфіденційності' },
-  { href: '#', label: 'Умови користування' },
-  { href: '#', label: 'Публічна оферта' },
+  { href: '/info?topic=privacy', label: 'Політика конфіденційності' },
+  { href: '/info?topic=terms', label: 'Умови користування' },
+  { href: '/info?topic=offer', label: 'Публічна оферта' },
 ]
 
 export default function SiteFooter() {
@@ -37,17 +39,17 @@ export default function SiteFooter() {
             <Image src={logo} alt="V-NRG" className="h-auto w-[108px]" />
 
             <p className="text-[16px] font-normal leading-[165%] text-[#D5E0E8]">
-              Професійне обладнання для вакуумного масажу. Більше 20 країн довіряють нашій якості
+              Професійне обладнання для вакуумного масажу. Більше 20 країн довіряють нашій якості.
             </p>
 
             <div className="flex flex-col gap-4">
               <span className="text-[18px] font-bold leading-[165%] text-white">Ми в соцмережах:</span>
 
               <div className="flex items-center gap-3">
-                <FooterSocialLink href="#" label="Instagram">
+                <FooterSocialLink href="https://instagram.com/" label="Instagram">
                   <InstagramIcon />
                 </FooterSocialLink>
-                <FooterSocialLink href="#" label="Facebook">
+                <FooterSocialLink href="https://facebook.com/" label="Facebook">
                   <FacebookIcon />
                 </FooterSocialLink>
               </div>
@@ -66,10 +68,10 @@ export default function SiteFooter() {
                   <Link href="tel:+380975468820">+38 (097) 546-88-20</Link>
 
                   <div className="flex items-center gap-3">
-                    <FooterSocialLink href="#" label="Telegram">
+                    <FooterSocialLink href="https://t.me/" label="Telegram">
                       <TelegramIcon />
                     </FooterSocialLink>
-                    <FooterSocialLink href="#" label="WhatsApp">
+                    <FooterSocialLink href="https://wa.me/380975468820" label="WhatsApp">
                       <WhatsappIcon />
                     </FooterSocialLink>
                   </div>
