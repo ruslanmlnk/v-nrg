@@ -19,6 +19,7 @@ import productThumbImage from '@public/assets/product/product-thumb.jpg'
 import FaqSection from '../FaqSection'
 import SiteFooter from '../SiteFooter'
 import { useCommerce } from '../providers/CommerceProvider'
+import SectionHeading from '../shared/SectionHeading'
 import BeforeAfterSlider from '../ui/BeforeAfterSlider'
 import { formatPrice, productsMap, type ProductId } from '../../data/products'
 
@@ -33,9 +34,24 @@ const productCards = Array.from({ length: 3 }, () => ({
 }))
 
 const productGallery = [
-  { alt: 'V-NRG 18 PRO основний вигляд', main: productMainImage, thumb: productThumbActive, video: true },
-  { alt: 'V-NRG 18 PRO вигляд збоку', main: productThumbImage, thumb: productThumbImage, video: false },
-  { alt: 'V-NRG 18 PRO панель керування', main: productThumbImage, thumb: productThumbImage, video: false },
+  {
+    alt: 'V-NRG 18 PRO основний вигляд',
+    main: productMainImage,
+    thumb: productThumbActive,
+    video: true,
+  },
+  {
+    alt: 'V-NRG 18 PRO вигляд збоку',
+    main: productThumbImage,
+    thumb: productThumbImage,
+    video: false,
+  },
+  {
+    alt: 'V-NRG 18 PRO панель керування',
+    main: productThumbImage,
+    thumb: productThumbImage,
+    video: false,
+  },
   { alt: 'V-NRG 18 PRO маніпули', main: productThumbImage, thumb: productThumbImage, video: false },
   { alt: 'V-NRG 18 PRO комплект', main: productThumbImage, thumb: productThumbImage, video: false },
 ] as const
@@ -225,7 +241,9 @@ export default function ProductDetailPage() {
                 </div>
 
                 <div className="flex items-start justify-between gap-4">
-                  <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">V-NRG 18 PRO</h2>
+                  <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                    V-NRG 18 PRO
+                  </h2>
                   <div className="flex items-center gap-4 text-[#22354A]">
                     <button
                       type="button"
@@ -251,11 +269,15 @@ export default function ProductDetailPage() {
                   <span className="text-[18px] font-bold leading-[145%] text-[#22354A]">4.8/5</span>
                 </div>
 
-                <div className="text-[28px] font-bold leading-[145%] text-[#22354A]">{formatPrice(product.price)}</div>
+                <div className="text-[28px] font-bold leading-[145%] text-[#22354A]">
+                  {formatPrice(product.price)}
+                </div>
 
                 <div className="flex flex-wrap items-center gap-4">
                   <div className="flex h-[50px] items-center gap-3 rounded-[11px] border border-[#D5E0E8] bg-white px-[18px]">
-                    <span className="text-[20px] font-medium leading-[145%] text-[#22354A]">{quantity}</span>
+                    <span className="text-[20px] font-medium leading-[145%] text-[#22354A]">
+                      {quantity}
+                    </span>
                     <div className="flex flex-col">
                       <button
                         type="button"
@@ -298,13 +320,17 @@ export default function ProductDetailPage() {
                       <span className="font-semibold">Доставка:</span> 1–3 робочі дні
                     </p>
                     <p>
-                      <span className="font-semibold">Оплата:</span> онлайн, безготівкова, оплата частинами
+                      <span className="font-semibold">Оплата:</span> онлайн, безготівкова, оплата
+                      частинами
                     </p>
                     <p>
                       <span className="font-semibold">Гарантія:</span> 12 місяців
                     </p>
                   </div>
-                  <Link href="mailto:0870758@gmail.com?subject=Умови%20доставки%20та%20оплати%20V-NRG%2018%20PRO" className="text-[18px] font-bold leading-[145%] text-[#4FACF5]">
+                  <Link
+                    href="mailto:0870758@gmail.com?subject=Умови%20доставки%20та%20оплати%20V-NRG%2018%20PRO"
+                    className="text-[18px] font-bold leading-[145%] text-[#4FACF5]"
+                  >
                     Умови доставки та оплати →
                   </Link>
                 </div>
@@ -357,7 +383,12 @@ export default function ProductDetailPage() {
 
       <section className="mt-[100px] rounded-t-[48px] bg-[#22354A] px-6 pb-[140px] pt-[100px] text-white">
         <div className="mx-auto flex max-w-[1288px] flex-col gap-12">
-          <SectionHeading align="center" eyebrow="До / Після" title="Як працює технологія V-NRG" titleClassName="text-white" />
+          <SectionHeading
+            align="center"
+            eyebrow="До / Після"
+            title="Як працює технологія V-NRG"
+            titleClassName="text-white"
+          />
           <div className="grid gap-5 lg:grid-cols-3">
             {comparisonCardPositions.map((position, index) => (
               <motion.div
@@ -382,7 +413,11 @@ export default function ProductDetailPage() {
 
       <section className="px-6 pt-[100px]">
         <div className="mx-auto flex max-w-[1288px] flex-col gap-12">
-          <SectionHeading align="center" eyebrow="Надійність та підтримка" title="Офіційне обладнання з гарантією та сервісом" />
+          <SectionHeading
+            align="center"
+            eyebrow="Надійність та підтримка"
+            title="Офіційне обладнання з гарантією та сервісом"
+          />
           <div className="flex flex-wrap items-center justify-center gap-5">
             <CertificateCard />
             <CertificateCard />
@@ -411,8 +446,14 @@ export default function ProductDetailPage() {
           <SliderNavigation
             activePage={activeReviewPage}
             pageCount={partnerReviewPages.length}
-            onNext={() => setActiveReviewPage((current) => (current + 1) % partnerReviewPages.length)}
-            onPrev={() => setActiveReviewPage((current) => (current - 1 + partnerReviewPages.length) % partnerReviewPages.length)}
+            onNext={() =>
+              setActiveReviewPage((current) => (current + 1) % partnerReviewPages.length)
+            }
+            onPrev={() =>
+              setActiveReviewPage(
+                (current) => (current - 1 + partnerReviewPages.length) % partnerReviewPages.length,
+              )
+            }
             onSelect={setActiveReviewPage}
           />
         </div>
@@ -478,29 +519,6 @@ function GalleryThumb({
   )
 }
 
-function SectionHeading({
-  align = 'left',
-  eyebrow,
-  title,
-  titleClassName,
-}: {
-  align?: 'left' | 'center'
-  eyebrow: string
-  title: string
-  titleClassName?: string
-}) {
-  const centered = align === 'center'
-
-  return (
-    <div className={`flex flex-col gap-4 ${centered ? 'items-center text-center' : 'items-start text-left'}`}>
-      <div className="text-[16px] font-bold uppercase leading-[145%] text-[#4FACF5]">{eyebrow}</div>
-      <h2 className={`max-w-[780px] text-[32px] font-medium leading-[125%] text-[#22354A] md:text-[48px] ${titleClassName ?? ''}`}>
-        {title}
-      </h2>
-    </div>
-  )
-}
-
 function TabLabel({
   active = false,
   children,
@@ -523,11 +541,7 @@ function TabLabel({
   )
 }
 
-function TabContent({
-  tab,
-}: {
-  tab: (typeof productTabs)[number]
-}) {
+function TabContent({ tab }: { tab: (typeof productTabs)[number] }) {
   if (tab.content.type === 'paragraphs') {
     return (
       <div className="flex flex-col gap-4 pt-8">
@@ -543,7 +557,10 @@ function TabContent({
   return (
     <ul className="grid gap-4 pt-8 md:grid-cols-2">
       {tab.content.items.map((item) => (
-        <li key={item} className="flex items-start gap-3 text-[18px] font-medium leading-[165%] text-[#22354A]">
+        <li
+          key={item}
+          className="flex items-start gap-3 text-[18px] font-medium leading-[165%] text-[#22354A]"
+        >
           <span className="mt-2 h-2 w-2 rounded-full bg-[#4FACF5]" />
           <span>{item}</span>
         </li>
@@ -555,7 +572,11 @@ function TabContent({
 function CertificateCard() {
   return (
     <div className="flex w-[232px] items-center justify-center rounded-[20px] bg-white px-8 py-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
-      <Image src={certificate} alt="Сертифікат V-NRG" className="h-[210px] w-[150px] rounded-[5px] border border-[#D5E0E8] object-cover" />
+      <Image
+        src={certificate}
+        alt="Сертифікат V-NRG"
+        className="h-[210px] w-[150px] rounded-[5px] border border-[#D5E0E8] object-cover"
+      />
     </div>
   )
 }
@@ -564,11 +585,19 @@ function PartnerReviewCard({ author, quote }: { author: string; quote: string })
   return (
     <article className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
       <div className="grid gap-8 md:grid-cols-[194px_minmax(0,1fr)]">
-        <Image src={partner} alt={author} className="h-full min-h-[200px] w-full rounded-[20px] object-cover" />
+        <Image
+          src={partner}
+          alt={author}
+          className="h-full min-h-[200px] w-full rounded-[20px] object-cover"
+        />
         <div className="flex flex-col justify-between gap-8">
-          <p className="text-[20px] font-medium leading-[145%] text-[#22354A]">&ldquo;{quote}&rdquo;</p>
+          <p className="text-[20px] font-medium leading-[145%] text-[#22354A]">
+            &ldquo;{quote}&rdquo;
+          </p>
           <div className="flex flex-wrap items-center gap-6">
-            <div className="border-r border-[#D5E0E8] pr-6 text-[24px] font-medium leading-[145%] text-[#22354A]">{author}</div>
+            <div className="border-r border-[#D5E0E8] pr-6 text-[24px] font-medium leading-[145%] text-[#22354A]">
+              {author}
+            </div>
             <div className="flex items-center gap-2">
               <CircleAction href="https://www.instagram.com/" label="Instagram">
                 <InstagramIcon />
@@ -599,7 +628,12 @@ function SliderNavigation({
 }) {
   return (
     <div className="flex items-center justify-between text-[#4FACF5]">
-      <button type="button" aria-label="Попередній слайд" onClick={onPrev} className="transition-opacity hover:opacity-70">
+      <button
+        type="button"
+        aria-label="Попередній слайд"
+        onClick={onPrev}
+        className="transition-opacity hover:opacity-70"
+      >
         <ChevronLeft />
       </button>
       <div className="flex items-center gap-2">
@@ -613,7 +647,12 @@ function SliderNavigation({
           />
         ))}
       </div>
-      <button type="button" aria-label="Наступний слайд" onClick={onNext} className="transition-opacity hover:opacity-70">
+      <button
+        type="button"
+        aria-label="Наступний слайд"
+        onClick={onNext}
+        className="transition-opacity hover:opacity-70"
+      >
         <ChevronRight />
       </button>
     </div>
@@ -621,7 +660,9 @@ function SliderNavigation({
 }
 
 function chunkItems<T>(items: readonly T[], size: number) {
-  return Array.from({ length: Math.ceil(items.length / size) }, (_, index) => items.slice(index * size, index * size + size))
+  return Array.from({ length: Math.ceil(items.length / size) }, (_, index) =>
+    items.slice(index * size, index * size + size),
+  )
 }
 
 function ProductCard({
@@ -640,9 +681,18 @@ function ProductCard({
   const { addToCart } = useCommerce()
 
   return (
-    <Link href={href} className="flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]">
+    <Link
+      href={href}
+      className="flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
+    >
       <div className="relative h-[300px] overflow-hidden rounded-[20px] bg-white">
-        <Image src={productCardImage} alt={title} fill className="object-contain p-6" sizes="(min-width: 1024px) 400px, 100vw" />
+        <Image
+          src={productCardImage}
+          alt={title}
+          fill
+          className="object-contain p-6"
+          sizes="(min-width: 1024px) 400px, 100vw"
+        />
       </div>
       <div className="flex flex-col gap-4 px-8 py-6">
         <div className="flex flex-col gap-2">
@@ -650,7 +700,9 @@ function ProductCard({
           <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">{details}</p>
         </div>
         <div className="flex items-center justify-between gap-4">
-          <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">{formatPrice(price)}</div>
+          <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">
+            {formatPrice(price)}
+          </div>
           <button
             type="button"
             aria-label={`Додати ${title} до кошика`}
@@ -679,7 +731,11 @@ function CircleAction({
   label: string
 }) {
   return (
-    <Link href={href} aria-label={label} className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5]">
+    <Link
+      href={href}
+      aria-label={label}
+      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5]"
+    >
       {children}
     </Link>
   )
@@ -702,7 +758,10 @@ function PlayBadge({ large = false }: { large?: boolean }) {
 function AvailabilityIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M14.3609 1.91203C14.7774 1.49547 15.4527 1.49547 15.8692 1.91203C16.2858 2.3286 16.2858 3.00382 15.8692 3.42038L5.20244 14.0872C5.0024 14.2872 4.73117 14.3997 4.44827 14.3997C4.16537 14.3997 3.89414 14.2872 3.6941 14.0872L0.494063 10.8871C0.0775 10.4706 0.0774997 9.79534 0.494063 9.37877C0.910626 8.96221 1.58585 8.96221 2.00241 9.37877L4.44827 11.8246L14.3609 1.91203Z" fill="#4FACF5" />
+      <path
+        d="M14.3609 1.91203C14.7774 1.49547 15.4527 1.49547 15.8692 1.91203C16.2858 2.3286 16.2858 3.00382 15.8692 3.42038L5.20244 14.0872C5.0024 14.2872 4.73117 14.3997 4.44827 14.3997C4.16537 14.3997 3.89414 14.2872 3.6941 14.0872L0.494063 10.8871C0.0775 10.4706 0.0774997 9.79534 0.494063 9.37877C0.910626 8.96221 1.58585 8.96221 2.00241 9.37877L4.44827 11.8246L14.3609 1.91203Z"
+        fill="#4FACF5"
+      />
     </svg>
   )
 }
@@ -725,7 +784,12 @@ function ShareIcon() {
       <circle cx="20" cy="8" r="2.5" fill="currentColor" />
       <circle cx="20" cy="20" r="2.5" fill="currentColor" />
       <path d="M10.2 12.9L17.8 9.1" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      <path d="M10.2 15.1L17.8 18.9" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path
+        d="M10.2 15.1L17.8 18.9"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }
@@ -744,9 +808,27 @@ function StarIcon() {
 function CartIcon() {
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10.6673 29.3327C11.4037 29.3327 12.0007 28.7357 12.0007 27.9993C12.0007 27.263 11.4037 26.666 10.6673 26.666C9.93094 26.666 9.33398 27.263 9.33398 27.9993C9.33398 28.7357 9.93094 29.3327 10.6673 29.3327Z" stroke="#4FACF5" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M25.3333 29.3327C26.0697 29.3327 26.6667 28.7357 26.6667 27.9993C26.6667 27.263 26.0697 26.666 25.3333 26.666C24.597 26.666 24 27.263 24 27.9993C24 28.7357 24.597 29.3327 25.3333 29.3327Z" stroke="#4FACF5" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M2.7334 2.73242H5.40007L8.94673 19.2924C9.07684 19.8989 9.41429 20.4411 9.90101 20.8256C10.3877 21.2101 10.9933 21.4129 11.6134 21.3991H24.6534C25.2603 21.3981 25.8487 21.1901 26.3214 20.8095C26.7942 20.4289 27.1229 19.8985 27.2534 19.3058L29.4534 9.39909H6.82673" stroke="#4FACF5" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M10.6673 29.3327C11.4037 29.3327 12.0007 28.7357 12.0007 27.9993C12.0007 27.263 11.4037 26.666 10.6673 26.666C9.93094 26.666 9.33398 27.263 9.33398 27.9993C9.33398 28.7357 9.93094 29.3327 10.6673 29.3327Z"
+        stroke="#4FACF5"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M25.3333 29.3327C26.0697 29.3327 26.6667 28.7357 26.6667 27.9993C26.6667 27.263 26.0697 26.666 25.3333 26.666C24.597 26.666 24 27.263 24 27.9993C24 28.7357 24.597 29.3327 25.3333 29.3327Z"
+        stroke="#4FACF5"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2.7334 2.73242H5.40007L8.94673 19.2924C9.07684 19.8989 9.41429 20.4411 9.90101 20.8256C10.3877 21.2101 10.9933 21.4129 11.6134 21.3991H24.6534C25.2603 21.3981 25.8487 21.1901 26.3214 20.8095C26.7942 20.4289 27.1229 19.8985 27.2534 19.3058L29.4534 9.39909H6.82673"
+        stroke="#4FACF5"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -756,7 +838,13 @@ function MiniChevron({ up = false }: { up?: boolean }) {
 
   return (
     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d={path} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d={path}
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -788,7 +876,13 @@ function PhoneIcon() {
 function ChevronLeft() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15 5L8 12L15 19" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M15 5L8 12L15 19"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -796,7 +890,13 @@ function ChevronLeft() {
 function ChevronRight() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9 5L16 12L9 19" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M9 5L16 12L9 19"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

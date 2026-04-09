@@ -65,7 +65,9 @@ export default function CatalogPage() {
               <span>/</span>
               <span className="text-[#4FACF5]">Каталог</span>
             </div>
-            <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">Каталог продукції</h1>
+            <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">
+              Каталог продукції
+            </h1>
           </div>
         </section>
 
@@ -90,8 +92,12 @@ export default function CatalogPage() {
                 />
               </div>
               <div className="flex flex-col gap-2 px-8 py-6">
-                <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">{category.title}</h2>
-                <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">{category.description}</p>
+                <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                  {category.title}
+                </h2>
+                <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+                  {category.description}
+                </p>
               </div>
             </Link>
           ))}

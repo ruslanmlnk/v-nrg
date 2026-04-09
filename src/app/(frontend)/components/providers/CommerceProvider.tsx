@@ -15,12 +15,16 @@ type CartItem = {
 }
 
 type LastOrder = {
+  createdAt?: string
   customerName: string
   email: string
+  expectedDate?: string
   id: string
   items: CartItem[]
   phone: string
+  status?: 'awaiting-payment' | 'delivered' | 'shipped' | 'processing' | 'cancelled'
   total: number
+  trackingNumber?: string
 }
 
 type PersistedStore = {
@@ -28,6 +32,7 @@ type PersistedStore = {
   compareIds: ProductId[]
   isLoggedIn: boolean
   lastOrder: LastOrder | null
+  orderHistory: LastOrder[]
 }
 
 type DetailedCartItem = {
@@ -62,6 +67,7 @@ type CommerceContextValue = {
   isLoggedIn: boolean
   isLogoutModalOpen: boolean
   lastOrder: LastOrder | null
+  orderHistory: LastOrder[]
   openCart: () => void
   openDealerModal: () => void
   openLogoutModal: () => void
@@ -80,6 +86,7 @@ const defaultStore: PersistedStore = {
   compareIds: [],
   isLoggedIn: false,
   lastOrder: null,
+  orderHistory: [],
 }
 
 const CommerceContext = createContext<CommerceContextValue | null>(null)
@@ -103,7 +110,10 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
           cartItems: parsedStore.cartItems ?? [],
           compareIds: parsedStore.compareIds ?? [],
           isLoggedIn: parsedStore.isLoggedIn ?? false,
-          lastOrder: parsedStore.lastOrder ?? null,
+          lastOrder: parsedStore.lastOrder ? normalizeStoredOrder(parsedStore.lastOrder) : null,
+          orderHistory:
+            parsedStore.orderHistory?.map(normalizeStoredOrder) ??
+            (parsedStore.lastOrder ? [normalizeStoredOrder(parsedStore.lastOrder)] : []),
         })
       }
     } catch {
@@ -250,13 +260,22 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const completeOrder: CommerceContextValue['completeOrder'] = ({ email, firstName, lastName, phone }) => {
+  const completeOrder: CommerceContextValue['completeOrder'] = ({
+    email,
+    firstName,
+    lastName,
+    phone,
+  }) => {
+    const createdAt = formatOrderDate(new Date())
     const order: LastOrder = {
+      createdAt,
       customerName: `${firstName} ${lastName}`.trim(),
       email,
+      expectedDate: formatOrderDate(addDays(new Date(), 3)),
       id: `${Math.floor(10000 + Math.random() * 90000)}`,
       items: store.cartItems,
       phone,
+      status: 'awaiting-payment',
       total: cartTotal,
     }
 
@@ -264,6 +283,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
       ...currentStore,
       cartItems: [],
       lastOrder: order,
+      orderHistory: [order, ...currentStore.orderHistory],
     }))
 
     setIsCartOpen(false)
@@ -289,6 +309,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     isLoggedIn: store.isLoggedIn,
     isLogoutModalOpen,
     lastOrder: store.lastOrder,
+    orderHistory: store.orderHistory,
     openCart: () => setIsCartOpen(true),
     openDealerModal: () => setIsDealerModalOpen(true),
     openLogoutModal: () => setIsLogoutModalOpen(true),
@@ -391,8 +412,12 @@ function CommerceOverlays() {
 
                 <div className="border-t border-[#D5E0E8] px-8 pb-6 pt-8">
                   <div className="mb-6 flex items-center justify-between gap-6">
-                    <span className="text-[22px] font-medium leading-[145%] text-[#22354A]">Всього:</span>
-                    <span className="text-[22px] font-bold leading-[145%] text-[#22354A]">{formatPrice(cartTotal)}</span>
+                    <span className="text-[22px] font-medium leading-[145%] text-[#22354A]">
+                      Всього:
+                    </span>
+                    <span className="text-[22px] font-bold leading-[145%] text-[#22354A]">
+                      {formatPrice(cartTotal)}
+                    </span>
                   </div>
 
                   <button
@@ -426,7 +451,9 @@ function CommerceOverlays() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-[#E7EEF3] px-8 py-7">
-              <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">Подати заявку</h2>
+              <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                Подати заявку
+              </h2>
               <CloseButton onClick={closeDealerModal} />
             </div>
 
@@ -436,7 +463,10 @@ function CommerceOverlays() {
                   required
                   value={dealerFormState.companyName}
                   onChange={(event) =>
-                    setDealerFormState((current) => ({ ...current, companyName: event.target.value }))
+                    setDealerFormState((current) => ({
+                      ...current,
+                      companyName: event.target.value,
+                    }))
                   }
                   placeholder="Введіть назву компанії"
                   className={`${dealerFieldClasses} h-[56px]`}
@@ -449,7 +479,10 @@ function CommerceOverlays() {
                     required
                     value={dealerFormState.firstName}
                     onChange={(event) =>
-                      setDealerFormState((current) => ({ ...current, firstName: event.target.value }))
+                      setDealerFormState((current) => ({
+                        ...current,
+                        firstName: event.target.value,
+                      }))
                     }
                     placeholder="Введіть ваше ім'я"
                     className={`${dealerFieldClasses} h-[56px]`}
@@ -461,7 +494,10 @@ function CommerceOverlays() {
                     required
                     value={dealerFormState.lastName}
                     onChange={(event) =>
-                      setDealerFormState((current) => ({ ...current, lastName: event.target.value }))
+                      setDealerFormState((current) => ({
+                        ...current,
+                        lastName: event.target.value,
+                      }))
                     }
                     placeholder="Введіть ваше прізвище"
                     className={`${dealerFieldClasses} h-[56px]`}
@@ -547,7 +583,8 @@ function CommerceOverlays() {
 
             <div className="px-8 pb-8 pt-10 text-center">
               <p className="mx-auto max-w-[402px] text-[22px] font-medium leading-[165%] text-[#22354A]">
-                Ви впевнені, що хочете вийти? Ви зможете увійти знову, використовуючи свої облікові дані
+                Ви впевнені, що хочете вийти? Ви зможете увійти знову, використовуючи свої облікові
+                дані
               </p>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -613,19 +650,35 @@ function CartDrawerItem({
     <div className="border-b border-[#D5E0E8] px-8 py-7">
       <div className="grid grid-cols-[100px_minmax(0,1fr)_72px] items-start gap-5">
         <div className="relative h-[100px] w-[100px] overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-white">
-          <Image src={item.product.cartImage} alt={item.product.title} fill className="object-contain p-3" sizes="100px" />
+          <Image
+            src={item.product.cartImage}
+            alt={item.product.title}
+            fill
+            className="object-contain p-3"
+            sizes="100px"
+          />
         </div>
 
         <div className="flex flex-col gap-3">
-          <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">{item.product.title}</h3>
-          <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">{formatPrice(item.total)}</div>
-          <button type="button" onClick={onRemove} className="w-fit text-[18px] font-medium leading-[145%] text-[#4FACF5]">
+          <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+            {item.product.title}
+          </h3>
+          <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+            {formatPrice(item.total)}
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="w-fit text-[18px] font-medium leading-[145%] text-[#4FACF5]"
+          >
             Видалити
           </button>
         </div>
 
         <div className="flex h-[50px] items-center justify-between rounded-[16px] bg-[#F5F8F9] px-4">
-          <span className="text-[18px] font-medium leading-[145%] text-[#22354A]">{item.quantity}</span>
+          <span className="text-[18px] font-medium leading-[145%] text-[#22354A]">
+            {item.quantity}
+          </span>
           <div className="flex flex-col gap-[2px]">
             <button
               type="button"
@@ -650,13 +703,7 @@ function CartDrawerItem({
   )
 }
 
-function DealerField({
-  children,
-  label,
-}: {
-  children: ReactNode
-  label: string
-}) {
+function DealerField({ children, label }: { children: ReactNode; label: string }) {
   return (
     <label className="flex flex-col gap-3">
       <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">{label}</span>
@@ -673,7 +720,13 @@ function CloseButton({ onClick }: { onClick: () => void }) {
       aria-label="Закрити"
       className="flex h-10 w-10 items-center justify-center rounded-full text-[#22354A] transition-colors hover:bg-[#F5F8F9]"
     >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
@@ -685,7 +738,13 @@ function ArrowIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M3.75 9H14.25" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M9.75 4.5L14.25 9L9.75 13.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M9.75 4.5L14.25 9L9.75 13.5"
+        stroke="white"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -695,10 +754,39 @@ function MiniChevron({ up = false }: { up?: boolean }) {
 
   return (
     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d={path} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d={path}
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
 
 const dealerFieldClasses =
   'w-full rounded-[20px] bg-[#F5F8F9] px-6 text-[18px] font-medium leading-[165%] text-[#22354A] outline-none placeholder:text-[#B7CAD1]'
+
+function addDays(date: Date, days: number) {
+  const nextDate = new Date(date)
+  nextDate.setDate(nextDate.getDate() + days)
+  return nextDate
+}
+
+function formatOrderDate(date: Date) {
+  return new Intl.DateTimeFormat('uk-UA', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(date)
+}
+
+function normalizeStoredOrder(order: LastOrder): LastOrder {
+  return {
+    ...order,
+    createdAt: order.createdAt ?? formatOrderDate(new Date()),
+    expectedDate: order.expectedDate ?? order.createdAt ?? formatOrderDate(addDays(new Date(), 3)),
+    status: order.status ?? 'processing',
+  }
+}

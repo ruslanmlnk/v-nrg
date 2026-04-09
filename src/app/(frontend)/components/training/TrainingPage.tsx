@@ -1,7 +1,5 @@
 'use client'
 
-import type { ReactNode } from 'react'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -10,6 +8,7 @@ import trainingVideo from '@public/assets/training/training-video.jpg'
 
 import FaqSection from '../FaqSection'
 import SiteFooter from '../SiteFooter'
+import SectionHeading from '../shared/SectionHeading'
 
 const learningFormats = [
   {
@@ -116,16 +115,23 @@ export default function TrainingPage() {
               <span className="text-[#4FACF5]">Навчання</span>
             </div>
 
-            <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">Навчання та відеоінструкції V-NRG</h1>
+            <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">
+              Навчання та відеоінструкції V-NRG
+            </h1>
 
             <p className="max-w-[840px] text-[18px] font-medium leading-[165%] text-white">
-              Повна підтримка від виробника: відеоуроки, інструкції та рекомендації для швидкого старту
+              Повна підтримка від виробника: відеоуроки, інструкції та рекомендації для швидкого
+              старту
             </p>
           </div>
         </section>
 
         <section className="flex flex-col items-center gap-12">
-          <SectionHeading align="center" eyebrow="Формати навчання" title="Зручні спосіби навчання" />
+          <SectionHeading
+            align="center"
+            eyebrow="Формати навчання"
+            title="Зручні спосіби навчання"
+          />
 
           <div className="grid w-full gap-5 lg:grid-cols-3">
             {learningFormats.map((format) => (
@@ -136,7 +142,9 @@ export default function TrainingPage() {
                 <format.icon />
 
                 <div className="flex flex-col gap-4">
-                  <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">{format.title}</h2>
+                  <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                    {format.title}
+                  </h2>
                   <p className="whitespace-pre-line text-[18px] font-medium leading-[165%] text-[#22354A]">
                     {format.description}
                   </p>
@@ -149,7 +157,11 @@ export default function TrainingPage() {
 
       <section className="px-6 pt-[100px]">
         <div className="mx-auto flex max-w-[1288px] flex-col items-center gap-12">
-          <SectionHeading align="center" eyebrow="Відеоінструкції" title="Детальні уроки для всіх етапів роботи" />
+          <SectionHeading
+            align="center"
+            eyebrow="Відеоінструкції"
+            title="Детальні уроки для всіх етапів роботи"
+          />
 
           <div className="w-full overflow-x-auto">
             <div className="flex min-w-max items-start gap-4">
@@ -192,12 +204,16 @@ export default function TrainingPage() {
 
                   <div className="absolute right-5 top-5 flex items-center gap-2 rounded-[20px] bg-black/40 px-2 py-1 text-white">
                     <ClockIcon />
-                    <span className="text-[16px] font-bold uppercase leading-[145%]">{lesson.duration}</span>
+                    <span className="text-[16px] font-bold uppercase leading-[145%]">
+                      {lesson.duration}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-4 px-8 py-6">
-                  <h3 className="whitespace-pre-line text-[24px] font-medium leading-[145%] text-[#22354A]">{lesson.title}</h3>
+                  <h3 className="whitespace-pre-line text-[24px] font-medium leading-[145%] text-[#22354A]">
+                    {lesson.title}
+                  </h3>
                   <p className="whitespace-pre-line text-[18px] font-medium leading-[165%] text-[#22354A]">
                     {lesson.description}
                   </p>
@@ -214,29 +230,16 @@ export default function TrainingPage() {
   )
 }
 
-function SectionHeading({
-  align = 'left',
-  eyebrow,
-  title,
-}: {
-  align?: 'left' | 'center'
-  eyebrow: string
-  title: ReactNode
-}) {
-  const centered = align === 'center'
-
-  return (
-    <div className={`flex flex-col gap-4 ${centered ? 'items-center text-center' : 'items-start text-left'}`}>
-      <div className="text-[16px] font-bold uppercase leading-[145%] text-[#4FACF5]">{eyebrow}</div>
-      <h2 className="max-w-[780px] text-[32px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">{title}</h2>
-    </div>
-  )
-}
-
 function PlayCircle() {
   return (
     <div className="flex h-[120px] w-[120px] items-center justify-center rounded-full bg-white">
-      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="44"
+        height="44"
+        viewBox="0 0 44 44"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M40.7473 15.9829C44.6858 18.2568 44.6858 23.9415 40.7473 26.2153L14.1627 41.564C10.2242 43.8378 5.30117 40.9955 5.30117 36.4478L5.30117 5.75049C5.30117 1.20275 10.2242 -1.6396 14.1627 0.634277L40.7473 15.9829Z"
           fill="#4FACF5"
@@ -256,7 +259,13 @@ function ClockIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M8 4V8L10.6667 9.33333" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M8 4V8L10.6667 9.33333"
+        stroke="white"
+        strokeWidth="1.33333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
