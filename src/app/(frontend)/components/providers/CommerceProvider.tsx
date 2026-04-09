@@ -7,7 +7,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import { AnimatePresence, motion } from 'motion/react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
+import { logoutUser, fetchCurrentUser } from '../../lib/authClient'
 import { formatPrice, productsMap, type ProductData, type ProductId } from '../../data/products'
+import type { FrontendUser } from '../../../../lib/frontendUser'
 
 type CartItem = {
   productId: ProductId
@@ -30,7 +32,6 @@ type LastOrder = {
 type PersistedStore = {
   cartItems: CartItem[]
   compareIds: ProductId[]
-  isLoggedIn: boolean
   lastOrder: LastOrder | null
   orderHistory: LastOrder[]
 }
@@ -61,10 +62,12 @@ type CommerceContextValue = {
   compareIds: ProductId[]
   compareProducts: ProductData[]
   completeOrder: (input: CompleteOrderInput) => LastOrder
+  currentUser: FrontendUser | null
   isCartOpen: boolean
   isDealerModalOpen: boolean
   isInCompare: (productId: ProductId) => boolean
   isLoggedIn: boolean
+  isUserLoading: boolean
   isLogoutModalOpen: boolean
   lastOrder: LastOrder | null
   orderHistory: LastOrder[]
@@ -73,8 +76,8 @@ type CommerceContextValue = {
   openLogoutModal: () => void
   removeFromCart: (productId: ProductId) => void
   removeFromCompare: (productId: ProductId) => void
-  signIn: () => void
-  signOut: () => void
+  signIn: (user: FrontendUser | null) => void
+  signOut: () => Promise<void>
   toggleCompare: (productId: ProductId) => void
   updateCartQuantity: (productId: ProductId, quantity: number) => void
 }
@@ -84,19 +87,26 @@ const STORAGE_KEY = 'v-nrg-front-store'
 const defaultStore: PersistedStore = {
   cartItems: [],
   compareIds: [],
-  isLoggedIn: false,
   lastOrder: null,
   orderHistory: [],
 }
 
 const CommerceContext = createContext<CommerceContextValue | null>(null)
 
-export function CommerceProvider({ children }: { children: ReactNode }) {
+export function CommerceProvider({
+  children,
+  initialUser,
+}: {
+  children: ReactNode
+  initialUser: FrontendUser | null
+}) {
   const router = useRouter()
   const pathname = usePathname()
 
   const [store, setStore] = useState<PersistedStore>(defaultStore)
   const [hasHydrated, setHasHydrated] = useState(false)
+  const [currentUser, setCurrentUser] = useState<FrontendUser | null>(initialUser)
+  const [isUserLoading, setIsUserLoading] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isDealerModalOpen, setIsDealerModalOpen] = useState(false)
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
@@ -109,7 +119,6 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
         setStore({
           cartItems: parsedStore.cartItems ?? [],
           compareIds: parsedStore.compareIds ?? [],
-          isLoggedIn: parsedStore.isLoggedIn ?? false,
           lastOrder: parsedStore.lastOrder ? normalizeStoredOrder(parsedStore.lastOrder) : null,
           orderHistory:
             parsedStore.orderHistory?.map(normalizeStoredOrder) ??
@@ -120,6 +129,32 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
       setStore(defaultStore)
     } finally {
       setHasHydrated(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    let isMounted = true
+
+    const syncUser = async () => {
+      setIsUserLoading(true)
+
+      try {
+        const nextUser = await fetchCurrentUser()
+
+        if (isMounted) {
+          setCurrentUser(nextUser)
+        }
+      } finally {
+        if (isMounted) {
+          setIsUserLoading(false)
+        }
+      }
+    }
+
+    void syncUser()
+
+    return () => {
+      isMounted = false
     }
   }, [])
 
@@ -240,20 +275,22 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
 
   const isInCompare = (productId: ProductId) => store.compareIds.includes(productId)
 
-  const signIn = () => {
-    setStore((currentStore) => ({
-      ...currentStore,
-      isLoggedIn: true,
-    }))
+  const signIn = (user: FrontendUser | null) => {
+    setCurrentUser(user)
+    router.refresh()
   }
 
-  const signOut = () => {
-    setStore((currentStore) => ({
-      ...currentStore,
-      isLoggedIn: false,
-    }))
+  const signOut = async () => {
+    try {
+      await logoutUser()
+    } catch {
+      // Even if the request fails, we still clear client auth state.
+    }
+
+    setCurrentUser(null)
 
     setIsLogoutModalOpen(false)
+    router.refresh()
 
     if (pathname?.startsWith('/account')) {
       router.push('/login')
@@ -303,10 +340,12 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     compareIds: store.compareIds,
     compareProducts,
     completeOrder,
+    currentUser,
     isCartOpen,
     isDealerModalOpen,
     isInCompare,
-    isLoggedIn: store.isLoggedIn,
+    isLoggedIn: Boolean(currentUser),
+    isUserLoading,
     isLogoutModalOpen,
     lastOrder: store.lastOrder,
     orderHistory: store.orderHistory,

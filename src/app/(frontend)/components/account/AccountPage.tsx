@@ -41,7 +41,8 @@ const orderStatusMeta = {
 } as const
 
 export default function AccountPage() {
-  const { isLoggedIn, lastOrder, openDealerModal, openLogoutModal, orderHistory } = useCommerce()
+  const { currentUser, isLoggedIn, lastOrder, openDealerModal, openLogoutModal, orderHistory } =
+    useCommerce()
 
   const [activeSection, setActiveSection] = useState<AccountSection>('orders')
   const [currentPage, setCurrentPage] = useState(1)

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
+import { registerUser } from '../../lib/authClient'
 import { useCommerce } from '../providers/CommerceProvider'
 
 const inputClasses =
@@ -15,6 +16,7 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formState, setFormState] = useState({
     email: '',
     firstName: '',
@@ -24,16 +26,44 @@ export default function RegisterForm() {
     phone: '',
   })
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (isSubmitting) {
+      return
+    }
+
+    const normalizedPhone = normalizePhone(formState.phone)
 
     if (formState.password !== formState.passwordConfirmation) {
       setError('Паролі не співпадають')
       return
     }
 
+    if (!normalizedPhone) {
+      setError('Введіть коректний номер телефону')
+      return
+    }
+
     setError('')
-    signIn()
+    setIsSubmitting(true)
+
+    const result = await registerUser({
+      email: formState.email.trim(),
+      firstName: formState.firstName.trim(),
+      lastName: formState.lastName.trim(),
+      password: formState.password,
+      phone: normalizedPhone,
+    })
+
+    setIsSubmitting(false)
+
+    if (!result.data) {
+      setError(result.error || 'Не вдалося зареєструватися. Спробуйте ще раз.')
+      return
+    }
+
+    signIn(result.data)
     router.push('/account')
   }
 
@@ -46,8 +76,10 @@ export default function RegisterForm() {
             required
             type="text"
             value={formState.firstName}
-            onChange={(event) => setFormState((current) => ({ ...current, firstName: event.target.value }))}
-            placeholder="Введіть ваше ім&apos;я"
+            onChange={(event) =>
+              setFormState((current) => ({ ...current, firstName: event.target.value }))
+            }
+            placeholder="Введіть ваше ім'я"
             className={inputClasses}
             autoComplete="given-name"
           />
@@ -59,7 +91,9 @@ export default function RegisterForm() {
             required
             type="text"
             value={formState.lastName}
-            onChange={(event) => setFormState((current) => ({ ...current, lastName: event.target.value }))}
+            onChange={(event) =>
+              setFormState((current) => ({ ...current, lastName: event.target.value }))
+            }
             placeholder="Введіть ваше прізвище"
             className={inputClasses}
             autoComplete="family-name"
@@ -72,7 +106,9 @@ export default function RegisterForm() {
             required
             type="email"
             value={formState.email}
-            onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
+            onChange={(event) =>
+              setFormState((current) => ({ ...current, email: event.target.value }))
+            }
             placeholder="Введіть ваш email"
             className={inputClasses}
             autoComplete="email"
@@ -90,11 +126,16 @@ export default function RegisterForm() {
               required
               type="tel"
               value={formState.phone}
-              onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))}
-              placeholder=""
+              onChange={(event) =>
+                setFormState((current) => ({
+                  ...current,
+                  phone: event.target.value.replace(/\D/g, '').slice(0, 9),
+                }))
+              }
+              placeholder="XX XXX XX XX"
               className={`${inputClasses} pl-[68px]`}
-              autoComplete="tel"
-              inputMode="tel"
+              autoComplete="tel-national"
+              inputMode="numeric"
             />
           </span>
         </label>
@@ -107,8 +148,10 @@ export default function RegisterForm() {
               required
               type={showPassword ? 'text' : 'password'}
               value={formState.password}
-              onChange={(event) => setFormState((current) => ({ ...current, password: event.target.value }))}
-              placeholder="12345"
+              onChange={(event) =>
+                setFormState((current) => ({ ...current, password: event.target.value }))
+              }
+              placeholder="Введіть пароль"
               className={`${inputClasses} pr-12`}
               autoComplete="new-password"
             />
@@ -125,7 +168,9 @@ export default function RegisterForm() {
         </label>
 
         <label className="flex flex-col gap-3">
-          <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">Підтвердження пароля *</span>
+          <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+            Підтвердження пароля *
+          </span>
 
           <span className="relative block">
             <input
@@ -133,9 +178,12 @@ export default function RegisterForm() {
               type={showConfirmPassword ? 'text' : 'password'}
               value={formState.passwordConfirmation}
               onChange={(event) =>
-                setFormState((current) => ({ ...current, passwordConfirmation: event.target.value }))
+                setFormState((current) => ({
+                  ...current,
+                  passwordConfirmation: event.target.value,
+                }))
               }
-              placeholder="12345"
+              placeholder="Повторіть пароль"
               className={`${inputClasses} pr-12`}
               autoComplete="new-password"
             />
@@ -143,7 +191,11 @@ export default function RegisterForm() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword((current) => !current)}
-              aria-label={showConfirmPassword ? 'Приховати підтвердження пароля' : 'Показати підтвердження пароля'}
+              aria-label={
+                showConfirmPassword
+                  ? 'Приховати підтвердження пароля'
+                  : 'Показати підтвердження пароля'
+              }
               className="absolute right-4 top-1/2 -translate-y-1/2 text-[#D3DCE4] transition-colors hover:text-[#4FACF5]"
             >
               <EyeIcon crossed={!showConfirmPassword} />
@@ -153,16 +205,21 @@ export default function RegisterForm() {
 
         <button
           type="submit"
-          className="relative mt-2 flex h-[50px] items-center justify-center rounded-full bg-[#22354A] pl-6 pr-[70px] text-white transition-transform duration-200 hover:-translate-y-0.5"
+          disabled={isSubmitting}
+          className="relative mt-2 flex h-[50px] items-center justify-center rounded-full bg-[#22354A] pl-6 pr-[70px] text-white transition-transform duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          <span className="text-[16px] font-medium leading-[145%]">Зареєструватися</span>
+          <span className="text-[16px] font-medium leading-[145%]">
+            {isSubmitting ? 'Створюємо акаунт...' : 'Зареєструватися'}
+          </span>
 
           <span className="absolute right-[3px] top-1/2 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-[#4FACF5]">
             <ArrowIcon />
           </span>
         </button>
 
-        {error ? <p className="text-[14px] font-medium leading-[165%] text-[#D94F4F]">{error}</p> : null}
+        {error ? (
+          <p className="text-[14px] font-medium leading-[165%] text-[#D94F4F]">{error}</p>
+        ) : null}
       </form>
 
       <p className="mt-6 text-center text-[16px] font-medium leading-[165%] text-[#22354A]">
@@ -179,7 +236,13 @@ function ArrowIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M3.75 9H14.25" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M9.75 4.5L14.25 9L9.75 13.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M9.75 4.5L14.25 9L9.75 13.5"
+        stroke="white"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -195,7 +258,19 @@ function EyeIcon({ crossed }: { crossed: boolean }) {
         strokeLinejoin="round"
       />
       <circle cx="9" cy="9" r="2.25" stroke="currentColor" strokeWidth="1.4" />
-      {crossed ? <path d="M3 15L15 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /> : null}
+      {crossed ? (
+        <path d="M3 15L15 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      ) : null}
     </svg>
   )
+}
+
+function normalizePhone(value: string) {
+  const digits = value.replace(/\D/g, '')
+
+  if (digits.length !== 9) {
+    return null
+  }
+
+  return `+380${digits}`
 }
