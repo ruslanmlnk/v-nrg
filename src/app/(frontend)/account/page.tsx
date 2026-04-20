@@ -1,4 +1,4 @@
-import AccountPage from '../components/account/AccountPage'
+import AccountPage from './AccountPage'
 
 export const metadata = {
   title: 'Кабінет користувача V-NRG',

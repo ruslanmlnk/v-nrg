@@ -1,4 +1,4 @@
-import ContactsPage from '../components/contacts/ContactsPage'
+import ContactsPage from './ContactsPage'
 
 export const metadata = {
   title: 'Контакти V-NRG',

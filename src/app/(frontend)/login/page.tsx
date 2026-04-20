@@ -1,4 +1,4 @@
-import LoginPage from '../components/login/LoginPage'
+import LoginPage from './LoginPage'
 
 export const metadata = {
   title: 'Вхід до особистого кабінету | V-NRG',

@@ -71,13 +71,14 @@ export default function BeforeAfterSlider({
         onPositionChange={(value) => position.set(value)}
         transition="0.4s cubic-bezier(0.22, 1, 0.36, 1)"
         handle={
-          <div className="relative flex h-full w-[56px] items-center justify-center">
-            <div className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-white/95 shadow-[0_0_0_1px_rgba(34,53,74,0.08)]" />
+          <div className="relative flex h-full w-[50px] items-center justify-center">
+            <div className="absolute left-1/2 top-0 h-[75px] w-[2px] -translate-x-1/2 bg-white/95" />
+            <div className="absolute bottom-0 left-1/2 h-[75px] w-[2px] -translate-x-1/2 bg-white/95" />
             <motion.div
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 flex h-[56px] w-[56px] items-center justify-center rounded-full border-2 border-white bg-[#4FACF5] shadow-[0_18px_40px_rgba(79,172,245,0.4)]"
+              className="relative z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-white bg-[#B6B6B666] backdrop-blur-[4px]"
             >
               <HandleIcon />
             </motion.div>
@@ -92,16 +93,16 @@ export default function BeforeAfterSlider({
   )
 }
 
-function CompareImage({
-  alt,
-  image,
-}: {
-  alt: string
-  image: StaticImageData
-}) {
+function CompareImage({ alt, image }: { alt: string; image: StaticImageData }) {
   return (
     <div className="relative h-full w-full">
-      <Image src={image} alt={alt} fill className="object-cover" sizes="(min-width: 1024px) 400px, 100vw" />
+      <Image
+        src={image}
+        alt={alt}
+        fill
+        className="object-cover"
+        sizes="(min-width: 1024px) 400px, 100vw"
+      />
     </div>
   )
 }
@@ -109,8 +110,20 @@ function CompareImage({
 function HandleIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 7L5 12L10 17" stroke="white" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M14 7L19 12L14 17" stroke="white" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M10 7L5 12L10 17"
+        stroke="white"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 7L19 12L14 17"
+        stroke="white"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

@@ -1,4 +1,4 @@
-import VacuumMassageCatalogPage from '../../components/catalog/VacuumMassageCatalogPage'
+import VacuumMassageCatalogPage from './VacuumMassageCatalogPage'
 
 export const metadata = {
   title: 'Апарати вакуумного масажу V-NRG',

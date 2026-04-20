@@ -9,6 +9,7 @@ import { toFrontendUser } from '@/lib/frontendUser'
 import './styles.css'
 import Header from './components/Header'
 import { CommerceProvider } from './components/providers/CommerceProvider'
+import { mapPayloadProducts } from './data/products'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -28,11 +29,23 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
   const initialUser = toFrontendUser(user)
+  const { docs: productDocs } = await payload.find({
+    collection: 'products',
+    depth: 1,
+    limit: 100,
+    sort: 'createdAt',
+    where: {
+      price: {
+        greater_than: 0,
+      },
+    },
+  })
+  const initialProducts = mapPayloadProducts(productDocs)
 
   return (
     <html lang="en">
       <body className={googleSans.className}>
-        <CommerceProvider initialUser={initialUser}>
+        <CommerceProvider initialProducts={initialProducts} initialUser={initialUser}>
           <Header />
           <main>{children}</main>
         </CommerceProvider>

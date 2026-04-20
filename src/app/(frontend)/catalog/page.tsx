@@ -1,4 +1,4 @@
-import CatalogPage from '../components/catalog/CatalogPage'
+import CatalogPage from './CatalogPage'
 
 export const metadata = {
   title: 'Каталог V-NRG',

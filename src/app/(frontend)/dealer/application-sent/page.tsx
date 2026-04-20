@@ -1,4 +1,4 @@
-import DealerSuccessPage from '../../components/dealer/DealerSuccessPage'
+import DealerSuccessPage from './DealerSuccessPage'
 
 export const metadata = {
   title: 'Заявку надіслано | V-NRG',

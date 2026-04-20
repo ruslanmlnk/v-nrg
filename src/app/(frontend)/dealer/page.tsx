@@ -1,4 +1,4 @@
-import DealerPage from '../components/dealer/DealerPage'
+import DealerPage from './DealerPage'
 
 export const metadata = {
   title: 'Стати дилером V-NRG',

@@ -1,4 +1,4 @@
-import ReviewPage from '../components/review/ReviewPage'
+import ReviewPage from './ReviewPage'
 
 export const metadata = {
   title: 'Відгуки | V-NRG',

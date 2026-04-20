@@ -1,4 +1,4 @@
-import ComparePage from '../components/compare/ComparePage'
+import ComparePage from './ComparePage'
 
 export const metadata = {
   title: 'Порівняння товарів V-NRG',

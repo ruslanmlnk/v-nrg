@@ -8,7 +8,12 @@ import { AnimatePresence, motion } from 'motion/react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 import { logoutUser, fetchCurrentUser } from '../../lib/authClient'
-import { formatPrice, productsMap, type ProductData, type ProductId } from '../../data/products'
+import {
+  formatPrice,
+  productsToMap,
+  type ProductData,
+  type ProductId,
+} from '../../data/products'
 import type { FrontendUser } from '../../../../lib/frontendUser'
 
 type CartItem = {
@@ -63,6 +68,7 @@ type CommerceContextValue = {
   compareProducts: ProductData[]
   completeOrder: (input: CompleteOrderInput) => LastOrder
   currentUser: FrontendUser | null
+  getProductById: (productId: ProductId) => ProductData | undefined
   isCartOpen: boolean
   isDealerModalOpen: boolean
   isInCompare: (productId: ProductId) => boolean
@@ -74,6 +80,7 @@ type CommerceContextValue = {
   openCart: () => void
   openDealerModal: () => void
   openLogoutModal: () => void
+  products: ProductData[]
   removeFromCart: (productId: ProductId) => void
   removeFromCompare: (productId: ProductId) => void
   signIn: (user: FrontendUser | null) => void
@@ -83,6 +90,7 @@ type CommerceContextValue = {
 }
 
 const STORAGE_KEY = 'v-nrg-front-store'
+const MAX_COMPARE_PRODUCTS = 3
 
 const defaultStore: PersistedStore = {
   cartItems: [],
@@ -95,9 +103,11 @@ const CommerceContext = createContext<CommerceContextValue | null>(null)
 
 export function CommerceProvider({
   children,
+  initialProducts,
   initialUser,
 }: {
   children: ReactNode
+  initialProducts: ProductData[]
   initialUser: FrontendUser | null
 }) {
   const router = useRouter()
@@ -110,6 +120,8 @@ export function CommerceProvider({
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isDealerModalOpen, setIsDealerModalOpen] = useState(false)
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
+  const productsMap = useMemo(() => productsToMap(initialProducts), [initialProducts])
+  const getProductById = (productId: ProductId) => productsMap[productId]
 
   useEffect(() => {
     try {
@@ -177,12 +189,22 @@ export function CommerceProvider({
 
   const cartItemsDetailed = useMemo<DetailedCartItem[]>(
     () =>
-      store.cartItems.map((item) => ({
-        product: productsMap[item.productId],
-        quantity: item.quantity,
-        total: productsMap[item.productId].price * item.quantity,
-      })),
-    [store.cartItems],
+      store.cartItems.flatMap((item) => {
+        const product = productsMap[item.productId]
+
+        if (!product) {
+          return []
+        }
+
+        return [
+          {
+            product,
+            quantity: item.quantity,
+            total: product.price * item.quantity,
+          },
+        ]
+      }),
+    [productsMap, store.cartItems],
   )
 
   const cartTotal = useMemo(
@@ -196,11 +218,20 @@ export function CommerceProvider({
   )
 
   const compareProducts = useMemo(
-    () => store.compareIds.map((productId) => productsMap[productId]),
-    [store.compareIds],
+    () =>
+      store.compareIds.flatMap((productId) => {
+        const product = productsMap[productId]
+
+        return product ? [product] : []
+      }),
+    [productsMap, store.compareIds],
   )
 
   const addToCart: CommerceContextValue['addToCart'] = (productId, quantity = 1, options) => {
+    if (!productsMap[productId]) {
+      return
+    }
+
     setStore((currentStore) => {
       const nextItems = [...currentStore.cartItems]
       const existingItemIndex = nextItems.findIndex((item) => item.productId === productId)
@@ -248,6 +279,10 @@ export function CommerceProvider({
   }
 
   const toggleCompare: CommerceContextValue['toggleCompare'] = (productId) => {
+    if (!productsMap[productId]) {
+      return
+    }
+
     setStore((currentStore) => {
       if (currentStore.compareIds.includes(productId)) {
         return {
@@ -259,7 +294,7 @@ export function CommerceProvider({
       return {
         ...currentStore,
         compareIds:
-          currentStore.compareIds.length >= 2
+          currentStore.compareIds.length >= MAX_COMPARE_PRODUCTS
             ? [...currentStore.compareIds.slice(1), productId]
             : [...currentStore.compareIds, productId],
       }
@@ -310,7 +345,10 @@ export function CommerceProvider({
       email,
       expectedDate: formatOrderDate(addDays(new Date(), 3)),
       id: `${Math.floor(10000 + Math.random() * 90000)}`,
-      items: store.cartItems,
+      items: cartItemsDetailed.map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      })),
       phone,
       status: 'awaiting-payment',
       total: cartTotal,
@@ -341,6 +379,7 @@ export function CommerceProvider({
     compareProducts,
     completeOrder,
     currentUser,
+    getProductById,
     isCartOpen,
     isDealerModalOpen,
     isInCompare,
@@ -352,6 +391,7 @@ export function CommerceProvider({
     openCart: () => setIsCartOpen(true),
     openDealerModal: () => setIsDealerModalOpen(true),
     openLogoutModal: () => setIsLogoutModalOpen(true),
+    products: initialProducts,
     removeFromCart,
     removeFromCompare,
     signIn,

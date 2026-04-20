@@ -1,4 +1,4 @@
-import CheckoutPage from '../components/checkout/CheckoutPage'
+import CheckoutPage from './CheckoutPage'
 
 export const metadata = {
   title: 'Оформлення замовлення V-NRG',

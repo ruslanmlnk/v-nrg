@@ -1,4 +1,4 @@
-import AboutPage from '../components/about/AboutPage'
+import AboutPage from './AboutPage'
 
 export const metadata = {
   title: 'Про бренд V-NRG',

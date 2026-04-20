@@ -1,4 +1,4 @@
-import RegisterPage from '../components/register/RegisterPage'
+import RegisterPage from './RegisterPage'
 
 export const metadata = {
   title: 'Реєстрація | V-NRG',

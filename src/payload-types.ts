@@ -187,10 +187,35 @@ export interface Review {
  */
 export interface Product {
   id: number;
-  title?: string | null;
-  price?: number | null;
+  title: string;
+  price: number;
   rating?: number | null;
+  /**
+   * Використовується в URL товару, наприклад v-nrg-18-pro.
+   */
+  slug: string;
+  category: 'vacuum' | 'physiotherapy' | 'components' | 'materials' | 'accessories' | 'chairs';
+  maniples?: number | null;
+  powerWatts?: number | null;
+  /**
+   * Наприклад: 18 маніпул · 800 Вт.
+   */
+  details?: string | null;
+  shortDescription?: string | null;
   gallery?: (number | Media)[] | null;
+  listFeatures?:
+    | {
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  compareFeatures?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
   description?: {
     content?: {
       root: {
@@ -441,7 +466,26 @@ export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   price?: T;
   rating?: T;
+  slug?: T;
+  category?: T;
+  maniples?: T;
+  powerWatts?: T;
+  details?: T;
+  shortDescription?: T;
   gallery?: T;
+  listFeatures?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  compareFeatures?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
   description?:
     | T
     | {

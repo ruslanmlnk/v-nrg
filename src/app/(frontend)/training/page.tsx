@@ -1,4 +1,4 @@
-import TrainingPage from '../components/training/TrainingPage'
+import TrainingPage from './TrainingPage'
 
 export default function Page() {
   return <TrainingPage />
