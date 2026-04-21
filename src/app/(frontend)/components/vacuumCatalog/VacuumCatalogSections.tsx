@@ -9,6 +9,7 @@ import { motion } from 'motion/react'
 import compareIcon from '@public/icon/header/compare.svg'
 
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import cartIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-vacuum-massage-catalog-page-cart.svg'
 import chevronDownIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-vacuum-massage-catalog-page-chevron-down.svg'
 import chevronUpIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-vacuum-massage-catalog-page-chevron-up.svg'
@@ -309,13 +310,17 @@ export function VacuumCatalogGrid({
             </div>
 
             <Link href={product.href}>
-              <Image
-                src={product.catalogImage}
-                alt={product.title}
-                fill
-                sizes="(min-width: 1024px) 400px, 100vw"
-                className="object-cover"
-              />
+              {product.catalogImage ? (
+                <Image
+                  src={product.catalogImage}
+                  alt={product.title}
+                  fill
+                  sizes="(min-width: 1024px) 400px, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <ProductImagePlaceholder className="absolute inset-0" />
+              )}
             </Link>
           </div>
 
@@ -325,7 +330,7 @@ export function VacuumCatalogGrid({
                 {product.title}
               </h3>
               <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                {product.details}
+                {product.details || 'Немає даних'}
               </p>
             </div>
 
@@ -376,13 +381,17 @@ export function VacuumCatalogList({
         >
           <div className="grid items-stretch gap-0 md:grid-cols-[380px_minmax(0,1fr)]">
             <div className="relative min-h-[240px] md:min-h-full">
-              <Image
-                src={product.catalogImage}
-                alt={product.title}
-                fill
-                sizes="(min-width: 768px) 380px, 100vw"
-                className="object-cover"
-              />
+              {product.catalogImage ? (
+                <Image
+                  src={product.catalogImage}
+                  alt={product.title}
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <ProductImagePlaceholder className="absolute inset-0" />
+              )}
             </div>
 
             <div className="flex flex-col justify-center gap-4 px-8 py-6">
@@ -391,13 +400,19 @@ export function VacuumCatalogList({
                   {product.title}
                 </h3>
                 <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                  {product.summary}
+                  {product.summary || 'Опис відсутній'}
                 </p>
-                <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                  {product.listFeatures.map((feature) => (
-                    <div key={`${product.uid}-${feature}`}>• {feature}</div>
-                  ))}
-                </div>
+                {product.listFeatures.length > 0 ? (
+                  <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+                    {product.listFeatures.map((feature) => (
+                      <div key={`${product.uid}-${feature}`}>• {feature}</div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-[16px] font-medium leading-[165%] text-[#6F8498]">
+                    Додаткові характеристики відсутні
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center justify-between gap-4">

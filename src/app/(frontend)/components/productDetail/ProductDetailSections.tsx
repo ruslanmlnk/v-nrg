@@ -12,6 +12,7 @@ import certificate from '@public/assets/product/certificate.jpg'
 import partner from '@public/assets/product/partner.jpg'
 
 import SectionHeading from '../shared/SectionHeading'
+import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import BeforeAfterSlider from '../ui/BeforeAfterSlider'
 import { useCommerce } from '../providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
@@ -91,7 +92,7 @@ export function ProductOverviewSection({
   quantity,
 }: {
   activeGalleryIndex: number
-  activeGalleryItem: { alt: string; main: ProductImage; video: boolean }
+  activeGalleryItem?: { alt: string; main: string; video: boolean }
   demoHref: string
   deliveryHref: string
   isCompared: boolean
@@ -104,7 +105,7 @@ export function ProductOverviewSection({
   onShare: () => Promise<void>
   paymentHref: string
   product: ProductData
-  productGallery: Array<{ alt: string; thumb: ProductImage; video: boolean }>
+  productGallery: Array<{ alt: string; thumb: string; video: boolean }>
   quantity: number
 }) {
   return (
@@ -112,33 +113,41 @@ export function ProductOverviewSection({
       <div className="grid items-start gap-5 xl:grid-cols-[610px_minmax(0,1fr)]">
         <div className="flex flex-col gap-4 rounded-[20px] bg-white p-6 shadow-[0_20px_60px_rgba(34,53,74,0.04)] xl:h-[621px]">
           <div className="relative flex min-h-[340px] flex-1 items-center justify-center overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-[linear-gradient(180deg,rgba(255,255,255,0)_54.61%,rgba(255,255,255,0.8)_91.48%)] px-8 py-8">
-            <Image
-              src={activeGalleryItem.main}
-              alt={activeGalleryItem.alt}
-              priority
-              fill
-              className="object-contain"
-              sizes="(min-width: 1280px) 562px, 100vw"
-            />
-            {activeGalleryItem.video ? (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <PlayBadge large />
-              </div>
-            ) : null}
+            {activeGalleryItem ? (
+              <>
+                <Image
+                  src={activeGalleryItem.main}
+                  alt={activeGalleryItem.alt}
+                  priority
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 1280px) 562px, 100vw"
+                />
+                {activeGalleryItem.video ? (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <PlayBadge large />
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <ProductImagePlaceholder className="absolute inset-0" label="Фото товару відсутнє" />
+            )}
           </div>
 
-          <div className="grid grid-cols-5 gap-4">
-            {productGallery.map((item, index) => (
-              <GalleryThumb
-                key={item.alt}
-                active={index === activeGalleryIndex}
-                alt={item.alt}
-                image={item.thumb}
-                showPlayBadge={item.video}
-                onClick={() => onSelectGallery(index)}
-              />
-            ))}
-          </div>
+          {productGallery.length > 0 ? (
+            <div className="grid grid-cols-5 gap-4">
+              {productGallery.map((item, index) => (
+                <GalleryThumb
+                  key={item.alt}
+                  active={index === activeGalleryIndex}
+                  alt={item.alt}
+                  image={item.thumb}
+                  showPlayBadge={item.video}
+                  onClick={() => onSelectGallery(index)}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-5">
@@ -274,11 +283,21 @@ export function ProductTabsSection({
   displayTabs,
   onSelectTab,
 }: {
-  activeTab: ProductTabData
+  activeTab?: ProductTabData
   activeTabId: string
   displayTabs: ProductTabData[]
   onSelectTab: (tabId: string) => void
 }) {
+  if (displayTabs.length === 0 || !activeTab) {
+    return (
+      <div className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
+        <div className="text-[18px] font-medium leading-[165%] text-[#6F8498]">
+          Інформація по вкладках відсутня.
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
       <div className="flex flex-wrap gap-x-12 gap-y-4 border-b border-[#D5E0E8]">
@@ -455,7 +474,7 @@ function GalleryThumb({
 }: {
   active?: boolean
   alt: string
-  image: ProductImage
+  image: string
   onClick: () => void
   showPlayBadge?: boolean
 }) {
@@ -641,18 +660,24 @@ function ProductCard({
       className="flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
     >
       <div className="relative h-[300px] overflow-hidden rounded-[20px] bg-white">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-contain p-6"
-          sizes="(min-width: 1024px) 400px, 100vw"
-        />
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-contain p-6"
+            sizes="(min-width: 1024px) 400px, 100vw"
+          />
+        ) : (
+          <ProductImagePlaceholder className="absolute inset-0" />
+        )}
       </div>
       <div className="flex flex-col gap-4 px-8 py-6">
         <div className="flex flex-col gap-2">
           <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">{title}</h3>
-          <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">{details}</p>
+          <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+            {details || 'Немає даних'}
+          </p>
         </div>
         <div className="flex items-center justify-between gap-4">
           <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">

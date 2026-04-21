@@ -19,6 +19,7 @@ import {
   type ProductData,
   type ProductId,
 } from '../../data/products'
+import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import type { FrontendUser } from '../../../../lib/frontendUser'
 
 type CartItem = {
@@ -734,13 +735,17 @@ function CartDrawerItem({
     <div className="border-b border-[#D5E0E8] px-8 py-7">
       <div className="grid grid-cols-[100px_minmax(0,1fr)_72px] items-start gap-5">
         <div className="relative h-[100px] w-[100px] overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-white">
-          <Image
-            src={item.product.cartImage}
-            alt={item.product.title}
-            fill
-            className="object-contain p-3"
-            sizes="100px"
-          />
+          {item.product.cartImage ? (
+            <Image
+              src={item.product.cartImage}
+              alt={item.product.title}
+              fill
+              className="object-contain p-3"
+              sizes="100px"
+            />
+          ) : (
+            <ProductImagePlaceholder className="absolute inset-0 text-[12px]" />
+          )}
         </div>
 
         <div className="flex flex-col gap-3">

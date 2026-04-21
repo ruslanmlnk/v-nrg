@@ -137,9 +137,17 @@ export const Products: CollectionConfig = {
           name: 'characteristics',
           fields: [
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({}),
+              name: 'items',
+              type: 'array',
+              label: 'Характеристики',
+              fields: [
+                {
+                  name: 'specification',
+                  type: 'text',
+                  label: 'Характеристика',
+                  required: true,
+                },
+              ],
             },
           ],
         },
@@ -159,9 +167,17 @@ export const Products: CollectionConfig = {
           name: 'advantages',
           fields: [
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({}),
+              name: 'items',
+              type: 'array',
+              label: 'Переваги',
+              fields: [
+                {
+                  name: 'advantage',
+                  type: 'text',
+                  label: 'Перевага',
+                  required: true,
+                },
+              ],
             },
           ],
         },
@@ -170,9 +186,11 @@ export const Products: CollectionConfig = {
           name: 'video',
           fields: [
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({}),
+              name: 'video',
+              type: 'upload',
+              relationTo: 'media',
+              hasMany: true,
+              label: 'Відео роботи',
             },
           ],
         },

@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { motion } from 'motion/react'
 
 import { formatPrice, type ProductImage } from '../../data/products'
+import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 
 export const checkoutFieldClasses =
   'w-full rounded-[20px] bg-[#F5F8F9] px-6 text-[18px] font-medium leading-[165%] text-[#22354A] outline-none placeholder:text-[#B7CAD1]'
@@ -146,13 +147,17 @@ export function CheckoutOrderSummary({
             {cartItemsDetailed.map((item) => (
               <div key={item.product.id} className="flex items-center gap-4">
                 <div className="relative h-[100px] w-[100px] overflow-hidden rounded-[10px] border border-[#D5E0E8] bg-white">
-                  <Image
-                    src={item.product.cartImage}
-                    alt={item.product.title}
-                    fill
-                    className="object-contain p-3"
-                    sizes="100px"
-                  />
+                  {item.product.cartImage ? (
+                    <Image
+                      src={item.product.cartImage}
+                      alt={item.product.title}
+                      fill
+                      className="object-contain p-3"
+                      sizes="100px"
+                    />
+                  ) : (
+                    <ProductImagePlaceholder className="absolute inset-0 text-[12px]" />
+                  )}
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="text-[24px] font-medium leading-[145%] text-[#22354A]">

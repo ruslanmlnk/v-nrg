@@ -237,21 +237,12 @@ export interface Product {
     } | null;
   };
   characteristics?: {
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
+    items?:
+      | {
+          specification: string;
+          id?: string | null;
+        }[]
+      | null;
   };
   equipment?: {
     content?: {
@@ -271,38 +262,15 @@ export interface Product {
     } | null;
   };
   advantages?: {
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
+    items?:
+      | {
+          advantage: string;
+          id?: string | null;
+        }[]
+      | null;
   };
   video?: {
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
+    video?: (number | Media)[] | null;
   };
   reviews?: (number | Review)[] | null;
   moreProducts?: (number | Product)[] | null;
@@ -519,7 +487,12 @@ export interface ProductsSelect<T extends boolean = true> {
   characteristics?:
     | T
     | {
-        content?: T;
+        items?:
+          | T
+          | {
+              specification?: T;
+              id?: T;
+            };
       };
   equipment?:
     | T
@@ -529,12 +502,17 @@ export interface ProductsSelect<T extends boolean = true> {
   advantages?:
     | T
     | {
-        content?: T;
+        items?:
+          | T
+          | {
+              advantage?: T;
+              id?: T;
+            };
       };
   video?:
     | T
     | {
-        content?: T;
+        video?: T;
       };
   reviews?: T;
   moreProducts?: T;

@@ -23,6 +23,9 @@ export default buildConfig({
   },
   collections: [Users, Media, Reviews, Products, Category],
   editor: lexicalEditor(),
+  graphQL: {
+    schemaOutputFile: path.resolve(dirname, 'app', '(frontend)', 'lib', 'graphql', 'schema.graphql'),
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

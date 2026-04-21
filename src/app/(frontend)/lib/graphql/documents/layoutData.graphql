@@ -1,0 +1,17 @@
+query GetLayoutData {
+  meUser {
+    user {
+      id
+      email
+      firstName
+      lastName
+      phone
+      role
+    }
+  }
+  Products(limit: 100, sort: "createdAt", where: { price: { greater_than: 0 } }) {
+    docs {
+      ...ProductFrontendFields
+    }
+  }
+}

@@ -4,7 +4,10 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import type { Product } from '@/payload-types'
 
-type ProductSeed = Omit<Product, 'createdAt' | 'id' | 'updatedAt'>
+type ProductSeedData = Omit<Product, 'createdAt' | 'id' | 'updatedAt'>
+type ProductSeed = Omit<ProductSeedData, 'category'> & {
+  categorySlug?: string
+}
 type RichTextContent = NonNullable<NonNullable<Product['description']>['content']>
 
 const products: ProductSeed[] = [
@@ -13,7 +16,7 @@ const products: ProductSeed[] = [
     title: 'V-NRG 18 PRO',
     price: 68000,
     rating: 4.8,
-    category: 'vacuum',
+    categorySlug: 'vacuum',
     maniples: 18,
     powerWatts: 800,
     details: '18 маніпул · 800 Вт',
@@ -36,14 +39,12 @@ const products: ProductSeed[] = [
         'Модель поєднує стабільну потужність, зрозуміле керування та набір маніпул для базових процедур по тілу.',
       ]),
     },
-    characteristics: {
-      content: richText([
-        '18 маніпул для різних зон тіла',
-        'Потужність 800 Вт',
-        'Сенсорна панель керування',
-        'Регулювання інтенсивності вакууму',
-      ]),
-    },
+    characteristics: specificationItems([
+      '18 маніпул для різних зон тіла',
+      'Потужність 800 Вт',
+      'Сенсорна панель керування',
+      'Регулювання інтенсивності вакууму',
+    ]),
     equipment: {
       content: richText([
         'Основний блок апарата',
@@ -52,13 +53,11 @@ const products: ProductSeed[] = [
         'Кабель живлення та інструкція',
       ]),
     },
-    advantages: {
-      content: richText([
-        'Швидкий старт без складного навчання',
-        'Підходить для естетичних і фізіотерапевтичних процедур',
-        'Стабільна робота при щоденному навантаженні',
-      ]),
-    },
+    advantages: advantageItems([
+      'Швидкий старт без складного навчання',
+      'Підходить для естетичних і фізіотерапевтичних процедур',
+      'Стабільна робота при щоденному навантаженні',
+    ]),
     video: {
       content: richText([
         'Для моделі доступні відеоінструкції з першого запуску, налаштування та базового обслуговування.',
@@ -80,7 +79,7 @@ const products: ProductSeed[] = [
     title: 'V-NRG 36 PRO',
     price: 88000,
     rating: 4.9,
-    category: 'vacuum',
+    categorySlug: 'vacuum',
     maniples: 36,
     powerWatts: 1200,
     details: '36 маніпул · 1200 Вт',
@@ -103,14 +102,12 @@ const products: ProductSeed[] = [
         'Апарат підходить для командної роботи, комплексних процедур і масштабування напрямку вакуумного масажу.',
       ]),
     },
-    characteristics: {
-      content: richText([
-        '36 маніпул',
-        'Потужність 1200 Вт',
-        'Розширений робочий діапазон',
-        'Сенсорний дисплей 12"',
-      ]),
-    },
+    characteristics: specificationItems([
+      '36 маніпул',
+      'Потужність 1200 Вт',
+      'Розширений робочий діапазон',
+      'Сенсорний дисплей 12"',
+    ]),
     equipment: {
       content: richText([
         'Основний блок апарата',
@@ -119,13 +116,11 @@ const products: ProductSeed[] = [
         'Кабель живлення та інструкція',
       ]),
     },
-    advantages: {
-      content: richText([
-        'Більше сценаріїв процедур',
-        'Підходить для високого навантаження',
-        'Зручний вибір для салонів, що розширюють послуги',
-      ]),
-    },
+    advantages: advantageItems([
+      'Більше сценаріїв процедур',
+      'Підходить для високого навантаження',
+      'Зручний вибір для салонів, що розширюють послуги',
+    ]),
     video: {
       content: richText([
         'Відеоматеріали допомагають команді швидко освоїти налаштування та базові режими роботи.',
@@ -147,7 +142,7 @@ const products: ProductSeed[] = [
     title: 'V-NRG Body Sculpt',
     price: 54000,
     rating: 4.7,
-    category: 'vacuum',
+    categorySlug: 'vacuum',
     maniples: 12,
     powerWatts: 650,
     details: '12 маніпул · 650 Вт',
@@ -169,15 +164,11 @@ const products: ProductSeed[] = [
         'V-NRG Body Sculpt — компактна тестова модель для локальних процедур і кабінетів з обмеженим простором.',
       ]),
     },
-    characteristics: {
-      content: richText(['12 маніпул', 'Потужність 650 Вт', 'Компактний корпус']),
-    },
+    characteristics: specificationItems(['12 маніпул', 'Потужність 650 Вт', 'Компактний корпус']),
     equipment: {
       content: richText(['Основний блок', 'Набір маніпул', 'Кабель живлення']),
     },
-    advantages: {
-      content: richText(['Компактність', 'Легкий старт', 'Зручність для локальних процедур']),
-    },
+    advantages: advantageItems(['Компактність', 'Легкий старт', 'Зручність для локальних процедур']),
     video: {
       content: richText(['Відеоінструкції можна додати в адмінці після тестування.']),
     },
@@ -197,6 +188,30 @@ async function seedProducts() {
 
   for (const product of products) {
     console.log(`Upserting ${product.slug}...`)
+    const { categorySlug, ...productData } = product
+    let data: ProductSeedData = productData
+
+    if (categorySlug) {
+      const categoryResult = await payload.find({
+        collection: 'category',
+        depth: 0,
+        limit: 1,
+        where: {
+          slug: {
+            equals: categorySlug,
+          },
+        },
+      })
+      const category = categoryResult.docs[0]
+
+      if (category) {
+        data = {
+          ...productData,
+          category: [category.id],
+        }
+      }
+    }
+
     const existing = await payload.find({
       collection: 'products',
       depth: 0,
@@ -212,12 +227,12 @@ async function seedProducts() {
       await payload.update({
         collection: 'products',
         id: existing.docs[0].id,
-        data: product,
+        data,
       })
     } else {
       await payload.create({
         collection: 'products',
-        data: product,
+        data,
       })
     }
   }
@@ -252,6 +267,18 @@ function richText(lines: string[]): RichTextContent {
       type: 'root',
       version: 1,
     },
+  }
+}
+
+function specificationItems(lines: string[]): Product['characteristics'] {
+  return {
+    items: lines.map((specification) => ({ specification })),
+  }
+}
+
+function advantageItems(lines: string[]): Product['advantages'] {
+  return {
+    items: lines.map((advantage) => ({ advantage })),
   }
 }
 

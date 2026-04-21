@@ -1,0 +1,47 @@
+fragment ProductFrontendFields on Product {
+  id
+  title
+  price
+  rating
+  slug
+  details
+  shortDescription
+  maniples
+  powerWatts
+  category {
+    slug
+  }
+  gallery {
+    url
+  }
+  listFeatures {
+    feature
+  }
+  compareFeatures {
+    label
+    value
+  }
+  description {
+    content
+  }
+  characteristics {
+    items {
+      specification
+    }
+  }
+  equipment {
+    content
+  }
+  advantages {
+    items {
+      advantage
+    }
+  }
+  video {
+    content
+  }
+  faq {
+    question
+    answer
+  }
+}

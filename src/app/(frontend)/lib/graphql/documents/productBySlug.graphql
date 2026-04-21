@@ -1,0 +1,7 @@
+query GetProductBySlug($slug: String!) {
+  Products(limit: 1, where: { slug: { equals: $slug } }) {
+    docs {
+      ...ProductFrontendFields
+    }
+  }
+}

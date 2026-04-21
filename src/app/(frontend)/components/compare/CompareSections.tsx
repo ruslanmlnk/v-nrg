@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'motion/react'
 
 import PageHero from '../shared/PageHero'
+import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import { useCommerce } from '../providers/CommerceProvider'
 import { formatPrice, type ProductData } from '../../data/products'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
@@ -23,7 +24,9 @@ export function CompareHeroSection() {
 export function CompareMainSection() {
   const { addToCart, compareProducts, removeFromCompare } = useCommerce()
 
-  const featureLabels = compareProducts[0]?.compareFeatures.map((feature) => feature.label) ?? []
+  const featureLabels = Array.from(
+    new Set(compareProducts.flatMap((product) => product.compareFeatures.map((feature) => feature.label))),
+  )
   const compareColumnsStyle =
     compareProducts.length > 0
       ? { gridTemplateColumns: `repeat(${compareProducts.length}, minmax(0, 1fr))` }
@@ -102,13 +105,17 @@ function CompareProductCard({
             <IconAsset src={closeIconAsset} width={18} height={18} />
           </button>
 
-          <Image
-            src={product.compareImage}
-            alt={product.title}
-            fill
-            className="object-contain p-6"
-            sizes="(min-width: 1280px) 400px, 100vw"
-          />
+          {product.compareImage ? (
+            <Image
+              src={product.compareImage}
+              alt={product.title}
+              fill
+              className="object-contain p-6"
+              sizes="(min-width: 1280px) 400px, 100vw"
+            />
+          ) : (
+            <ProductImagePlaceholder className="absolute inset-0" />
+          )}
         </div>
 
         <div className="flex flex-1 flex-col gap-4 px-8 py-6">
@@ -116,7 +123,9 @@ function CompareProductCard({
             <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A] transition-colors duration-200 group-hover:text-[#4FACF5]">
               {product.title}
             </h3>
-            <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">{product.details}</p>
+            <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+              {product.details || 'Немає даних'}
+            </p>
           </div>
 
           <div className="flex items-center justify-between gap-4">
@@ -173,6 +182,11 @@ function CompareFeaturesTable({
 }) {
   return (
     <div className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
+      {featureLabels.length === 0 ? (
+        <div className="text-[18px] font-medium leading-[165%] text-[#6F8498]">
+          Характеристики для порівняння відсутні.
+        </div>
+      ) : (
       <div className="flex flex-col gap-8">
         <section className="border-b border-[#D5E0E8] pb-4">
           <div className="mb-4 text-[24px] font-medium leading-[145%] text-[#22354A]">Характеристика</div>
@@ -205,6 +219,7 @@ function CompareFeaturesTable({
           ))}
         </div>
       </div>
+      )}
     </div>
   )
 }

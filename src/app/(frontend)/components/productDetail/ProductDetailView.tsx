@@ -17,7 +17,6 @@ import {
 import {
   chunkItems,
   createProductGallery,
-  fallbackProductTabs,
   partnerReviews,
 } from './data'
 import type { ProductData } from '../../data/products'
@@ -26,7 +25,7 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const { addToCart, isInCompare, products, toggleCompare } = useCommerce()
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
   const [activeReviewPage, setActiveReviewPage] = useState(0)
-  const displayTabs = product.tabs.length > 0 ? product.tabs : fallbackProductTabs
+  const displayTabs = product.tabs
   const [activeTabId, setActiveTabId] = useState<string>(displayTabs[0]?.id ?? 'description')
   const [isShareActive, setIsShareActive] = useState(false)
   const [quantity, setQuantity] = useState(1)
