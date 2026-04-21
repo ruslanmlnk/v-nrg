@@ -1,24 +1,5 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import type { CollectionConfig } from 'payload'
-
-const productCategoryOptions = [
-  { label: 'Апарати вакуумного масажу', value: 'vacuum' },
-  { label: 'Апарати фізіотерапії', value: 'physiotherapy' },
-  { label: 'Комплектуючі', value: 'components' },
-  { label: 'Розхідники', value: 'materials' },
-  { label: 'Аксесуари', value: 'accessories' },
-  { label: 'Стільці для масажу', value: 'chairs' },
-]
-
-function formatSlug(value?: string | null) {
-  return (
-    value
-      ?.trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '') || undefined
-  )
-}
+import { slugField, type CollectionConfig } from 'payload'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -28,17 +9,6 @@ export const Products: CollectionConfig = {
   },
   access: {
     read: () => true,
-  },
-  hooks: {
-    beforeValidate: [
-      ({ data }) => {
-        if (data && !data.slug) {
-          data.slug = formatSlug(data.title)
-        }
-
-        return data
-      },
-    ],
   },
   fields: [
     {
@@ -67,28 +37,16 @@ export const Products: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'slug',
-      type: 'text',
-      label: 'Slug',
-      unique: true,
-      index: true,
-      required: true,
-      admin: {
-        description: 'Використовується в URL товару, наприклад v-nrg-18-pro.',
-      },
-    },
+    slugField(),
     {
       type: 'row',
       fields: [
         {
           name: 'category',
-          type: 'select',
+          type: 'relationship',
+          relationTo: 'category',
+          hasMany: true,
           label: 'Категорія',
-          options: productCategoryOptions,
-          defaultValue: 'vacuum',
-          required: true,
-          index: true,
         },
         {
           name: 'maniples',

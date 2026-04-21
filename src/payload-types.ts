@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     reviews: Review;
     products: Product;
+    category: Category;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    category: CategorySelect<false> | CategorySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -191,10 +193,11 @@ export interface Product {
   price: number;
   rating?: number | null;
   /**
-   * Використовується в URL товару, наприклад v-nrg-18-pro.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
+  generateSlug?: boolean | null;
   slug: string;
-  category: 'vacuum' | 'physiotherapy' | 'components' | 'materials' | 'accessories' | 'chairs';
+  category?: (number | Category)[] | null;
   maniples?: number | null;
   powerWatts?: number | null;
   /**
@@ -323,6 +326,23 @@ export interface Product {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category".
+ */
+export interface Category {
+  id: number;
+  image: number | Media;
+  title?: string | null;
+  description?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -360,6 +380,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'category';
+        value: number | Category;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -466,6 +490,7 @@ export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   price?: T;
   rating?: T;
+  generateSlug?: T;
   slug?: T;
   category?: T;
   maniples?: T;
@@ -528,6 +553,19 @@ export interface ProductsSelect<T extends boolean = true> {
         after?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category_select".
+ */
+export interface CategorySelect<T extends boolean = true> {
+  image?: T;
+  title?: T;
+  description?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
