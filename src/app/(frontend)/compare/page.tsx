@@ -1,9 +1,16 @@
-import ComparePage from './ComparePage'
+import { CompareHeroSection, CompareMainSection } from '../components/compare/CompareSections'
 
 export const metadata = {
   title: 'Порівняння товарів V-NRG',
 }
 
-export default function Compare() {
-  return <ComparePage />
+export default function ComparePage() {
+  return (
+    <div className="pt-5">
+      <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
+        <CompareHeroSection />
+        <CompareMainSection />
+      </div>
+    </div>
+  )
 }

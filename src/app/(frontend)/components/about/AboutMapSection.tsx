@@ -7,6 +7,13 @@ import type { DivIcon, Map as LeafletMap, Marker as LeafletMarker } from 'leafle
 
 import aboutMap from '@public/assets/about/about-map.jpg'
 import aboutSalon from '@public/assets/about/about-salon-1.webp'
+import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import searchIconAsset from '@public/icon/generated/components-about-about-map-section-search.svg'
+import closeIconAsset from '@public/icon/generated/components-about-about-map-section-close.svg'
+import mapMarkerActiveIconAsset from '@public/icon/generated/about-map-marker-active.svg'
+import mapMarkerIconAsset from '@public/icon/generated/about-map-marker.svg'
+import instagramIconAsset from '@public/icon/generated/components-about-about-map-section-instagram.svg'
+import phoneIconAsset from '@public/icon/generated/components-about-about-map-section-phone.svg'
 
 type LeafletModule = typeof import('leaflet')
 
@@ -153,7 +160,7 @@ export default function AboutMapSection() {
     visibleSalons.forEach((salon) => {
       const isActive = salon.id === activeSalon?.id
       const marker = leaflet.marker(salon.coordinates, {
-        icon: createMarkerIcon(leaflet, isActive),
+        icon: createMarkerPin(leaflet, isActive),
       })
 
       marker.addTo(map)
@@ -229,10 +236,10 @@ export default function AboutMapSection() {
                     </div>
                     <div className="flex items-center gap-2">
                       <CircleLink ariaLabel="Instagram салону">
-                        <InstagramIcon />
+                        <IconAsset src={instagramIconAsset} width={20} height={20} />
                       </CircleLink>
                       <CircleLink ariaLabel="Телефон салону">
-                        <PhoneIcon />
+                        <IconAsset src={phoneIconAsset} width={20} height={20} />
                       </CircleLink>
                     </div>
                   </div>
@@ -251,7 +258,7 @@ export default function AboutMapSection() {
 
           <div className="absolute left-4 right-4 top-4 z-[500] flex flex-col gap-3 sm:left-[27px] sm:right-[27px] sm:top-[27px] sm:flex-row sm:items-center sm:justify-between">
             <label className="flex h-[55px] w-full max-w-[400px] items-center gap-4 rounded-[40px] bg-white px-6 shadow-[0_0_10px_rgba(0,0,0,0.2)]">
-              <SearchIcon />
+              <IconAsset src={searchIconAsset} width={18} height={18} />
               <input
                 type="text"
                 value={searchQuery}
@@ -271,7 +278,7 @@ export default function AboutMapSection() {
               className="flex h-[50px] items-center gap-2 self-start rounded-[40px] bg-[#22354A] px-6 text-[16px] font-medium leading-[145%] text-white"
             >
               <span>Закрити мапу</span>
-              <CloseIcon />
+              <IconAsset src={closeIconAsset} width={18} height={18} />
             </button>
           </div>
         </div>
@@ -315,17 +322,12 @@ export function AboutMapPreview({
   )
 }
 
-function createMarkerIcon(leaflet: LeafletModule, active: boolean): DivIcon {
-  const fill = active ? '#4FACF5' : '#22354A'
+function createMarkerPin(leaflet: LeafletModule, active: boolean): DivIcon {
+  const iconUrl = getAssetUrl(active ? mapMarkerActiveIconAsset : mapMarkerIconAsset)
 
   return leaflet.divIcon({
     className: 'about-map-pin-icon',
-    html: `
-      <svg width="40" height="49" viewBox="0 0 40 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 0C8.95431 0 0 8.99066 0 20.081C0 35.1415 20 49 20 49C20 49 40 35.1415 40 20.081C40 8.99066 31.0457 0 20 0Z" fill="${fill}" />
-        <circle cx="20" cy="20" r="6" fill="white" />
-      </svg>
-    `,
+    html: `<img src="${iconUrl}" alt="" width="40" height="49" />`,
     iconAnchor: [20, 49],
     iconSize: [40, 49],
     popupAnchor: [0, -44],
@@ -333,6 +335,9 @@ function createMarkerIcon(leaflet: LeafletModule, active: boolean): DivIcon {
 }
 
 function createPopupMarkup(salon: Salon) {
+  const instagramIconUrl = getAssetUrl(instagramIconAsset)
+  const phoneIconUrl = getAssetUrl(phoneIconAsset)
+
   return `
     <div class="about-map-popup-card">
       <div class="about-map-popup-row">
@@ -346,8 +351,8 @@ function createPopupMarkup(salon: Salon) {
       <div class="about-map-popup-footer">
         <div class="about-map-popup-label">Контакти для зв'язку:</div>
         <div class="about-map-popup-actions">
-          <span class="about-map-popup-action">${instagramMarkup}</span>
-          <span class="about-map-popup-action">${phoneMarkup}</span>
+          <span class="about-map-popup-action"><img src="${instagramIconUrl}" alt="" width="20" height="20" /></span>
+          <span class="about-map-popup-action"><img src="${phoneIconUrl}" alt="" width="20" height="20" /></span>
         </div>
       </div>
     </div>
@@ -371,61 +376,6 @@ function CircleLink({
   )
 }
 
-function SearchIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8.25 14.25C11.5637 14.25 14.25 11.5637 14.25 8.25C14.25 4.93629 11.5637 2.25 8.25 2.25C4.93629 2.25 2.25 4.93629 2.25 8.25C2.25 11.5637 4.93629 14.25 8.25 14.25Z"
-        stroke="#22354A"
-        strokeWidth="1.5"
-      />
-      <path d="M12.75 12.75L15.75 15.75" stroke="#22354A" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  )
+function getAssetUrl(src: StaticImageData | string) {
+  return typeof src === 'string' ? src : src.src
 }
-
-function CloseIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M13.5 4.5L4.5 13.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M4.5 4.5L13.5 13.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-function InstagramIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2.1" y="2.1" width="15.8" height="15.8" rx="4.5" stroke="white" strokeWidth="1.4" />
-      <circle cx="10" cy="10" r="3.2" stroke="white" strokeWidth="1.4" />
-      <circle cx="14.4" cy="5.6" r="0.9" fill="white" />
-    </svg>
-  )
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M6.24117 3.83331C6.55945 3.83331 6.85411 4.00692 7.01075 4.28614L8.31757 6.61612C8.47047 6.88867 8.45162 7.22514 8.2693 7.47903L7.12897 9.06736C7.95122 10.7619 9.2381 12.0488 10.9327 12.871L12.521 11.7307C12.7749 11.5484 13.1113 11.5295 13.3839 11.6824L15.7139 12.9892C15.9931 13.1459 16.1667 13.4405 16.1667 13.7588V15.5C16.1667 15.9602 15.7935 16.3333 15.3333 16.3333H14.5C8.8851 16.3333 3.66669 11.1149 3.66669 5.49998V4.66665C3.66669 4.20641 4.03979 3.83331 4.50002 3.83331H6.24117Z"
-        stroke="white"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-const instagramMarkup = `
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2.1" y="2.1" width="15.8" height="15.8" rx="4.5" stroke="white" stroke-width="1.4" />
-    <circle cx="10" cy="10" r="3.2" stroke="white" stroke-width="1.4" />
-    <circle cx="14.4" cy="5.6" r="0.9" fill="white" />
-  </svg>
-`
-
-const phoneMarkup = `
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.24117 3.83331C6.55945 3.83331 6.85411 4.00692 7.01075 4.28614L8.31757 6.61612C8.47047 6.88867 8.45162 7.22514 8.2693 7.47903L7.12897 9.06736C7.95122 10.7619 9.2381 12.0488 10.9327 12.871L12.521 11.7307C12.7749 11.5484 13.1113 11.5295 13.3839 11.6824L15.7139 12.9892C15.9931 13.1459 16.1667 13.4405 16.1667 13.7588V15.5C16.1667 15.9602 15.7935 16.3333 15.3333 16.3333H14.5C8.8851 16.3333 3.66669 11.1149 3.66669 5.49998V4.66665C3.66669 4.20641 4.03979 3.83331 4.50002 3.83331H6.24117Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" />
-  </svg>
-`

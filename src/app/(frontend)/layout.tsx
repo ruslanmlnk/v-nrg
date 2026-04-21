@@ -9,6 +9,7 @@ import { toFrontendUser } from '@/lib/frontendUser'
 import './styles.css'
 import Header from './components/Header'
 import { CommerceProvider } from './components/providers/CommerceProvider'
+import SiteFooter from './components/SiteFooter'
 import { mapPayloadProducts } from './data/products'
 
 export const metadata = {
@@ -48,6 +49,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <CommerceProvider initialProducts={initialProducts} initialUser={initialUser}>
           <Header />
           <main>{children}</main>
+          <SiteFooter />
         </CommerceProvider>
       </body>
     </html>

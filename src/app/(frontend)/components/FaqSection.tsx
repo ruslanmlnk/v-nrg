@@ -3,6 +3,10 @@
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 
+import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import faqChevronDownIconAsset from '@public/icon/generated/faq-chevron-down.svg'
+import faqChevronUpIconAsset from '@public/icon/generated/faq-chevron-up.svg'
+
 type FaqItemData = {
   answer?: string
   isActive?: boolean
@@ -141,11 +145,11 @@ function FaqItem({
 }
 
 function FaqChevron({ active }: { active: boolean }) {
-  const path = active ? 'M4 8L12 16L20 8' : 'M4 16L12 8L20 16'
-
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d={path} stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <IconAsset
+      src={active ? faqChevronDownIconAsset : faqChevronUpIconAsset}
+      width={24}
+      height={24}
+    />
   )
 }

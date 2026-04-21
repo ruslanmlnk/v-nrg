@@ -5,6 +5,8 @@ import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 import { ReactCompareSlider } from 'react-compare-slider'
+import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import handleIconAsset from '@public/icon/generated/components-ui-before-after-slider-handle.svg'
 
 type BeforeAfterSliderProps = {
   afterAlt: string
@@ -80,7 +82,7 @@ export default function BeforeAfterSlider({
               transition={{ duration: 0.2 }}
               className="relative z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-white bg-[#B6B6B666] backdrop-blur-[4px]"
             >
-              <HandleIcon />
+              <IconAsset src={handleIconAsset} width={24} height={24} />
             </motion.div>
           </div>
         }
@@ -107,23 +109,3 @@ function CompareImage({ alt, image }: { alt: string; image: StaticImageData }) {
   )
 }
 
-function HandleIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M10 7L5 12L10 17"
-        stroke="white"
-        strokeWidth="2.1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14 7L19 12L14 17"
-        stroke="white"
-        strokeWidth="2.1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}

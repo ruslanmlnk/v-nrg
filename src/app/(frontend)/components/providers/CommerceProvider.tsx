@@ -8,6 +8,11 @@ import { AnimatePresence, motion } from 'motion/react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 import { logoutUser, fetchCurrentUser } from '../../lib/authClient'
+import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import arrowIconAsset from '@public/icon/generated/components-providers-commerce-provider-arrow.svg'
+import closeIconAsset from '@public/icon/generated/commerce-close.svg'
+import miniChevronDownIconAsset from '@public/icon/generated/commerce-mini-chevron-down.svg'
+import miniChevronUpIconAsset from '@public/icon/generated/commerce-mini-chevron-up.svg'
 import {
   formatPrice,
   productsToMap,
@@ -509,7 +514,7 @@ function CommerceOverlays() {
                   >
                     Оформити замовлення
                     <span className="absolute right-[3px] top-1/2 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-[#4FACF5]">
-                      <ArrowIcon />
+                      <IconAsset src={arrowIconAsset} width={18} height={18} />
                     </span>
                   </button>
                 </div>
@@ -799,48 +804,18 @@ function CloseButton({ onClick }: { onClick: () => void }) {
       aria-label="Закрити"
       className="flex h-10 w-10 items-center justify-center rounded-full text-[#22354A] transition-colors hover:bg-[#F5F8F9]"
     >
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
+      <IconAsset src={closeIconAsset} width={24} height={24} />
     </button>
   )
 }
 
-function ArrowIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.75 9H14.25" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-      <path
-        d="M9.75 4.5L14.25 9L9.75 13.5"
-        stroke="white"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 function MiniChevron({ up = false }: { up?: boolean }) {
-  const path = up ? 'M3 9L8 4L13 9' : 'M3 5L8 10L13 5'
-
   return (
-    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d={path}
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <IconAsset
+      src={up ? miniChevronUpIconAsset : miniChevronDownIconAsset}
+      width={16}
+      height={12}
+    />
   )
 }
 
