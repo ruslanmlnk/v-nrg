@@ -1908,18 +1908,20 @@ export type Product_Characteristics = {
 
 export type Product_Characteristics_Items = {
   __typename?: 'Product_Characteristics_Items';
-  specification?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product_Equipment = {
   __typename?: 'Product_Equipment';
-  content?: Maybe<Scalars['JSON']['output']>;
+  items?: Maybe<Array<Product_Equipment_Items>>;
 };
 
-
-export type Product_EquipmentContentArgs = {
-  depth?: InputMaybe<Scalars['Int']['input']>;
+export type Product_Equipment_Items = {
+  __typename?: 'Product_Equipment_Items';
+  item?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product_Advantages = {
@@ -1929,18 +1931,14 @@ export type Product_Advantages = {
 
 export type Product_Advantages_Items = {
   __typename?: 'Product_Advantages_Items';
-  advantage?: Maybe<Scalars['String']['output']>;
+  item?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product_Video = {
   __typename?: 'Product_Video';
-  content?: Maybe<Scalars['JSON']['output']>;
-};
-
-
-export type Product_VideoContentArgs = {
-  depth?: InputMaybe<Scalars['Int']['input']>;
+  items?: Maybe<Array<Media>>;
+  description?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product_Faq = {
@@ -1990,12 +1988,15 @@ export type Product_Where = {
   compareFeatures__value?: InputMaybe<Product_CompareFeatures__Value_Operator>;
   compareFeatures__id?: InputMaybe<Product_CompareFeatures__Id_Operator>;
   description__content?: InputMaybe<Product_Description__Content_Operator>;
-  characteristics__items__specification?: InputMaybe<Product_Characteristics__Items__Specification_Operator>;
+  characteristics__items__label?: InputMaybe<Product_Characteristics__Items__Label_Operator>;
+  characteristics__items__value?: InputMaybe<Product_Characteristics__Items__Value_Operator>;
   characteristics__items__id?: InputMaybe<Product_Characteristics__Items__Id_Operator>;
-  equipment__content?: InputMaybe<Product_Equipment__Content_Operator>;
-  advantages__items__advantage?: InputMaybe<Product_Advantages__Items__Advantage_Operator>;
+  equipment__items__item?: InputMaybe<Product_Equipment__Items__Item_Operator>;
+  equipment__items__id?: InputMaybe<Product_Equipment__Items__Id_Operator>;
+  advantages__items__item?: InputMaybe<Product_Advantages__Items__Item_Operator>;
   advantages__items__id?: InputMaybe<Product_Advantages__Items__Id_Operator>;
-  video__content?: InputMaybe<Product_Video__Content_Operator>;
+  video__items?: InputMaybe<Product_Video__Items_Operator>;
+  video__description?: InputMaybe<Product_Video__Description_Operator>;
   reviews?: InputMaybe<Product_Reviews_Operator>;
   moreProducts?: InputMaybe<Product_MoreProducts_Operator>;
   recommendedTogether?: InputMaybe<Product_RecommendedTogether_Operator>;
@@ -2174,7 +2175,17 @@ export type Product_Description__Content_Operator = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Product_Characteristics__Items__Specification_Operator = {
+export type Product_Characteristics__Items__Label_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_Characteristics__Items__Value_Operator = {
   equals?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   like?: InputMaybe<Scalars['String']['input']>;
@@ -2195,15 +2206,28 @@ export type Product_Characteristics__Items__Id_Operator = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Product_Equipment__Content_Operator = {
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
-  contains?: InputMaybe<Scalars['JSON']['input']>;
+export type Product_Equipment__Items__Item_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_Equipment__Items__Id_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Product_Advantages__Items__Advantage_Operator = {
+export type Product_Advantages__Items__Item_Operator = {
   equals?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   like?: InputMaybe<Scalars['String']['input']>;
@@ -2224,11 +2248,20 @@ export type Product_Advantages__Items__Id_Operator = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Product_Video__Content_Operator = {
+export type Product_Video__Items_Operator = {
   equals?: InputMaybe<Scalars['JSON']['input']>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
-  contains?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Product_Video__Description_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -2371,12 +2404,15 @@ export type Product_Where_And = {
   compareFeatures__value?: InputMaybe<Product_CompareFeatures__Value_Operator>;
   compareFeatures__id?: InputMaybe<Product_CompareFeatures__Id_Operator>;
   description__content?: InputMaybe<Product_Description__Content_Operator>;
-  characteristics__items__specification?: InputMaybe<Product_Characteristics__Items__Specification_Operator>;
+  characteristics__items__label?: InputMaybe<Product_Characteristics__Items__Label_Operator>;
+  characteristics__items__value?: InputMaybe<Product_Characteristics__Items__Value_Operator>;
   characteristics__items__id?: InputMaybe<Product_Characteristics__Items__Id_Operator>;
-  equipment__content?: InputMaybe<Product_Equipment__Content_Operator>;
-  advantages__items__advantage?: InputMaybe<Product_Advantages__Items__Advantage_Operator>;
+  equipment__items__item?: InputMaybe<Product_Equipment__Items__Item_Operator>;
+  equipment__items__id?: InputMaybe<Product_Equipment__Items__Id_Operator>;
+  advantages__items__item?: InputMaybe<Product_Advantages__Items__Item_Operator>;
   advantages__items__id?: InputMaybe<Product_Advantages__Items__Id_Operator>;
-  video__content?: InputMaybe<Product_Video__Content_Operator>;
+  video__items?: InputMaybe<Product_Video__Items_Operator>;
+  video__description?: InputMaybe<Product_Video__Description_Operator>;
   reviews?: InputMaybe<Product_Reviews_Operator>;
   moreProducts?: InputMaybe<Product_MoreProducts_Operator>;
   recommendedTogether?: InputMaybe<Product_RecommendedTogether_Operator>;
@@ -2411,12 +2447,15 @@ export type Product_Where_Or = {
   compareFeatures__value?: InputMaybe<Product_CompareFeatures__Value_Operator>;
   compareFeatures__id?: InputMaybe<Product_CompareFeatures__Id_Operator>;
   description__content?: InputMaybe<Product_Description__Content_Operator>;
-  characteristics__items__specification?: InputMaybe<Product_Characteristics__Items__Specification_Operator>;
+  characteristics__items__label?: InputMaybe<Product_Characteristics__Items__Label_Operator>;
+  characteristics__items__value?: InputMaybe<Product_Characteristics__Items__Value_Operator>;
   characteristics__items__id?: InputMaybe<Product_Characteristics__Items__Id_Operator>;
-  equipment__content?: InputMaybe<Product_Equipment__Content_Operator>;
-  advantages__items__advantage?: InputMaybe<Product_Advantages__Items__Advantage_Operator>;
+  equipment__items__item?: InputMaybe<Product_Equipment__Items__Item_Operator>;
+  equipment__items__id?: InputMaybe<Product_Equipment__Items__Id_Operator>;
+  advantages__items__item?: InputMaybe<Product_Advantages__Items__Item_Operator>;
   advantages__items__id?: InputMaybe<Product_Advantages__Items__Id_Operator>;
-  video__content?: InputMaybe<Product_Video__Content_Operator>;
+  video__items?: InputMaybe<Product_Video__Items_Operator>;
+  video__description?: InputMaybe<Product_Video__Description_Operator>;
   reviews?: InputMaybe<Product_Reviews_Operator>;
   moreProducts?: InputMaybe<Product_MoreProducts_Operator>;
   recommendedTogether?: InputMaybe<Product_RecommendedTogether_Operator>;
@@ -3064,35 +3103,64 @@ export type ProductsDocAccessFields_Characteristics_Items_Delete = {
 
 export type ProductsDocAccessFields_Characteristics_Items_Fields = {
   __typename?: 'ProductsDocAccessFields_characteristics_items_Fields';
-  specification?: Maybe<ProductsDocAccessFields_Characteristics_Items_Specification>;
+  label?: Maybe<ProductsDocAccessFields_Characteristics_Items_Label>;
+  value?: Maybe<ProductsDocAccessFields_Characteristics_Items_Value>;
   id?: Maybe<ProductsDocAccessFields_Characteristics_Items_Id>;
 };
 
-export type ProductsDocAccessFields_Characteristics_Items_Specification = {
-  __typename?: 'ProductsDocAccessFields_characteristics_items_specification';
-  create?: Maybe<ProductsDocAccessFields_Characteristics_Items_Specification_Create>;
-  read?: Maybe<ProductsDocAccessFields_Characteristics_Items_Specification_Read>;
-  update?: Maybe<ProductsDocAccessFields_Characteristics_Items_Specification_Update>;
-  delete?: Maybe<ProductsDocAccessFields_Characteristics_Items_Specification_Delete>;
+export type ProductsDocAccessFields_Characteristics_Items_Label = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_label';
+  create?: Maybe<ProductsDocAccessFields_Characteristics_Items_Label_Create>;
+  read?: Maybe<ProductsDocAccessFields_Characteristics_Items_Label_Read>;
+  update?: Maybe<ProductsDocAccessFields_Characteristics_Items_Label_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Characteristics_Items_Label_Delete>;
 };
 
-export type ProductsDocAccessFields_Characteristics_Items_Specification_Create = {
-  __typename?: 'ProductsDocAccessFields_characteristics_items_specification_Create';
+export type ProductsDocAccessFields_Characteristics_Items_Label_Create = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_label_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Characteristics_Items_Specification_Read = {
-  __typename?: 'ProductsDocAccessFields_characteristics_items_specification_Read';
+export type ProductsDocAccessFields_Characteristics_Items_Label_Read = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_label_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Characteristics_Items_Specification_Update = {
-  __typename?: 'ProductsDocAccessFields_characteristics_items_specification_Update';
+export type ProductsDocAccessFields_Characteristics_Items_Label_Update = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_label_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Characteristics_Items_Specification_Delete = {
-  __typename?: 'ProductsDocAccessFields_characteristics_items_specification_Delete';
+export type ProductsDocAccessFields_Characteristics_Items_Label_Delete = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_label_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Characteristics_Items_Value = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_value';
+  create?: Maybe<ProductsDocAccessFields_Characteristics_Items_Value_Create>;
+  read?: Maybe<ProductsDocAccessFields_Characteristics_Items_Value_Read>;
+  update?: Maybe<ProductsDocAccessFields_Characteristics_Items_Value_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Characteristics_Items_Value_Delete>;
+};
+
+export type ProductsDocAccessFields_Characteristics_Items_Value_Create = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_value_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Characteristics_Items_Value_Read = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_value_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Characteristics_Items_Value_Update = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_value_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Characteristics_Items_Value_Delete = {
+  __typename?: 'ProductsDocAccessFields_characteristics_items_value_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -3126,34 +3194,97 @@ export type ProductsDocAccessFields_Characteristics_Items_Id_Delete = {
 
 export type ProductsDocAccessFields_Equipment = {
   __typename?: 'ProductsDocAccessFields_equipment';
-  content?: Maybe<ProductsDocAccessFields_Equipment_Content>;
+  items?: Maybe<ProductsDocAccessFields_Equipment_Items>;
 };
 
-export type ProductsDocAccessFields_Equipment_Content = {
-  __typename?: 'ProductsDocAccessFields_equipment_content';
-  create?: Maybe<ProductsDocAccessFields_Equipment_Content_Create>;
-  read?: Maybe<ProductsDocAccessFields_Equipment_Content_Read>;
-  update?: Maybe<ProductsDocAccessFields_Equipment_Content_Update>;
-  delete?: Maybe<ProductsDocAccessFields_Equipment_Content_Delete>;
+export type ProductsDocAccessFields_Equipment_Items = {
+  __typename?: 'ProductsDocAccessFields_equipment_items';
+  create?: Maybe<ProductsDocAccessFields_Equipment_Items_Create>;
+  read?: Maybe<ProductsDocAccessFields_Equipment_Items_Read>;
+  update?: Maybe<ProductsDocAccessFields_Equipment_Items_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Equipment_Items_Delete>;
+  fields?: Maybe<ProductsDocAccessFields_Equipment_Items_Fields>;
 };
 
-export type ProductsDocAccessFields_Equipment_Content_Create = {
-  __typename?: 'ProductsDocAccessFields_equipment_content_Create';
+export type ProductsDocAccessFields_Equipment_Items_Create = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Equipment_Content_Read = {
-  __typename?: 'ProductsDocAccessFields_equipment_content_Read';
+export type ProductsDocAccessFields_Equipment_Items_Read = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Equipment_Content_Update = {
-  __typename?: 'ProductsDocAccessFields_equipment_content_Update';
+export type ProductsDocAccessFields_Equipment_Items_Update = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Equipment_Content_Delete = {
-  __typename?: 'ProductsDocAccessFields_equipment_content_Delete';
+export type ProductsDocAccessFields_Equipment_Items_Delete = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Fields = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_Fields';
+  item?: Maybe<ProductsDocAccessFields_Equipment_Items_Item>;
+  id?: Maybe<ProductsDocAccessFields_Equipment_Items_Id>;
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Item = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_item';
+  create?: Maybe<ProductsDocAccessFields_Equipment_Items_Item_Create>;
+  read?: Maybe<ProductsDocAccessFields_Equipment_Items_Item_Read>;
+  update?: Maybe<ProductsDocAccessFields_Equipment_Items_Item_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Equipment_Items_Item_Delete>;
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Item_Create = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_item_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Item_Read = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_item_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Item_Update = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_item_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Item_Delete = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_item_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Id = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_id';
+  create?: Maybe<ProductsDocAccessFields_Equipment_Items_Id_Create>;
+  read?: Maybe<ProductsDocAccessFields_Equipment_Items_Id_Read>;
+  update?: Maybe<ProductsDocAccessFields_Equipment_Items_Id_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Equipment_Items_Id_Delete>;
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Id_Create = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Id_Read = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Id_Update = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Equipment_Items_Id_Delete = {
+  __typename?: 'ProductsDocAccessFields_equipment_items_id_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -3193,35 +3324,35 @@ export type ProductsDocAccessFields_Advantages_Items_Delete = {
 
 export type ProductsDocAccessFields_Advantages_Items_Fields = {
   __typename?: 'ProductsDocAccessFields_advantages_items_Fields';
-  advantage?: Maybe<ProductsDocAccessFields_Advantages_Items_Advantage>;
+  item?: Maybe<ProductsDocAccessFields_Advantages_Items_Item>;
   id?: Maybe<ProductsDocAccessFields_Advantages_Items_Id>;
 };
 
-export type ProductsDocAccessFields_Advantages_Items_Advantage = {
-  __typename?: 'ProductsDocAccessFields_advantages_items_advantage';
-  create?: Maybe<ProductsDocAccessFields_Advantages_Items_Advantage_Create>;
-  read?: Maybe<ProductsDocAccessFields_Advantages_Items_Advantage_Read>;
-  update?: Maybe<ProductsDocAccessFields_Advantages_Items_Advantage_Update>;
-  delete?: Maybe<ProductsDocAccessFields_Advantages_Items_Advantage_Delete>;
+export type ProductsDocAccessFields_Advantages_Items_Item = {
+  __typename?: 'ProductsDocAccessFields_advantages_items_item';
+  create?: Maybe<ProductsDocAccessFields_Advantages_Items_Item_Create>;
+  read?: Maybe<ProductsDocAccessFields_Advantages_Items_Item_Read>;
+  update?: Maybe<ProductsDocAccessFields_Advantages_Items_Item_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Advantages_Items_Item_Delete>;
 };
 
-export type ProductsDocAccessFields_Advantages_Items_Advantage_Create = {
-  __typename?: 'ProductsDocAccessFields_advantages_items_advantage_Create';
+export type ProductsDocAccessFields_Advantages_Items_Item_Create = {
+  __typename?: 'ProductsDocAccessFields_advantages_items_item_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Advantages_Items_Advantage_Read = {
-  __typename?: 'ProductsDocAccessFields_advantages_items_advantage_Read';
+export type ProductsDocAccessFields_Advantages_Items_Item_Read = {
+  __typename?: 'ProductsDocAccessFields_advantages_items_item_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Advantages_Items_Advantage_Update = {
-  __typename?: 'ProductsDocAccessFields_advantages_items_advantage_Update';
+export type ProductsDocAccessFields_Advantages_Items_Item_Update = {
+  __typename?: 'ProductsDocAccessFields_advantages_items_item_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Advantages_Items_Advantage_Delete = {
-  __typename?: 'ProductsDocAccessFields_advantages_items_advantage_Delete';
+export type ProductsDocAccessFields_Advantages_Items_Item_Delete = {
+  __typename?: 'ProductsDocAccessFields_advantages_items_item_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -3255,34 +3386,63 @@ export type ProductsDocAccessFields_Advantages_Items_Id_Delete = {
 
 export type ProductsDocAccessFields_Video = {
   __typename?: 'ProductsDocAccessFields_video';
-  content?: Maybe<ProductsDocAccessFields_Video_Content>;
+  items?: Maybe<ProductsDocAccessFields_Video_Items>;
+  description?: Maybe<ProductsDocAccessFields_Video_Description>;
 };
 
-export type ProductsDocAccessFields_Video_Content = {
-  __typename?: 'ProductsDocAccessFields_video_content';
-  create?: Maybe<ProductsDocAccessFields_Video_Content_Create>;
-  read?: Maybe<ProductsDocAccessFields_Video_Content_Read>;
-  update?: Maybe<ProductsDocAccessFields_Video_Content_Update>;
-  delete?: Maybe<ProductsDocAccessFields_Video_Content_Delete>;
+export type ProductsDocAccessFields_Video_Items = {
+  __typename?: 'ProductsDocAccessFields_video_items';
+  create?: Maybe<ProductsDocAccessFields_Video_Items_Create>;
+  read?: Maybe<ProductsDocAccessFields_Video_Items_Read>;
+  update?: Maybe<ProductsDocAccessFields_Video_Items_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Video_Items_Delete>;
 };
 
-export type ProductsDocAccessFields_Video_Content_Create = {
-  __typename?: 'ProductsDocAccessFields_video_content_Create';
+export type ProductsDocAccessFields_Video_Items_Create = {
+  __typename?: 'ProductsDocAccessFields_video_items_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Video_Content_Read = {
-  __typename?: 'ProductsDocAccessFields_video_content_Read';
+export type ProductsDocAccessFields_Video_Items_Read = {
+  __typename?: 'ProductsDocAccessFields_video_items_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Video_Content_Update = {
-  __typename?: 'ProductsDocAccessFields_video_content_Update';
+export type ProductsDocAccessFields_Video_Items_Update = {
+  __typename?: 'ProductsDocAccessFields_video_items_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Video_Content_Delete = {
-  __typename?: 'ProductsDocAccessFields_video_content_Delete';
+export type ProductsDocAccessFields_Video_Items_Delete = {
+  __typename?: 'ProductsDocAccessFields_video_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Video_Description = {
+  __typename?: 'ProductsDocAccessFields_video_description';
+  create?: Maybe<ProductsDocAccessFields_Video_Description_Create>;
+  read?: Maybe<ProductsDocAccessFields_Video_Description_Read>;
+  update?: Maybe<ProductsDocAccessFields_Video_Description_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Video_Description_Delete>;
+};
+
+export type ProductsDocAccessFields_Video_Description_Create = {
+  __typename?: 'ProductsDocAccessFields_video_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Video_Description_Read = {
+  __typename?: 'ProductsDocAccessFields_video_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Video_Description_Update = {
+  __typename?: 'ProductsDocAccessFields_video_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Video_Description_Delete = {
+  __typename?: 'ProductsDocAccessFields_video_description_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6473,35 +6633,64 @@ export type ProductsFields_Characteristics_Items_Delete = {
 
 export type ProductsFields_Characteristics_Items_Fields = {
   __typename?: 'ProductsFields_characteristics_items_Fields';
-  specification?: Maybe<ProductsFields_Characteristics_Items_Specification>;
+  label?: Maybe<ProductsFields_Characteristics_Items_Label>;
+  value?: Maybe<ProductsFields_Characteristics_Items_Value>;
   id?: Maybe<ProductsFields_Characteristics_Items_Id>;
 };
 
-export type ProductsFields_Characteristics_Items_Specification = {
-  __typename?: 'ProductsFields_characteristics_items_specification';
-  create?: Maybe<ProductsFields_Characteristics_Items_Specification_Create>;
-  read?: Maybe<ProductsFields_Characteristics_Items_Specification_Read>;
-  update?: Maybe<ProductsFields_Characteristics_Items_Specification_Update>;
-  delete?: Maybe<ProductsFields_Characteristics_Items_Specification_Delete>;
+export type ProductsFields_Characteristics_Items_Label = {
+  __typename?: 'ProductsFields_characteristics_items_label';
+  create?: Maybe<ProductsFields_Characteristics_Items_Label_Create>;
+  read?: Maybe<ProductsFields_Characteristics_Items_Label_Read>;
+  update?: Maybe<ProductsFields_Characteristics_Items_Label_Update>;
+  delete?: Maybe<ProductsFields_Characteristics_Items_Label_Delete>;
 };
 
-export type ProductsFields_Characteristics_Items_Specification_Create = {
-  __typename?: 'ProductsFields_characteristics_items_specification_Create';
+export type ProductsFields_Characteristics_Items_Label_Create = {
+  __typename?: 'ProductsFields_characteristics_items_label_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Characteristics_Items_Specification_Read = {
-  __typename?: 'ProductsFields_characteristics_items_specification_Read';
+export type ProductsFields_Characteristics_Items_Label_Read = {
+  __typename?: 'ProductsFields_characteristics_items_label_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Characteristics_Items_Specification_Update = {
-  __typename?: 'ProductsFields_characteristics_items_specification_Update';
+export type ProductsFields_Characteristics_Items_Label_Update = {
+  __typename?: 'ProductsFields_characteristics_items_label_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Characteristics_Items_Specification_Delete = {
-  __typename?: 'ProductsFields_characteristics_items_specification_Delete';
+export type ProductsFields_Characteristics_Items_Label_Delete = {
+  __typename?: 'ProductsFields_characteristics_items_label_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Characteristics_Items_Value = {
+  __typename?: 'ProductsFields_characteristics_items_value';
+  create?: Maybe<ProductsFields_Characteristics_Items_Value_Create>;
+  read?: Maybe<ProductsFields_Characteristics_Items_Value_Read>;
+  update?: Maybe<ProductsFields_Characteristics_Items_Value_Update>;
+  delete?: Maybe<ProductsFields_Characteristics_Items_Value_Delete>;
+};
+
+export type ProductsFields_Characteristics_Items_Value_Create = {
+  __typename?: 'ProductsFields_characteristics_items_value_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Characteristics_Items_Value_Read = {
+  __typename?: 'ProductsFields_characteristics_items_value_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Characteristics_Items_Value_Update = {
+  __typename?: 'ProductsFields_characteristics_items_value_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Characteristics_Items_Value_Delete = {
+  __typename?: 'ProductsFields_characteristics_items_value_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6535,34 +6724,97 @@ export type ProductsFields_Characteristics_Items_Id_Delete = {
 
 export type ProductsFields_Equipment = {
   __typename?: 'ProductsFields_equipment';
-  content?: Maybe<ProductsFields_Equipment_Content>;
+  items?: Maybe<ProductsFields_Equipment_Items>;
 };
 
-export type ProductsFields_Equipment_Content = {
-  __typename?: 'ProductsFields_equipment_content';
-  create?: Maybe<ProductsFields_Equipment_Content_Create>;
-  read?: Maybe<ProductsFields_Equipment_Content_Read>;
-  update?: Maybe<ProductsFields_Equipment_Content_Update>;
-  delete?: Maybe<ProductsFields_Equipment_Content_Delete>;
+export type ProductsFields_Equipment_Items = {
+  __typename?: 'ProductsFields_equipment_items';
+  create?: Maybe<ProductsFields_Equipment_Items_Create>;
+  read?: Maybe<ProductsFields_Equipment_Items_Read>;
+  update?: Maybe<ProductsFields_Equipment_Items_Update>;
+  delete?: Maybe<ProductsFields_Equipment_Items_Delete>;
+  fields?: Maybe<ProductsFields_Equipment_Items_Fields>;
 };
 
-export type ProductsFields_Equipment_Content_Create = {
-  __typename?: 'ProductsFields_equipment_content_Create';
+export type ProductsFields_Equipment_Items_Create = {
+  __typename?: 'ProductsFields_equipment_items_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Equipment_Content_Read = {
-  __typename?: 'ProductsFields_equipment_content_Read';
+export type ProductsFields_Equipment_Items_Read = {
+  __typename?: 'ProductsFields_equipment_items_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Equipment_Content_Update = {
-  __typename?: 'ProductsFields_equipment_content_Update';
+export type ProductsFields_Equipment_Items_Update = {
+  __typename?: 'ProductsFields_equipment_items_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Equipment_Content_Delete = {
-  __typename?: 'ProductsFields_equipment_content_Delete';
+export type ProductsFields_Equipment_Items_Delete = {
+  __typename?: 'ProductsFields_equipment_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Fields = {
+  __typename?: 'ProductsFields_equipment_items_Fields';
+  item?: Maybe<ProductsFields_Equipment_Items_Item>;
+  id?: Maybe<ProductsFields_Equipment_Items_Id>;
+};
+
+export type ProductsFields_Equipment_Items_Item = {
+  __typename?: 'ProductsFields_equipment_items_item';
+  create?: Maybe<ProductsFields_Equipment_Items_Item_Create>;
+  read?: Maybe<ProductsFields_Equipment_Items_Item_Read>;
+  update?: Maybe<ProductsFields_Equipment_Items_Item_Update>;
+  delete?: Maybe<ProductsFields_Equipment_Items_Item_Delete>;
+};
+
+export type ProductsFields_Equipment_Items_Item_Create = {
+  __typename?: 'ProductsFields_equipment_items_item_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Item_Read = {
+  __typename?: 'ProductsFields_equipment_items_item_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Item_Update = {
+  __typename?: 'ProductsFields_equipment_items_item_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Item_Delete = {
+  __typename?: 'ProductsFields_equipment_items_item_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Id = {
+  __typename?: 'ProductsFields_equipment_items_id';
+  create?: Maybe<ProductsFields_Equipment_Items_Id_Create>;
+  read?: Maybe<ProductsFields_Equipment_Items_Id_Read>;
+  update?: Maybe<ProductsFields_Equipment_Items_Id_Update>;
+  delete?: Maybe<ProductsFields_Equipment_Items_Id_Delete>;
+};
+
+export type ProductsFields_Equipment_Items_Id_Create = {
+  __typename?: 'ProductsFields_equipment_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Id_Read = {
+  __typename?: 'ProductsFields_equipment_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Id_Update = {
+  __typename?: 'ProductsFields_equipment_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Equipment_Items_Id_Delete = {
+  __typename?: 'ProductsFields_equipment_items_id_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6602,35 +6854,35 @@ export type ProductsFields_Advantages_Items_Delete = {
 
 export type ProductsFields_Advantages_Items_Fields = {
   __typename?: 'ProductsFields_advantages_items_Fields';
-  advantage?: Maybe<ProductsFields_Advantages_Items_Advantage>;
+  item?: Maybe<ProductsFields_Advantages_Items_Item>;
   id?: Maybe<ProductsFields_Advantages_Items_Id>;
 };
 
-export type ProductsFields_Advantages_Items_Advantage = {
-  __typename?: 'ProductsFields_advantages_items_advantage';
-  create?: Maybe<ProductsFields_Advantages_Items_Advantage_Create>;
-  read?: Maybe<ProductsFields_Advantages_Items_Advantage_Read>;
-  update?: Maybe<ProductsFields_Advantages_Items_Advantage_Update>;
-  delete?: Maybe<ProductsFields_Advantages_Items_Advantage_Delete>;
+export type ProductsFields_Advantages_Items_Item = {
+  __typename?: 'ProductsFields_advantages_items_item';
+  create?: Maybe<ProductsFields_Advantages_Items_Item_Create>;
+  read?: Maybe<ProductsFields_Advantages_Items_Item_Read>;
+  update?: Maybe<ProductsFields_Advantages_Items_Item_Update>;
+  delete?: Maybe<ProductsFields_Advantages_Items_Item_Delete>;
 };
 
-export type ProductsFields_Advantages_Items_Advantage_Create = {
-  __typename?: 'ProductsFields_advantages_items_advantage_Create';
+export type ProductsFields_Advantages_Items_Item_Create = {
+  __typename?: 'ProductsFields_advantages_items_item_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Advantages_Items_Advantage_Read = {
-  __typename?: 'ProductsFields_advantages_items_advantage_Read';
+export type ProductsFields_Advantages_Items_Item_Read = {
+  __typename?: 'ProductsFields_advantages_items_item_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Advantages_Items_Advantage_Update = {
-  __typename?: 'ProductsFields_advantages_items_advantage_Update';
+export type ProductsFields_Advantages_Items_Item_Update = {
+  __typename?: 'ProductsFields_advantages_items_item_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Advantages_Items_Advantage_Delete = {
-  __typename?: 'ProductsFields_advantages_items_advantage_Delete';
+export type ProductsFields_Advantages_Items_Item_Delete = {
+  __typename?: 'ProductsFields_advantages_items_item_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6664,34 +6916,63 @@ export type ProductsFields_Advantages_Items_Id_Delete = {
 
 export type ProductsFields_Video = {
   __typename?: 'ProductsFields_video';
-  content?: Maybe<ProductsFields_Video_Content>;
+  items?: Maybe<ProductsFields_Video_Items>;
+  description?: Maybe<ProductsFields_Video_Description>;
 };
 
-export type ProductsFields_Video_Content = {
-  __typename?: 'ProductsFields_video_content';
-  create?: Maybe<ProductsFields_Video_Content_Create>;
-  read?: Maybe<ProductsFields_Video_Content_Read>;
-  update?: Maybe<ProductsFields_Video_Content_Update>;
-  delete?: Maybe<ProductsFields_Video_Content_Delete>;
+export type ProductsFields_Video_Items = {
+  __typename?: 'ProductsFields_video_items';
+  create?: Maybe<ProductsFields_Video_Items_Create>;
+  read?: Maybe<ProductsFields_Video_Items_Read>;
+  update?: Maybe<ProductsFields_Video_Items_Update>;
+  delete?: Maybe<ProductsFields_Video_Items_Delete>;
 };
 
-export type ProductsFields_Video_Content_Create = {
-  __typename?: 'ProductsFields_video_content_Create';
+export type ProductsFields_Video_Items_Create = {
+  __typename?: 'ProductsFields_video_items_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Video_Content_Read = {
-  __typename?: 'ProductsFields_video_content_Read';
+export type ProductsFields_Video_Items_Read = {
+  __typename?: 'ProductsFields_video_items_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Video_Content_Update = {
-  __typename?: 'ProductsFields_video_content_Update';
+export type ProductsFields_Video_Items_Update = {
+  __typename?: 'ProductsFields_video_items_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Video_Content_Delete = {
-  __typename?: 'ProductsFields_video_content_Delete';
+export type ProductsFields_Video_Items_Delete = {
+  __typename?: 'ProductsFields_video_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Video_Description = {
+  __typename?: 'ProductsFields_video_description';
+  create?: Maybe<ProductsFields_Video_Description_Create>;
+  read?: Maybe<ProductsFields_Video_Description_Read>;
+  update?: Maybe<ProductsFields_Video_Description_Update>;
+  delete?: Maybe<ProductsFields_Video_Description_Delete>;
+};
+
+export type ProductsFields_Video_Description_Create = {
+  __typename?: 'ProductsFields_video_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Video_Description_Read = {
+  __typename?: 'ProductsFields_video_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Video_Description_Update = {
+  __typename?: 'ProductsFields_video_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Video_Description_Delete = {
+  __typename?: 'ProductsFields_video_description_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -8270,12 +8551,18 @@ export type MutationProduct_CharacteristicsInput = {
 };
 
 export type MutationProduct_Characteristics_ItemsInput = {
-  specification: Scalars['String']['input'];
+  label: Scalars['String']['input'];
+  value: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProduct_EquipmentInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  items?: InputMaybe<Array<InputMaybe<MutationProduct_Equipment_ItemsInput>>>;
+};
+
+export type MutationProduct_Equipment_ItemsInput = {
+  item: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProduct_AdvantagesInput = {
@@ -8283,12 +8570,13 @@ export type MutationProduct_AdvantagesInput = {
 };
 
 export type MutationProduct_Advantages_ItemsInput = {
-  advantage: Scalars['String']['input'];
+  item: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProduct_VideoInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  items?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  description?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProduct_FaqInput = {
@@ -8351,12 +8639,18 @@ export type MutationProductUpdate_CharacteristicsInput = {
 };
 
 export type MutationProductUpdate_Characteristics_ItemsInput = {
-  specification: Scalars['String']['input'];
+  label: Scalars['String']['input'];
+  value: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductUpdate_EquipmentInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  items?: InputMaybe<Array<InputMaybe<MutationProductUpdate_Equipment_ItemsInput>>>;
+};
+
+export type MutationProductUpdate_Equipment_ItemsInput = {
+  item: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductUpdate_AdvantagesInput = {
@@ -8364,12 +8658,13 @@ export type MutationProductUpdate_AdvantagesInput = {
 };
 
 export type MutationProductUpdate_Advantages_ItemsInput = {
-  advantage: Scalars['String']['input'];
+  item: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductUpdate_VideoInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  items?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  description?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductUpdate_FaqInput = {
@@ -8511,16 +8806,16 @@ export enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
 export type GetLayoutDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', specification?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', content?: unknown | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', advantage?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', content?: unknown | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', specification?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', content?: unknown | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', advantage?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', content?: unknown | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
 
-export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', specification?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', content?: unknown | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', advantage?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', content?: unknown | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
+export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
 
 export const ProductFrontendFieldsFragmentDoc = gql`
     fragment ProductFrontendFields on Product {
@@ -8551,19 +8846,28 @@ export const ProductFrontendFieldsFragmentDoc = gql`
   }
   characteristics {
     items {
-      specification
+      label
+      value
     }
   }
   equipment {
-    content
+    items {
+      item
+    }
   }
   advantages {
     items {
-      advantage
+      item
     }
   }
   video {
-    content
+    description
+    items {
+      alt
+      mimeType
+      thumbnailURL
+      url
+    }
   }
   faq {
     question

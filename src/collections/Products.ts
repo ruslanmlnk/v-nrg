@@ -30,10 +30,10 @@ export const Products: CollectionConfig = {
           name: 'rating',
           type: 'number',
           label: 'Рейтинг',
+          defaultValue: 4.8,
           admin: {
             step: 0.25,
           },
-          defaultValue: 4.8,
         },
       ],
     },
@@ -142,10 +142,21 @@ export const Products: CollectionConfig = {
               label: 'Характеристики',
               fields: [
                 {
-                  name: 'specification',
-                  type: 'text',
-                  label: 'Характеристика',
-                  required: true,
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'label',
+                      type: 'text',
+                      label: 'Назва',
+                      required: true,
+                    },
+                    {
+                      name: 'value',
+                      type: 'text',
+                      label: 'Значення',
+                      required: true,
+                    },
+                  ],
                 },
               ],
             },
@@ -156,9 +167,17 @@ export const Products: CollectionConfig = {
           name: 'equipment',
           fields: [
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({}),
+              name: 'items',
+              type: 'array',
+              label: 'Комплектація',
+              fields: [
+                {
+                  name: 'item',
+                  type: 'text',
+                  label: 'Елемент',
+                  required: true,
+                },
+              ],
             },
           ],
         },
@@ -172,7 +191,7 @@ export const Products: CollectionConfig = {
               label: 'Переваги',
               fields: [
                 {
-                  name: 'advantage',
+                  name: 'item',
                   type: 'text',
                   label: 'Перевага',
                   required: true,
@@ -186,11 +205,16 @@ export const Products: CollectionConfig = {
           name: 'video',
           fields: [
             {
-              name: 'video',
+              name: 'items',
               type: 'upload',
               relationTo: 'media',
               hasMany: true,
-              label: 'Відео роботи',
+              label: 'Відео',
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Опис під відео',
             },
           ],
         },

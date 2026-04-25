@@ -5,14 +5,12 @@ import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
 import { registerUser } from '../../lib/authClient'
+import { authInputClasses } from '../auth/styles'
 import { useCommerce } from '../providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import arrowIconAsset from '@public/icon/generated/register-components-register-form-arrow.svg'
 import eyeCrossedIconAsset from '@public/icon/generated/common-eye-crossed.svg'
 import eyeIconAsset from '@public/icon/generated/common-eye.svg'
-
-const inputClasses =
-  'h-[55px] w-full rounded-[14px] border border-[#EFF3F7] bg-[#F5F8F9] px-4 text-[16px] font-medium leading-[165%] text-[#22354A] outline-none transition-colors placeholder:text-[#B7CAD1] focus:border-[#4FACF5]'
 
 export default function RegisterForm() {
   const router = useRouter()
@@ -84,7 +82,7 @@ export default function RegisterForm() {
               setFormState((current) => ({ ...current, firstName: event.target.value }))
             }
             placeholder="Введіть ваше ім'я"
-            className={inputClasses}
+            className={authInputClasses}
             autoComplete="given-name"
           />
         </label>
@@ -99,7 +97,7 @@ export default function RegisterForm() {
               setFormState((current) => ({ ...current, lastName: event.target.value }))
             }
             placeholder="Введіть ваше прізвище"
-            className={inputClasses}
+            className={authInputClasses}
             autoComplete="family-name"
           />
         </label>
@@ -114,7 +112,7 @@ export default function RegisterForm() {
               setFormState((current) => ({ ...current, email: event.target.value }))
             }
             placeholder="Введіть ваш email"
-            className={inputClasses}
+            className={authInputClasses}
             autoComplete="email"
           />
         </label>
@@ -137,7 +135,7 @@ export default function RegisterForm() {
                 }))
               }
               placeholder="XX XXX XX XX"
-              className={`${inputClasses} pl-[68px]`}
+              className={`${authInputClasses} pl-[68px]`}
               autoComplete="tel-national"
               inputMode="numeric"
             />
@@ -156,7 +154,7 @@ export default function RegisterForm() {
                 setFormState((current) => ({ ...current, password: event.target.value }))
               }
               placeholder="Введіть пароль"
-              className={`${inputClasses} pr-12`}
+              className={`${authInputClasses} pr-12`}
               autoComplete="new-password"
             />
 
@@ -192,7 +190,7 @@ export default function RegisterForm() {
                 }))
               }
               placeholder="Повторіть пароль"
-              className={`${inputClasses} pr-12`}
+              className={`${authInputClasses} pr-12`}
               autoComplete="new-password"
             />
 

@@ -16,6 +16,12 @@ type AuthActionResult<T> = {
   error: string | null
 }
 
+type ApiResponsePayload = {
+  errors?: unknown
+  message?: unknown
+  user?: unknown
+}
+
 export async function fetchCurrentUser() {
   const response = await fetch('/api/users/me', {
     cache: 'no-store',
@@ -94,20 +100,22 @@ export async function logoutUser() {
   })
 }
 
-async function parseJson(response: Response) {
+async function parseJson(response: Response): Promise<ApiResponsePayload | null> {
   try {
-    return await response.json()
+    const payload: unknown = await response.json()
+
+    return isRecord(payload) ? payload : null
   } catch {
     return null
   }
 }
 
-function extractErrorMessage(payload: unknown, fallback: string) {
-  if (!payload || typeof payload !== 'object') {
+function extractErrorMessage(payload: ApiResponsePayload | null, fallback: string) {
+  if (!payload) {
     return fallback
   }
 
-  if ('errors' in payload && Array.isArray(payload.errors)) {
+  if (Array.isArray(payload.errors)) {
     for (const entry of payload.errors) {
       if (
         entry &&
@@ -120,9 +128,13 @@ function extractErrorMessage(payload: unknown, fallback: string) {
     }
   }
 
-  if ('message' in payload && typeof payload.message === 'string') {
+  if (typeof payload.message === 'string') {
     return payload.message
   }
 
   return fallback
+}
+
+function isRecord(value: unknown): value is ApiResponsePayload {
+  return Boolean(value) && typeof value === 'object'
 }

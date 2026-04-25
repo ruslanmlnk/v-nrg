@@ -239,38 +239,31 @@ export interface Product {
   characteristics?: {
     items?:
       | {
-          specification: string;
+          label: string;
+          value: string;
           id?: string | null;
         }[]
       | null;
   };
   equipment?: {
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
+    items?:
+      | {
+          item: string;
+          id?: string | null;
+        }[]
+      | null;
   };
   advantages?: {
     items?:
       | {
-          advantage: string;
+          item: string;
           id?: string | null;
         }[]
       | null;
   };
   video?: {
-    video?: (number | Media)[] | null;
+    items?: (number | Media)[] | null;
+    description?: string | null;
   };
   reviews?: (number | Review)[] | null;
   moreProducts?: (number | Product)[] | null;
@@ -490,14 +483,20 @@ export interface ProductsSelect<T extends boolean = true> {
         items?:
           | T
           | {
-              specification?: T;
+              label?: T;
+              value?: T;
               id?: T;
             };
       };
   equipment?:
     | T
     | {
-        content?: T;
+        items?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
       };
   advantages?:
     | T
@@ -505,14 +504,15 @@ export interface ProductsSelect<T extends boolean = true> {
         items?:
           | T
           | {
-              advantage?: T;
+              item?: T;
               id?: T;
             };
       };
   video?:
     | T
     | {
-        video?: T;
+        items?: T;
+        description?: T;
       };
   reviews?: T;
   moreProducts?: T;

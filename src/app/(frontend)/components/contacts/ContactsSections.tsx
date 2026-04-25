@@ -28,7 +28,7 @@ export function ContactsHeroSection() {
           <span className="text-[#4FACF5]">Контакти</span>
         </div>
         <h1 className="text-[36px] font-medium leading-[145%] md:text-[48px]">
-          Зв'яжіться з нами
+          Зв&apos;яжіться з нами
         </h1>
         <p className="text-[16px] font-medium leading-[165%] text-[#D5E0E8] md:text-[18px]">
           Маєте запитання щодо обладнання або співпраці? Наша команда готова допомогти
@@ -76,11 +76,11 @@ export function ContactsInfoSection() {
     >
       <div className="flex max-w-[520px] flex-col gap-4">
         <h2 className="text-[36px] font-medium leading-[145%] text-[#22354A] md:text-[48px]">
-          Зв'яжіться з нами
+          Зв&apos;яжіться з нами
         </h2>
         <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
           Щоб отримати консультацію, дізнатися більше про обладнання або домовитися про
-          демонстрацію, залиште заявку онлайн або зв'яжіться з нами у робочий час
+          демонстрацію, залиште заявку онлайн або зв&apos;яжіться з нами у робочий час
         </p>
       </div>
 

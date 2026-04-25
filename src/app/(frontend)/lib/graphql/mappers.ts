@@ -1,4 +1,4 @@
-import type { FrontendUser } from '@/lib/frontendUser'
+import { toFrontendUser, type FrontendUser } from '@/lib/frontendUser'
 
 import { unwrapProduct, type ProductData, type ProductSource } from '../../data/products'
 import type { GetLayoutDataQuery, ProductFrontendFieldsFragment } from './generated'
@@ -15,34 +15,22 @@ export function mapGraphQLProduct(product: GraphQLProduct): ProductData {
 }
 
 export function mapGraphQLUser(user: GraphQLUser | null | undefined): FrontendUser | null {
-  if (!user || typeof user.id !== 'number' || typeof user.email !== 'string') {
-    return null
-  }
-
-  return {
-    email: user.email,
-    firstName: typeof user.firstName === 'string' ? user.firstName : '',
-    id: user.id,
-    lastName: typeof user.lastName === 'string' ? user.lastName : '',
-    phone: typeof user.phone === 'string' ? user.phone : '',
-    role: user.role ?? 'user',
-  }
+  return toFrontendUser(user)
 }
 
 function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
   return {
-    advantages: {
-      items: product.advantages?.items?.map((item) => item?.advantage),
-    },
+    advantages: product.advantages?.items?.map((item) => item?.item),
     categorySlugs: product.category?.map((item) => item?.slug),
-    characteristics: {
-      items: product.characteristics?.items?.map((item) => item?.specification),
-    },
+    characteristics: product.characteristics?.items?.map((item) => ({
+      label: item?.label,
+      value: item?.value,
+    })),
     cmsId: product.id,
     compareFeatures: product.compareFeatures,
     description: product.description?.content,
     details: product.details,
-    equipment: product.equipment?.content,
+    equipment: product.equipment?.items?.map((item) => item?.item),
     faq: product.faq,
     galleryUrls: product.gallery?.map((item) => item?.url),
     listFeatures: product.listFeatures?.map((item) => item?.feature),
@@ -53,6 +41,12 @@ function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
     shortDescription: product.shortDescription,
     slug: product.slug,
     title: product.title,
-    video: product.video?.content,
+    videoDescription: product.video?.description,
+    videos: product.video?.items?.map((item) => ({
+      alt: item?.alt,
+      mimeType: item?.mimeType,
+      previewImage: item?.thumbnailURL ?? item?.url,
+      src: item?.url,
+    })),
   }
 }

@@ -1461,12 +1461,18 @@ type Product_Characteristics {
 }
 
 type Product_Characteristics_Items {
-  specification: String
+  label: String
+  value: String
   id: String
 }
 
 type Product_Equipment {
-  content(depth: Int): JSON
+  items: [Product_Equipment_Items!]
+}
+
+type Product_Equipment_Items {
+  item: String
+  id: String
 }
 
 type Product_Advantages {
@@ -1474,12 +1480,13 @@ type Product_Advantages {
 }
 
 type Product_Advantages_Items {
-  advantage: String
+  item: String
   id: String
 }
 
 type Product_Video {
-  content(depth: Int): JSON
+  items: [Media!]
+  description: String
 }
 
 type Product_Faq {
@@ -1526,12 +1533,15 @@ input Product_where {
   compareFeatures__value: Product_compareFeatures__value_operator
   compareFeatures__id: Product_compareFeatures__id_operator
   description__content: Product_description__content_operator
-  characteristics__items__specification: Product_characteristics__items__specification_operator
+  characteristics__items__label: Product_characteristics__items__label_operator
+  characteristics__items__value: Product_characteristics__items__value_operator
   characteristics__items__id: Product_characteristics__items__id_operator
-  equipment__content: Product_equipment__content_operator
-  advantages__items__advantage: Product_advantages__items__advantage_operator
+  equipment__items__item: Product_equipment__items__item_operator
+  equipment__items__id: Product_equipment__items__id_operator
+  advantages__items__item: Product_advantages__items__item_operator
   advantages__items__id: Product_advantages__items__id_operator
-  video__content: Product_video__content_operator
+  video__items: Product_video__items_operator
+  video__description: Product_video__description_operator
   reviews: Product_reviews_operator
   moreProducts: Product_moreProducts_operator
   recommendedTogether: Product_recommendedTogether_operator
@@ -1710,7 +1720,17 @@ input Product_description__content_operator {
   exists: Boolean
 }
 
-input Product_characteristics__items__specification_operator {
+input Product_characteristics__items__label_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Product_characteristics__items__value_operator {
   equals: String
   not_equals: String
   like: String
@@ -1731,15 +1751,28 @@ input Product_characteristics__items__id_operator {
   exists: Boolean
 }
 
-input Product_equipment__content_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
+input Product_equipment__items__item_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Product_equipment__items__id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
-input Product_advantages__items__advantage_operator {
+input Product_advantages__items__item_operator {
   equals: String
   not_equals: String
   like: String
@@ -1760,11 +1793,20 @@ input Product_advantages__items__id_operator {
   exists: Boolean
 }
 
-input Product_video__content_operator {
+input Product_video__items_operator {
   equals: JSON
   not_equals: JSON
-  like: JSON
-  contains: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Product_video__description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
   exists: Boolean
 }
 
@@ -1907,12 +1949,15 @@ input Product_where_and {
   compareFeatures__value: Product_compareFeatures__value_operator
   compareFeatures__id: Product_compareFeatures__id_operator
   description__content: Product_description__content_operator
-  characteristics__items__specification: Product_characteristics__items__specification_operator
+  characteristics__items__label: Product_characteristics__items__label_operator
+  characteristics__items__value: Product_characteristics__items__value_operator
   characteristics__items__id: Product_characteristics__items__id_operator
-  equipment__content: Product_equipment__content_operator
-  advantages__items__advantage: Product_advantages__items__advantage_operator
+  equipment__items__item: Product_equipment__items__item_operator
+  equipment__items__id: Product_equipment__items__id_operator
+  advantages__items__item: Product_advantages__items__item_operator
   advantages__items__id: Product_advantages__items__id_operator
-  video__content: Product_video__content_operator
+  video__items: Product_video__items_operator
+  video__description: Product_video__description_operator
   reviews: Product_reviews_operator
   moreProducts: Product_moreProducts_operator
   recommendedTogether: Product_recommendedTogether_operator
@@ -1947,12 +1992,15 @@ input Product_where_or {
   compareFeatures__value: Product_compareFeatures__value_operator
   compareFeatures__id: Product_compareFeatures__id_operator
   description__content: Product_description__content_operator
-  characteristics__items__specification: Product_characteristics__items__specification_operator
+  characteristics__items__label: Product_characteristics__items__label_operator
+  characteristics__items__value: Product_characteristics__items__value_operator
   characteristics__items__id: Product_characteristics__items__id_operator
-  equipment__content: Product_equipment__content_operator
-  advantages__items__advantage: Product_advantages__items__advantage_operator
+  equipment__items__item: Product_equipment__items__item_operator
+  equipment__items__id: Product_equipment__items__id_operator
+  advantages__items__item: Product_advantages__items__item_operator
   advantages__items__id: Product_advantages__items__id_operator
-  video__content: Product_video__content_operator
+  video__items: Product_video__items_operator
+  video__description: Product_video__description_operator
   reviews: Product_reviews_operator
   moreProducts: Product_moreProducts_operator
   recommendedTogether: Product_recommendedTogether_operator
@@ -2492,30 +2540,54 @@ type ProductsDocAccessFields_characteristics_items_Delete {
 }
 
 type ProductsDocAccessFields_characteristics_items_Fields {
-  specification: ProductsDocAccessFields_characteristics_items_specification
+  label: ProductsDocAccessFields_characteristics_items_label
+  value: ProductsDocAccessFields_characteristics_items_value
   id: ProductsDocAccessFields_characteristics_items_id
 }
 
-type ProductsDocAccessFields_characteristics_items_specification {
-  create: ProductsDocAccessFields_characteristics_items_specification_Create
-  read: ProductsDocAccessFields_characteristics_items_specification_Read
-  update: ProductsDocAccessFields_characteristics_items_specification_Update
-  delete: ProductsDocAccessFields_characteristics_items_specification_Delete
+type ProductsDocAccessFields_characteristics_items_label {
+  create: ProductsDocAccessFields_characteristics_items_label_Create
+  read: ProductsDocAccessFields_characteristics_items_label_Read
+  update: ProductsDocAccessFields_characteristics_items_label_Update
+  delete: ProductsDocAccessFields_characteristics_items_label_Delete
 }
 
-type ProductsDocAccessFields_characteristics_items_specification_Create {
+type ProductsDocAccessFields_characteristics_items_label_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_characteristics_items_specification_Read {
+type ProductsDocAccessFields_characteristics_items_label_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_characteristics_items_specification_Update {
+type ProductsDocAccessFields_characteristics_items_label_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_characteristics_items_specification_Delete {
+type ProductsDocAccessFields_characteristics_items_label_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_characteristics_items_value {
+  create: ProductsDocAccessFields_characteristics_items_value_Create
+  read: ProductsDocAccessFields_characteristics_items_value_Read
+  update: ProductsDocAccessFields_characteristics_items_value_Update
+  delete: ProductsDocAccessFields_characteristics_items_value_Delete
+}
+
+type ProductsDocAccessFields_characteristics_items_value_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_characteristics_items_value_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_characteristics_items_value_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_characteristics_items_value_Delete {
   permission: Boolean!
 }
 
@@ -2543,29 +2615,81 @@ type ProductsDocAccessFields_characteristics_items_id_Delete {
 }
 
 type ProductsDocAccessFields_equipment {
-  content: ProductsDocAccessFields_equipment_content
+  items: ProductsDocAccessFields_equipment_items
 }
 
-type ProductsDocAccessFields_equipment_content {
-  create: ProductsDocAccessFields_equipment_content_Create
-  read: ProductsDocAccessFields_equipment_content_Read
-  update: ProductsDocAccessFields_equipment_content_Update
-  delete: ProductsDocAccessFields_equipment_content_Delete
+type ProductsDocAccessFields_equipment_items {
+  create: ProductsDocAccessFields_equipment_items_Create
+  read: ProductsDocAccessFields_equipment_items_Read
+  update: ProductsDocAccessFields_equipment_items_Update
+  delete: ProductsDocAccessFields_equipment_items_Delete
+  fields: ProductsDocAccessFields_equipment_items_Fields
 }
 
-type ProductsDocAccessFields_equipment_content_Create {
+type ProductsDocAccessFields_equipment_items_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_equipment_content_Read {
+type ProductsDocAccessFields_equipment_items_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_equipment_content_Update {
+type ProductsDocAccessFields_equipment_items_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_equipment_content_Delete {
+type ProductsDocAccessFields_equipment_items_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_Fields {
+  item: ProductsDocAccessFields_equipment_items_item
+  id: ProductsDocAccessFields_equipment_items_id
+}
+
+type ProductsDocAccessFields_equipment_items_item {
+  create: ProductsDocAccessFields_equipment_items_item_Create
+  read: ProductsDocAccessFields_equipment_items_item_Read
+  update: ProductsDocAccessFields_equipment_items_item_Update
+  delete: ProductsDocAccessFields_equipment_items_item_Delete
+}
+
+type ProductsDocAccessFields_equipment_items_item_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_item_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_item_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_item_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_id {
+  create: ProductsDocAccessFields_equipment_items_id_Create
+  read: ProductsDocAccessFields_equipment_items_id_Read
+  update: ProductsDocAccessFields_equipment_items_id_Update
+  delete: ProductsDocAccessFields_equipment_items_id_Delete
+}
+
+type ProductsDocAccessFields_equipment_items_id_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_id_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_id_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_equipment_items_id_Delete {
   permission: Boolean!
 }
 
@@ -2598,30 +2722,30 @@ type ProductsDocAccessFields_advantages_items_Delete {
 }
 
 type ProductsDocAccessFields_advantages_items_Fields {
-  advantage: ProductsDocAccessFields_advantages_items_advantage
+  item: ProductsDocAccessFields_advantages_items_item
   id: ProductsDocAccessFields_advantages_items_id
 }
 
-type ProductsDocAccessFields_advantages_items_advantage {
-  create: ProductsDocAccessFields_advantages_items_advantage_Create
-  read: ProductsDocAccessFields_advantages_items_advantage_Read
-  update: ProductsDocAccessFields_advantages_items_advantage_Update
-  delete: ProductsDocAccessFields_advantages_items_advantage_Delete
+type ProductsDocAccessFields_advantages_items_item {
+  create: ProductsDocAccessFields_advantages_items_item_Create
+  read: ProductsDocAccessFields_advantages_items_item_Read
+  update: ProductsDocAccessFields_advantages_items_item_Update
+  delete: ProductsDocAccessFields_advantages_items_item_Delete
 }
 
-type ProductsDocAccessFields_advantages_items_advantage_Create {
+type ProductsDocAccessFields_advantages_items_item_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_advantages_items_advantage_Read {
+type ProductsDocAccessFields_advantages_items_item_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_advantages_items_advantage_Update {
+type ProductsDocAccessFields_advantages_items_item_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_advantages_items_advantage_Delete {
+type ProductsDocAccessFields_advantages_items_item_Delete {
   permission: Boolean!
 }
 
@@ -2649,29 +2773,53 @@ type ProductsDocAccessFields_advantages_items_id_Delete {
 }
 
 type ProductsDocAccessFields_video {
-  content: ProductsDocAccessFields_video_content
+  items: ProductsDocAccessFields_video_items
+  description: ProductsDocAccessFields_video_description
 }
 
-type ProductsDocAccessFields_video_content {
-  create: ProductsDocAccessFields_video_content_Create
-  read: ProductsDocAccessFields_video_content_Read
-  update: ProductsDocAccessFields_video_content_Update
-  delete: ProductsDocAccessFields_video_content_Delete
+type ProductsDocAccessFields_video_items {
+  create: ProductsDocAccessFields_video_items_Create
+  read: ProductsDocAccessFields_video_items_Read
+  update: ProductsDocAccessFields_video_items_Update
+  delete: ProductsDocAccessFields_video_items_Delete
 }
 
-type ProductsDocAccessFields_video_content_Create {
+type ProductsDocAccessFields_video_items_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_video_content_Read {
+type ProductsDocAccessFields_video_items_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_video_content_Update {
+type ProductsDocAccessFields_video_items_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_video_content_Delete {
+type ProductsDocAccessFields_video_items_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_video_description {
+  create: ProductsDocAccessFields_video_description_Create
+  read: ProductsDocAccessFields_video_description_Read
+  update: ProductsDocAccessFields_video_description_Update
+  delete: ProductsDocAccessFields_video_description_Delete
+}
+
+type ProductsDocAccessFields_video_description_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_video_description_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_video_description_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_video_description_Delete {
   permission: Boolean!
 }
 
@@ -5390,30 +5538,54 @@ type ProductsFields_characteristics_items_Delete {
 }
 
 type ProductsFields_characteristics_items_Fields {
-  specification: ProductsFields_characteristics_items_specification
+  label: ProductsFields_characteristics_items_label
+  value: ProductsFields_characteristics_items_value
   id: ProductsFields_characteristics_items_id
 }
 
-type ProductsFields_characteristics_items_specification {
-  create: ProductsFields_characteristics_items_specification_Create
-  read: ProductsFields_characteristics_items_specification_Read
-  update: ProductsFields_characteristics_items_specification_Update
-  delete: ProductsFields_characteristics_items_specification_Delete
+type ProductsFields_characteristics_items_label {
+  create: ProductsFields_characteristics_items_label_Create
+  read: ProductsFields_characteristics_items_label_Read
+  update: ProductsFields_characteristics_items_label_Update
+  delete: ProductsFields_characteristics_items_label_Delete
 }
 
-type ProductsFields_characteristics_items_specification_Create {
+type ProductsFields_characteristics_items_label_Create {
   permission: Boolean!
 }
 
-type ProductsFields_characteristics_items_specification_Read {
+type ProductsFields_characteristics_items_label_Read {
   permission: Boolean!
 }
 
-type ProductsFields_characteristics_items_specification_Update {
+type ProductsFields_characteristics_items_label_Update {
   permission: Boolean!
 }
 
-type ProductsFields_characteristics_items_specification_Delete {
+type ProductsFields_characteristics_items_label_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_characteristics_items_value {
+  create: ProductsFields_characteristics_items_value_Create
+  read: ProductsFields_characteristics_items_value_Read
+  update: ProductsFields_characteristics_items_value_Update
+  delete: ProductsFields_characteristics_items_value_Delete
+}
+
+type ProductsFields_characteristics_items_value_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_characteristics_items_value_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_characteristics_items_value_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_characteristics_items_value_Delete {
   permission: Boolean!
 }
 
@@ -5441,29 +5613,81 @@ type ProductsFields_characteristics_items_id_Delete {
 }
 
 type ProductsFields_equipment {
-  content: ProductsFields_equipment_content
+  items: ProductsFields_equipment_items
 }
 
-type ProductsFields_equipment_content {
-  create: ProductsFields_equipment_content_Create
-  read: ProductsFields_equipment_content_Read
-  update: ProductsFields_equipment_content_Update
-  delete: ProductsFields_equipment_content_Delete
+type ProductsFields_equipment_items {
+  create: ProductsFields_equipment_items_Create
+  read: ProductsFields_equipment_items_Read
+  update: ProductsFields_equipment_items_Update
+  delete: ProductsFields_equipment_items_Delete
+  fields: ProductsFields_equipment_items_Fields
 }
 
-type ProductsFields_equipment_content_Create {
+type ProductsFields_equipment_items_Create {
   permission: Boolean!
 }
 
-type ProductsFields_equipment_content_Read {
+type ProductsFields_equipment_items_Read {
   permission: Boolean!
 }
 
-type ProductsFields_equipment_content_Update {
+type ProductsFields_equipment_items_Update {
   permission: Boolean!
 }
 
-type ProductsFields_equipment_content_Delete {
+type ProductsFields_equipment_items_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_Fields {
+  item: ProductsFields_equipment_items_item
+  id: ProductsFields_equipment_items_id
+}
+
+type ProductsFields_equipment_items_item {
+  create: ProductsFields_equipment_items_item_Create
+  read: ProductsFields_equipment_items_item_Read
+  update: ProductsFields_equipment_items_item_Update
+  delete: ProductsFields_equipment_items_item_Delete
+}
+
+type ProductsFields_equipment_items_item_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_item_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_item_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_item_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_id {
+  create: ProductsFields_equipment_items_id_Create
+  read: ProductsFields_equipment_items_id_Read
+  update: ProductsFields_equipment_items_id_Update
+  delete: ProductsFields_equipment_items_id_Delete
+}
+
+type ProductsFields_equipment_items_id_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_id_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_id_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_equipment_items_id_Delete {
   permission: Boolean!
 }
 
@@ -5496,30 +5720,30 @@ type ProductsFields_advantages_items_Delete {
 }
 
 type ProductsFields_advantages_items_Fields {
-  advantage: ProductsFields_advantages_items_advantage
+  item: ProductsFields_advantages_items_item
   id: ProductsFields_advantages_items_id
 }
 
-type ProductsFields_advantages_items_advantage {
-  create: ProductsFields_advantages_items_advantage_Create
-  read: ProductsFields_advantages_items_advantage_Read
-  update: ProductsFields_advantages_items_advantage_Update
-  delete: ProductsFields_advantages_items_advantage_Delete
+type ProductsFields_advantages_items_item {
+  create: ProductsFields_advantages_items_item_Create
+  read: ProductsFields_advantages_items_item_Read
+  update: ProductsFields_advantages_items_item_Update
+  delete: ProductsFields_advantages_items_item_Delete
 }
 
-type ProductsFields_advantages_items_advantage_Create {
+type ProductsFields_advantages_items_item_Create {
   permission: Boolean!
 }
 
-type ProductsFields_advantages_items_advantage_Read {
+type ProductsFields_advantages_items_item_Read {
   permission: Boolean!
 }
 
-type ProductsFields_advantages_items_advantage_Update {
+type ProductsFields_advantages_items_item_Update {
   permission: Boolean!
 }
 
-type ProductsFields_advantages_items_advantage_Delete {
+type ProductsFields_advantages_items_item_Delete {
   permission: Boolean!
 }
 
@@ -5547,29 +5771,53 @@ type ProductsFields_advantages_items_id_Delete {
 }
 
 type ProductsFields_video {
-  content: ProductsFields_video_content
+  items: ProductsFields_video_items
+  description: ProductsFields_video_description
 }
 
-type ProductsFields_video_content {
-  create: ProductsFields_video_content_Create
-  read: ProductsFields_video_content_Read
-  update: ProductsFields_video_content_Update
-  delete: ProductsFields_video_content_Delete
+type ProductsFields_video_items {
+  create: ProductsFields_video_items_Create
+  read: ProductsFields_video_items_Read
+  update: ProductsFields_video_items_Update
+  delete: ProductsFields_video_items_Delete
 }
 
-type ProductsFields_video_content_Create {
+type ProductsFields_video_items_Create {
   permission: Boolean!
 }
 
-type ProductsFields_video_content_Read {
+type ProductsFields_video_items_Read {
   permission: Boolean!
 }
 
-type ProductsFields_video_content_Update {
+type ProductsFields_video_items_Update {
   permission: Boolean!
 }
 
-type ProductsFields_video_content_Delete {
+type ProductsFields_video_items_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_video_description {
+  create: ProductsFields_video_description_Create
+  read: ProductsFields_video_description_Read
+  update: ProductsFields_video_description_Update
+  delete: ProductsFields_video_description_Delete
+}
+
+type ProductsFields_video_description_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_video_description_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_video_description_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_video_description_Delete {
   permission: Boolean!
 }
 
@@ -6711,12 +6959,18 @@ input mutationProduct_CharacteristicsInput {
 }
 
 input mutationProduct_Characteristics_ItemsInput {
-  specification: String!
+  label: String!
+  value: String!
   id: String
 }
 
 input mutationProduct_EquipmentInput {
-  content: JSON
+  items: [mutationProduct_Equipment_ItemsInput]
+}
+
+input mutationProduct_Equipment_ItemsInput {
+  item: String!
+  id: String
 }
 
 input mutationProduct_AdvantagesInput {
@@ -6724,12 +6978,13 @@ input mutationProduct_AdvantagesInput {
 }
 
 input mutationProduct_Advantages_ItemsInput {
-  advantage: String!
+  item: String!
   id: String
 }
 
 input mutationProduct_VideoInput {
-  content: JSON
+  items: [Int]
+  description: String
 }
 
 input mutationProduct_FaqInput {
@@ -6792,12 +7047,18 @@ input mutationProductUpdate_CharacteristicsInput {
 }
 
 input mutationProductUpdate_Characteristics_ItemsInput {
-  specification: String!
+  label: String!
+  value: String!
   id: String
 }
 
 input mutationProductUpdate_EquipmentInput {
-  content: JSON
+  items: [mutationProductUpdate_Equipment_ItemsInput]
+}
+
+input mutationProductUpdate_Equipment_ItemsInput {
+  item: String!
+  id: String
 }
 
 input mutationProductUpdate_AdvantagesInput {
@@ -6805,12 +7066,13 @@ input mutationProductUpdate_AdvantagesInput {
 }
 
 input mutationProductUpdate_Advantages_ItemsInput {
-  advantage: String!
+  item: String!
   id: String
 }
 
 input mutationProductUpdate_VideoInput {
-  content: JSON
+  items: [Int]
+  description: String
 }
 
 input mutationProductUpdate_FaqInput {

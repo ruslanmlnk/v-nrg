@@ -26,19 +26,28 @@ fragment ProductFrontendFields on Product {
   }
   characteristics {
     items {
-      specification
+      label
+      value
     }
   }
   equipment {
-    content
+    items {
+      item
+    }
   }
   advantages {
     items {
-      advantage
+      item
     }
   }
   video {
-    content
+    description
+    items {
+      alt
+      mimeType
+      thumbnailURL
+      url
+    }
   }
   faq {
     question

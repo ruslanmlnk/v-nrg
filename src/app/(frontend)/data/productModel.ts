@@ -13,6 +13,18 @@ export type ProductFeature = {
   value: string
 }
 
+export type ProductSpecification = {
+  label: string
+  value: string
+}
+
+export type ProductVideoItem = {
+  alt: string
+  mimeType?: string
+  previewImage: ProductImage
+  src: string
+}
+
 export type ProductTabContent =
   | {
       paragraphs: string[]
@@ -20,7 +32,16 @@ export type ProductTabContent =
     }
   | {
       items: string[]
-      type: 'list'
+      type: 'checklist'
+    }
+  | {
+      items: ProductSpecification[]
+      type: 'specifications'
+    }
+  | {
+      description?: string
+      items: ProductVideoItem[]
+      type: 'videos'
     }
 
 export type ProductTabData = {
@@ -58,15 +79,20 @@ export type ProductData = {
   title: string
 }
 
-export type ProductSourceSection = {
-  content?: unknown | null
-  items?: Array<string | null | undefined> | null
+export type ProductVideoSource = {
+  alt?: string | null
+  mimeType?: string | null
+  previewImage?: string | null
+  src?: string | null
 }
 
 export type ProductSource = {
-  advantages?: ProductSourceSection | null
+  advantages?: Array<string | null | undefined> | null
   categorySlugs?: Array<string | null | undefined> | null
-  characteristics?: ProductSourceSection | null
+  characteristics?:
+    | Array<{ label?: string | null; value?: string | null } | null>
+    | null
+    | undefined
   cmsId: number
   compareFeatures?:
     | Array<{ label?: string | null; value?: string | null } | null>
@@ -74,7 +100,7 @@ export type ProductSource = {
     | undefined
   description?: unknown
   details?: string | null
-  equipment?: unknown
+  equipment?: Array<string | null | undefined> | null
   faq?: Array<{ answer?: string | null; question?: string | null } | null> | null | undefined
   galleryUrls?: Array<string | null | undefined> | null
   listFeatures?: Array<string | null | undefined> | null
@@ -85,14 +111,8 @@ export type ProductSource = {
   shortDescription?: string | null
   slug?: string | null
   title?: string | null
-  video?: unknown
-}
-
-type ProductTabConfig = {
-  getLines: (product: ProductSource) => string[]
-  id: string
-  label: string
-  type: ProductTabContent['type']
+  videoDescription?: string | null
+  videos?: Array<ProductVideoSource | null> | null
 }
 
 export const productCategoryLabels: Record<ProductCategory, string> = {
@@ -103,24 +123,6 @@ export const productCategoryLabels: Record<ProductCategory, string> = {
   physiotherapy: 'Апарати фізіотерапії',
   vacuum: 'Апарати вакуумного масажу',
 }
-
-const productTabs: ProductTabConfig[] = [
-  createTab('description', 'Опис', 'paragraphs', (product) =>
-    unwrapRichTextLines(product.description),
-  ),
-  createTab('specs', 'Характеристики', 'list', (product) =>
-    unwrapSectionLines(product.characteristics),
-  ),
-  createTab('package', 'Комплектація', 'list', (product) =>
-    unwrapRichTextLines(product.equipment),
-  ),
-  createTab('advantages', 'Переваги', 'list', (product) =>
-    unwrapSectionLines(product.advantages),
-  ),
-  createTab('video', 'Відео роботи', 'paragraphs', (product) =>
-    unwrapRichTextLines(product.video),
-  ),
-]
 
 export function unwrapProduct(product: ProductSource): ProductData {
   const slug = unwrapSlug(product)
@@ -164,29 +166,89 @@ export function formatPrice(value: number) {
   return `${new Intl.NumberFormat('uk-UA').format(value)} ₴`
 }
 
-export function createProductSourceSection(
-  value: unknown,
-  items?: Array<string | null | undefined> | null,
-): ProductSourceSection | null {
-  return {
-    content: asRecord(value)?.content,
-    items,
-  }
+function unwrapTabs(product: ProductSource): ProductTabData[] {
+  const description = unwrapRichTextLines(product.description)
+  const specifications = unwrapSpecifications(product.characteristics)
+  const equipment = unwrapTextList(product.equipment)
+  const advantages = unwrapTextList(product.advantages)
+  const videos = unwrapVideos(product.videos)
+  const videoDescription = unwrapText(product.videoDescription)
+
+  return [
+    createParagraphTab('description', 'Опис', description),
+    createSpecificationTab('specs', 'Характеристики', specifications),
+    createChecklistTab('package', 'Комплектація', equipment),
+    createChecklistTab('advantages', 'Переваги', advantages),
+    createVideoTab('video', 'Відео роботи', videos, videoDescription),
+  ].filter(isDefined)
 }
 
-function createTab(
+function createParagraphTab(
   id: string,
   label: string,
-  type: ProductTabContent['type'],
-  getLines: (product: ProductSource) => string[],
-): ProductTabConfig {
-  return { getLines, id, label, type }
+  paragraphs: string[],
+): ProductTabData | undefined {
+  return paragraphs.length > 0
+    ? {
+        content: { paragraphs, type: 'paragraphs' },
+        id,
+        label,
+      }
+    : undefined
+}
+
+function createChecklistTab(id: string, label: string, items: string[]): ProductTabData | undefined {
+  return items.length > 0
+    ? {
+        content: { items, type: 'checklist' },
+        id,
+        label,
+      }
+    : undefined
+}
+
+function createSpecificationTab(
+  id: string,
+  label: string,
+  items: ProductSpecification[],
+): ProductTabData | undefined {
+  return items.length > 0
+    ? {
+        content: { items, type: 'specifications' },
+        id,
+        label,
+      }
+    : undefined
+}
+
+function createVideoTab(
+  id: string,
+  label: string,
+  items: ProductVideoItem[],
+  description?: string,
+): ProductTabData | undefined {
+  return items.length > 0 || description
+    ? {
+        content: { description, items, type: 'videos' },
+        id,
+        label,
+      }
+    : undefined
 }
 
 function unwrapCategory(value: ProductSource['categorySlugs']): ProductCategory {
   const slug = unwrapText(asArray<string | null | undefined>(value)[0])
 
   return slug && slug in productCategoryLabels ? (slug as ProductCategory) : 'vacuum'
+}
+
+function unwrapSpecifications(value: ProductSource['characteristics']): ProductSpecification[] {
+  return asArray<NonNullable<NonNullable<ProductSource['characteristics']>[number]>>(value)
+    .map((item) => ({
+      label: unwrapText(item?.label) ?? '',
+      value: unwrapText(item?.value) ?? '',
+    }))
+    .filter((item) => item.label && item.value)
 }
 
 function unwrapCompareFeatures(value: ProductSource['compareFeatures']): ProductFeature[] {
@@ -207,30 +269,23 @@ function unwrapFaq(value: ProductSource['faq']): ProductFaqItem[] {
     .filter((item) => item.question)
 }
 
-function unwrapTabs(product: ProductSource): ProductTabData[] {
-  return productTabs.flatMap((tab) => {
-    const lines = tab.getLines(product)
+function unwrapVideos(value: ProductSource['videos']): ProductVideoItem[] {
+  return asArray<ProductVideoSource | null>(value)
+    .map((item) => {
+      const src = unwrapText(item?.src)
 
-    if (lines.length === 0) {
-      return []
-    }
+      if (!src) {
+        return undefined
+      }
 
-    return [
-      {
-        content:
-          tab.type === 'list'
-            ? { items: lines, type: 'list' as const }
-            : { paragraphs: lines, type: 'paragraphs' as const },
-        id: tab.id,
-        label: tab.label,
-      },
-    ]
-  })
-}
-
-function unwrapSectionLines(value: ProductSourceSection | null | undefined): string[] {
-  const items = unwrapTextList(value?.items)
-  return items.length > 0 ? items : unwrapRichTextLines(value?.content)
+      return {
+        alt: unwrapText(item?.alt) ?? 'Відео роботи',
+        mimeType: unwrapText(item?.mimeType),
+        previewImage: unwrapText(item?.previewImage) ?? src,
+        src,
+      }
+    })
+    .filter(isDefined)
 }
 
 function unwrapDetails(product: ProductSource): string {

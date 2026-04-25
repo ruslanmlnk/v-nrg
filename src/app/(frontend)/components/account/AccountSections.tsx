@@ -15,12 +15,7 @@ import statusPendingIconAsset from '@public/icon/generated/account-account-page-
 import statusShippedIconAsset from '@public/icon/generated/account-account-page-status-shipped.svg'
 import truckBadgeIconAsset from '@public/icon/generated/account-account-page-truck-badge.svg'
 import { formatPrice } from '../../data/products'
-import {
-  accountFallbacks,
-  orderLabels,
-  orderStatusMeta,
-  type OrderStatusIconKey,
-} from './data'
+import { accountFallbacks, orderLabels, orderStatusMeta, type OrderStatusIconKey } from './data'
 
 export type AccountOrder = {
   createdAt?: string
@@ -153,7 +148,7 @@ export function OrderCard({ order }: { order: AccountOrder }) {
                   className="flex items-center justify-between gap-4"
                 >
                   <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                    {product.title} Ă— {item.quantity}
+                    {product.title} × {item.quantity}
                   </div>
                   <div className="text-[16px] font-bold leading-[165%] text-[#22354A]">
                     {formatPrice(product.price * item.quantity)}

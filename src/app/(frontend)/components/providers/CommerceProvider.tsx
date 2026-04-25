@@ -1,6 +1,6 @@
 'use client'
 
-import type { FormEvent, ReactNode } from 'react'
+import type { ChangeEvent, FormEvent, ReactNode } from 'react'
 
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
@@ -13,12 +13,8 @@ import arrowIconAsset from '@public/icon/generated/components-providers-commerce
 import closeIconAsset from '@public/icon/generated/commerce-close.svg'
 import miniChevronDownIconAsset from '@public/icon/generated/commerce-mini-chevron-down.svg'
 import miniChevronUpIconAsset from '@public/icon/generated/commerce-mini-chevron-up.svg'
-import {
-  formatPrice,
-  productsToMap,
-  type ProductData,
-  type ProductId,
-} from '../../data/products'
+import { formatPrice, productsToMap, type ProductData, type ProductId } from '../../data/products'
+import { dealerFieldClasses, initialDealerFormState, type DealerFormState } from '../dealer/data'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import type { FrontendUser } from '../../../../lib/frontendUser'
 
@@ -97,6 +93,11 @@ type CommerceContextValue = {
 
 const STORAGE_KEY = 'v-nrg-front-store'
 const MAX_COMPARE_PRODUCTS = 3
+const orderDateFormatter = new Intl.DateTimeFormat('uk-UA', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+})
 
 const defaultStore: PersistedStore = {
   cartItems: [],
@@ -131,17 +132,10 @@ export function CommerceProvider({
 
   useEffect(() => {
     try {
-      const rawStore = window.localStorage.getItem(STORAGE_KEY)
-      if (rawStore) {
-        const parsedStore = JSON.parse(rawStore) as PersistedStore
-        setStore({
-          cartItems: parsedStore.cartItems ?? [],
-          compareIds: parsedStore.compareIds ?? [],
-          lastOrder: parsedStore.lastOrder ? normalizeStoredOrder(parsedStore.lastOrder) : null,
-          orderHistory:
-            parsedStore.orderHistory?.map(normalizeStoredOrder) ??
-            (parsedStore.lastOrder ? [normalizeStoredOrder(parsedStore.lastOrder)] : []),
-        })
+      const persistedStore = readPersistedStore()
+
+      if (persistedStore) {
+        setStore(persistedStore)
       }
     } catch {
       setStore(defaultStore)
@@ -350,7 +344,7 @@ export function CommerceProvider({
       customerName: `${firstName} ${lastName}`.trim(),
       email,
       expectedDate: formatOrderDate(addDays(new Date(), 3)),
-      id: `${Math.floor(10000 + Math.random() * 90000)}`,
+      id: createOrderId(),
       items: cartItemsDetailed.map((item) => ({
         productId: item.product.id,
         quantity: item.quantity,
@@ -435,27 +429,28 @@ function CommerceOverlays() {
     isCartOpen,
     isDealerModalOpen,
     isLogoutModalOpen,
-    openDealerModal,
     removeFromCart,
     signOut,
     updateCartQuantity,
   } = useCommerce()
 
-  const [dealerFormState, setDealerFormState] = useState({
-    city: '',
-    companyName: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    message: '',
-    phone: '+380',
-  })
+  const [dealerFormState, setDealerFormState] = useState<DealerFormState>(() => ({
+    ...initialDealerFormState,
+  }))
 
   const handleDealerSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     closeDealerModal()
     router.push('/dealer/application-sent')
   }
+
+  const handleDealerFieldChange =
+    (field: keyof DealerFormState) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { value } = event.target
+
+      setDealerFormState((current) => ({ ...current, [field]: value }))
+    }
 
   return (
     <AnimatePresence>
@@ -547,12 +542,7 @@ function CommerceOverlays() {
                 <input
                   required
                   value={dealerFormState.companyName}
-                  onChange={(event) =>
-                    setDealerFormState((current) => ({
-                      ...current,
-                      companyName: event.target.value,
-                    }))
-                  }
+                  onChange={handleDealerFieldChange('companyName')}
                   placeholder="Введіть назву компанії"
                   className={`${dealerFieldClasses} h-[56px]`}
                 />
@@ -563,12 +553,7 @@ function CommerceOverlays() {
                   <input
                     required
                     value={dealerFormState.firstName}
-                    onChange={(event) =>
-                      setDealerFormState((current) => ({
-                        ...current,
-                        firstName: event.target.value,
-                      }))
-                    }
+                    onChange={handleDealerFieldChange('firstName')}
                     placeholder="Введіть ваше ім'я"
                     className={`${dealerFieldClasses} h-[56px]`}
                   />
@@ -578,12 +563,7 @@ function CommerceOverlays() {
                   <input
                     required
                     value={dealerFormState.lastName}
-                    onChange={(event) =>
-                      setDealerFormState((current) => ({
-                        ...current,
-                        lastName: event.target.value,
-                      }))
-                    }
+                    onChange={handleDealerFieldChange('lastName')}
                     placeholder="Введіть ваше прізвище"
                     className={`${dealerFieldClasses} h-[56px]`}
                   />
@@ -595,9 +575,7 @@ function CommerceOverlays() {
                   <input
                     required
                     value={dealerFormState.phone}
-                    onChange={(event) =>
-                      setDealerFormState((current) => ({ ...current, phone: event.target.value }))
-                    }
+                    onChange={handleDealerFieldChange('phone')}
                     placeholder="+380"
                     className={`${dealerFieldClasses} h-[56px]`}
                   />
@@ -608,9 +586,7 @@ function CommerceOverlays() {
                     required
                     type="email"
                     value={dealerFormState.email}
-                    onChange={(event) =>
-                      setDealerFormState((current) => ({ ...current, email: event.target.value }))
-                    }
+                    onChange={handleDealerFieldChange('email')}
                     placeholder="Введіть ваш email"
                     className={`${dealerFieldClasses} h-[56px]`}
                   />
@@ -621,9 +597,7 @@ function CommerceOverlays() {
                 <input
                   required
                   value={dealerFormState.city}
-                  onChange={(event) =>
-                    setDealerFormState((current) => ({ ...current, city: event.target.value }))
-                  }
+                  onChange={handleDealerFieldChange('city')}
                   placeholder="Київ, Одеса, Львів..."
                   className={`${dealerFieldClasses} h-[56px]`}
                 />
@@ -632,9 +606,7 @@ function CommerceOverlays() {
               <DealerField label="Повідомлення">
                 <textarea
                   value={dealerFormState.message}
-                  onChange={(event) =>
-                    setDealerFormState((current) => ({ ...current, message: event.target.value }))
-                  }
+                  onChange={handleDealerFieldChange('message')}
                   placeholder="Короткий опис вашого бізнесу"
                   className={`${dealerFieldClasses} min-h-[132px] resize-none py-5`}
                 />
@@ -824,9 +796,6 @@ function MiniChevron({ up = false }: { up?: boolean }) {
   )
 }
 
-const dealerFieldClasses =
-  'w-full rounded-[20px] bg-[#F5F8F9] px-6 text-[18px] font-medium leading-[165%] text-[#22354A] outline-none placeholder:text-[#B7CAD1]'
-
 function addDays(date: Date, days: number) {
   const nextDate = new Date(date)
   nextDate.setDate(nextDate.getDate() + days)
@@ -834,11 +803,32 @@ function addDays(date: Date, days: number) {
 }
 
 function formatOrderDate(date: Date) {
-  return new Intl.DateTimeFormat('uk-UA', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  }).format(date)
+  return orderDateFormatter.format(date)
+}
+
+function createOrderId() {
+  return `${Math.floor(10000 + Math.random() * 90000)}`
+}
+
+function readPersistedStore(): PersistedStore | null {
+  const rawStore = window.localStorage.getItem(STORAGE_KEY)
+
+  if (!rawStore) {
+    return null
+  }
+
+  return normalizePersistedStore(JSON.parse(rawStore) as Partial<PersistedStore>)
+}
+
+function normalizePersistedStore(store: Partial<PersistedStore>): PersistedStore {
+  return {
+    cartItems: store.cartItems ?? [],
+    compareIds: store.compareIds ?? [],
+    lastOrder: store.lastOrder ? normalizeStoredOrder(store.lastOrder) : null,
+    orderHistory:
+      store.orderHistory?.map(normalizeStoredOrder) ??
+      (store.lastOrder ? [normalizeStoredOrder(store.lastOrder)] : []),
+  }
 }
 
 function normalizeStoredOrder(order: LastOrder): LastOrder {

@@ -1,5 +1,8 @@
 import type { ProductData } from '../../data/products'
 
+import beforeAfterAfter from '@public/assets/product/before-after-after.jpg'
+import beforeAfterBefore from '@public/assets/product/before-after-before.jpg'
+
 export const partnerReviews = [
   {
     author: 'Олена Мельник',
@@ -9,7 +12,7 @@ export const partnerReviews = [
   {
     author: 'Ірина Соколова',
     quote:
-      "Апарат легко став частиною нашого робочого процесу. Команді подобається проста адаптація режимів, а клієнти швидко помічають комфорт і результат.",
+      'Апарат легко став частиною нашого робочого процесу. Команді подобається проста адаптація режимів, а клієнти швидко помічають комфорт і результат.',
   },
   {
     author: 'Марина Бойко',
@@ -23,7 +26,23 @@ export const partnerReviews = [
   },
 ] as const
 
-export const comparisonCardPositions = [44, 58, 71] as const
+export const beforeAfterCards = [
+  {
+    afterImage: beforeAfterAfter,
+    beforeImage: beforeAfterBefore,
+    defaultPosition: 44,
+  },
+  {
+    afterImage: beforeAfterAfter,
+    beforeImage: beforeAfterBefore,
+    defaultPosition: 58,
+  },
+  {
+    afterImage: beforeAfterAfter,
+    beforeImage: beforeAfterBefore,
+    defaultPosition: 71,
+  },
+] as const
 
 export function createProductGallery(product: ProductData) {
   const images = Array.from(

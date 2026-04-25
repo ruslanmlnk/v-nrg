@@ -6,14 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'motion/react'
 
-import beforeAfterAfter from '@public/assets/product/before-after-after.jpg'
-import beforeAfterBefore from '@public/assets/product/before-after-before.jpg'
 import certificate from '@public/assets/product/certificate.jpg'
 import partner from '@public/assets/product/partner.jpg'
 
 import SectionHeading from '../shared/SectionHeading'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
-import BeforeAfterSlider from '../ui/BeforeAfterSlider'
+import BeforeAfterGrid from '../ui/BeforeAfterGrid'
 import { useCommerce } from '../providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import availabilityIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-availability.svg'
@@ -26,15 +24,18 @@ import productChevronLeftIconAsset from '@public/icon/generated/product-chevron-
 import productChevronRightIconAsset from '@public/icon/generated/product-chevron-right.svg'
 import productMiniChevronDownIconAsset from '@public/icon/generated/product-mini-chevron-down.svg'
 import productMiniChevronUpIconAsset from '@public/icon/generated/product-mini-chevron-up.svg'
+import productTabCheckIconAsset from '@public/icon/generated/product-tab-check.svg'
 import shareIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-share.svg'
 import starIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-star.svg'
 import {
   formatPrice,
   type ProductData,
   type ProductImage,
+  type ProductSpecification,
   type ProductTabData,
+  type ProductVideoItem,
 } from '../../data/products'
-import { comparisonCardPositions } from './data'
+import { beforeAfterCards } from './data'
 
 export function ProductPageSection({
   children,
@@ -339,25 +340,11 @@ export function ProductComparisonSection({ demoHref }: { demoHref: string }) {
         title="Як працює технологія V-NRG"
         titleClassName="text-white"
       />
-      <div className="grid gap-5 lg:grid-cols-3">
-        {comparisonCardPositions.map((position, index) => (
-          <motion.div
-            key={`comparison-${position}`}
-            initial={{ opacity: 0, scale: 0.96, y: 22 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ amount: 0.3, once: true }}
-            transition={{ delay: index * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <BeforeAfterSlider
-              beforeAlt="Стан до процедури V-NRG"
-              beforeImage={beforeAfterBefore}
-              afterAlt="Стан після процедури V-NRG"
-              afterImage={beforeAfterAfter}
-              defaultPosition={position}
-            />
-          </motion.div>
-        ))}
-      </div>
+      <BeforeAfterGrid
+        beforeAlt="Стан до процедури V-NRG"
+        afterAlt="Стан після процедури V-NRG"
+        cards={beforeAfterCards}
+      />
       <ProductDemoCta demoHref={demoHref} />
     </ProductPageSection>
   )
@@ -532,19 +519,143 @@ function TabContent({ tab }: { tab: ProductTabData }) {
     )
   }
 
+  if (tab.content.type === 'specifications') {
+    return <SpecificationTabContent items={tab.content.items} />
+  }
+
+  if (tab.content.type === 'videos') {
+    return <VideoTabContent description={tab.content.description} items={tab.content.items} />
+  }
+
+  return <ChecklistTabContent items={tab.content.items} />
+}
+
+function SpecificationTabContent({ items }: { items: ProductSpecification[] }) {
+  const columns = splitIntoColumns(items)
+
   return (
-    <ul className="grid gap-4 pt-8 md:grid-cols-2">
-      {tab.content.items.map((item) => (
-        <li
-          key={item}
-          className="flex items-start gap-3 text-[18px] font-medium leading-[165%] text-[#22354A]"
-        >
-          <span className="mt-2 h-2 w-2 rounded-full bg-[#4FACF5]" />
-          <span>{item}</span>
-        </li>
+    <div className="grid gap-8 pt-8 md:grid-cols-2 md:gap-x-12">
+      {columns.map((column, columnIndex) => (
+        <div key={`spec-column-${columnIndex}`} className="flex flex-col gap-8">
+          {column.map((item) => (
+            <div
+              key={`${item.label}-${item.value}`}
+              className="flex items-center justify-between gap-6 border-b border-[#D5E0E8] pb-2"
+            >
+              <span className="text-[18px] font-bold leading-[145%] text-[#22354A] md:text-[20px]">
+                {item.label}:
+              </span>
+              <span className="min-w-0 max-w-[55%] text-right text-[18px] font-medium leading-[165%] text-[#22354A]">
+                {item.value}
+              </span>
+            </div>
+          ))}
+        </div>
       ))}
-    </ul>
+    </div>
   )
+}
+
+function ChecklistTabContent({ items }: { items: string[] }) {
+  const columns = splitIntoColumns(items)
+
+  return (
+    <div className="grid gap-8 pt-8 md:grid-cols-2 md:gap-x-12">
+      {columns.map((column, columnIndex) => (
+        <div key={`checklist-column-${columnIndex}`} className="flex flex-col gap-8">
+          {column.map((item) => (
+            <div
+              key={item}
+              className="flex items-center gap-4 border-b border-[#D5E0E8] pb-2 text-[18px] font-medium leading-[165%] text-[#22354A]"
+            >
+              <IconAsset src={productTabCheckIconAsset} width={18} height={18} />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function VideoTabContent({
+  description,
+  items,
+}: {
+  description?: string
+  items: ProductVideoItem[]
+}) {
+  const isSingleVideo = items.length === 1
+
+  return (
+    <div className="flex flex-col gap-5 pt-8">
+      {items.length > 0 ? (
+        <div className={isSingleVideo ? 'grid gap-5' : 'grid gap-5 md:grid-cols-2'}>
+          {items.map((item) => (
+            <VideoCard key={`${item.src}-${item.alt}`} item={item} />
+          ))}
+        </div>
+      ) : null}
+
+      {description ? (
+        <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">{description}</p>
+      ) : null}
+    </div>
+  )
+}
+
+function VideoCard({ item }: { item: ProductVideoItem }) {
+  const isVideo = item.mimeType?.startsWith('video/')
+
+  return (
+    <a
+      href={item.src}
+      target="_blank"
+      rel="noreferrer"
+      className="group block overflow-hidden rounded-[20px] bg-[#22354A]"
+    >
+      <div className="relative aspect-[98/50]">
+        {isVideo ? (
+          <video
+            src={item.src}
+            poster={item.previewImage ?? undefined}
+            preload="metadata"
+            muted
+            playsInline
+            className="h-full w-full object-cover"
+          />
+        ) : item.previewImage ? (
+          <Image
+            src={item.previewImage}
+            alt={item.alt}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+        ) : (
+          <ProductImagePlaceholder className="absolute inset-0" label="Відео" />
+        )}
+
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <VideoPlayButton />
+        </div>
+      </div>
+    </a>
+  )
+}
+
+function VideoPlayButton() {
+  return (
+    <div className="flex h-[84px] w-[84px] items-center justify-center rounded-full bg-white shadow-[0_16px_40px_rgba(34,53,74,0.18)] md:h-[120px] md:w-[120px]">
+      <span className="ml-[6px] block h-0 w-0 border-y-[12px] border-l-[18px] border-y-transparent border-l-[#4FACF5] md:border-y-[14px] md:border-l-[22px]" />
+    </div>
+  )
+}
+
+function splitIntoColumns<T>(items: T[]) {
+  const midpoint = Math.ceil(items.length / 2)
+  return [items.slice(0, midpoint), items.slice(midpoint)].filter((column) => column.length > 0)
 }
 
 function CertificateCard() {

@@ -3,7 +3,7 @@
 import type { StaticImageData } from 'next/image'
 
 import Image from 'next/image'
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import { motion, useMotionValue } from 'motion/react'
 import { ReactCompareSlider } from 'react-compare-slider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import handleIconAsset from '@public/icon/generated/components-ui-before-after-slider-handle.svg'
@@ -11,35 +11,18 @@ import handleIconAsset from '@public/icon/generated/components-ui-before-after-s
 type BeforeAfterSliderProps = {
   afterAlt: string
   afterImage: StaticImageData
-  afterLabel?: string
   beforeAlt: string
   beforeImage: StaticImageData
-  beforeLabel?: string
   className?: string
-  defaultPosition?: number
 }
 
 export default function BeforeAfterSlider({
   afterAlt,
   afterImage,
-  afterLabel = 'Після',
   beforeAlt,
   beforeImage,
-  beforeLabel = 'До',
   className,
-  defaultPosition = 58,
 }: BeforeAfterSliderProps) {
-  const position = useMotionValue(defaultPosition)
-  const smoothPosition = useSpring(position, {
-    damping: 34,
-    mass: 0.4,
-    stiffness: 260,
-  })
-
-  const beforeOpacity = useTransform(smoothPosition, [0, 50, 100], [1, 0.86, 0.42])
-  const afterOpacity = useTransform(smoothPosition, [0, 50, 100], [0.42, 0.86, 1])
-  const beforeX = useTransform(smoothPosition, [0, 100], [0, -8])
-  const afterX = useTransform(smoothPosition, [0, 100], [8, 0])
 
   return (
     <motion.div
@@ -50,27 +33,9 @@ export default function BeforeAfterSlider({
       whileHover={{ y: -3 }}
       className={`relative h-[200px] overflow-hidden rounded-[20px] bg-[#22354A] shadow-[0_24px_64px_rgba(0,0,0,0.18)] ${className ?? ''}`}
     >
-      <div className="pointer-events-none absolute inset-x-5 top-5 z-20 flex items-center justify-between">
-        <motion.span
-          style={{ opacity: beforeOpacity, x: beforeX }}
-          className="rounded-full bg-white/88 px-3 py-1 text-[14px] font-bold uppercase tracking-[0.08em] text-[#22354A] backdrop-blur"
-        >
-          {beforeLabel}
-        </motion.span>
-
-        <motion.span
-          style={{ opacity: afterOpacity, x: afterX }}
-          className="rounded-full bg-[#22354A]/68 px-3 py-1 text-[14px] font-bold uppercase tracking-[0.08em] text-white backdrop-blur"
-        >
-          {afterLabel}
-        </motion.span>
-      </div>
-
       <ReactCompareSlider
         boundsPadding="0px"
         className="h-full w-full"
-        defaultPosition={defaultPosition}
-        onPositionChange={(value) => position.set(value)}
         transition="0.4s cubic-bezier(0.22, 1, 0.36, 1)"
         handle={
           <div className="relative flex h-full w-[50px] items-center justify-center">
@@ -108,4 +73,3 @@ function CompareImage({ alt, image }: { alt: string; image: StaticImageData }) {
     </div>
   )
 }
-

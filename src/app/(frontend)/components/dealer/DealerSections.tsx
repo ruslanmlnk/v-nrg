@@ -8,10 +8,13 @@ import PageHero from '../shared/PageHero'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import benefitIconAsset from '@public/icon/generated/dealer-dealer-page-benefit.svg'
 
-import { dealerBenefits, dealerPoints, initialDealerFormState, type DealerFormState } from './data'
-
-export const dealerFieldClasses =
-  'w-full rounded-[20px] bg-[#F5F8F9] px-6 text-[18px] font-medium leading-[165%] text-[#22354A] outline-none placeholder:text-[#B7CAD1]'
+import {
+  dealerBenefits,
+  dealerFieldClasses,
+  dealerPoints,
+  initialDealerFormState,
+  type DealerFormState,
+} from './data'
 
 export function DealerHeroSection() {
   return (
@@ -41,7 +44,9 @@ export function DealerBenefitsSection() {
             <IconAsset src={benefitIconAsset} width={28} height={28} />
           </div>
           <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">{benefit.title}</h2>
-          <p className="mt-3 text-[18px] font-medium leading-[165%] text-[#22354A]">{benefit.description}</p>
+          <p className="mt-3 text-[18px] font-medium leading-[165%] text-[#22354A]">
+            {benefit.description}
+          </p>
         </motion.article>
       ))}
     </section>
@@ -51,11 +56,16 @@ export function DealerBenefitsSection() {
 export function DealerInfoSection() {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-[36px] font-medium leading-[145%] text-[#22354A] md:text-[48px]">Чому дилери обирають нас</h2>
+      <h2 className="text-[36px] font-medium leading-[145%] text-[#22354A] md:text-[48px]">
+        Чому дилери обирають нас
+      </h2>
       <div className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
         <ul className="flex flex-col gap-4">
           {dealerPoints.map((point) => (
-            <li key={point} className="flex items-start gap-3 text-[18px] font-medium leading-[165%] text-[#22354A]">
+            <li
+              key={point}
+              className="flex items-start gap-3 text-[18px] font-medium leading-[165%] text-[#22354A]"
+            >
               <span className="mt-2 h-2 w-2 rounded-full bg-[#4FACF5]" />
               <span>{point}</span>
             </li>
@@ -70,10 +80,12 @@ export function DealerApplicationSection() {
   const router = useRouter()
   const [formState, setFormState] = useState<DealerFormState>(() => ({ ...initialDealerFormState }))
 
-  const handleFieldChange = (field: keyof DealerFormState) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { value } = event.target
-    setFormState((current) => ({ ...current, [field]: value }))
-  }
+  const handleFieldChange =
+    (field: keyof DealerFormState) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { value } = event.target
+      setFormState((current) => ({ ...current, [field]: value }))
+    }
 
   return (
     <motion.div
