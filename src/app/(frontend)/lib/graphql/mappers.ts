@@ -1,10 +1,31 @@
 import { toFrontendUser, type FrontendUser } from '@/lib/frontendUser'
 
-import { unwrapProduct, type ProductData, type ProductSource } from '../../data/products'
+import {
+  unwrapCatalogCategory,
+  unwrapProduct,
+  type ProductCategoryData,
+  type ProductData,
+  type ProductSource,
+} from '../../data/products'
 import type { GetLayoutDataQuery, ProductFrontendFieldsFragment } from './generated'
 
+type GraphQLCategory = NonNullable<NonNullable<GetLayoutDataQuery['Categories']>['docs']>[number]
 type GraphQLProduct = ProductFrontendFieldsFragment
 type GraphQLUser = NonNullable<GetLayoutDataQuery['meUser']>['user']
+
+export function mapGraphQLCategories(categories: GraphQLCategory[]): ProductCategoryData[] {
+  return categories
+    .map((category) =>
+      unwrapCatalogCategory({
+        description: category.description,
+        id: category.id,
+        imageUrl: category.image?.url,
+        slug: category.slug,
+        title: category.title,
+      }),
+    )
+    .filter((category): category is ProductCategoryData => Boolean(category))
+}
 
 export function mapGraphQLProducts(products: GraphQLProduct[]): ProductData[] {
   return products.map(mapGraphQLProduct)
@@ -21,6 +42,10 @@ export function mapGraphQLUser(user: GraphQLUser | null | undefined): FrontendUs
 function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
   return {
     advantages: product.advantages?.items?.map((item) => item?.item),
+    categories: product.category?.map((item) => ({
+      slug: item?.slug,
+      title: item?.title,
+    })),
     categorySlugs: product.category?.map((item) => item?.slug),
     characteristics: product.characteristics?.items?.map((item) => ({
       label: item?.label,

@@ -3,7 +3,7 @@
 import type { StaticImageData } from 'next/image'
 
 import Image from 'next/image'
-import { motion, useMotionValue } from 'motion/react'
+import { motion } from 'motion/react'
 import { ReactCompareSlider } from 'react-compare-slider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import handleIconAsset from '@public/icon/generated/components-ui-before-after-slider-handle.svg'
@@ -23,7 +23,6 @@ export default function BeforeAfterSlider({
   beforeImage,
   className,
 }: BeforeAfterSliderProps) {
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}

@@ -2,13 +2,19 @@ import { cache } from 'react'
 
 import { createGraphQLClient, createRequestGraphQLClient } from './client'
 import { getSdk } from './generated'
-import { mapGraphQLProduct, mapGraphQLProducts, mapGraphQLUser } from './mappers'
+import {
+  mapGraphQLCategories,
+  mapGraphQLProduct,
+  mapGraphQLProducts,
+  mapGraphQLUser,
+} from './mappers'
 
 export async function getLayoutData() {
   const sdk = getSdk(await createRequestGraphQLClient())
   const data = await sdk.GetLayoutData()
 
   return {
+    initialCategories: mapGraphQLCategories(data.Categories?.docs ?? []),
     initialProducts: mapGraphQLProducts(data.Products?.docs ?? []),
     initialUser: mapGraphQLUser(data.meUser?.user ?? null),
   }

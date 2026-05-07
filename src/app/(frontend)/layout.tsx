@@ -20,12 +20,16 @@ const googleSans = Google_Sans({
 
 export default async function RootLayout(props: { children: ReactNode }) {
   const { children } = props
-  const { initialProducts, initialUser } = await getLayoutData()
+  const { initialCategories, initialProducts, initialUser } = await getLayoutData()
 
   return (
     <html lang="en">
       <body className={googleSans.className}>
-        <CommerceProvider initialProducts={initialProducts} initialUser={initialUser}>
+        <CommerceProvider
+          initialCategories={initialCategories}
+          initialProducts={initialProducts}
+          initialUser={initialUser}
+        >
           <Header />
           <main>{children}</main>
           <SiteFooter />

@@ -13,7 +13,13 @@ import arrowIconAsset from '@public/icon/generated/components-providers-commerce
 import closeIconAsset from '@public/icon/generated/commerce-close.svg'
 import miniChevronDownIconAsset from '@public/icon/generated/commerce-mini-chevron-down.svg'
 import miniChevronUpIconAsset from '@public/icon/generated/commerce-mini-chevron-up.svg'
-import { formatPrice, productsToMap, type ProductData, type ProductId } from '../../data/products'
+import {
+  formatPrice,
+  productsToMap,
+  type ProductCategoryData,
+  type ProductData,
+  type ProductId,
+} from '../../data/products'
 import { dealerFieldClasses, initialDealerFormState, type DealerFormState } from '../dealer/data'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import type { FrontendUser } from '../../../../lib/frontendUser'
@@ -59,6 +65,7 @@ type CompleteOrderInput = {
 type CommerceContextValue = {
   addToCart: (productId: ProductId, quantity?: number, options?: { openDrawer?: boolean }) => void
   cartCount: number
+  categories: ProductCategoryData[]
   cartItems: CartItem[]
   cartItemsDetailed: DetailedCartItem[]
   cartTotal: number
@@ -110,10 +117,12 @@ const CommerceContext = createContext<CommerceContextValue | null>(null)
 
 export function CommerceProvider({
   children,
+  initialCategories,
   initialProducts,
   initialUser,
 }: {
   children: ReactNode
+  initialCategories: ProductCategoryData[]
   initialProducts: ProductData[]
   initialUser: FrontendUser | null
 }) {
@@ -368,6 +377,7 @@ export function CommerceProvider({
   const contextValue: CommerceContextValue = {
     addToCart,
     cartCount,
+    categories: initialCategories,
     cartItems: store.cartItems,
     cartItemsDetailed,
     cartTotal,

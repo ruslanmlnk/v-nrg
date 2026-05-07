@@ -1,32 +1,36 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useParams } from 'next/navigation'
 
 import { useCommerce } from '../../components/providers/CommerceProvider'
 import {
-  VacuumCatalogGrid,
-  VacuumCatalogHero,
-  VacuumCatalogInfoSection,
-  VacuumCatalogList,
-  VacuumCatalogPagination,
-  VacuumCatalogSidebar,
-  VacuumCatalogToolbar,
-} from '../../components/vacuumCatalog/VacuumCatalogSections'
+  CatalogGrid,
+  CatalogHero,
+  CatalogInfoSection,
+  CatalogList,
+  CatalogPagination,
+  CatalogSidebar,
+  CatalogToolbar,
+} from '../../components/catalog/CatalogSections'
 import {
   ITEMS_PER_PAGE,
   matchesPowerBandValue,
+  type CatalogCategoryOption,
   type CatalogItem,
   type PowerBand,
   type SortOption,
   type ViewMode,
-} from '../../components/vacuumCatalog/data'
-import { type ProductCategory, type ProductId } from '../../data/products'
+} from '../../components/catalog/catalogData'
+import { type ProductId } from '../../data/products'
 
-export default function VacuumMassageCatalogPage() {
-  const { addToCart, isInCompare, products, toggleCompare } = useCommerce()
+export default function CatalogPage() {
+  const params = useParams<{ category?: string }>()
+  const routeCategory = typeof params.category === 'string' ? params.category : ''
+  const { addToCart, categories, isInCompare, products, toggleCompare } = useCommerce()
   const [sharedProductId, setSharedProductId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('vacuum')
+  const [selectedCategory, setSelectedCategory] = useState(routeCategory)
   const [selectedModels, setSelectedModels] = useState<ProductId[]>([])
   const [selectedManiples, setSelectedManiples] = useState<number[]>([])
   const [selectedPowerBands, setSelectedPowerBands] = useState<PowerBand[]>([
@@ -54,6 +58,32 @@ export default function VacuumMassageCatalogPage() {
     [catalogItems],
   )
 
+  const categoryOptions = useMemo<CatalogCategoryOption[]>(() => {
+    const options = new Map<string, CatalogCategoryOption>()
+
+    for (const category of categories) {
+      options.set(category.slug, {
+        label: category.title,
+        slug: category.slug,
+      })
+    }
+
+    for (const item of catalogItems) {
+      if (!options.has(item.category)) {
+        options.set(item.category, {
+          label: item.categoryLabel,
+          slug: item.category,
+        })
+      }
+    }
+
+    return Array.from(options.values())
+  }, [catalogItems, categories])
+
+  const activeCategory =
+    categories.find((category) => category.slug === selectedCategory) ??
+    (selectedCategory ? null : (categories[0] ?? null))
+
   const maniplesOptions = useMemo(
     () =>
       Array.from(new Set(catalogItems.map((item) => item.maniples).filter(Boolean))).sort(
@@ -79,6 +109,10 @@ export default function VacuumMassageCatalogPage() {
     })
   }, [maniplesOptions])
 
+  useEffect(() => {
+    setSelectedCategory(routeCategory)
+  }, [routeCategory])
+
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
   const filteredProducts = catalogItems.filter((item) => {
@@ -88,7 +122,7 @@ export default function VacuumMassageCatalogPage() {
       item.summary.toLowerCase().includes(normalizedQuery) ||
       item.listFeatures.some((feature) => feature.toLowerCase().includes(normalizedQuery))
 
-    const matchesCategory = item.category === selectedCategory
+    const matchesCategory = !selectedCategory || item.category === selectedCategory
     const matchesModel = selectedModels.length === 0 || selectedModels.includes(item.id)
     const matchesManiples =
       selectedManiples.length === 0 || selectedManiples.includes(item.maniples)
@@ -157,7 +191,7 @@ export default function VacuumMassageCatalogPage() {
 
   const resetFilters = () => {
     setSearchQuery('')
-    setSelectedCategory('vacuum')
+    setSelectedCategory(routeCategory)
     setSelectedModels(modelOptions.map((option) => option.id))
     setSelectedManiples(maniplesOptions)
     setSelectedPowerBands(['under-1000', 'over-1000'])
@@ -168,10 +202,11 @@ export default function VacuumMassageCatalogPage() {
   return (
     <div className="pt-5">
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
-        <VacuumCatalogHero />
+        <CatalogHero title={activeCategory?.title ?? 'Каталог'} />
 
         <section className="grid items-start gap-5 lg:grid-cols-[400px_minmax(0,1fr)]">
-          <VacuumCatalogSidebar
+          <CatalogSidebar
+            categoryOptions={categoryOptions}
             catalogItems={catalogItems}
             maniplesOptions={maniplesOptions}
             modelOptions={modelOptions}
@@ -193,7 +228,7 @@ export default function VacuumMassageCatalogPage() {
           />
 
           <div className="flex flex-col gap-5">
-            <VacuumCatalogToolbar
+            <CatalogToolbar
               productCount={sortedProducts.length}
               sortOption={sortOption}
               viewMode={viewMode}
@@ -211,7 +246,7 @@ export default function VacuumMassageCatalogPage() {
                 </p>
               </div>
             ) : viewMode === 'grid' ? (
-              <VacuumCatalogGrid
+              <CatalogGrid
                 items={paginatedProducts}
                 isCompared={isInCompare}
                 onAddToCart={(productId) => addToCart(productId)}
@@ -220,13 +255,13 @@ export default function VacuumMassageCatalogPage() {
                 sharedProductId={sharedProductId}
               />
             ) : (
-              <VacuumCatalogList
+              <CatalogList
                 items={paginatedProducts}
                 onAddToCart={(productId) => addToCart(productId)}
               />
             )}
 
-            <VacuumCatalogPagination
+            <CatalogPagination
               currentPage={currentPage}
               onPageChange={setCurrentPage}
               rangeEnd={rangeEnd}
@@ -237,7 +272,7 @@ export default function VacuumMassageCatalogPage() {
           </div>
         </section>
 
-        <VacuumCatalogInfoSection />
+        <CatalogInfoSection category={activeCategory} />
       </div>
     </div>
   )

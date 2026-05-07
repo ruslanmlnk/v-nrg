@@ -15,6 +15,7 @@ export function mapPayloadProduct(product: PayloadProduct) {
 function toPayloadProductSource(product: PayloadProduct): ProductSource {
   return {
     advantages: product.advantages?.items?.map((item) => item.item),
+    categories: unwrapCategorySources(product.category),
     categorySlugs: unwrapCategorySlugs(product.category),
     characteristics: product.characteristics?.items?.map((item) => ({
       label: item.label,
@@ -40,19 +41,28 @@ function toPayloadProductSource(product: PayloadProduct): ProductSource {
   }
 }
 
-function unwrapCategorySlugs(value: PayloadProduct['category']) {
+function unwrapCategorySources(value: PayloadProduct['category']) {
   return Array.isArray(value)
-    ? value.map((item) => (isCategory(item) ? item.slug : undefined))
+    ? value.map((item) =>
+        isCategory(item)
+          ? {
+              slug: item.slug,
+              title: item.title,
+            }
+          : undefined,
+      )
     : []
+}
+
+function unwrapCategorySlugs(value: PayloadProduct['category']) {
+  return Array.isArray(value) ? value.map((item) => (isCategory(item) ? item.slug : undefined)) : []
 }
 
 function unwrapGalleryUrls(value: PayloadProduct['gallery']) {
   return Array.isArray(value) ? value.map((item) => (isMedia(item) ? item.url : undefined)) : []
 }
 
-function unwrapVideoSources(
-  value: Array<number | Media> | null | undefined,
-): ProductVideoSource[] {
+function unwrapVideoSources(value: Array<number | Media> | null | undefined): ProductVideoSource[] {
   return Array.isArray(value)
     ? value.map((item) =>
         isMedia(item)

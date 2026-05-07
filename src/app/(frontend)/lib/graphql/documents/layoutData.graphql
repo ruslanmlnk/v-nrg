@@ -14,4 +14,15 @@ query GetLayoutData {
       ...ProductFrontendFields
     }
   }
+  Categories(limit: 100, sort: "createdAt") {
+    docs {
+      id
+      title
+      description
+      slug
+      image {
+        url
+      }
+    }
+  }
 }

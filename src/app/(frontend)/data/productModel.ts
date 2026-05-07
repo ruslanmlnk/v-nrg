@@ -1,12 +1,26 @@
 export type ProductId = string
 export type ProductImage = string | null
-export type ProductCategory =
-  | 'accessories'
-  | 'chairs'
-  | 'components'
-  | 'materials'
-  | 'physiotherapy'
-  | 'vacuum'
+export type ProductCategory = string
+
+export type ProductCategoryData = {
+  description: string
+  href: string
+  id: string
+  image: ProductImage
+  slug: string
+  title: string
+}
+
+export type ProductCategorySource = {
+  slug?: string | null
+  title?: string | null
+}
+
+export type CatalogCategorySource = ProductCategorySource & {
+  description?: string | null
+  id?: number | string | null
+  imageUrl?: string | null
+}
 
 export type ProductFeature = {
   label: string
@@ -88,6 +102,7 @@ export type ProductVideoSource = {
 
 export type ProductSource = {
   advantages?: Array<string | null | undefined> | null
+  categories?: Array<ProductCategorySource | null | undefined> | null
   categorySlugs?: Array<string | null | undefined> | null
   characteristics?:
     | Array<{ label?: string | null; value?: string | null } | null>
@@ -115,33 +130,24 @@ export type ProductSource = {
   videos?: Array<ProductVideoSource | null> | null
 }
 
-export const productCategoryLabels: Record<ProductCategory, string> = {
-  accessories: 'Аксесуари',
-  chairs: 'Стільці для масажу',
-  components: 'Комплектуючі',
-  materials: 'Розхідники',
-  physiotherapy: 'Апарати фізіотерапії',
-  vacuum: 'Апарати вакуумного масажу',
-}
-
 export function unwrapProduct(product: ProductSource): ProductData {
   const slug = unwrapSlug(product)
-  const category = unwrapCategory(product.categorySlugs)
+  const category = unwrapProductCategory(product.categories, product.categorySlugs)
   const galleryImages = unwrapTextList(product.galleryUrls)
   const primaryImage = galleryImages[0] ?? null
 
   return {
     cartImage: galleryImages[2] ?? primaryImage,
     catalogImage: primaryImage,
-    category,
-    categoryLabel: productCategoryLabels[category],
+    category: category.slug,
+    categoryLabel: category.title,
     cmsId: product.cmsId,
     compareFeatures: unwrapCompareFeatures(product.compareFeatures),
     compareImage: galleryImages[1] ?? primaryImage,
     details: unwrapDetails(product),
     faq: unwrapFaq(product.faq),
     galleryImages,
-    href: `/catalog/aparaty-vakuumnoho-masazhu/${slug}`,
+    href: `/catalog/${category.slug}/${slug}`,
     id: slug,
     listFeatures: unwrapTextList(product.listFeatures),
     maniples: unwrapNumber(product.maniples),
@@ -152,6 +158,25 @@ export function unwrapProduct(product: ProductSource): ProductData {
     slug,
     tabs: unwrapTabs(product),
     title: unwrapText(product.title) ?? 'Товар без назви',
+  }
+}
+
+export function unwrapCatalogCategory(category: CatalogCategorySource): ProductCategoryData | null {
+  const slug = unwrapText(category.slug)
+
+  if (!slug) {
+    return null
+  }
+
+  const title = unwrapText(category.title) ?? slug
+
+  return {
+    description: unwrapText(category.description) ?? '',
+    href: `/catalog/${slug}`,
+    id: String(category.id ?? slug),
+    image: unwrapText(category.imageUrl) ?? null,
+    slug,
+    title,
   }
 }
 
@@ -197,7 +222,11 @@ function createParagraphTab(
     : undefined
 }
 
-function createChecklistTab(id: string, label: string, items: string[]): ProductTabData | undefined {
+function createChecklistTab(
+  id: string,
+  label: string,
+  items: string[],
+): ProductTabData | undefined {
   return items.length > 0
     ? {
         content: { items, type: 'checklist' },
@@ -236,10 +265,33 @@ function createVideoTab(
     : undefined
 }
 
-function unwrapCategory(value: ProductSource['categorySlugs']): ProductCategory {
-  const slug = unwrapText(asArray<string | null | undefined>(value)[0])
+function unwrapProductCategory(
+  categories: ProductSource['categories'],
+  categorySlugs: ProductSource['categorySlugs'],
+): { slug: ProductCategory; title: string } {
+  const category = asArray<ProductCategorySource | null | undefined>(categories)
+    .map((item) => {
+      const slug = unwrapText(item?.slug)
 
-  return slug && slug in productCategoryLabels ? (slug as ProductCategory) : 'vacuum'
+      return slug
+        ? {
+            slug,
+            title: unwrapText(item?.title) ?? slug,
+          }
+        : undefined
+    })
+    .filter(isDefined)[0]
+
+  if (category) {
+    return category
+  }
+
+  const fallbackSlug = unwrapText(asArray<string | null | undefined>(categorySlugs)[0]) ?? 'catalog'
+
+  return {
+    slug: fallbackSlug,
+    title: fallbackSlug,
+  }
 }
 
 function unwrapSpecifications(value: ProductSource['characteristics']): ProductSpecification[] {
@@ -307,7 +359,10 @@ function unwrapSlug(product: ProductSource): string {
 function unwrapRichTextLines(value: unknown): string[] {
   const children = asArray(asRecord(asRecord(value)?.root)?.children)
 
-  return children.map(collectText).map((line) => line.trim()).filter(Boolean)
+  return children
+    .map(collectText)
+    .map((line) => line.trim())
+    .filter(Boolean)
 }
 
 function collectText(value: unknown): string {
