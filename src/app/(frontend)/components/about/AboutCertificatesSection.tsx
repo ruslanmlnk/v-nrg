@@ -4,7 +4,7 @@ import SectionHeading from '../shared/SectionHeading'
 
 export function AboutCertificatesSection() {
   return (
-    <section className="mt-24 rounded-[48px] bg-[#22354A] py-[100px]">
+    <section className="mt-[62px] rounded-[48px] bg-[#22354A] py-[100px] max-w-[1440px] mx-auto">
       <div className="mx-auto flex max-w-[1288px] flex-col items-center gap-12 px-6">
         <SectionHeading
           align="center"

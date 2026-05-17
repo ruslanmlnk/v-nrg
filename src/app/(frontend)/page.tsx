@@ -1,4 +1,5 @@
 import './styles.css'
+import { AboutCertificatesSection } from './components/about/AboutCertificatesSection'
 import Hero from './components/mainPage/Hero'
 import HowItWorks from './components/mainPage/HowItWorks'
 import ModelComparisonSection from './components/mainPage/ModelComparisonSection'
@@ -17,6 +18,7 @@ export default function HomePage() {
       <HowItWorks />
       <ProductComparisonSection demoHref={demoHref} title={"Результати наших клієнтів"} />
       <ModelComparisonSection />
+      <AboutCertificatesSection />
     </>
   )
 }

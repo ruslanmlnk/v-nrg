@@ -42,7 +42,7 @@ export default function ModelComparisonSection() {
   return (
     <ProductPageSection
       fullWidth
-      className="gap-12 rounded-t-[48px] bg-[#F5F8F9] pb-[140px] pt-[100px] mt-[-40px] text-white"
+      className="gap-12 rounded-t-[48px] bg-[#F5F8F9] pt-[100px] mt-[-40px] text-white"
     >
       <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-12">
         <SectionHeading

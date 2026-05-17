@@ -27,7 +27,9 @@ export function ProductComparisonSection({ demoHref, title = "Як працює 
         afterAlt="Стан після процедури V-NRG"
         cards={beforeAfterCards}
       />
-      <ArrowPillButton className="self-center">Записатися на демонстрацію</ArrowPillButton>
+      <ArrowPillButton className="mr-[50px] self-center md:mr-[54px]">
+        Записатися на демонстрацію
+      </ArrowPillButton>
     </ProductPageSection>
   )
 }
