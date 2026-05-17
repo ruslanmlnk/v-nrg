@@ -10,17 +10,16 @@ import { beforeAfterCards } from './data'
 import { ProductPageSection } from './ProductPageSection'
 import ArrowPillButton from '../ui/ArrowPillButton'
 
-export function ProductComparisonSection({ demoHref }: { demoHref: string }) {
+export function ProductComparisonSection({ demoHref, title = "Як працює технологія V-NRG" }: { demoHref: string, title?: String }) {
   return (
     <ProductPageSection
-      sectionClassName="mt-[100px]"
       fullWidth
       className="gap-12 rounded-t-[48px] bg-[#22354A] pb-[140px] pt-[100px] text-white"
     >
       <SectionHeading
         align="center"
         eyebrow="До / Після"
-        title="Як працює технологія V-NRG"
+        title={title}
         titleClassName="text-white"
       />
       <BeforeAfterGrid
@@ -28,7 +27,7 @@ export function ProductComparisonSection({ demoHref }: { demoHref: string }) {
         afterAlt="Стан після процедури V-NRG"
         cards={beforeAfterCards}
       />
-      <ArrowPillButton className="mt-[164.5px]">Записатися на демонстрацію</ArrowPillButton>
+      <ArrowPillButton className="self-center">Записатися на демонстрацію</ArrowPillButton>
     </ProductPageSection>
   )
 }

@@ -14,7 +14,7 @@ export default function HomePage() {
     <>
       <Hero />
       <HowItWorks />
-      <ProductComparisonSection demoHref={demoHref} />
+      <ProductComparisonSection demoHref={demoHref} title={"Результати наших клієнтів"} />
     </>
   )
 }
