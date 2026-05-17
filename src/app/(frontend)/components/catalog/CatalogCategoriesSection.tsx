@@ -21,14 +21,14 @@ export function CatalogCategoriesSection() {
           href={category.href}
           className="group flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
         >
-          <div className="relative h-[300px] overflow-hidden rounded-[20px]">
+          <div className="relative h-[300px] overflow-hidden rounded-[20px] border border-transparent transition-colors group-hover:border-[#4FACF5]">
             {category.image ? (
               <Image
                 src={category.image}
                 alt={category.title}
                 fill
                 sizes="(min-width: 1024px) 400px, 100vw"
-                className="object-cover"
+                className="object-cover object-top"
               />
             ) : (
               <ProductImagePlaceholder className="absolute inset-0" label={category.title} />

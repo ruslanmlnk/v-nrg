@@ -6,14 +6,16 @@ export function ProductPageSection({
   children,
   className = '',
   sectionClassName = '',
+  fullWidth = false,
 }: {
   children: ReactNode
   className?: string
   sectionClassName?: string
+  fullWidth?: boolean
 }) {
   return (
     <section className={sectionClassName}>
-      <div className={`mx-auto flex max-w-[1288px] flex-col px-6 ${className}`.trim()}>
+      <div className={`mx-auto flex ${fullWidth ? "max-w-[1440px]" : "max-w-[1288px] px-6"} flex-col ${className}`.trim()}>
         {children}
       </div>
     </section>

@@ -49,6 +49,10 @@ export type Query = {
   Categories?: Maybe<Categories>;
   countCategories?: Maybe<CountCategories>;
   docAccessCategory?: Maybe<CategoryDocAccess>;
+  Article?: Maybe<Article>;
+  Articles?: Maybe<Articles>;
+  countArticles?: Maybe<CountArticles>;
+  docAccessArticle?: Maybe<ArticlesDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -221,6 +225,38 @@ export type QueryCountCategoriesArgs = {
 
 
 export type QueryDocAccessCategoryArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryArticleArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryArticlesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Article_Where>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountArticlesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Article_Where>;
+};
+
+
+export type QueryDocAccessArticleArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -4227,6 +4263,479 @@ export type CategoryDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Article = {
+  __typename?: 'Article';
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  publishedAt: Scalars['DateTime']['output'];
+  generateSlug?: Maybe<Scalars['Boolean']['output']>;
+  slug: Scalars['String']['output'];
+  cardPoster?: Maybe<Media>;
+  heroImage?: Maybe<Media>;
+  content: Scalars['JSON']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type ArticleContentArgs = {
+  depth?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Articles = {
+  __typename?: 'Articles';
+  docs: Array<Article>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type Article_Where = {
+  title?: InputMaybe<Article_Title_Operator>;
+  publishedAt?: InputMaybe<Article_PublishedAt_Operator>;
+  generateSlug?: InputMaybe<Article_GenerateSlug_Operator>;
+  slug?: InputMaybe<Article_Slug_Operator>;
+  cardPoster?: InputMaybe<Article_CardPoster_Operator>;
+  heroImage?: InputMaybe<Article_HeroImage_Operator>;
+  content?: InputMaybe<Article_Content_Operator>;
+  updatedAt?: InputMaybe<Article_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Article_CreatedAt_Operator>;
+  id?: InputMaybe<Article_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Article_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Article_Where_Or>>>;
+};
+
+export type Article_Title_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Article_PublishedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Article_GenerateSlug_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Article_Slug_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Article_CardPoster_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Article_HeroImage_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Article_Content_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  like?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type Article_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Article_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Article_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Article_Where_And = {
+  title?: InputMaybe<Article_Title_Operator>;
+  publishedAt?: InputMaybe<Article_PublishedAt_Operator>;
+  generateSlug?: InputMaybe<Article_GenerateSlug_Operator>;
+  slug?: InputMaybe<Article_Slug_Operator>;
+  cardPoster?: InputMaybe<Article_CardPoster_Operator>;
+  heroImage?: InputMaybe<Article_HeroImage_Operator>;
+  content?: InputMaybe<Article_Content_Operator>;
+  updatedAt?: InputMaybe<Article_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Article_CreatedAt_Operator>;
+  id?: InputMaybe<Article_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Article_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Article_Where_Or>>>;
+};
+
+export type Article_Where_Or = {
+  title?: InputMaybe<Article_Title_Operator>;
+  publishedAt?: InputMaybe<Article_PublishedAt_Operator>;
+  generateSlug?: InputMaybe<Article_GenerateSlug_Operator>;
+  slug?: InputMaybe<Article_Slug_Operator>;
+  cardPoster?: InputMaybe<Article_CardPoster_Operator>;
+  heroImage?: InputMaybe<Article_HeroImage_Operator>;
+  content?: InputMaybe<Article_Content_Operator>;
+  updatedAt?: InputMaybe<Article_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Article_CreatedAt_Operator>;
+  id?: InputMaybe<Article_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Article_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Article_Where_Or>>>;
+};
+
+export type CountArticles = {
+  __typename?: 'countArticles';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ArticlesDocAccess = {
+  __typename?: 'articlesDocAccess';
+  fields?: Maybe<ArticlesDocAccessFields>;
+  create?: Maybe<ArticlesCreateDocAccess>;
+  read?: Maybe<ArticlesReadDocAccess>;
+  update?: Maybe<ArticlesUpdateDocAccess>;
+  delete?: Maybe<ArticlesDeleteDocAccess>;
+};
+
+export type ArticlesDocAccessFields = {
+  __typename?: 'ArticlesDocAccessFields';
+  title?: Maybe<ArticlesDocAccessFields_Title>;
+  publishedAt?: Maybe<ArticlesDocAccessFields_PublishedAt>;
+  generateSlug?: Maybe<ArticlesDocAccessFields_GenerateSlug>;
+  slug?: Maybe<ArticlesDocAccessFields_Slug>;
+  cardPoster?: Maybe<ArticlesDocAccessFields_CardPoster>;
+  heroImage?: Maybe<ArticlesDocAccessFields_HeroImage>;
+  content?: Maybe<ArticlesDocAccessFields_Content>;
+  updatedAt?: Maybe<ArticlesDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<ArticlesDocAccessFields_CreatedAt>;
+};
+
+export type ArticlesDocAccessFields_Title = {
+  __typename?: 'ArticlesDocAccessFields_title';
+  create?: Maybe<ArticlesDocAccessFields_Title_Create>;
+  read?: Maybe<ArticlesDocAccessFields_Title_Read>;
+  update?: Maybe<ArticlesDocAccessFields_Title_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_Title_Delete>;
+};
+
+export type ArticlesDocAccessFields_Title_Create = {
+  __typename?: 'ArticlesDocAccessFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Title_Read = {
+  __typename?: 'ArticlesDocAccessFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Title_Update = {
+  __typename?: 'ArticlesDocAccessFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Title_Delete = {
+  __typename?: 'ArticlesDocAccessFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_PublishedAt = {
+  __typename?: 'ArticlesDocAccessFields_publishedAt';
+  create?: Maybe<ArticlesDocAccessFields_PublishedAt_Create>;
+  read?: Maybe<ArticlesDocAccessFields_PublishedAt_Read>;
+  update?: Maybe<ArticlesDocAccessFields_PublishedAt_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_PublishedAt_Delete>;
+};
+
+export type ArticlesDocAccessFields_PublishedAt_Create = {
+  __typename?: 'ArticlesDocAccessFields_publishedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_PublishedAt_Read = {
+  __typename?: 'ArticlesDocAccessFields_publishedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_PublishedAt_Update = {
+  __typename?: 'ArticlesDocAccessFields_publishedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_PublishedAt_Delete = {
+  __typename?: 'ArticlesDocAccessFields_publishedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_GenerateSlug = {
+  __typename?: 'ArticlesDocAccessFields_generateSlug';
+  create?: Maybe<ArticlesDocAccessFields_GenerateSlug_Create>;
+  read?: Maybe<ArticlesDocAccessFields_GenerateSlug_Read>;
+  update?: Maybe<ArticlesDocAccessFields_GenerateSlug_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_GenerateSlug_Delete>;
+};
+
+export type ArticlesDocAccessFields_GenerateSlug_Create = {
+  __typename?: 'ArticlesDocAccessFields_generateSlug_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_GenerateSlug_Read = {
+  __typename?: 'ArticlesDocAccessFields_generateSlug_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_GenerateSlug_Update = {
+  __typename?: 'ArticlesDocAccessFields_generateSlug_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_GenerateSlug_Delete = {
+  __typename?: 'ArticlesDocAccessFields_generateSlug_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Slug = {
+  __typename?: 'ArticlesDocAccessFields_slug';
+  create?: Maybe<ArticlesDocAccessFields_Slug_Create>;
+  read?: Maybe<ArticlesDocAccessFields_Slug_Read>;
+  update?: Maybe<ArticlesDocAccessFields_Slug_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_Slug_Delete>;
+};
+
+export type ArticlesDocAccessFields_Slug_Create = {
+  __typename?: 'ArticlesDocAccessFields_slug_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Slug_Read = {
+  __typename?: 'ArticlesDocAccessFields_slug_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Slug_Update = {
+  __typename?: 'ArticlesDocAccessFields_slug_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Slug_Delete = {
+  __typename?: 'ArticlesDocAccessFields_slug_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CardPoster = {
+  __typename?: 'ArticlesDocAccessFields_cardPoster';
+  create?: Maybe<ArticlesDocAccessFields_CardPoster_Create>;
+  read?: Maybe<ArticlesDocAccessFields_CardPoster_Read>;
+  update?: Maybe<ArticlesDocAccessFields_CardPoster_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_CardPoster_Delete>;
+};
+
+export type ArticlesDocAccessFields_CardPoster_Create = {
+  __typename?: 'ArticlesDocAccessFields_cardPoster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CardPoster_Read = {
+  __typename?: 'ArticlesDocAccessFields_cardPoster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CardPoster_Update = {
+  __typename?: 'ArticlesDocAccessFields_cardPoster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CardPoster_Delete = {
+  __typename?: 'ArticlesDocAccessFields_cardPoster_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_HeroImage = {
+  __typename?: 'ArticlesDocAccessFields_heroImage';
+  create?: Maybe<ArticlesDocAccessFields_HeroImage_Create>;
+  read?: Maybe<ArticlesDocAccessFields_HeroImage_Read>;
+  update?: Maybe<ArticlesDocAccessFields_HeroImage_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_HeroImage_Delete>;
+};
+
+export type ArticlesDocAccessFields_HeroImage_Create = {
+  __typename?: 'ArticlesDocAccessFields_heroImage_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_HeroImage_Read = {
+  __typename?: 'ArticlesDocAccessFields_heroImage_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_HeroImage_Update = {
+  __typename?: 'ArticlesDocAccessFields_heroImage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_HeroImage_Delete = {
+  __typename?: 'ArticlesDocAccessFields_heroImage_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Content = {
+  __typename?: 'ArticlesDocAccessFields_content';
+  create?: Maybe<ArticlesDocAccessFields_Content_Create>;
+  read?: Maybe<ArticlesDocAccessFields_Content_Read>;
+  update?: Maybe<ArticlesDocAccessFields_Content_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_Content_Delete>;
+};
+
+export type ArticlesDocAccessFields_Content_Create = {
+  __typename?: 'ArticlesDocAccessFields_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Content_Read = {
+  __typename?: 'ArticlesDocAccessFields_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Content_Update = {
+  __typename?: 'ArticlesDocAccessFields_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Content_Delete = {
+  __typename?: 'ArticlesDocAccessFields_content_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_UpdatedAt = {
+  __typename?: 'ArticlesDocAccessFields_updatedAt';
+  create?: Maybe<ArticlesDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<ArticlesDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<ArticlesDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type ArticlesDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'ArticlesDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'ArticlesDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'ArticlesDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'ArticlesDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CreatedAt = {
+  __typename?: 'ArticlesDocAccessFields_createdAt';
+  create?: Maybe<ArticlesDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<ArticlesDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<ArticlesDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_CreatedAt_Delete>;
+};
+
+export type ArticlesDocAccessFields_CreatedAt_Create = {
+  __typename?: 'ArticlesDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CreatedAt_Read = {
+  __typename?: 'ArticlesDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CreatedAt_Update = {
+  __typename?: 'ArticlesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'ArticlesDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesCreateDocAccess = {
+  __typename?: 'ArticlesCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ArticlesReadDocAccess = {
+  __typename?: 'ArticlesReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ArticlesUpdateDocAccess = {
+  __typename?: 'ArticlesUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ArticlesDeleteDocAccess = {
+  __typename?: 'ArticlesDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -4423,10 +4932,11 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Media = 'media',
   Reviews = 'reviews',
   Products = 'products',
-  Category = 'category'
+  Category = 'category',
+  Articles = 'articles'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -4476,7 +4986,8 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Media = 'media',
   Reviews = 'reviews',
   Products = 'products',
-  Category = 'category'
+  Category = 'category',
+  Articles = 'articles'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -5067,6 +5578,7 @@ export type Access = {
   reviews?: Maybe<ReviewsAccess>;
   products?: Maybe<ProductsAccess>;
   category?: Maybe<CategoryAccess>;
+  articles?: Maybe<ArticlesAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
@@ -7620,6 +8132,304 @@ export type CategoryDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type ArticlesAccess = {
+  __typename?: 'articlesAccess';
+  fields?: Maybe<ArticlesFields>;
+  create?: Maybe<ArticlesCreateAccess>;
+  read?: Maybe<ArticlesReadAccess>;
+  update?: Maybe<ArticlesUpdateAccess>;
+  delete?: Maybe<ArticlesDeleteAccess>;
+};
+
+export type ArticlesFields = {
+  __typename?: 'ArticlesFields';
+  title?: Maybe<ArticlesFields_Title>;
+  publishedAt?: Maybe<ArticlesFields_PublishedAt>;
+  generateSlug?: Maybe<ArticlesFields_GenerateSlug>;
+  slug?: Maybe<ArticlesFields_Slug>;
+  cardPoster?: Maybe<ArticlesFields_CardPoster>;
+  heroImage?: Maybe<ArticlesFields_HeroImage>;
+  content?: Maybe<ArticlesFields_Content>;
+  updatedAt?: Maybe<ArticlesFields_UpdatedAt>;
+  createdAt?: Maybe<ArticlesFields_CreatedAt>;
+};
+
+export type ArticlesFields_Title = {
+  __typename?: 'ArticlesFields_title';
+  create?: Maybe<ArticlesFields_Title_Create>;
+  read?: Maybe<ArticlesFields_Title_Read>;
+  update?: Maybe<ArticlesFields_Title_Update>;
+  delete?: Maybe<ArticlesFields_Title_Delete>;
+};
+
+export type ArticlesFields_Title_Create = {
+  __typename?: 'ArticlesFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Title_Read = {
+  __typename?: 'ArticlesFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Title_Update = {
+  __typename?: 'ArticlesFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Title_Delete = {
+  __typename?: 'ArticlesFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_PublishedAt = {
+  __typename?: 'ArticlesFields_publishedAt';
+  create?: Maybe<ArticlesFields_PublishedAt_Create>;
+  read?: Maybe<ArticlesFields_PublishedAt_Read>;
+  update?: Maybe<ArticlesFields_PublishedAt_Update>;
+  delete?: Maybe<ArticlesFields_PublishedAt_Delete>;
+};
+
+export type ArticlesFields_PublishedAt_Create = {
+  __typename?: 'ArticlesFields_publishedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_PublishedAt_Read = {
+  __typename?: 'ArticlesFields_publishedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_PublishedAt_Update = {
+  __typename?: 'ArticlesFields_publishedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_PublishedAt_Delete = {
+  __typename?: 'ArticlesFields_publishedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_GenerateSlug = {
+  __typename?: 'ArticlesFields_generateSlug';
+  create?: Maybe<ArticlesFields_GenerateSlug_Create>;
+  read?: Maybe<ArticlesFields_GenerateSlug_Read>;
+  update?: Maybe<ArticlesFields_GenerateSlug_Update>;
+  delete?: Maybe<ArticlesFields_GenerateSlug_Delete>;
+};
+
+export type ArticlesFields_GenerateSlug_Create = {
+  __typename?: 'ArticlesFields_generateSlug_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_GenerateSlug_Read = {
+  __typename?: 'ArticlesFields_generateSlug_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_GenerateSlug_Update = {
+  __typename?: 'ArticlesFields_generateSlug_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_GenerateSlug_Delete = {
+  __typename?: 'ArticlesFields_generateSlug_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Slug = {
+  __typename?: 'ArticlesFields_slug';
+  create?: Maybe<ArticlesFields_Slug_Create>;
+  read?: Maybe<ArticlesFields_Slug_Read>;
+  update?: Maybe<ArticlesFields_Slug_Update>;
+  delete?: Maybe<ArticlesFields_Slug_Delete>;
+};
+
+export type ArticlesFields_Slug_Create = {
+  __typename?: 'ArticlesFields_slug_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Slug_Read = {
+  __typename?: 'ArticlesFields_slug_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Slug_Update = {
+  __typename?: 'ArticlesFields_slug_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Slug_Delete = {
+  __typename?: 'ArticlesFields_slug_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CardPoster = {
+  __typename?: 'ArticlesFields_cardPoster';
+  create?: Maybe<ArticlesFields_CardPoster_Create>;
+  read?: Maybe<ArticlesFields_CardPoster_Read>;
+  update?: Maybe<ArticlesFields_CardPoster_Update>;
+  delete?: Maybe<ArticlesFields_CardPoster_Delete>;
+};
+
+export type ArticlesFields_CardPoster_Create = {
+  __typename?: 'ArticlesFields_cardPoster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CardPoster_Read = {
+  __typename?: 'ArticlesFields_cardPoster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CardPoster_Update = {
+  __typename?: 'ArticlesFields_cardPoster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CardPoster_Delete = {
+  __typename?: 'ArticlesFields_cardPoster_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_HeroImage = {
+  __typename?: 'ArticlesFields_heroImage';
+  create?: Maybe<ArticlesFields_HeroImage_Create>;
+  read?: Maybe<ArticlesFields_HeroImage_Read>;
+  update?: Maybe<ArticlesFields_HeroImage_Update>;
+  delete?: Maybe<ArticlesFields_HeroImage_Delete>;
+};
+
+export type ArticlesFields_HeroImage_Create = {
+  __typename?: 'ArticlesFields_heroImage_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_HeroImage_Read = {
+  __typename?: 'ArticlesFields_heroImage_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_HeroImage_Update = {
+  __typename?: 'ArticlesFields_heroImage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_HeroImage_Delete = {
+  __typename?: 'ArticlesFields_heroImage_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Content = {
+  __typename?: 'ArticlesFields_content';
+  create?: Maybe<ArticlesFields_Content_Create>;
+  read?: Maybe<ArticlesFields_Content_Read>;
+  update?: Maybe<ArticlesFields_Content_Update>;
+  delete?: Maybe<ArticlesFields_Content_Delete>;
+};
+
+export type ArticlesFields_Content_Create = {
+  __typename?: 'ArticlesFields_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Content_Read = {
+  __typename?: 'ArticlesFields_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Content_Update = {
+  __typename?: 'ArticlesFields_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Content_Delete = {
+  __typename?: 'ArticlesFields_content_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_UpdatedAt = {
+  __typename?: 'ArticlesFields_updatedAt';
+  create?: Maybe<ArticlesFields_UpdatedAt_Create>;
+  read?: Maybe<ArticlesFields_UpdatedAt_Read>;
+  update?: Maybe<ArticlesFields_UpdatedAt_Update>;
+  delete?: Maybe<ArticlesFields_UpdatedAt_Delete>;
+};
+
+export type ArticlesFields_UpdatedAt_Create = {
+  __typename?: 'ArticlesFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_UpdatedAt_Read = {
+  __typename?: 'ArticlesFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_UpdatedAt_Update = {
+  __typename?: 'ArticlesFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_UpdatedAt_Delete = {
+  __typename?: 'ArticlesFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CreatedAt = {
+  __typename?: 'ArticlesFields_createdAt';
+  create?: Maybe<ArticlesFields_CreatedAt_Create>;
+  read?: Maybe<ArticlesFields_CreatedAt_Read>;
+  update?: Maybe<ArticlesFields_CreatedAt_Update>;
+  delete?: Maybe<ArticlesFields_CreatedAt_Delete>;
+};
+
+export type ArticlesFields_CreatedAt_Create = {
+  __typename?: 'ArticlesFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CreatedAt_Read = {
+  __typename?: 'ArticlesFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CreatedAt_Update = {
+  __typename?: 'ArticlesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_CreatedAt_Delete = {
+  __typename?: 'ArticlesFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesCreateAccess = {
+  __typename?: 'ArticlesCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ArticlesReadAccess = {
+  __typename?: 'ArticlesReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ArticlesUpdateAccess = {
+  __typename?: 'ArticlesUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ArticlesDeleteAccess = {
+  __typename?: 'ArticlesDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -8107,6 +8917,10 @@ export type Mutation = {
   updateCategory?: Maybe<Category>;
   deleteCategory?: Maybe<Category>;
   duplicateCategory?: Maybe<Category>;
+  createArticle?: Maybe<Article>;
+  updateArticle?: Maybe<Article>;
+  deleteArticle?: Maybe<Article>;
+  duplicateArticle?: Maybe<Article>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -8280,6 +9094,33 @@ export type MutationDeleteCategoryArgs = {
 export type MutationDuplicateCategoryArgs = {
   id: Scalars['Int']['input'];
   data: MutationCategoryInput;
+};
+
+
+export type MutationCreateArticleArgs = {
+  data: MutationArticleInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateArticleArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationArticleUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteArticleArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateArticleArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationArticleInput;
 };
 
 
@@ -8699,6 +9540,30 @@ export type MutationCategoryUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationArticleInput = {
+  title: Scalars['String']['input'];
+  publishedAt: Scalars['String']['input'];
+  generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
+  slug: Scalars['String']['input'];
+  cardPoster?: InputMaybe<Scalars['Int']['input']>;
+  heroImage?: InputMaybe<Scalars['Int']['input']>;
+  content: Scalars['JSON']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationArticleUpdateInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['String']['input']>;
+  generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  cardPoster?: InputMaybe<Scalars['Int']['input']>;
+  heroImage?: InputMaybe<Scalars['Int']['input']>;
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -8727,7 +9592,8 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Media = 'media',
   Reviews = 'reviews',
   Products = 'products',
-  Category = 'category'
+  Category = 'category',
+  Articles = 'articles'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -8757,7 +9623,8 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Media = 'media',
   Reviews = 'reviews',
   Products = 'products',
-  Category = 'category'
+  Category = 'category',
+  Articles = 'articles'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {

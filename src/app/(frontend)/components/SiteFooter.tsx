@@ -24,7 +24,7 @@ const infoLinks = [
   { href: '/info?topic=warranty', label: 'Гарантія та сервіс' },
   { href: '/training', label: 'Навчання' },
   { href: '/review', label: 'Відгуки' },
-  { href: '/info?topic=blog', label: 'Блог' },
+  { href: '/blog', label: 'Блог' },
 ]
 
 const legalLinks = [

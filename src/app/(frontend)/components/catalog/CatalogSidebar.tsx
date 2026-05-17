@@ -46,7 +46,7 @@ export function CatalogSidebar({
   onTogglePowerBand: (band: PowerBand) => void
   resetFilters: () => void
   searchQuery: string
-  selectedCategory: string
+  selectedCategory: string | null
   selectedManiples: number[]
   selectedModels: ProductId[]
   selectedPowerBands: PowerBand[]

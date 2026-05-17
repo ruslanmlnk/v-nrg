@@ -286,11 +286,12 @@ function unwrapProductCategory(
     return category
   }
 
-  const fallbackSlug = unwrapText(asArray<string | null | undefined>(categorySlugs)[0]) ?? 'catalog'
+  const fallbackSlug = unwrapText(asArray<string | null | undefined>(categorySlugs)[0])
+  const slug = fallbackSlug && fallbackSlug !== 'catalog' ? fallbackSlug : 'product'
 
   return {
-    slug: fallbackSlug,
-    title: fallbackSlug,
+    slug,
+    title: slug,
   }
 }
 

@@ -8,7 +8,7 @@ import { reviews } from './data'
 
 import { ReviewCard } from './ReviewCard'
 
-const reviewPages = chunkItems(reviews, 2)
+const reviewPages = chunkItems(reviews, 4)
 
 export function ReviewShowcaseSection() {
   const [activePage, setActivePage] = useState(0)
@@ -29,7 +29,7 @@ export function ReviewShowcaseSection() {
           </h1>
         </div>
 
-        <div className="grid w-full gap-5 lg:grid-cols-2">
+        <div className="grid w-full gap-5 md:grid-cols-2">
           {activeReviews.map((item) => (
             <ReviewCard key={item.id} {...item} />
           ))}

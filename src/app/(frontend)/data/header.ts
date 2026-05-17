@@ -3,5 +3,5 @@ export const navLinks = [
   { href: '/about', label: 'Про бренд' },
   { href: '/training', label: 'Навчання' },
   { href: '/review', label: 'Відгуки' },
-  { href: '#', label: 'Блог' },
+  { href: '/blog', label: 'Блог' },
 ]

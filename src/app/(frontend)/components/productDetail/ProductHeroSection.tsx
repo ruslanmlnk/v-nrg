@@ -2,7 +2,21 @@
 
 import Link from 'next/link'
 
-export function ProductHeroSection({ title }: { title: string }) {
+type ProductHeroSectionProps = {
+  categoryLabel?: string
+  categorySlug?: string
+  title: string
+}
+
+export function ProductHeroSection({
+  categoryLabel,
+  categorySlug,
+  title,
+}: ProductHeroSectionProps) {
+  const hasCategory = Boolean(
+    categoryLabel && categorySlug && categorySlug !== 'catalog' && categorySlug !== 'product',
+  )
+
   return (
     <section className="flex min-h-[268px] items-center justify-center rounded-[20px] bg-[#22354A] px-6 py-14 text-center text-white">
       <div className="flex max-w-[920px] flex-col items-center gap-4">
@@ -10,8 +24,12 @@ export function ProductHeroSection({ title }: { title: string }) {
           <Link href="/">Головна</Link>
           <span>/</span>
           <Link href="/catalog">Каталог</Link>
-          <span>/</span>
-          <Link href="/catalog/aparaty-vakuumnoho-masazhu">Апарати вакуумного масажу</Link>
+          {hasCategory ? (
+            <>
+              <span>/</span>
+              <Link href={`/catalog/${categorySlug}`}>{categoryLabel}</Link>
+            </>
+          ) : null}
           <span>/</span>
           <span className="text-[#4FACF5]">{title}</span>
         </div>

@@ -21,6 +21,10 @@ type Query {
   Categories(draft: Boolean, where: Category_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Categories
   countCategories(draft: Boolean, trash: Boolean, where: Category_where): countCategories
   docAccessCategory(id: Int!): categoryDocAccess
+  Article(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Article
+  Articles(draft: Boolean, where: Article_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Articles
+  countArticles(draft: Boolean, trash: Boolean, where: Article_where): countArticles
+  docAccessArticle(id: Int!): articlesDocAccess
   PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
@@ -3490,6 +3494,420 @@ type CategoryDeleteDocAccess {
   where: JSONObject
 }
 
+type Article {
+  id: Int!
+  title: String!
+  publishedAt: DateTime!
+  generateSlug: Boolean
+  slug: String!
+  cardPoster: Media
+  heroImage: Media
+  content(depth: Int): JSON!
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Articles {
+  docs: [Article!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input Article_where {
+  title: Article_title_operator
+  publishedAt: Article_publishedAt_operator
+  generateSlug: Article_generateSlug_operator
+  slug: Article_slug_operator
+  cardPoster: Article_cardPoster_operator
+  heroImage: Article_heroImage_operator
+  content: Article_content_operator
+  updatedAt: Article_updatedAt_operator
+  createdAt: Article_createdAt_operator
+  id: Article_id_operator
+  AND: [Article_where_and]
+  OR: [Article_where_or]
+}
+
+input Article_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Article_publishedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input Article_generateSlug_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input Article_slug_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Article_cardPoster_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input Article_heroImage_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input Article_content_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+}
+
+input Article_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Article_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Article_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input Article_where_and {
+  title: Article_title_operator
+  publishedAt: Article_publishedAt_operator
+  generateSlug: Article_generateSlug_operator
+  slug: Article_slug_operator
+  cardPoster: Article_cardPoster_operator
+  heroImage: Article_heroImage_operator
+  content: Article_content_operator
+  updatedAt: Article_updatedAt_operator
+  createdAt: Article_createdAt_operator
+  id: Article_id_operator
+  AND: [Article_where_and]
+  OR: [Article_where_or]
+}
+
+input Article_where_or {
+  title: Article_title_operator
+  publishedAt: Article_publishedAt_operator
+  generateSlug: Article_generateSlug_operator
+  slug: Article_slug_operator
+  cardPoster: Article_cardPoster_operator
+  heroImage: Article_heroImage_operator
+  content: Article_content_operator
+  updatedAt: Article_updatedAt_operator
+  createdAt: Article_createdAt_operator
+  id: Article_id_operator
+  AND: [Article_where_and]
+  OR: [Article_where_or]
+}
+
+type countArticles {
+  totalDocs: Int
+}
+
+type articlesDocAccess {
+  fields: ArticlesDocAccessFields
+  create: ArticlesCreateDocAccess
+  read: ArticlesReadDocAccess
+  update: ArticlesUpdateDocAccess
+  delete: ArticlesDeleteDocAccess
+}
+
+type ArticlesDocAccessFields {
+  title: ArticlesDocAccessFields_title
+  publishedAt: ArticlesDocAccessFields_publishedAt
+  generateSlug: ArticlesDocAccessFields_generateSlug
+  slug: ArticlesDocAccessFields_slug
+  cardPoster: ArticlesDocAccessFields_cardPoster
+  heroImage: ArticlesDocAccessFields_heroImage
+  content: ArticlesDocAccessFields_content
+  updatedAt: ArticlesDocAccessFields_updatedAt
+  createdAt: ArticlesDocAccessFields_createdAt
+}
+
+type ArticlesDocAccessFields_title {
+  create: ArticlesDocAccessFields_title_Create
+  read: ArticlesDocAccessFields_title_Read
+  update: ArticlesDocAccessFields_title_Update
+  delete: ArticlesDocAccessFields_title_Delete
+}
+
+type ArticlesDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_publishedAt {
+  create: ArticlesDocAccessFields_publishedAt_Create
+  read: ArticlesDocAccessFields_publishedAt_Read
+  update: ArticlesDocAccessFields_publishedAt_Update
+  delete: ArticlesDocAccessFields_publishedAt_Delete
+}
+
+type ArticlesDocAccessFields_publishedAt_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_publishedAt_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_publishedAt_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_publishedAt_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_generateSlug {
+  create: ArticlesDocAccessFields_generateSlug_Create
+  read: ArticlesDocAccessFields_generateSlug_Read
+  update: ArticlesDocAccessFields_generateSlug_Update
+  delete: ArticlesDocAccessFields_generateSlug_Delete
+}
+
+type ArticlesDocAccessFields_generateSlug_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_generateSlug_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_generateSlug_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_generateSlug_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_slug {
+  create: ArticlesDocAccessFields_slug_Create
+  read: ArticlesDocAccessFields_slug_Read
+  update: ArticlesDocAccessFields_slug_Update
+  delete: ArticlesDocAccessFields_slug_Delete
+}
+
+type ArticlesDocAccessFields_slug_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_slug_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_slug_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_slug_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_cardPoster {
+  create: ArticlesDocAccessFields_cardPoster_Create
+  read: ArticlesDocAccessFields_cardPoster_Read
+  update: ArticlesDocAccessFields_cardPoster_Update
+  delete: ArticlesDocAccessFields_cardPoster_Delete
+}
+
+type ArticlesDocAccessFields_cardPoster_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_cardPoster_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_cardPoster_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_cardPoster_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_heroImage {
+  create: ArticlesDocAccessFields_heroImage_Create
+  read: ArticlesDocAccessFields_heroImage_Read
+  update: ArticlesDocAccessFields_heroImage_Update
+  delete: ArticlesDocAccessFields_heroImage_Delete
+}
+
+type ArticlesDocAccessFields_heroImage_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_heroImage_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_heroImage_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_heroImage_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_content {
+  create: ArticlesDocAccessFields_content_Create
+  read: ArticlesDocAccessFields_content_Read
+  update: ArticlesDocAccessFields_content_Update
+  delete: ArticlesDocAccessFields_content_Delete
+}
+
+type ArticlesDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_content_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_updatedAt {
+  create: ArticlesDocAccessFields_updatedAt_Create
+  read: ArticlesDocAccessFields_updatedAt_Read
+  update: ArticlesDocAccessFields_updatedAt_Update
+  delete: ArticlesDocAccessFields_updatedAt_Delete
+}
+
+type ArticlesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_createdAt {
+  create: ArticlesDocAccessFields_createdAt_Create
+  read: ArticlesDocAccessFields_createdAt_Read
+  update: ArticlesDocAccessFields_createdAt_Update
+  delete: ArticlesDocAccessFields_createdAt_Delete
+}
+
+type ArticlesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ArticlesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ArticlesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ArticlesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ArticlesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -3666,9 +4084,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   reviews
   products
   category
+  articles
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -3717,6 +4136,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   reviews
   products
   category
+  articles
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -4239,6 +4659,7 @@ type Access {
   reviews: reviewsAccess
   products: productsAccess
   category: categoryAccess
+  articles: articlesAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -6353,6 +6774,253 @@ type CategoryDeleteAccess {
   where: JSONObject
 }
 
+type articlesAccess {
+  fields: ArticlesFields
+  create: ArticlesCreateAccess
+  read: ArticlesReadAccess
+  update: ArticlesUpdateAccess
+  delete: ArticlesDeleteAccess
+}
+
+type ArticlesFields {
+  title: ArticlesFields_title
+  publishedAt: ArticlesFields_publishedAt
+  generateSlug: ArticlesFields_generateSlug
+  slug: ArticlesFields_slug
+  cardPoster: ArticlesFields_cardPoster
+  heroImage: ArticlesFields_heroImage
+  content: ArticlesFields_content
+  updatedAt: ArticlesFields_updatedAt
+  createdAt: ArticlesFields_createdAt
+}
+
+type ArticlesFields_title {
+  create: ArticlesFields_title_Create
+  read: ArticlesFields_title_Read
+  update: ArticlesFields_title_Update
+  delete: ArticlesFields_title_Delete
+}
+
+type ArticlesFields_title_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_title_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_title_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_title_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_publishedAt {
+  create: ArticlesFields_publishedAt_Create
+  read: ArticlesFields_publishedAt_Read
+  update: ArticlesFields_publishedAt_Update
+  delete: ArticlesFields_publishedAt_Delete
+}
+
+type ArticlesFields_publishedAt_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_publishedAt_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_publishedAt_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_publishedAt_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_generateSlug {
+  create: ArticlesFields_generateSlug_Create
+  read: ArticlesFields_generateSlug_Read
+  update: ArticlesFields_generateSlug_Update
+  delete: ArticlesFields_generateSlug_Delete
+}
+
+type ArticlesFields_generateSlug_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_generateSlug_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_generateSlug_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_generateSlug_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_slug {
+  create: ArticlesFields_slug_Create
+  read: ArticlesFields_slug_Read
+  update: ArticlesFields_slug_Update
+  delete: ArticlesFields_slug_Delete
+}
+
+type ArticlesFields_slug_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_slug_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_slug_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_slug_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_cardPoster {
+  create: ArticlesFields_cardPoster_Create
+  read: ArticlesFields_cardPoster_Read
+  update: ArticlesFields_cardPoster_Update
+  delete: ArticlesFields_cardPoster_Delete
+}
+
+type ArticlesFields_cardPoster_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_cardPoster_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_cardPoster_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_cardPoster_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_heroImage {
+  create: ArticlesFields_heroImage_Create
+  read: ArticlesFields_heroImage_Read
+  update: ArticlesFields_heroImage_Update
+  delete: ArticlesFields_heroImage_Delete
+}
+
+type ArticlesFields_heroImage_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_heroImage_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_heroImage_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_heroImage_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_content {
+  create: ArticlesFields_content_Create
+  read: ArticlesFields_content_Read
+  update: ArticlesFields_content_Update
+  delete: ArticlesFields_content_Delete
+}
+
+type ArticlesFields_content_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_content_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_content_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_content_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_updatedAt {
+  create: ArticlesFields_updatedAt_Create
+  read: ArticlesFields_updatedAt_Read
+  update: ArticlesFields_updatedAt_Update
+  delete: ArticlesFields_updatedAt_Delete
+}
+
+type ArticlesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_createdAt {
+  create: ArticlesFields_createdAt_Create
+  read: ArticlesFields_createdAt_Read
+  update: ArticlesFields_createdAt_Update
+  delete: ArticlesFields_createdAt_Delete
+}
+
+type ArticlesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ArticlesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ArticlesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ArticlesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ArticlesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -6761,6 +7429,10 @@ type Mutation {
   updateCategory(id: Int!, autosave: Boolean, data: mutationCategoryUpdateInput!, draft: Boolean, trash: Boolean): Category
   deleteCategory(id: Int!, trash: Boolean): Category
   duplicateCategory(id: Int!, data: mutationCategoryInput!): Category
+  createArticle(data: mutationArticleInput!, draft: Boolean): Article
+  updateArticle(id: Int!, autosave: Boolean, data: mutationArticleUpdateInput!, draft: Boolean, trash: Boolean): Article
+  deleteArticle(id: Int!, trash: Boolean): Article
+  duplicateArticle(id: Int!, data: mutationArticleInput!): Article
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -7107,6 +7779,30 @@ input mutationCategoryUpdateInput {
   createdAt: String
 }
 
+input mutationArticleInput {
+  title: String!
+  publishedAt: String!
+  generateSlug: Boolean
+  slug: String!
+  cardPoster: Int
+  heroImage: Int
+  content: JSON!
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationArticleUpdateInput {
+  title: String
+  publishedAt: String
+  generateSlug: Boolean
+  slug: String
+  cardPoster: Int
+  heroImage: Int
+  content: JSON
+  updatedAt: String
+  createdAt: String
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -7136,6 +7832,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   reviews
   products
   category
+  articles
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -7166,6 +7863,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   reviews
   products
   category
+  articles
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

@@ -86,7 +86,11 @@ export default function ProductDetailView({ product }: { product: ProductData })
   return (
     <div className="bg-[#F5F8F9] pt-5">
       <ProductPageSection className="gap-12">
-        <ProductHeroSection title={product.title} />
+        <ProductHeroSection
+          categoryLabel={product.categoryLabel}
+          categorySlug={product.category}
+          title={product.title}
+        />
 
         <ProductOverviewSection
           activeGalleryIndex={activeGalleryIndex}

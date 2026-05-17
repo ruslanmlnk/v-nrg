@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 import arrowIcon from '@public/icon/header/arrow.svg'
 import cardIcon from '@public/icon/header/card.svg'
@@ -8,11 +9,8 @@ import langIcon from '@public/icon/header/global.svg'
 import phoneIcon from '@public/icon/header/phone.svg'
 
 import NavBar from './NavBar'
-import { useCommerce } from './providers/CommerceProvider'
 
 export default function Header() {
-  const { openDealerModal } = useCommerce()
-
   return (
     <header className="mx-auto mt-5 max-w-[1288px] px-6 text-white">
       <div className="flex flex-wrap items-center justify-between gap-4 rounded-[20px] bg-[#22354A] px-6 py-[11.8px] leading-[26px]">
@@ -37,13 +35,12 @@ export default function Header() {
             <Image src={arrowIcon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
           </div>
 
-          <button
-            type="button"
-            onClick={openDealerModal}
+          <Link
+            href="/dealer"
             className="font-bold uppercase text-[#4FACF5]"
           >
             Стати дилером
-          </button>
+          </Link>
         </div>
       </div>
 

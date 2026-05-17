@@ -8,11 +8,13 @@ import demoArrowIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoh
 import { beforeAfterCards } from './data'
 
 import { ProductPageSection } from './ProductPageSection'
+import ArrowPillButton from '../ui/ArrowPillButton'
 
 export function ProductComparisonSection({ demoHref }: { demoHref: string }) {
   return (
     <ProductPageSection
       sectionClassName="mt-[100px]"
+      fullWidth
       className="gap-12 rounded-t-[48px] bg-[#22354A] pb-[140px] pt-[100px] text-white"
     >
       <SectionHeading
@@ -26,20 +28,8 @@ export function ProductComparisonSection({ demoHref }: { demoHref: string }) {
         afterAlt="Стан після процедури V-NRG"
         cards={beforeAfterCards}
       />
-      <ProductDemoCta demoHref={demoHref} />
+      <ArrowPillButton className="mt-[164.5px]">Записатися на демонстрацію</ArrowPillButton>
     </ProductPageSection>
   )
 }
 
-function ProductDemoCta({ demoHref }: { demoHref: string }) {
-  return (
-    <Link href={demoHref} className="group mx-auto inline-flex items-center">
-      <span className="flex min-h-[50px] items-center rounded-[40px] bg-white px-6 text-[18px] font-medium leading-[145%] text-[#22354A] transition-transform duration-300 group-hover:-translate-x-1">
-        Записатися на демонстрацію
-      </span>
-      <span className="ml-[-6px] flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#4FACF5] transition-transform duration-300 group-hover:translate-x-1">
-        <IconAsset src={demoArrowIconAsset} width={26} height={26} />
-      </span>
-    </Link>
-  )
-}

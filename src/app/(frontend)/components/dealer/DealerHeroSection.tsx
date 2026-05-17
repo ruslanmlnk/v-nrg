@@ -6,10 +6,10 @@ export function DealerHeroSection() {
   return (
     <PageHero
       currentLabel="Стати дилером"
-      title="Партнерство з V-NRG"
-      description="Розвивайте свій бізнес разом з виробником професійного обладнання для вакуумного масажу."
-      contentClassName="max-w-[860px]"
-      descriptionClassName="text-[16px] text-[#D5E0E8] md:text-[18px]"
+      title="Стати дилером V-NRG"
+      description="Бажаєте співпрацювати з нами? Заповніть заявку на дилерство — ми зв'яжемося з вами найближчим часом"
+      sectionClassName="pb-[91px] pt-14"
+      contentClassName="max-w-[920px]"
     />
   )
 }
