@@ -1,6 +1,7 @@
 import './styles.css'
 import Hero from './components/mainPage/Hero'
 import HowItWorks from './components/mainPage/HowItWorks'
+import ModelComparisonSection from './components/mainPage/ModelComparisonSection'
 import BeforeAfterGrid from './components/ui/BeforeAfterGrid'
 import beforeAfterAfter from '@public/assets/product/before-after-after.jpg'
 import beforeAfterBefore from '@public/assets/product/before-after-before.jpg'
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Hero />
       <HowItWorks />
       <ProductComparisonSection demoHref={demoHref} title={"Результати наших клієнтів"} />
+      <ModelComparisonSection />
     </>
   )
 }

@@ -10,7 +10,7 @@ const HowItWorks = () => {
             <p className="text-[#4FACF5] uppercase text-center text-base font-bold leading-[165%]">Принцип дії</p>
             <h2 className="mt-4 text-[#22354A] font-medium text-[48px] leading-[125%] text-center">Як працює технологія<br />V-NRG</h2>
 
-            <div className="grid grid-cols-3 gap-5 mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
                 <div className="bg-white p-8 rounded-[20px]">
                     <Image src={icon1} alt="" />
                     <div className="font-medium text-[24px] leading-[35px] mt-6">Стимуляція кровообігу</div>

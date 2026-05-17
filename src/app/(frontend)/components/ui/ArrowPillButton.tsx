@@ -22,7 +22,7 @@ export default function ArrowPillButton({
 }: ArrowPillButtonProps) {
   const content = (
     <>
-      <span className={`relative z-10 text-[18px] font-medium leading-[165%] ${labelClassName}`}>
+      <span className={`relative z-10 text-base md:text-[18px] font-medium leading-[165%] ${labelClassName}`}>
         {children}
       </span>
       <span className="pointer-events-none absolute inset-y-0 right-[-54px] w-[54px] rounded-full bg-[#4FACF5] transition-[width,border-radius] duration-300 ease-out group-hover/arrow-pill:w-[calc(100%+54px)] group-hover/arrow-pill:rounded-[40px]" />
