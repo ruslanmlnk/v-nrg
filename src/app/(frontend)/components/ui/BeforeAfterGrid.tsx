@@ -25,7 +25,7 @@ export default function BeforeAfterGrid({
   cards,
 }: BeforeAfterGridProps) {
   return (
-    <div className={`grid max-w-[1288px] mx-auto px-6 gap-5 lg:grid-cols-3 ${className}`.trim()}>
+    <div className={`mx-auto grid w-full max-w-[1288px] gap-5 px-6 lg:grid-cols-3 ${className}`.trim()}>
       {cards.map((card, index) => (
         <motion.div
           key={`comparison-${index}`}
