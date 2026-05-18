@@ -13,7 +13,7 @@ import NavBar from './NavBar'
 export default function Header() {
   return (
     <header className="mx-auto mt-5 max-w-[1288px] px-6 text-white">
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[20px] bg-[#22354A] px-6 py-[11.8px] leading-[26px]">
+      <div className="hidden flex-wrap items-center justify-between gap-4 rounded-[20px] bg-[#22354A] px-6 py-[11.8px] leading-[26px] lg:flex">
         <div className="flex flex-wrap items-center gap-[25px]">
           <div className="flex items-center gap-[8px]">
             <Image src={phoneIcon} alt="Phone icon" width={16} height={16} />
