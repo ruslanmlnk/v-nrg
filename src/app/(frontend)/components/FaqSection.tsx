@@ -76,7 +76,7 @@ export default function FaqSection({
 
   return (
     <section className={sectionClassName}>
-      <div className="mx-auto flex max-w-[1288px] flex-col gap-12">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-12">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="text-[16px] font-bold uppercase leading-[145%] text-[#4FACF5]">{eyebrow}</div>
           <h2 className="max-w-[780px] text-[32px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">{title}</h2>
