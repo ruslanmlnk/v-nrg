@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 
 import logo from '@public/logo.svg'
 import arrowDarkIcon from '@public/icon/header/arrow_dark.svg'
@@ -15,26 +16,75 @@ import ActionIcon from '../ui/ActionIcon'
 import { useCommerce } from './providers/CommerceProvider'
 
 export default function NavBar() {
-  const { cartCount, compareCount, isLoggedIn, openCart } = useCommerce()
+  const { cartCount, categories, compareCount, isLoggedIn, openCart } = useCommerce()
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
   return (
-    <nav className="rounded-[20px] bg-white px-6 py-6 text-[#22354A] lg:mt-2 lg:py-0">
+    <nav
+      className="relative rounded-[20px] bg-white px-6 py-6 text-[#22354A] lg:mt-2 lg:py-0"
+      onMouseLeave={() => setOpenDropdown(null)}
+    >
       <div className="flex items-center justify-between gap-6 lg:grid lg:min-h-[90px] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center">
         <Link href="/" className="block shrink-0 lg:order-2 lg:justify-self-center" aria-label="V-NRG Pro">
           <Image src={logo} alt="V-NRG Pro" priority className="h-auto w-[81px] lg:w-[108px]" />
         </Link>
 
         <ul className="hidden flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[16px] font-medium uppercase leading-[165%] lg:order-1 lg:flex lg:justify-self-start">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <Link href={link.href} className="flex items-center gap-2 whitespace-nowrap">
-                <span>{link.label}</span>
-                {link.hasArrow ? (
-                  <Image src={arrowDarkIcon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
+          {navLinks.map((link) => {
+            const dropdownLinks = link.hasArrow
+              ? categories.map((category) => ({
+                  href: category.href,
+                  label: category.title,
+                }))
+              : null
+            const isOpen = openDropdown === link.label
+
+            return (
+              <li
+                key={link.label}
+                onMouseEnter={() => setOpenDropdown(dropdownLinks?.length ? link.label : null)}
+              >
+                <Link
+                  href={link.href}
+                  className="flex items-center gap-2 whitespace-nowrap"
+                  onFocus={() => setOpenDropdown(dropdownLinks?.length ? link.label : null)}
+                >
+                  <span>{link.label}</span>
+                  {link.hasArrow ? (
+                    <Image
+                      src={arrowDarkIcon}
+                      alt=""
+                      aria-hidden="true"
+                      className={`h-[10px] w-[9.14px] transition-transform duration-200 ${
+                        isOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  ) : null}
+                </Link>
+
+                {dropdownLinks?.length ? (
+                  <div
+                    className={`absolute left-6 top-full z-50 w-[520px] pt-2 transition duration-200 ${
+                      isOpen ? 'visible opacity-100' : 'invisible opacity-0'
+                    }`}
+                    onMouseEnter={() => setOpenDropdown(link.label)}
+                  >
+                    <div className="flex flex-col items-start gap-4 rounded-[20px] bg-white p-6 shadow-[0_4px_4px_rgba(0,0,0,0.10)]">
+                      {dropdownLinks.map((dropdownLink) => (
+                        <Link
+                          key={dropdownLink.label}
+                          href={dropdownLink.href}
+                          className="text-[16px] font-medium uppercase leading-[165%] text-[#181818] transition-colors duration-200 hover:text-[#4FACF5]"
+                        >
+                          {dropdownLink.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 ) : null}
-              </Link>
-            </li>
-          ))}
+              </li>
+            )
+          })}
         </ul>
 
         <div className="hidden flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[16px] font-medium uppercase leading-[165%] lg:order-3 lg:flex lg:justify-self-end">
