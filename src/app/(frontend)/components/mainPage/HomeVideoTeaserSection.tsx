@@ -35,8 +35,8 @@ const benefits: TeaserBenefit[] = [
 
 export default function HomeVideoTeaserSection() {
   return (
-    <section className="px-6 pt-[100px] lg:px-[100px]">
-      <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-12">
+    <section className="pt-12 md:pt-[100px]">
+      <div className="mx-auto flex max-w-[1288px] px-6 flex-col items-center gap-6 md:gap-12">
         <SectionHeading
           align="center"
           eyebrow="Навчання"
@@ -50,7 +50,7 @@ export default function HomeVideoTeaserSection() {
         />
 
         <div className="flex w-full flex-col gap-5">
-          <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden rounded-[20px] bg-[#1D2734] md:min-h-[614px]">
+          <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-[20px] bg-[#1D2734] md:min-h-[614px]">
             <Image
               src={videoTeaserImage}
               alt="Відео-інструкції V-NRG"
@@ -72,7 +72,7 @@ export default function HomeVideoTeaserSection() {
               >
                 <IconAsset src={benefit.icon} width={32} height={32} />
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                  <h3 className="text-[20px] md:text-[24px] font-medium leading-[145%] text-[#22354A]">
                     {benefit.title}
                   </h3>
                   <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
