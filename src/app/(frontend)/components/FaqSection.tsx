@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import faqChevronDownIconAsset from '@public/icon/generated/faq-chevron-down.svg'
 import faqChevronUpIconAsset from '@public/icon/generated/faq-chevron-up.svg'
+import SectionHeading from './shared/SectionHeading'
 
 type FaqItemData = {
   answer?: string
@@ -76,11 +77,8 @@ export default function FaqSection({
 
   return (
     <section className={sectionClassName}>
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-12">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="text-[16px] font-bold uppercase leading-[145%] text-[#4FACF5]">{eyebrow}</div>
-          <h2 className="max-w-[780px] text-[32px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">{title}</h2>
-        </div>
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-6 md:gap-12">
+        <SectionHeading align="center" eyebrow={eyebrow} title={title} />
 
         <div className="grid gap-5 lg:grid-cols-2">
           {columns.map((column, columnIndex) => (
@@ -124,9 +122,8 @@ function FaqItem({
     <div className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
       <button type="button" onClick={onToggle} className="flex w-full items-start gap-6 text-left">
         <div
-          className={`flex-1 text-[24px] font-medium leading-[145%] transition-colors ${
-            isActive ? 'text-[#4FACF5]' : 'text-[#22354A]'
-          }`}
+          className={`flex-1 text-[24px] font-medium leading-[145%] transition-colors ${isActive ? 'text-[#4FACF5]' : 'text-[#22354A]'
+            }`}
         >
           {question}
         </div>

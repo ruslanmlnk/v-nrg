@@ -42,7 +42,7 @@ export default async function HomePage() {
       <HomeVideoTeaserSection />
       <HomeReviewsSection />
       <FaqSection
-        sectionClassName="px-6 pt-[96px] lg:px-[100px]"
+        sectionClassName="px-6 pt-12 md:pt-[96px] lg:px-[100px]"
         title={
           <>
             Відповіді на поширені

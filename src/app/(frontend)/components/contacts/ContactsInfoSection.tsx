@@ -16,20 +16,20 @@ export function ContactsInfoSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.35 }}
-      className="flex flex-col gap-8 px-2 pt-4"
+      className="flex flex-col gap-12 md:gap-8"
     >
       <div className="flex max-w-[520px] flex-col gap-4">
-        <h2 className="text-[36px] font-medium leading-[145%] text-[#22354A] md:text-[48px]">
+        <h2 className="text-[26px] font-medium leading-[33px] md:leading-[145%] text-[#22354A] md:text-[48px]">
           Зв&apos;яжіться з нами
         </h2>
-        <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+        <p className="text-base md:text-[18px] font-medium leading-[165%] text-[#22354A]">
           Щоб отримати консультацію, дізнатися більше про обладнання або домовитися про
           демонстрацію, залиште заявку онлайн або зв&apos;яжіться з нами у робочий час
         </p>
       </div>
 
       <div className="flex flex-col gap-5">
-        <div className="text-[28px] font-medium leading-[145%] text-[#22354A]">
+        <div className="text-[20px] md:text-[28px] font-medium leading-[25px] md:leading-[145%] text-[#22354A]">
           Ми в соцмережах:
         </div>
         <div className="flex flex-wrap items-center gap-3">

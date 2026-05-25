@@ -58,6 +58,18 @@ export default function PartnerReviewsSection({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -32 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.18}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -60) {
+                onNext()
+              }
+
+              if (info.offset.x > 60) {
+                onPrev()
+              }
+            }}
             className="grid w-full gap-5 lg:grid-cols-2"
           >
             {reviews.map((review, index) => (
@@ -85,14 +97,14 @@ function PartnerReviewCard({ review }: { review: PartnerReview }) {
         <Image
           src={review.image ?? partner}
           alt={review.author}
-          className="h-[260px] w-full rounded-[20px] object-cover md:h-auto md:w-[194.779px] md:flex-none"
+          className="h-[148px] w-full rounded-[20px] object-cover md:h-auto md:w-[194.779px] md:flex-none"
         />
         <div className="flex flex-1 flex-col justify-center gap-8">
-          <p className="text-[20px] font-medium leading-[145%] text-[#22354A]">
+          <p className="text-center text-[20px] font-medium leading-[145%] text-[#22354A] md:text-left">
             &ldquo;{review.quote}&rdquo;
           </p>
-          <div className="flex items-center gap-4 self-start sm:gap-6">
-            <div className="shrink-0 whitespace-nowrap border-r border-[#D5E0E8] pr-4 text-[20px] font-medium leading-[145%] text-[#22354A] sm:pr-6 sm:text-[24px]">
+          <div className="flex w-full flex-col items-center gap-4 self-center md:w-auto md:flex-row md:self-start sm:gap-6">
+            <div className="w-full border-b border-[#D5E0E8] pb-4 text-center text-[20px] font-medium leading-[145%] text-[#22354A] md:w-auto md:shrink-0 md:whitespace-nowrap md:border-b-0 md:border-r md:pb-0 md:pr-4 md:text-left sm:pr-6 sm:text-[24px]">
               {review.author}
             </div>
             <div className="flex shrink-0 items-center gap-2">
