@@ -25,7 +25,7 @@ const currencyOptions = [
 
 export default function Header() {
   return (
-    <header className="relative z-50 mx-auto mt-5 max-w-[1288px] px-6 text-white">
+    <header className="relative z-50 mx-auto mt-6 md:mt-5 max-w-[1288px] px-6 text-white">
       <div className="hidden flex-wrap items-center justify-between gap-4 rounded-[20px] bg-[#22354A] px-6 py-[11.8px] leading-[26px] lg:flex">
         <div className="flex flex-wrap items-center gap-[25px]">
           <div className="flex items-center gap-[8px]">
@@ -97,9 +97,8 @@ function HeaderDropdown({
             <button
               key={option.label}
               type="button"
-              className={`whitespace-nowrap text-[16px] font-medium leading-[165%] transition-colors duration-200 hover:text-[#4FACF5] ${
-                option.active ? 'text-[#4FACF5]' : 'text-[#181818]'
-              }`}
+              className={`whitespace-nowrap text-[16px] font-medium leading-[165%] transition-colors duration-200 hover:text-[#4FACF5] ${option.active ? 'text-[#4FACF5]' : 'text-[#181818]'
+                }`}
             >
               {option.label}
             </button>

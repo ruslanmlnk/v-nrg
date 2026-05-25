@@ -14,7 +14,7 @@ export function ProductComparisonSection({ demoHref, title = "Як працює 
   return (
     <ProductPageSection
       fullWidth
-      className="gap-12 rounded-t-[48px] bg-[#22354A] pb-[140px] pt-[100px] text-white"
+      className="gap-6 md:gap-12 rounded-t-[48px] bg-[#22354A] pt-[48px] pb-6 md:pb-[140px] md:pt-[100px] text-white"
     >
       <SectionHeading
         align="center"

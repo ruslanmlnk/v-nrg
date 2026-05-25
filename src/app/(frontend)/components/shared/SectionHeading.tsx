@@ -28,7 +28,7 @@ export default function SectionHeading({
     >
       <div className="text-[16px] font-bold uppercase leading-[26px] text-[#4FACF5]">{eyebrow}</div>
       <h2
-        className={`max-w-[780px] text-[32px] font-medium leading-[125%] text-[#22354A] md:text-[48px] ${titleClassName ?? ''
+        className={`max-w-[780px] text-[26px] font-medium leading-[125%] text-[#22354A] md:text-[48px] ${titleClassName ?? ''
           }`}
       >
         {title}

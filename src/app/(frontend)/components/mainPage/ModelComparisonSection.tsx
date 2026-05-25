@@ -42,9 +42,9 @@ export default function ModelComparisonSection() {
   return (
     <ProductPageSection
       fullWidth
-      className="gap-12 rounded-t-[48px] bg-[#F5F8F9] pt-[100px] mt-[-40px] text-white"
+      className="gap-12 rounded-t-[48px] bg-[#F5F8F9] pt-12 md:pt-[100px] md:mt-[-40px] text-white"
     >
-      <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-12">
+      <div className="mx-auto flex max-w-[1288px] px-6 flex-col items-center gap-6 md:gap-12">
         <SectionHeading
           align="center"
           eyebrow="Порівняння моделей"
@@ -70,12 +70,12 @@ export default function ModelComparisonSection() {
                 sizes="180px"
               />
 
-              <div className="flex min-w-0 flex-1 flex-col items-start gap-6">
+              <div className="flex min-w-0 flex-1 flex-col items-start gap-5 md:gap-6">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                  <h3 className="text-[20px] md:text-[24px] font-medium leading-[145%] text-[#22354A]">
                     {model.title}
                   </h3>
-                  <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+                  <p className="text-base md:text-[18px] font-medium leading-[26px] md:leading-[165%] text-[#22354A]">
                     {model.description}
                   </p>
                 </div>
@@ -84,7 +84,7 @@ export default function ModelComparisonSection() {
                   {model.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">
                       <span className="h-[6px] w-[6px] shrink-0 rounded-full bg-[#4FACF5]" />
-                      <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+                      <span className="text-base md:text-[18px] font-medium leading-[26px] md:leading-[165%] text-[#22354A]">
                         {feature}
                       </span>
                     </li>

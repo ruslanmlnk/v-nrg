@@ -32,7 +32,7 @@ export default function BeforeAfterSlider({
       viewport={{ amount: 0.35, once: true }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -3 }}
-      className={`relative h-[200px] overflow-hidden rounded-[20px] bg-[#22354A] shadow-[0_24px_64px_rgba(0,0,0,0.18)] ${className ?? ''}`}
+      className={`relative h-[180px] md:h-[200px] overflow-hidden rounded-[20px] bg-[#22354A] shadow-[0_24px_64px_rgba(0,0,0,0.18)] ${className ?? ''}`}
     >
       <ReactCompareSlider
         boundsPadding="0px"
