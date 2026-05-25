@@ -16,6 +16,7 @@ type BeforeAfterGridProps = {
 type BeforeAfterGridCard = {
   afterImage: StaticImageData
   beforeImage: StaticImageData
+  defaultPosition?: number
 }
 
 export default function BeforeAfterGrid({
@@ -39,6 +40,7 @@ export default function BeforeAfterGrid({
             beforeImage={card.beforeImage}
             afterAlt={afterAlt}
             afterImage={card.afterImage}
+            defaultPosition={card.defaultPosition}
           />
         </motion.div>
       ))}

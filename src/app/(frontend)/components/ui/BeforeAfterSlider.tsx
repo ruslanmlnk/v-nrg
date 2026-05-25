@@ -14,6 +14,7 @@ type BeforeAfterSliderProps = {
   beforeAlt: string
   beforeImage: StaticImageData
   className?: string
+  defaultPosition?: number
 }
 
 export default function BeforeAfterSlider({
@@ -22,6 +23,7 @@ export default function BeforeAfterSlider({
   beforeAlt,
   beforeImage,
   className,
+  defaultPosition = 50,
 }: BeforeAfterSliderProps) {
   return (
     <motion.div
@@ -35,9 +37,11 @@ export default function BeforeAfterSlider({
       <ReactCompareSlider
         boundsPadding="0px"
         className="h-full w-full"
+        defaultPosition={defaultPosition}
+        onlyHandleDraggable={false}
         transition="0.4s cubic-bezier(0.22, 1, 0.36, 1)"
         handle={
-          <div className="relative flex h-full w-[50px] items-center justify-center">
+          <div className="pointer-events-auto relative flex h-full w-[50px] touch-pan-y items-center justify-center">
             <div className="absolute left-1/2 top-0 h-[75px] w-[2px] -translate-x-1/2 bg-white/95" />
             <div className="absolute bottom-0 left-1/2 h-[75px] w-[2px] -translate-x-1/2 bg-white/95" />
             <motion.div
