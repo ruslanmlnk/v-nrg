@@ -31,30 +31,30 @@ export function ContactRequestSection({ className = '' }: ContactRequestSectionP
 
   return (
     <section
-      className={`grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,580px)] ${className}`.trim()}
+      className={`grid items-start gap-6 md:gap-10 lg:grid-cols-[minmax(0,1fr)_610px] lg:items-center lg:gap-12 ${className}`.trim()}
     >
       <ContactsInfoSection />
 
       <ContactsFormSection onSubmit={handleSubmit}>
-        <div className="grid gap-5 md:grid-cols-2">
-          <ContactField label="Ім'я *">
+        <div className="grid gap-4 md:grid-cols-2">
+          <ContactField label="Ім'я" required>
             <input
               required
               value={formState.name}
               onChange={(event) => setFormState((current) => ({ ...current, name: event.target.value }))}
               placeholder="Введіть ваше ім'я"
-              className={`${contactFieldClasses} h-[56px]`}
+              className={`${contactFieldClasses} h-[58px]`}
             />
           </ContactField>
 
-          <ContactField label="Email *">
+          <ContactField label="Email" required>
             <input
               required
               type="email"
               value={formState.email}
               onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
               placeholder="Введіть ваш email"
-              className={`${contactFieldClasses} h-[56px]`}
+              className={`${contactFieldClasses} h-[58px]`}
             />
           </ContactField>
         </div>
@@ -65,7 +65,7 @@ export function ContactRequestSection({ className = '' }: ContactRequestSectionP
             value={formState.message}
             onChange={(event) => setFormState((current) => ({ ...current, message: event.target.value }))}
             placeholder="Напишіть нам"
-            className={`${contactFieldClasses} min-h-[124px] resize-none py-5`}
+            className={`${contactFieldClasses} min-h-[116px] resize-none py-4`}
           />
         </ContactField>
       </ContactsFormSection>

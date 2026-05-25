@@ -16,34 +16,34 @@ export function ContactsInfoSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.35 }}
-      className="flex flex-col gap-12 md:gap-8"
+      className="flex flex-col justify-center gap-6"
     >
-      <div className="flex max-w-[520px] flex-col gap-4">
-        <h2 className="text-[26px] font-medium leading-[33px] md:leading-[145%] text-[#22354A] md:text-[48px]">
+      <div className="flex flex-col gap-4 border-b border-[#D5E0E8] pb-6 md:gap-6">
+        <h2 className="text-[26px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">
           Зв&apos;яжіться з нами
         </h2>
-        <p className="text-base md:text-[18px] font-medium leading-[165%] text-[#22354A]">
+        <p className="text-[16px] font-medium leading-[165%] text-[#22354A] md:text-[18px]">
           Щоб отримати консультацію, дізнатися більше про обладнання або домовитися про
           демонстрацію, залиште заявку онлайн або зв&apos;яжіться з нами у робочий час
         </p>
       </div>
 
-      <div className="flex flex-col gap-5">
-        <div className="text-[20px] md:text-[28px] font-medium leading-[25px] md:leading-[145%] text-[#22354A]">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="text-[20px] font-bold leading-[125%] text-[#22354A] md:text-[24px]">
           Ми в соцмережах:
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <SocialCircle href="https://t.me/" label="Telegram">
-            <IconAsset src={telegramIconAsset} width={18} height={18} />
-          </SocialCircle>
-          <SocialCircle href="https://instagram.com/" label="Instagram">
-            <IconAsset src={instagramIconAsset} width={18} height={18} />
-          </SocialCircle>
-          <SocialCircle href="https://facebook.com/" label="Facebook">
-            <IconAsset src={facebookIconAsset} width={18} height={18} />
+            <IconAsset src={telegramIconAsset} width={20} height={20} />
           </SocialCircle>
           <SocialCircle href="https://wa.me/380975468820" label="WhatsApp">
-            <IconAsset src={whatsappIconAsset} width={18} height={18} />
+            <IconAsset src={whatsappIconAsset} width={20} height={20} />
+          </SocialCircle>
+          <SocialCircle href="https://instagram.com/" label="Instagram">
+            <IconAsset src={instagramIconAsset} width={20} height={20} />
+          </SocialCircle>
+          <SocialCircle href="https://facebook.com/" label="Facebook">
+            <IconAsset src={facebookIconAsset} width={20} height={20} />
           </SocialCircle>
         </div>
       </div>
@@ -64,7 +64,7 @@ function SocialCircle({
     <Link
       href={href}
       aria-label={label}
-      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5] text-white"
+      className="flex h-11 w-11 items-center justify-center rounded-full bg-[#4FACF5] text-white"
     >
       {children}
     </Link>

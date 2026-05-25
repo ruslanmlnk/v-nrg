@@ -151,7 +151,7 @@ export default function NavBar() {
               aria-expanded={mobileCatalogOpen}
               onClick={() => setMobileCatalogOpen((isOpen) => !isOpen)}
             >
-              <span>{navLinks[0]?.label ?? 'Каталог'}</span>
+              <span className="uppercase">{navLinks[0]?.label ?? 'Каталог'}</span>
               <Image
                 src={arrowDarkIcon}
                 alt=""

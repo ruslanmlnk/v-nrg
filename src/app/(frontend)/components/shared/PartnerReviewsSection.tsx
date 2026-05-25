@@ -70,7 +70,7 @@ export default function PartnerReviewsSection({
                 onPrev()
               }
             }}
-            className="grid w-full gap-5 lg:grid-cols-2"
+            className="grid w-full min-w-0 gap-5 lg:grid-cols-[repeat(2,minmax(0,1fr))]"
           >
             {reviews.map((review, index) => (
               <PartnerReviewCard key={`${review.author}-${index}`} review={review} />
@@ -92,19 +92,19 @@ export default function PartnerReviewsSection({
 
 function PartnerReviewCard({ review }: { review: PartnerReview }) {
   return (
-    <article className="flex flex-col items-center gap-8 rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
-      <div className="flex w-full flex-col gap-8 md:flex-row md:items-stretch">
+    <article className="flex min-w-0 flex-col items-center gap-8 overflow-hidden rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
+      <div className="flex w-full min-w-0 flex-col gap-8 md:flex-row md:items-stretch">
         <Image
           src={review.image ?? partner}
           alt={review.author}
           className="h-[148px] w-full rounded-[20px] object-cover md:h-auto md:w-[194.779px] md:flex-none"
         />
-        <div className="flex flex-1 flex-col justify-center gap-8">
-          <p className="text-center text-[20px] font-medium leading-[145%] text-[#22354A] md:text-left">
+        <div className="flex min-w-0 flex-1 flex-col justify-center gap-8">
+          <p className="min-w-0 text-center text-[20px] font-medium leading-[145%] text-[#22354A] md:text-left">
             &ldquo;{review.quote}&rdquo;
           </p>
-          <div className="flex w-full flex-col items-center gap-4 self-center md:w-auto md:flex-row md:self-start sm:gap-6">
-            <div className="w-full border-b border-[#D5E0E8] pb-4 text-center text-[20px] font-medium leading-[145%] text-[#22354A] md:w-auto md:shrink-0 md:whitespace-nowrap md:border-b-0 md:border-r md:pb-0 md:pr-4 md:text-left sm:pr-6 sm:text-[24px]">
+          <div className="flex w-full min-w-0 flex-col items-center gap-4 self-center md:w-auto md:flex-row md:flex-wrap md:self-start sm:gap-6 xl:flex-nowrap">
+            <div className="w-full min-w-0 border-b border-[#D5E0E8] pb-4 text-center text-[20px] font-medium leading-[145%] text-[#22354A] md:w-auto md:border-b-0 md:border-r md:pb-0 md:pr-4 md:text-left sm:pr-6 sm:text-[24px] xl:shrink-0 xl:whitespace-nowrap">
               {review.author}
             </div>
             <div className="flex shrink-0 items-center gap-2">
