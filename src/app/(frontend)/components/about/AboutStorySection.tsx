@@ -6,7 +6,7 @@ import { aboutHighlights } from './data'
 export function AboutStorySection() {
   return (
     <section className="grid items-center gap-12 lg:grid-cols-[500px_minmax(0,1fr)]">
-      <div className="relative mx-auto h-[479px] w-full max-w-[500px]">
+      <div className="relative order-2 mx-auto h-[479px] w-full max-w-[500px] lg:order-1">
         <Image
           src={aboutTeam1}
           alt="Команда V-NRG"
@@ -26,7 +26,7 @@ export function AboutStorySection() {
         />
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="order-1 flex flex-col gap-6 lg:order-2">
         <div className="flex flex-col gap-4">
           <div className="text-[16px] font-bold uppercase leading-[145%] text-[#4FACF5]">
             Про нас
