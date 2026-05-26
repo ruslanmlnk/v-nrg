@@ -9,6 +9,7 @@ type ArrowPillButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode
   className?: string
   href?: string
+  isDark?: boolean
   labelClassName?: string
 }
 
@@ -16,6 +17,7 @@ export default function ArrowPillButton({
   children,
   className = '',
   href,
+  isDark = false,
   labelClassName = '',
   type = 'button',
   ...props
@@ -39,7 +41,8 @@ export default function ArrowPillButton({
     </>
   )
 
-  const buttonClassName = `group/arrow-pill relative flex h-[50px] items-center rounded-[40px] bg-white px-4 text-[#22354A] transition-colors duration-300 hover:text-white md:h-[54px] md:px-6 ${className}`
+  const colorClassName = isDark ? 'bg-[#22354A] text-white' : 'bg-white text-[#22354A]'
+  const buttonClassName = `group/arrow-pill relative flex h-[50px] items-center rounded-[40px] px-4 ${colorClassName} transition-colors duration-300 hover:text-white md:h-[54px] md:px-6 ${className}`
 
   if (href) {
     return (

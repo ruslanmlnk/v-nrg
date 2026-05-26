@@ -9,7 +9,6 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 import { logoutUser, fetchCurrentUser } from '../../lib/authClient'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
-import arrowIconAsset from '@public/icon/generated/components-providers-commerce-provider-arrow.svg'
 import closeIconAsset from '@public/icon/generated/commerce-close.svg'
 import miniChevronDownIconAsset from '@public/icon/generated/commerce-mini-chevron-down.svg'
 import miniChevronUpIconAsset from '@public/icon/generated/commerce-mini-chevron-up.svg'
@@ -22,6 +21,7 @@ import {
 } from '../../data/products'
 import { dealerFieldClasses, initialDealerFormState, type DealerFormState } from '../dealer/data'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import ArrowPillButton from '../ui/ArrowPillButton'
 import type { FrontendUser } from '../../../../lib/frontendUser'
 
 type CartItem = {
@@ -465,17 +465,17 @@ function CommerceOverlays() {
   return (
     <AnimatePresence>
       {isCartOpen ? (
-        <Overlay key="cart-overlay" onClose={closeCart}>
+        <Overlay key="cart-overlay" onClose={closeCart} centered>
           <motion.aside
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 80 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="ml-auto flex h-full w-full max-w-[500px] flex-col bg-white shadow-[0_24px_80px_rgba(34,53,74,0.2)]"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 18, scale: 0.98 }}
+            transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+            className="flex max-h-[calc(100dvh-32px)] w-full max-w-[500px] flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_24px_80px_rgba(34,53,74,0.2)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#D5E0E8] px-8 py-7">
-              <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">Ваш кошик</h2>
+            <div className="flex items-center justify-between border-b border-[#D5E0E8] px-8 py-6">
+              <h2 className="text-[22px] font-medium leading-[145%] text-[#22354A]">Ваш кошик</h2>
               <CloseButton onClick={closeCart} />
             </div>
 
@@ -488,7 +488,7 @@ function CommerceOverlays() {
               </div>
             ) : (
               <>
-                <div className="flex flex-1 flex-col overflow-y-auto">
+                <div className="flex flex-1 flex-col gap-4 overflow-y-auto bg-white px-8 py-6">
                   {cartItemsDetailed.map((item) => (
                     <CartDrawerItem
                       key={item.product.id}
@@ -500,29 +500,27 @@ function CommerceOverlays() {
                   ))}
                 </div>
 
-                <div className="border-t border-[#D5E0E8] px-8 pb-6 pt-8">
+                <div className="border-t border-[#D5E0E8] bg-white px-8 py-6">
                   <div className="mb-6 flex items-center justify-between gap-6">
-                    <span className="text-[22px] font-medium leading-[145%] text-[#22354A]">
+                    <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">
                       Всього:
                     </span>
-                    <span className="text-[22px] font-bold leading-[145%] text-[#22354A]">
+                    <span className="text-[24px] font-bold leading-[145%] text-[#22354A]">
                       {formatPrice(cartTotal)}
                     </span>
                   </div>
 
-                  <button
+                  <ArrowPillButton
+                    isDark
                     type="button"
                     onClick={() => {
                       closeCart()
                       router.push('/checkout')
                     }}
-                    className="relative flex h-[50px] w-full items-center justify-center rounded-full bg-[#22354A] pl-8 pr-[72px] text-[18px] font-medium leading-[145%] text-white"
+                    className="mr-[50px] w-[calc(100%-50px)] justify-center md:mr-[54px] md:w-[calc(100%-54px)]"
                   >
                     Оформити замовлення
-                    <span className="absolute right-[3px] top-1/2 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-[#4FACF5]">
-                      <IconAsset src={arrowIconAsset} width={18} height={18} />
-                    </span>
-                  </button>
+                  </ArrowPillButton>
                 </div>
               </>
             )}
@@ -714,9 +712,9 @@ function CartDrawerItem({
   onRemove: () => void
 }) {
   return (
-    <div className="border-b border-[#D5E0E8] px-8 py-7">
-      <div className="grid grid-cols-[100px_minmax(0,1fr)_72px] items-start gap-5">
-        <div className="relative h-[100px] w-[100px] overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-white">
+    <div className="border-b border-[#D5E0E8] pb-4 last:border-b-0 last:pb-0">
+      <div className="flex items-center gap-6">
+        <div className="relative h-[100px] w-[100px] flex-none overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-white">
           {item.product.cartImage ? (
             <Image
               src={item.product.cartImage}
@@ -730,13 +728,24 @@ function CartDrawerItem({
           )}
         </div>
 
-        <div className="flex flex-col gap-3">
-          <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
-            {item.product.title}
-          </h3>
-          <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-            {formatPrice(item.total)}
+        <div className="flex min-w-0 flex-1 flex-col justify-center gap-2">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+                {item.product.title}
+              </h3>
+              <div className="mt-2 text-[18px] font-bold leading-[165%] text-[#22354A]">
+                {formatPrice(item.total)}
+              </div>
+            </div>
+
+            <QuantityControl
+              quantity={item.quantity}
+              onDecrease={onDecrease}
+              onIncrease={onIncrease}
+            />
           </div>
+
           <button
             type="button"
             onClick={onRemove}
@@ -745,30 +754,40 @@ function CartDrawerItem({
             Видалити
           </button>
         </div>
+      </div>
+    </div>
+  )
+}
 
-        <div className="flex h-[50px] items-center justify-between rounded-[16px] bg-[#F5F8F9] px-4">
-          <span className="text-[18px] font-medium leading-[145%] text-[#22354A]">
-            {item.quantity}
-          </span>
-          <div className="flex flex-col gap-[2px]">
-            <button
-              type="button"
-              aria-label="Збільшити кількість"
-              onClick={onIncrease}
-              className="flex h-4 w-4 items-center justify-center text-[#22354A]"
-            >
-              <MiniChevron up />
-            </button>
-            <button
-              type="button"
-              aria-label="Зменшити кількість"
-              onClick={onDecrease}
-              className="flex h-4 w-4 items-center justify-center text-[#22354A]"
-            >
-              <MiniChevron />
-            </button>
-          </div>
-        </div>
+function QuantityControl({
+  onDecrease,
+  onIncrease,
+  quantity,
+}: {
+  onDecrease: () => void
+  onIncrease: () => void
+  quantity: number
+}) {
+  return (
+    <div className="flex flex-none items-center gap-2.5 rounded-[10px] bg-[#F5F8F9] py-2 pl-4 pr-2">
+      <span className="text-[18px] font-medium leading-[145%] text-[#22354A]">{quantity}</span>
+      <div className="flex flex-col gap-0">
+        <button
+          type="button"
+          aria-label="Збільшити кількість"
+          onClick={onIncrease}
+          className="flex h-[15px] w-[19px] items-center justify-center rounded bg-white text-[#22354A]"
+        >
+          <MiniChevron up />
+        </button>
+        <button
+          type="button"
+          aria-label="Зменшити кількість"
+          onClick={onDecrease}
+          className="flex h-[15px] w-[19px] items-center justify-center rounded bg-white text-[#22354A]"
+        >
+          <MiniChevron />
+        </button>
       </div>
     </div>
   )
