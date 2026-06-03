@@ -11,6 +11,7 @@ import { Reviews } from './collections/Reviews'
 import { Products } from './collections/Products'
 import { Category } from './collections/Category'
 import { Articles } from './collections/Articles'
+import { Orders } from './collections/Orders'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,10 +23,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Reviews, Products, Category, Articles],
+  collections: [Users, Media, Reviews, Products, Category, Articles, Orders],
   editor: lexicalEditor(),
   graphQL: {
-    schemaOutputFile: path.resolve(dirname, 'app', '(frontend)', 'lib', 'graphql', 'schema.graphql'),
+    schemaOutputFile: path.resolve(
+      dirname,
+      'app',
+      '(frontend)',
+      'lib',
+      'graphql',
+      'schema.graphql',
+    ),
   },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

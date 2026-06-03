@@ -73,6 +73,7 @@ export interface Config {
     products: Product;
     category: Category;
     articles: Article;
+    orders: Order;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     category: CategorySelect<false> | CategorySelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -344,6 +346,53 @@ export interface Article {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  orderNumber: string;
+  customer?: (number | null) | User;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  customerEmail: string;
+  orderStatus: 'new' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  paymentStatus: 'awaiting_payment' | 'processing' | 'paid' | 'failed' | 'refunded';
+  paymentMethod: 'card-online' | 'monobank-parts' | 'invoice' | 'cash-on-delivery';
+  total: number;
+  items:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  delivery?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  comment?: string | null;
+  monobank?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -389,6 +438,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'articles';
         value: number | Article;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -605,6 +658,28 @@ export interface ArticlesSelect<T extends boolean = true> {
   cardPoster?: T;
   heroImage?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
+  customer?: T;
+  firstName?: T;
+  lastName?: T;
+  phone?: T;
+  customerEmail?: T;
+  orderStatus?: T;
+  paymentStatus?: T;
+  paymentMethod?: T;
+  total?: T;
+  items?: T;
+  delivery?: T;
+  comment?: T;
+  monobank?: T;
   updatedAt?: T;
   createdAt?: T;
 }

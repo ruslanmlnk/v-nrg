@@ -9,6 +9,7 @@ export function CheckoutOrderSummary({
   cartItemsDetailed,
   cartTotal,
   isCartEmpty,
+  isSubmitting = false,
 }: {
   cartItemsDetailed: Array<{
     product: {
@@ -22,6 +23,7 @@ export function CheckoutOrderSummary({
   }>
   cartTotal: number
   isCartEmpty: boolean
+  isSubmitting?: boolean
 }) {
   return (
     <motion.aside
@@ -93,10 +95,10 @@ export function CheckoutOrderSummary({
         <button
           type="submit"
           form="checkout-form"
-          disabled={isCartEmpty}
+          disabled={isCartEmpty || isSubmitting}
           className="flex h-[50px] items-center justify-center rounded-full bg-[#4FACF5] text-[18px] font-bold leading-[165%] text-white disabled:cursor-not-allowed disabled:bg-[#B7CAD1]"
         >
-          Підтвердити замовлення
+          {isSubmitting ? 'Обробка...' : 'Підтвердити замовлення'}
         </button>
       </div>
     </motion.aside>

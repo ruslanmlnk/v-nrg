@@ -67,6 +67,7 @@ type CompleteOrderInput = {
   email: string
   firstName: string
   lastName: string
+  orderId?: string
   phone: string
 }
 
@@ -370,6 +371,7 @@ export function CommerceProvider({
     email,
     firstName,
     lastName,
+    orderId,
     phone,
   }) => {
     const createdAt = formatOrderDate(new Date())
@@ -378,7 +380,7 @@ export function CommerceProvider({
       customerName: `${firstName} ${lastName}`.trim(),
       email,
       expectedDate: formatOrderDate(addDays(new Date(), 3)),
-      id: createOrderId(),
+      id: orderId || createOrderId(),
       items: cartItemsDetailed.map((item) => ({
         productId: item.product.id,
         quantity: item.quantity,
@@ -388,12 +390,18 @@ export function CommerceProvider({
       total: cartTotal,
     }
 
-    setStore((currentStore) => ({
-      ...currentStore,
-      cartItems: [],
-      lastOrder: order,
-      orderHistory: [order, ...currentStore.orderHistory],
-    }))
+    setStore((currentStore) => {
+      const nextStore = {
+        ...currentStore,
+        cartItems: [],
+        lastOrder: order,
+        orderHistory: [order, ...currentStore.orderHistory],
+      }
+
+      persistStore(nextStore)
+
+      return nextStore
+    })
 
     setIsCartOpen(false)
     return order
@@ -905,6 +913,14 @@ function formatOrderDate(date: Date) {
 
 function createOrderId() {
   return `${Math.floor(10000 + Math.random() * 90000)}`
+}
+
+function persistStore(store: PersistedStore) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store))
 }
 
 function readPersistedStore(): PersistedStore | null {

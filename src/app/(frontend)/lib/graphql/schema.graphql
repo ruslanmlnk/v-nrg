@@ -25,6 +25,10 @@ type Query {
   Articles(draft: Boolean, where: Article_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Articles
   countArticles(draft: Boolean, trash: Boolean, where: Article_where): countArticles
   docAccessArticle(id: Int!): articlesDocAccess
+  Order(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Order
+  Orders(draft: Boolean, where: Order_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Orders
+  countOrders(draft: Boolean, trash: Boolean, where: Order_where): countOrders
+  docAccessOrder(id: Int!): ordersDocAccess
   PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
@@ -3984,6 +3988,732 @@ type ArticlesDeleteDocAccess {
   where: JSONObject
 }
 
+type Order {
+  id: Int!
+  orderNumber: String!
+  customer: User
+  firstName: String!
+  lastName: String!
+  phone: String!
+  customerEmail: EmailAddress!
+  orderStatus: Order_orderStatus!
+  paymentStatus: Order_paymentStatus!
+  paymentMethod: Order_paymentMethod!
+  total: Float!
+  items: JSON!
+  delivery: JSON
+  comment: String
+  monobank: JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum Order_orderStatus {
+  new
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+enum Order_paymentStatus {
+  awaiting_payment
+  processing
+  paid
+  failed
+  refunded
+}
+
+enum Order_paymentMethod {
+  card_online
+  monobank_parts
+  invoice
+  cash_on_delivery
+}
+
+type Orders {
+  docs: [Order!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input Order_where {
+  orderNumber: Order_orderNumber_operator
+  customer: Order_customer_operator
+  firstName: Order_firstName_operator
+  lastName: Order_lastName_operator
+  phone: Order_phone_operator
+  customerEmail: Order_customerEmail_operator
+  orderStatus: Order_orderStatus_operator
+  paymentStatus: Order_paymentStatus_operator
+  paymentMethod: Order_paymentMethod_operator
+  total: Order_total_operator
+  items: Order_items_operator
+  delivery: Order_delivery_operator
+  comment: Order_comment_operator
+  monobank: Order_monobank_operator
+  updatedAt: Order_updatedAt_operator
+  createdAt: Order_createdAt_operator
+  id: Order_id_operator
+  AND: [Order_where_and]
+  OR: [Order_where_or]
+}
+
+input Order_orderNumber_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Order_customer_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Order_firstName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Order_lastName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Order_phone_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Order_customerEmail_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+}
+
+input Order_orderStatus_operator {
+  equals: Order_orderStatus_Input
+  not_equals: Order_orderStatus_Input
+  in: [Order_orderStatus_Input]
+  not_in: [Order_orderStatus_Input]
+  all: [Order_orderStatus_Input]
+}
+
+enum Order_orderStatus_Input {
+  new
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+input Order_paymentStatus_operator {
+  equals: Order_paymentStatus_Input
+  not_equals: Order_paymentStatus_Input
+  in: [Order_paymentStatus_Input]
+  not_in: [Order_paymentStatus_Input]
+  all: [Order_paymentStatus_Input]
+}
+
+enum Order_paymentStatus_Input {
+  awaiting_payment
+  processing
+  paid
+  failed
+  refunded
+}
+
+input Order_paymentMethod_operator {
+  equals: Order_paymentMethod_Input
+  not_equals: Order_paymentMethod_Input
+  in: [Order_paymentMethod_Input]
+  not_in: [Order_paymentMethod_Input]
+  all: [Order_paymentMethod_Input]
+}
+
+enum Order_paymentMethod_Input {
+  card_online
+  monobank_parts
+  invoice
+  cash_on_delivery
+}
+
+input Order_total_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Order_items_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
+}
+
+input Order_delivery_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
+  exists: Boolean
+}
+
+input Order_comment_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input Order_monobank_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
+  exists: Boolean
+}
+
+input Order_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Order_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Order_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input Order_where_and {
+  orderNumber: Order_orderNumber_operator
+  customer: Order_customer_operator
+  firstName: Order_firstName_operator
+  lastName: Order_lastName_operator
+  phone: Order_phone_operator
+  customerEmail: Order_customerEmail_operator
+  orderStatus: Order_orderStatus_operator
+  paymentStatus: Order_paymentStatus_operator
+  paymentMethod: Order_paymentMethod_operator
+  total: Order_total_operator
+  items: Order_items_operator
+  delivery: Order_delivery_operator
+  comment: Order_comment_operator
+  monobank: Order_monobank_operator
+  updatedAt: Order_updatedAt_operator
+  createdAt: Order_createdAt_operator
+  id: Order_id_operator
+  AND: [Order_where_and]
+  OR: [Order_where_or]
+}
+
+input Order_where_or {
+  orderNumber: Order_orderNumber_operator
+  customer: Order_customer_operator
+  firstName: Order_firstName_operator
+  lastName: Order_lastName_operator
+  phone: Order_phone_operator
+  customerEmail: Order_customerEmail_operator
+  orderStatus: Order_orderStatus_operator
+  paymentStatus: Order_paymentStatus_operator
+  paymentMethod: Order_paymentMethod_operator
+  total: Order_total_operator
+  items: Order_items_operator
+  delivery: Order_delivery_operator
+  comment: Order_comment_operator
+  monobank: Order_monobank_operator
+  updatedAt: Order_updatedAt_operator
+  createdAt: Order_createdAt_operator
+  id: Order_id_operator
+  AND: [Order_where_and]
+  OR: [Order_where_or]
+}
+
+type countOrders {
+  totalDocs: Int
+}
+
+type ordersDocAccess {
+  fields: OrdersDocAccessFields
+  create: OrdersCreateDocAccess
+  read: OrdersReadDocAccess
+  update: OrdersUpdateDocAccess
+  delete: OrdersDeleteDocAccess
+}
+
+type OrdersDocAccessFields {
+  orderNumber: OrdersDocAccessFields_orderNumber
+  customer: OrdersDocAccessFields_customer
+  firstName: OrdersDocAccessFields_firstName
+  lastName: OrdersDocAccessFields_lastName
+  phone: OrdersDocAccessFields_phone
+  customerEmail: OrdersDocAccessFields_customerEmail
+  orderStatus: OrdersDocAccessFields_orderStatus
+  paymentStatus: OrdersDocAccessFields_paymentStatus
+  paymentMethod: OrdersDocAccessFields_paymentMethod
+  total: OrdersDocAccessFields_total
+  items: OrdersDocAccessFields_items
+  delivery: OrdersDocAccessFields_delivery
+  comment: OrdersDocAccessFields_comment
+  monobank: OrdersDocAccessFields_monobank
+  updatedAt: OrdersDocAccessFields_updatedAt
+  createdAt: OrdersDocAccessFields_createdAt
+}
+
+type OrdersDocAccessFields_orderNumber {
+  create: OrdersDocAccessFields_orderNumber_Create
+  read: OrdersDocAccessFields_orderNumber_Read
+  update: OrdersDocAccessFields_orderNumber_Update
+  delete: OrdersDocAccessFields_orderNumber_Delete
+}
+
+type OrdersDocAccessFields_orderNumber_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderNumber_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderNumber_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderNumber_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customer {
+  create: OrdersDocAccessFields_customer_Create
+  read: OrdersDocAccessFields_customer_Read
+  update: OrdersDocAccessFields_customer_Update
+  delete: OrdersDocAccessFields_customer_Delete
+}
+
+type OrdersDocAccessFields_customer_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customer_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customer_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customer_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_firstName {
+  create: OrdersDocAccessFields_firstName_Create
+  read: OrdersDocAccessFields_firstName_Read
+  update: OrdersDocAccessFields_firstName_Update
+  delete: OrdersDocAccessFields_firstName_Delete
+}
+
+type OrdersDocAccessFields_firstName_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_firstName_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_firstName_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_firstName_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_lastName {
+  create: OrdersDocAccessFields_lastName_Create
+  read: OrdersDocAccessFields_lastName_Read
+  update: OrdersDocAccessFields_lastName_Update
+  delete: OrdersDocAccessFields_lastName_Delete
+}
+
+type OrdersDocAccessFields_lastName_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_lastName_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_lastName_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_lastName_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_phone {
+  create: OrdersDocAccessFields_phone_Create
+  read: OrdersDocAccessFields_phone_Read
+  update: OrdersDocAccessFields_phone_Update
+  delete: OrdersDocAccessFields_phone_Delete
+}
+
+type OrdersDocAccessFields_phone_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_phone_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_phone_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_phone_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customerEmail {
+  create: OrdersDocAccessFields_customerEmail_Create
+  read: OrdersDocAccessFields_customerEmail_Read
+  update: OrdersDocAccessFields_customerEmail_Update
+  delete: OrdersDocAccessFields_customerEmail_Delete
+}
+
+type OrdersDocAccessFields_customerEmail_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customerEmail_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customerEmail_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_customerEmail_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderStatus {
+  create: OrdersDocAccessFields_orderStatus_Create
+  read: OrdersDocAccessFields_orderStatus_Read
+  update: OrdersDocAccessFields_orderStatus_Update
+  delete: OrdersDocAccessFields_orderStatus_Delete
+}
+
+type OrdersDocAccessFields_orderStatus_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderStatus_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderStatus_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_orderStatus_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentStatus {
+  create: OrdersDocAccessFields_paymentStatus_Create
+  read: OrdersDocAccessFields_paymentStatus_Read
+  update: OrdersDocAccessFields_paymentStatus_Update
+  delete: OrdersDocAccessFields_paymentStatus_Delete
+}
+
+type OrdersDocAccessFields_paymentStatus_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentStatus_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentStatus_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentStatus_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentMethod {
+  create: OrdersDocAccessFields_paymentMethod_Create
+  read: OrdersDocAccessFields_paymentMethod_Read
+  update: OrdersDocAccessFields_paymentMethod_Update
+  delete: OrdersDocAccessFields_paymentMethod_Delete
+}
+
+type OrdersDocAccessFields_paymentMethod_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentMethod_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentMethod_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentMethod_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_total {
+  create: OrdersDocAccessFields_total_Create
+  read: OrdersDocAccessFields_total_Read
+  update: OrdersDocAccessFields_total_Update
+  delete: OrdersDocAccessFields_total_Delete
+}
+
+type OrdersDocAccessFields_total_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_total_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_total_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_total_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items {
+  create: OrdersDocAccessFields_items_Create
+  read: OrdersDocAccessFields_items_Read
+  update: OrdersDocAccessFields_items_Update
+  delete: OrdersDocAccessFields_items_Delete
+}
+
+type OrdersDocAccessFields_items_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery {
+  create: OrdersDocAccessFields_delivery_Create
+  read: OrdersDocAccessFields_delivery_Read
+  update: OrdersDocAccessFields_delivery_Update
+  delete: OrdersDocAccessFields_delivery_Delete
+}
+
+type OrdersDocAccessFields_delivery_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_comment {
+  create: OrdersDocAccessFields_comment_Create
+  read: OrdersDocAccessFields_comment_Read
+  update: OrdersDocAccessFields_comment_Update
+  delete: OrdersDocAccessFields_comment_Delete
+}
+
+type OrdersDocAccessFields_comment_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_comment_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_comment_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_comment_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_monobank {
+  create: OrdersDocAccessFields_monobank_Create
+  read: OrdersDocAccessFields_monobank_Read
+  update: OrdersDocAccessFields_monobank_Update
+  delete: OrdersDocAccessFields_monobank_Delete
+}
+
+type OrdersDocAccessFields_monobank_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_monobank_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_monobank_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_monobank_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt {
+  create: OrdersDocAccessFields_updatedAt_Create
+  read: OrdersDocAccessFields_updatedAt_Read
+  update: OrdersDocAccessFields_updatedAt_Update
+  delete: OrdersDocAccessFields_updatedAt_Delete
+}
+
+type OrdersDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt {
+  create: OrdersDocAccessFields_createdAt_Create
+  read: OrdersDocAccessFields_createdAt_Read
+  update: OrdersDocAccessFields_createdAt_Update
+  delete: OrdersDocAccessFields_createdAt_Delete
+}
+
+type OrdersDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -4161,9 +4891,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   products
   category
   articles
+  orders
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -4213,6 +4944,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   products
   category
   articles
+  orders
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -4736,6 +5468,7 @@ type Access {
   products: productsAccess
   category: categoryAccess
   articles: articlesAccess
+  orders: ordersAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -7145,6 +7878,421 @@ type ArticlesDeleteAccess {
   where: JSONObject
 }
 
+type ordersAccess {
+  fields: OrdersFields
+  create: OrdersCreateAccess
+  read: OrdersReadAccess
+  update: OrdersUpdateAccess
+  delete: OrdersDeleteAccess
+}
+
+type OrdersFields {
+  orderNumber: OrdersFields_orderNumber
+  customer: OrdersFields_customer
+  firstName: OrdersFields_firstName
+  lastName: OrdersFields_lastName
+  phone: OrdersFields_phone
+  customerEmail: OrdersFields_customerEmail
+  orderStatus: OrdersFields_orderStatus
+  paymentStatus: OrdersFields_paymentStatus
+  paymentMethod: OrdersFields_paymentMethod
+  total: OrdersFields_total
+  items: OrdersFields_items
+  delivery: OrdersFields_delivery
+  comment: OrdersFields_comment
+  monobank: OrdersFields_monobank
+  updatedAt: OrdersFields_updatedAt
+  createdAt: OrdersFields_createdAt
+}
+
+type OrdersFields_orderNumber {
+  create: OrdersFields_orderNumber_Create
+  read: OrdersFields_orderNumber_Read
+  update: OrdersFields_orderNumber_Update
+  delete: OrdersFields_orderNumber_Delete
+}
+
+type OrdersFields_orderNumber_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_orderNumber_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_orderNumber_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_orderNumber_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_customer {
+  create: OrdersFields_customer_Create
+  read: OrdersFields_customer_Read
+  update: OrdersFields_customer_Update
+  delete: OrdersFields_customer_Delete
+}
+
+type OrdersFields_customer_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_customer_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_customer_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_customer_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_firstName {
+  create: OrdersFields_firstName_Create
+  read: OrdersFields_firstName_Read
+  update: OrdersFields_firstName_Update
+  delete: OrdersFields_firstName_Delete
+}
+
+type OrdersFields_firstName_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_firstName_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_firstName_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_firstName_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_lastName {
+  create: OrdersFields_lastName_Create
+  read: OrdersFields_lastName_Read
+  update: OrdersFields_lastName_Update
+  delete: OrdersFields_lastName_Delete
+}
+
+type OrdersFields_lastName_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_lastName_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_lastName_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_lastName_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_phone {
+  create: OrdersFields_phone_Create
+  read: OrdersFields_phone_Read
+  update: OrdersFields_phone_Update
+  delete: OrdersFields_phone_Delete
+}
+
+type OrdersFields_phone_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_phone_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_phone_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_phone_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_customerEmail {
+  create: OrdersFields_customerEmail_Create
+  read: OrdersFields_customerEmail_Read
+  update: OrdersFields_customerEmail_Update
+  delete: OrdersFields_customerEmail_Delete
+}
+
+type OrdersFields_customerEmail_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_customerEmail_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_customerEmail_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_customerEmail_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_orderStatus {
+  create: OrdersFields_orderStatus_Create
+  read: OrdersFields_orderStatus_Read
+  update: OrdersFields_orderStatus_Update
+  delete: OrdersFields_orderStatus_Delete
+}
+
+type OrdersFields_orderStatus_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_orderStatus_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_orderStatus_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_orderStatus_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentStatus {
+  create: OrdersFields_paymentStatus_Create
+  read: OrdersFields_paymentStatus_Read
+  update: OrdersFields_paymentStatus_Update
+  delete: OrdersFields_paymentStatus_Delete
+}
+
+type OrdersFields_paymentStatus_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentStatus_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentStatus_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentStatus_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentMethod {
+  create: OrdersFields_paymentMethod_Create
+  read: OrdersFields_paymentMethod_Read
+  update: OrdersFields_paymentMethod_Update
+  delete: OrdersFields_paymentMethod_Delete
+}
+
+type OrdersFields_paymentMethod_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentMethod_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentMethod_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentMethod_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_total {
+  create: OrdersFields_total_Create
+  read: OrdersFields_total_Read
+  update: OrdersFields_total_Update
+  delete: OrdersFields_total_Delete
+}
+
+type OrdersFields_total_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_total_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_total_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_total_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_items {
+  create: OrdersFields_items_Create
+  read: OrdersFields_items_Read
+  update: OrdersFields_items_Update
+  delete: OrdersFields_items_Delete
+}
+
+type OrdersFields_items_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery {
+  create: OrdersFields_delivery_Create
+  read: OrdersFields_delivery_Read
+  update: OrdersFields_delivery_Update
+  delete: OrdersFields_delivery_Delete
+}
+
+type OrdersFields_delivery_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_comment {
+  create: OrdersFields_comment_Create
+  read: OrdersFields_comment_Read
+  update: OrdersFields_comment_Update
+  delete: OrdersFields_comment_Delete
+}
+
+type OrdersFields_comment_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_comment_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_comment_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_comment_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_monobank {
+  create: OrdersFields_monobank_Create
+  read: OrdersFields_monobank_Read
+  update: OrdersFields_monobank_Update
+  delete: OrdersFields_monobank_Delete
+}
+
+type OrdersFields_monobank_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_monobank_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_monobank_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_monobank_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt {
+  create: OrdersFields_updatedAt_Create
+  read: OrdersFields_updatedAt_Read
+  update: OrdersFields_updatedAt_Update
+  delete: OrdersFields_updatedAt_Delete
+}
+
+type OrdersFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt {
+  create: OrdersFields_createdAt_Create
+  read: OrdersFields_createdAt_Read
+  update: OrdersFields_createdAt_Update
+  delete: OrdersFields_createdAt_Delete
+}
+
+type OrdersFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -7557,6 +8705,10 @@ type Mutation {
   updateArticle(id: Int!, autosave: Boolean, data: mutationArticleUpdateInput!, draft: Boolean, trash: Boolean): Article
   deleteArticle(id: Int!, trash: Boolean): Article
   duplicateArticle(id: Int!, data: mutationArticleInput!): Article
+  createOrder(data: mutationOrderInput!, draft: Boolean): Order
+  updateOrder(id: Int!, autosave: Boolean, data: mutationOrderUpdateInput!, draft: Boolean, trash: Boolean): Order
+  deleteOrder(id: Int!, trash: Boolean): Order
+  duplicateOrder(id: Int!, data: mutationOrderInput!): Order
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -7932,6 +9084,90 @@ input mutationArticleUpdateInput {
   createdAt: String
 }
 
+input mutationOrderInput {
+  orderNumber: String!
+  customer: Int
+  firstName: String!
+  lastName: String!
+  phone: String!
+  customerEmail: String!
+  orderStatus: Order_orderStatus_MutationInput!
+  paymentStatus: Order_paymentStatus_MutationInput!
+  paymentMethod: Order_paymentMethod_MutationInput!
+  total: Float!
+  items: JSON!
+  delivery: JSON
+  comment: String
+  monobank: JSON
+  updatedAt: String
+  createdAt: String
+}
+
+enum Order_orderStatus_MutationInput {
+  new
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+enum Order_paymentStatus_MutationInput {
+  awaiting_payment
+  processing
+  paid
+  failed
+  refunded
+}
+
+enum Order_paymentMethod_MutationInput {
+  card_online
+  monobank_parts
+  invoice
+  cash_on_delivery
+}
+
+input mutationOrderUpdateInput {
+  orderNumber: String
+  customer: Int
+  firstName: String
+  lastName: String
+  phone: String
+  customerEmail: String
+  orderStatus: OrderUpdate_orderStatus_MutationInput
+  paymentStatus: OrderUpdate_paymentStatus_MutationInput
+  paymentMethod: OrderUpdate_paymentMethod_MutationInput
+  total: Float
+  items: JSON
+  delivery: JSON
+  comment: String
+  monobank: JSON
+  updatedAt: String
+  createdAt: String
+}
+
+enum OrderUpdate_orderStatus_MutationInput {
+  new
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+enum OrderUpdate_paymentStatus_MutationInput {
+  awaiting_payment
+  processing
+  paid
+  failed
+  refunded
+}
+
+enum OrderUpdate_paymentMethod_MutationInput {
+  card_online
+  monobank_parts
+  invoice
+  cash_on_delivery
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -7962,6 +9198,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   products
   category
   articles
+  orders
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -7993,6 +9230,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   products
   category
   articles
+  orders
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

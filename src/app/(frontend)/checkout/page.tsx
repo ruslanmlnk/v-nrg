@@ -19,9 +19,25 @@ import {
   checkoutFieldClasses,
 } from '../components/checkout/CheckoutSections'
 
+type MonobankCreateResponse = {
+  invoiceUrl?: string
+  pageUrl?: string
+  redirectUrl?: string
+  redirect_url?: string
+  url?: string
+}
+
+type CreatedOrderResponse = {
+  id: number | string
+  orderNumber: string
+  paymentStatus?: string
+}
+
 export default function CheckoutPage() {
   const router = useRouter()
   const { cartItemsDetailed, cartTotal, completeOrder } = useCommerce()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [paymentError, setPaymentError] = useState('')
   const [formState, setFormState] = useState({
     comment: '',
     deliveryMethod: 'nova-poshta',
@@ -36,21 +52,107 @@ export default function CheckoutPage() {
 
   const isCartEmpty = cartItemsDetailed.length === 0
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (isCartEmpty) {
+    if (isCartEmpty || isSubmitting) {
       return
     }
 
-    completeOrder({
-      email: formState.email,
-      firstName: formState.firstName,
-      lastName: formState.lastName,
-      phone: formState.phone,
-    })
+    setIsSubmitting(true)
+    setPaymentError('')
 
-    router.push('/checkout/success')
+    const paymentItems = cartItemsDetailed.map((item) => ({
+      id: item.product.id,
+      price: item.product.price,
+      quantity: item.quantity,
+      title: item.product.title,
+    }))
+    const orderId = createCheckoutOrderId()
+    const customerName = `${formState.firstName} ${formState.lastName}`.trim()
+
+    try {
+      const createdOrder = await createCheckoutOrder({
+        comment: formState.comment,
+        customerEmail: formState.email,
+        delivery: {
+          method: formState.deliveryMethod,
+          pickupPoint: formState.pickupPoint,
+        },
+        firstName: formState.firstName,
+        items: paymentItems,
+        lastName: formState.lastName,
+        orderNumber: orderId,
+        paymentMethod: formState.paymentMethod,
+        phone: formState.phone,
+        total: cartTotal,
+      })
+      const orderNumber = createdOrder.orderNumber
+
+      if (formState.paymentMethod === 'card-online') {
+        const response = await createMonobankPayment('/api/monobank/payment/create', {
+          amount: cartTotal,
+          customerEmail: formState.email,
+          items: paymentItems,
+          orderId: orderNumber,
+        })
+        const redirectUrl = getPaymentRedirectUrl(response)
+
+        if (!redirectUrl) {
+          throw new Error('Monobank did not return payment url')
+        }
+
+        completeOrder({
+          email: formState.email,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          orderId: orderNumber,
+          phone: formState.phone,
+        })
+        window.location.assign(redirectUrl)
+        return
+      }
+
+      if (formState.paymentMethod === 'monobank-parts') {
+        const response = await createMonobankPayment('/api/monobank/parts/create', {
+          amount: cartTotal,
+          customerEmail: formState.email,
+          customerName,
+          financialPhone: formState.financialPhone,
+          items: paymentItems,
+          orderId: orderNumber,
+        })
+        const redirectUrl = getPaymentRedirectUrl(response)
+
+        completeOrder({
+          email: formState.email,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          orderId: orderNumber,
+          phone: formState.phone,
+        })
+
+        if (redirectUrl) {
+          window.location.assign(redirectUrl)
+          return
+        }
+      }
+
+      if (formState.paymentMethod !== 'monobank-parts') {
+        completeOrder({
+          email: formState.email,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          orderId: orderNumber,
+          phone: formState.phone,
+        })
+      }
+
+      router.push('/checkout/success')
+    } catch {
+      setPaymentError('Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.')
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -256,6 +358,12 @@ export default function CheckoutPage() {
                       className={`${checkoutFieldClasses} min-h-[128px] resize-none py-5`}
                     />
                   </CheckoutField>
+
+                  {paymentError ? (
+                    <div className="rounded-[20px] border border-[#F4B8B8] bg-[#FFF4F4] px-6 py-4 text-[16px] font-medium leading-[145%] text-[#D94E4E]">
+                      {paymentError}
+                    </div>
+                  ) : null}
                 </div>
               </CheckoutSection>
             </form>
@@ -264,10 +372,61 @@ export default function CheckoutPage() {
               cartItemsDetailed={cartItemsDetailed}
               cartTotal={cartTotal}
               isCartEmpty={isCartEmpty}
+              isSubmitting={isSubmitting}
             />
           </div>
         </section>
       </div>
     </div>
   )
+}
+
+async function createCheckoutOrder(payload: Record<string, unknown>) {
+  const response = await fetch('/api/orders', {
+    body: JSON.stringify(payload),
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+  })
+  const data = (await response.json().catch(() => null)) as CreatedOrderResponse | null
+
+  if (!response.ok || !data?.orderNumber) {
+    throw new Error('Order create failed')
+  }
+
+  return data
+}
+
+async function createMonobankPayment(endpoint: string, payload: Record<string, unknown>) {
+  const response = await fetch(endpoint, {
+    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+  })
+  const data = (await response.json().catch(() => null)) as MonobankCreateResponse | null
+
+  if (!response.ok || !data) {
+    throw new Error('Monobank request failed')
+  }
+
+  return data
+}
+
+function getPaymentRedirectUrl(response: MonobankCreateResponse) {
+  return (
+    response.pageUrl ||
+    response.invoiceUrl ||
+    response.redirectUrl ||
+    response.redirect_url ||
+    response.url ||
+    ''
+  )
+}
+
+function createCheckoutOrderId() {
+  return `${Math.floor(10000 + Math.random() * 90000)}`
 }
