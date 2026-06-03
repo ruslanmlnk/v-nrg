@@ -195,7 +195,7 @@ export default function CheckoutPage() {
       setPaymentError(
         error instanceof Error
           ? error.message
-          : 'ĐťĐµ Đ˛Đ´Đ°Đ»ĐľŃŃŹ ŃŃ‚Đ˛ĐľŃ€Đ¸Ń‚Đ¸ ĐľĐżĐ»Đ°Ń‚Ń Monobank. ĐźĐµŃ€ĐµĐ˛Ń–Ń€Ń‚Đµ Đ´Đ°Đ˝Ń– Ń‚Đ° ŃĐżŃ€ĐľĐ±ŃĐąŃ‚Đµ Ń‰Đµ Ń€Đ°Đ·.',
+          : 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.',
       )
       setIsSubmitting(false)
     }
@@ -206,14 +206,14 @@ export default function CheckoutPage() {
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
         <section className="flex flex-col gap-10">
           <h1 className="text-[36px] font-medium leading-[60px] text-[#22354A] md:text-[48px]">
-            ĐžŃ„ĐľŃ€ĐĽĐ»ĐµĐ˝Đ˝ŃŹ Đ·Đ°ĐĽĐľĐ˛Đ»ĐµĐ˝Đ˝ŃŹ
+            Оформлення замовлення
           </h1>
 
           <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,820px)_400px]">
             <form id="checkout-form" className="flex flex-col gap-5" onSubmit={handleSubmit}>
               <CheckoutSection
                 icon={<IconAsset src={userIconAsset} width={24} height={24} />}
-                title="ĐšĐľĐ˝Ń‚Đ°ĐşŃ‚Đ˝Ń– Đ´Đ°Đ˝Ń–"
+                title="Контактні дані"
               >
                 {!isLoggedIn && !isUserLoading ? (
                   <div className="rounded-[20px] border border-[#D5E0E8] bg-white px-6 py-4 text-[18px] font-medium leading-[165%] text-[#22354A]">
@@ -225,31 +225,31 @@ export default function CheckoutPage() {
                 ) : null}
 
                 <div className="grid gap-5 md:grid-cols-2">
-                  <CheckoutField label="Đ†ĐĽ'ŃŹ *">
+                  <CheckoutField label="Ім'я *">
                     <input
                       required
                       value={formState.firstName}
                       onChange={(event) =>
                         setFormState((current) => ({ ...current, firstName: event.target.value }))
                       }
-                      placeholder="Đ’Đ˛ĐµĐ´Ń–Ń‚ŃŚ Ń–ĐĽ'ŃŹ"
+                      placeholder="Введіть ім'я"
                       className={`${checkoutFieldClasses} h-[64px]`}
                     />
                   </CheckoutField>
 
-                  <CheckoutField label="ĐźŃ€Ń–Đ·Đ˛Đ¸Ń‰Đµ *">
+                  <CheckoutField label="Прізвище *">
                     <input
                       required
                       value={formState.lastName}
                       onChange={(event) =>
                         setFormState((current) => ({ ...current, lastName: event.target.value }))
                       }
-                      placeholder="Đ’Đ˛ĐµĐ´Ń–Ń‚ŃŚ ĐżŃ€Ń–Đ·Đ˛Đ¸Ń‰Đµ"
+                      placeholder="Введіть прізвище"
                       className={`${checkoutFieldClasses} h-[64px]`}
                     />
                   </CheckoutField>
 
-                  <CheckoutField label="Đ˘ĐµĐ»ĐµŃ„ĐľĐ˝ *">
+                  <CheckoutField label="Телефон *">
                     <input
                       required
                       value={formState.phone}
@@ -278,13 +278,13 @@ export default function CheckoutPage() {
 
               <CheckoutSection
                 icon={<IconAsset src={truckIconAsset} width={24} height={24} />}
-                title="Đ”ĐľŃŃ‚Đ°Đ˛ĐşĐ°"
+                title="Доставка"
               >
                 <div className="flex flex-col gap-4">
                   <DeliveryOption
                     active={formState.deliveryMethod === 'nova-poshta'}
-                    description="1-3 Đ´Đ˝Ń– Â· Đ‘ĐµĐ·ĐşĐľŃŃ‚ĐľĐ˛Đ˝Đľ"
-                    title="ĐťĐľĐ˛Đ° ĐźĐľŃŃ‚Đ°"
+                    description="1-3 дні · Безкоштовно"
+                    title="Нова Пошта"
                     onClick={() =>
                       setFormState((current) => ({ ...current, deliveryMethod: 'nova-poshta' }))
                     }
@@ -304,8 +304,8 @@ export default function CheckoutPage() {
 
                   <DeliveryOption
                     active={formState.deliveryMethod === 'courier'}
-                    description="1-2 Đ´Đ˝Ń– Â· 200 ĐłŃ€Đ˝"
-                    title="ĐšŃŃ€'Ń”Ń€ ĐżĐľ ĐšĐ¸Ń”Đ˛Ń"
+                    description="1-2 дні · 200 грн"
+                    title="Кур'єр по Києву"
                     onClick={() =>
                       setFormState((current) => ({ ...current, deliveryMethod: 'courier' }))
                     }
@@ -313,8 +313,8 @@ export default function CheckoutPage() {
 
                   <DeliveryOption
                     active={formState.deliveryMethod === 'pickup'}
-                    description="ĐˇĐ°ĐĽĐľĐ˛Đ¸Đ˛Ń–Đ· Đ·Ń– ŃĐşĐ»Đ°Đ´Ń"
-                    title="ĐˇĐ°ĐĽĐľĐ˛Đ¸Đ˛Ń–Đ·"
+                    description="Самовивіз зі складу"
+                    title="Самовивіз"
                     onClick={() =>
                       setFormState((current) => ({ ...current, deliveryMethod: 'pickup' }))
                     }
@@ -324,13 +324,13 @@ export default function CheckoutPage() {
 
               <CheckoutSection
                 icon={<IconAsset src={cardIconAsset} width={24} height={24} />}
-                title="ĐˇĐżĐľŃŃ–Đ± ĐľĐżĐ»Đ°Ń‚Đ¸"
+                title="Спосіб оплати"
               >
                 <div className="flex flex-col gap-5">
                   <PaymentOption
                     active={formState.paymentMethod === 'card-online'}
                     description="Monobank"
-                    title="ĐžĐżĐ»Đ°Ń‚Đ° ĐşĐ°Ń€Ń‚ĐşĐľŃŽ ĐľĐ˝Đ»Đ°ĐąĐ˝"
+                    title="Оплата карткою онлайн"
                     onClick={() =>
                       setFormState((current) => ({ ...current, paymentMethod: 'card-online' }))
                     }
@@ -338,8 +338,8 @@ export default function CheckoutPage() {
 
                   <PaymentOption
                     active={formState.paymentMethod === 'monobank-parts'}
-                    description="ĐžŃ„ĐľŃ€ĐĽĐ»ĐµĐ˝Đ˝ŃŹ Ń‡ĐµŃ€ĐµĐ· ĐĽĐµĐ˝ĐµĐ´Đ¶ĐµŃ€Đ° ĐżŃ–ŃĐ»ŃŹ ĐżŃ–Đ´Ń‚Đ˛ĐµŃ€Đ´Đ¶ĐµĐ˝Đ˝ŃŹ Đ·Đ°ĐĽĐľĐ˛Đ»ĐµĐ˝Đ˝ŃŹ"
-                    title="ĐžĐżĐ»Đ°Ń‚Đ° Ń‡Đ°ŃŃ‚Đ¸Đ˝Đ°ĐĽĐ¸ Monobank"
+                    description="Оформлення через менеджера після підтвердження замовлення"
+                    title="Оплата частинами Monobank"
                     onClick={() =>
                       setFormState((current) => ({
                         ...current,
@@ -351,14 +351,14 @@ export default function CheckoutPage() {
                       <div className="flex flex-col gap-4">
                         <div>
                           <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                            ĐžĐżĐ»Đ°Ń‚Đ° Ń‡Đ°ŃŃ‚Đ¸Đ˝Đ°ĐĽĐ¸ 8 ĐżĐ»Đ°Ń‚ĐµĐ¶Ń–Đ˛
+                            Оплата частинами 8 платежів
                           </div>
                           <div className="text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
-                            8 ĐżĐ»Đ°Ń‚ĐµĐ¶Ń–Đ˛ 7 ĐĽŃ–ŃŃŹŃ†Ń–Đ˛
+                            8 платежів 7 місяців
                           </div>
                         </div>
 
-                        <CheckoutField label="Đ¤Ń–Đ˝Đ°Đ˝ŃĐľĐ˛Đ¸Đą Đ˝ĐľĐĽĐµŃ€">
+                        <CheckoutField label="Фінансовий номер">
                           <input
                             value={formState.financialPhone}
                             onChange={(event) =>
@@ -377,8 +377,8 @@ export default function CheckoutPage() {
 
                   <PaymentOption
                     active={formState.paymentMethod === 'invoice'}
-                    description="ĐžĐżĐ»Đ°Ń‚Đ° Đ·Đ° Ń€Đ°Ń…ŃĐ˝ĐşĐľĐĽ"
-                    title="Đ‘ĐµĐ·ĐłĐľŃ‚Ń–Đ˛ĐşĐľĐ˛Đ¸Đą Ń€ĐľĐ·Ń€Đ°Ń…ŃĐ˝ĐľĐş"
+                    description="Оплата за рахунком"
+                    title="Безготівковий розрахунок"
                     onClick={() =>
                       setFormState((current) => ({ ...current, paymentMethod: 'invoice' }))
                     }
@@ -386,8 +386,8 @@ export default function CheckoutPage() {
 
                   <PaymentOption
                     active={formState.paymentMethod === 'cash-on-delivery'}
-                    description="ĐžĐżĐ»Đ°Ń‚Đ° ĐżŃ€Đ¸ ĐľŃ‚Ń€Đ¸ĐĽĐ°Đ˝Đ˝Ń–"
-                    title="ĐťĐ°ĐşĐ»Đ°Đ´ĐµĐ˝Đ¸Đą ĐżĐ»Đ°Ń‚Ń–Đ¶"
+                    description="Оплата при отриманні"
+                    title="Накладений платіж"
                     onClick={() =>
                       setFormState((current) => ({
                         ...current,
@@ -396,13 +396,13 @@ export default function CheckoutPage() {
                     }
                   />
 
-                  <CheckoutField label="ĐšĐľĐĽĐµĐ˝Ń‚Đ°Ń€ Đ´Đľ Đ·Đ°ĐĽĐľĐ˛Đ»ĐµĐ˝Đ˝ŃŹ">
+                  <CheckoutField label="Коментар до замовлення">
                     <textarea
                       value={formState.comment}
                       onChange={(event) =>
                         setFormState((current) => ({ ...current, comment: event.target.value }))
                       }
-                      placeholder="Đ”ĐľĐ´Đ°Ń‚ĐşĐľĐ˛Đ° Ń–Đ˝Ń„ĐľŃ€ĐĽĐ°Ń†Ń–ŃŹ, ĐżĐľĐ±Đ°Đ¶Đ°Đ˝Đ˝ŃŹ Ń‰ĐľĐ´Đľ Đ´ĐľŃŃ‚Đ°Đ˛ĐşĐ¸..."
+                      placeholder="Додаткова інформація, побажання щодо доставки..."
                       className={`${checkoutFieldClasses} min-h-[128px] resize-none py-5`}
                     />
                   </CheckoutField>
@@ -485,8 +485,7 @@ function getMonobankErrorMessage(response: MonobankCreateResponse | null) {
   const detailsMessage = getDetailsMessage(response?.details)
 
   return (
-    detailsMessage ||
-    'ĐťĐµ Đ˛Đ´Đ°Đ»ĐľŃŃŹ ŃŃ‚Đ˛ĐľŃ€Đ¸Ń‚Đ¸ ĐľĐżĐ»Đ°Ń‚Ń Monobank. ĐźĐµŃ€ĐµĐ˛Ń–Ń€Ń‚Đµ Đ´Đ°Đ˝Ń– Ń‚Đ° ŃĐżŃ€ĐľĐ±ŃĐąŃ‚Đµ Ń‰Đµ Ń€Đ°Đ·.'
+    detailsMessage || 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.'
   )
 }
 
