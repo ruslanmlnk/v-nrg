@@ -1,6 +1,14 @@
-import { APIError, type Access, type CollectionConfig, type PayloadRequest } from 'payload'
+import {
+  APIError,
+  type Access,
+  type CollectionConfig,
+  type FieldAccess,
+  type PayloadRequest,
+} from 'payload'
 
 const isAdmin: Access = ({ req: { user } }) => user?.collection === 'users' && user.role === 'admin'
+const isAdminField: FieldAccess = ({ req: { user } }) =>
+  user?.collection === 'users' && user.role === 'admin'
 const canAccessAdmin = ({ req }: { req: PayloadRequest }) =>
   req.user?.collection === 'users' && req.user.role === 'admin'
 
@@ -23,7 +31,7 @@ const isAdminOrSelf: Access = ({ req: { user } }) => {
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
-    defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'role'],
+    defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'role', 'dealerDiscountPercent'],
     useAsTitle: 'email',
   },
   auth: true,
@@ -73,6 +81,14 @@ export const Users: CollectionConfig = {
 
         if (operation === 'update' && !canManageRole && 'role' in data) {
           delete data.role
+        }
+
+        if (!canManageRole && 'dealerDiscountPercent' in data) {
+          delete data.dealerDiscountPercent
+        }
+
+        if (data.role && data.role !== 'dealer') {
+          data.dealerDiscountPercent = 0
         }
 
         const effectiveRole = data.role ?? originalDoc?.role ?? 'user'
@@ -126,6 +142,23 @@ export const Users: CollectionConfig = {
         },
       ],
       required: true,
+      saveToJWT: true,
+    },
+    {
+      name: 'dealerDiscountPercent',
+      type: 'number',
+      admin: {
+        condition: (_, siblingData) => siblingData.role === 'dealer',
+        description: 'Відсоток знижки на товари для дилерського акаунта.',
+        step: 1,
+      },
+      access: {
+        update: isAdminField,
+      },
+      defaultValue: 0,
+      label: 'Знижка дилера, %',
+      max: 100,
+      min: 0,
       saveToJWT: true,
     },
   ],

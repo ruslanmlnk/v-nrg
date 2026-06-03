@@ -14,59 +14,56 @@ import {
   ProductReviewsSection,
   ProductTabsSection,
 } from './ProductDetailSections'
-import {
-  chunkItems,
-  createProductGallery,
-  partnerReviews,
-} from './data'
+import { chunkItems, createProductGallery, partnerReviews } from './data'
 import type { ProductData } from '../../data/products'
 
 export default function ProductDetailView({ product }: { product: ProductData }) {
-  const { addToCart, isInCompare, products, toggleCompare } = useCommerce()
+  const { addToCart, getProductById, isInCompare, products, toggleCompare } = useCommerce()
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
   const [activeReviewPage, setActiveReviewPage] = useState(0)
-  const displayTabs = product.tabs
+  const displayProduct = getProductById(product.id) ?? product
+  const displayTabs = displayProduct.tabs
   const [activeTabId, setActiveTabId] = useState<string>(displayTabs[0]?.id ?? 'description')
   const [isShareActive, setIsShareActive] = useState(false)
   const [quantity, setQuantity] = useState(1)
 
-  const productGallery = useMemo(() => createProductGallery(product), [product])
+  const productGallery = useMemo(() => createProductGallery(displayProduct), [displayProduct])
   const relatedProducts = useMemo(
-    () => products.filter((item) => item.id !== product.id).slice(0, 3),
-    [product.id, products],
+    () => products.filter((item) => item.id !== displayProduct.id).slice(0, 3),
+    [displayProduct.id, products],
   )
   const faqColumns = useMemo(() => {
-    if (product.faq.length === 0) {
+    if (displayProduct.faq.length === 0) {
       return undefined
     }
 
-    const faqItems = product.faq.map((item, index) => ({
+    const faqItems = displayProduct.faq.map((item, index) => ({
       ...item,
       isActive: index === 0,
     }))
 
     return chunkItems(faqItems, Math.ceil(faqItems.length / 2))
-  }, [product.faq])
+  }, [displayProduct.faq])
 
   const activeGalleryItem = productGallery[activeGalleryIndex] ?? productGallery[0]
   const activeTab = displayTabs.find((tab) => tab.id === activeTabId) ?? displayTabs[0]
-  const isCompared = isInCompare(product.id)
+  const isCompared = isInCompare(displayProduct.id)
   const reviewPages = chunkItems(partnerReviews, 2)
   const visibleReviews = reviewPages[activeReviewPage] ?? reviewPages[0] ?? []
-  const demoHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Демонстрація ${product.title}`)}`
-  const paymentHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Оплата частинами ${product.title}`)}`
-  const deliveryHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Умови доставки та оплати ${product.title}`)}`
+  const demoHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Демонстрація ${displayProduct.title}`)}`
+  const paymentHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Оплата частинами ${displayProduct.title}`)}`
+  const deliveryHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Умови доставки та оплати ${displayProduct.title}`)}`
 
   useEffect(() => {
     setActiveGalleryIndex(0)
     setActiveTabId(displayTabs[0]?.id ?? 'description')
-  }, [displayTabs, product.id])
+  }, [displayProduct.id, displayTabs])
 
   const handleShare = async () => {
     const shareData = {
-      text: product.title,
-      title: product.title,
-      url: typeof window === 'undefined' ? product.href : window.location.href,
+      text: displayProduct.title,
+      title: displayProduct.title,
+      url: typeof window === 'undefined' ? displayProduct.href : window.location.href,
     }
 
     try {
@@ -87,9 +84,9 @@ export default function ProductDetailView({ product }: { product: ProductData })
     <div className="bg-[#F5F8F9] pt-5">
       <ProductPageSection className="gap-12">
         <ProductHeroSection
-          categoryLabel={product.categoryLabel}
-          categorySlug={product.category}
-          title={product.title}
+          categoryLabel={displayProduct.categoryLabel}
+          categorySlug={displayProduct.category}
+          title={displayProduct.title}
         />
 
         <ProductOverviewSection
@@ -99,14 +96,14 @@ export default function ProductDetailView({ product }: { product: ProductData })
           deliveryHref={deliveryHref}
           isCompared={isCompared}
           isShareActive={isShareActive}
-          onAddToCart={() => addToCart(product.id, quantity)}
+          onAddToCart={() => addToCart(displayProduct.id, quantity)}
           onDecreaseQuantity={() => setQuantity((current) => Math.max(1, current - 1))}
           onIncreaseQuantity={() => setQuantity((current) => current + 1)}
           onSelectGallery={setActiveGalleryIndex}
           onShare={handleShare}
-          onToggleCompare={() => toggleCompare(product.id)}
+          onToggleCompare={() => toggleCompare(displayProduct.id)}
           paymentHref={paymentHref}
-          product={product}
+          product={displayProduct}
           productGallery={productGallery}
           quantity={quantity}
         />
@@ -131,7 +128,11 @@ export default function ProductDetailView({ product }: { product: ProductData })
         }
         onSelect={setActiveReviewPage}
       />
-      <ProductCardsSection eyebrow="Більше товарів" products={relatedProducts} title="Схожі товари" />
+      <ProductCardsSection
+        eyebrow="Більше товарів"
+        products={relatedProducts}
+        title="Схожі товари"
+      />
       <ProductCardsSection
         eyebrow="Рекомендуємо разом"
         products={relatedProducts}

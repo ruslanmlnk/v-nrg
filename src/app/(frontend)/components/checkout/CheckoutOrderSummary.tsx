@@ -11,7 +11,13 @@ export function CheckoutOrderSummary({
   isCartEmpty,
 }: {
   cartItemsDetailed: Array<{
-    product: { cartImage: ProductImage; id: string; price: number; title: string }
+    product: {
+      cartImage: ProductImage
+      id: string
+      price: number
+      regularPrice?: number
+      title: string
+    }
     quantity: number
   }>
   cartTotal: number
@@ -55,6 +61,11 @@ export function CheckoutOrderSummary({
                   <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
                     {item.quantity} × {formatPrice(item.product.price)}
                   </div>
+                  {item.product.regularPrice && item.product.regularPrice > item.product.price ? (
+                    <div className="text-[14px] font-medium leading-[145%] text-[#B7CAD1]">
+                      РРЦ: {formatPrice(item.product.regularPrice)}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ))}

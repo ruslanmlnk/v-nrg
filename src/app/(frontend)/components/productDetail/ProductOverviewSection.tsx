@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import { ProductPrice } from '../shared/ProductPrice'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import availabilityIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-availability.svg'
 import compareIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-compare.svg'
@@ -10,7 +11,7 @@ import productMiniChevronDownIconAsset from '@public/icon/generated/product-mini
 import productMiniChevronUpIconAsset from '@public/icon/generated/product-mini-chevron-up.svg'
 import shareIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-share.svg'
 import starIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-star.svg'
-import { formatPrice, type ProductData } from '../../data/products'
+import { type ProductData } from '../../data/products'
 
 export function ProductOverviewSection({
   activeGalleryIndex,
@@ -129,9 +130,12 @@ export function ProductOverviewSection({
               </span>
             </div>
 
-            <div className="text-[28px] font-bold leading-[145%] text-[#22354A]">
-              {formatPrice(product.price)}
-            </div>
+            <ProductPrice
+              oldPrice={product.oldPrice}
+              priceClassName="text-[28px]"
+              price={product.price}
+              regularPrice={product.regularPrice}
+            />
 
             <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
               <div className="flex h-[50px] items-center gap-[11px] rounded-[11px] border border-[#D5E0E8] bg-white py-[9px] pl-[18px] pr-[9px]">

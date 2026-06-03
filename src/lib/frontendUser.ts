@@ -1,6 +1,9 @@
 import type { User } from '../payload-types'
 
-export type FrontendUser = Pick<User, 'email' | 'firstName' | 'id' | 'lastName' | 'phone' | 'role'>
+export type FrontendUser = Pick<
+  User,
+  'dealerDiscountPercent' | 'email' | 'firstName' | 'id' | 'lastName' | 'phone' | 'role'
+>
 
 const frontendUserRoles: FrontendUser['role'][] = ['admin', 'dealer', 'user']
 
@@ -18,6 +21,7 @@ export function toFrontendUser(user: unknown): FrontendUser | null {
     lastName: getStringField(userRecord, 'lastName'),
     phone: getStringField(userRecord, 'phone'),
     role: isFrontendUserRole(userRecord.role) ? userRecord.role : 'user',
+    dealerDiscountPercent: getDiscountPercent(userRecord.dealerDiscountPercent),
   }
 }
 
@@ -33,4 +37,12 @@ function getStringField(record: Record<string, unknown>, key: string) {
 
 function isFrontendUserRole(value: unknown): value is FrontendUser['role'] {
   return frontendUserRoles.includes(value as FrontendUser['role'])
+}
+
+function getDiscountPercent(value: unknown) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return 0
+  }
+
+  return Math.min(100, Math.max(0, value))
 }

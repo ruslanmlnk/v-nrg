@@ -46,6 +46,7 @@ type User {
   lastName: String
   phone: String
   role: User_role!
+  dealerDiscountPercent: Float
   updatedAt: DateTime
   createdAt: DateTime
   email: EmailAddress!
@@ -99,6 +100,7 @@ input User_where {
   lastName: User_lastName_operator
   phone: User_phone_operator
   role: User_role_operator
+  dealerDiscountPercent: User_dealerDiscountPercent_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -155,6 +157,16 @@ enum User_role_Input {
   admin
   user
   dealer
+}
+
+input User_dealerDiscountPercent_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
 }
 
 input User_updatedAt_operator {
@@ -235,6 +247,7 @@ input User_where_and {
   lastName: User_lastName_operator
   phone: User_phone_operator
   role: User_role_operator
+  dealerDiscountPercent: User_dealerDiscountPercent_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -251,6 +264,7 @@ input User_where_or {
   lastName: User_lastName_operator
   phone: User_phone_operator
   role: User_role_operator
+  dealerDiscountPercent: User_dealerDiscountPercent_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -280,6 +294,7 @@ type UsersDocAccessFields {
   lastName: UsersDocAccessFields_lastName
   phone: UsersDocAccessFields_phone
   role: UsersDocAccessFields_role
+  dealerDiscountPercent: UsersDocAccessFields_dealerDiscountPercent
   updatedAt: UsersDocAccessFields_updatedAt
   createdAt: UsersDocAccessFields_createdAt
   email: UsersDocAccessFields_email
@@ -375,6 +390,29 @@ type UsersDocAccessFields_role_Update {
 }
 
 type UsersDocAccessFields_role_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_dealerDiscountPercent {
+  create: UsersDocAccessFields_dealerDiscountPercent_Create
+  read: UsersDocAccessFields_dealerDiscountPercent_Read
+  update: UsersDocAccessFields_dealerDiscountPercent_Update
+  delete: UsersDocAccessFields_dealerDiscountPercent_Delete
+}
+
+type UsersDocAccessFields_dealerDiscountPercent_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_dealerDiscountPercent_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_dealerDiscountPercent_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_dealerDiscountPercent_Delete {
   permission: Boolean!
 }
 
@@ -1415,6 +1453,7 @@ type Product {
   category: [Category!]
   maniples: Float
   powerWatts: Float
+  oldprice: Float
   details: String
   shortDescription: String
   gallery: [Media!]
@@ -1528,6 +1567,7 @@ input Product_where {
   category: Product_category_operator
   maniples: Product_maniples_operator
   powerWatts: Product_powerWatts_operator
+  oldprice: Product_oldprice_operator
   details: Product_details_operator
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
@@ -1627,6 +1667,16 @@ input Product_maniples_operator {
 }
 
 input Product_powerWatts_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Product_oldprice_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1944,6 +1994,7 @@ input Product_where_and {
   category: Product_category_operator
   maniples: Product_maniples_operator
   powerWatts: Product_powerWatts_operator
+  oldprice: Product_oldprice_operator
   details: Product_details_operator
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
@@ -1987,6 +2038,7 @@ input Product_where_or {
   category: Product_category_operator
   maniples: Product_maniples_operator
   powerWatts: Product_powerWatts_operator
+  oldprice: Product_oldprice_operator
   details: Product_details_operator
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
@@ -2042,6 +2094,7 @@ type ProductsDocAccessFields {
   category: ProductsDocAccessFields_category
   maniples: ProductsDocAccessFields_maniples
   powerWatts: ProductsDocAccessFields_powerWatts
+  oldprice: ProductsDocAccessFields_oldprice
   details: ProductsDocAccessFields_details
   shortDescription: ProductsDocAccessFields_shortDescription
   gallery: ProductsDocAccessFields_gallery
@@ -2242,6 +2295,29 @@ type ProductsDocAccessFields_powerWatts_Update {
 }
 
 type ProductsDocAccessFields_powerWatts_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_oldprice {
+  create: ProductsDocAccessFields_oldprice_Create
+  read: ProductsDocAccessFields_oldprice_Read
+  update: ProductsDocAccessFields_oldprice_Update
+  delete: ProductsDocAccessFields_oldprice_Delete
+}
+
+type ProductsDocAccessFields_oldprice_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_oldprice_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_oldprice_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_oldprice_Delete {
   permission: Boolean!
 }
 
@@ -4679,6 +4755,7 @@ type UsersFields {
   lastName: UsersFields_lastName
   phone: UsersFields_phone
   role: UsersFields_role
+  dealerDiscountPercent: UsersFields_dealerDiscountPercent
   updatedAt: UsersFields_updatedAt
   createdAt: UsersFields_createdAt
   email: UsersFields_email
@@ -4774,6 +4851,29 @@ type UsersFields_role_Update {
 }
 
 type UsersFields_role_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_dealerDiscountPercent {
+  create: UsersFields_dealerDiscountPercent_Create
+  read: UsersFields_dealerDiscountPercent_Read
+  update: UsersFields_dealerDiscountPercent_Update
+  delete: UsersFields_dealerDiscountPercent_Delete
+}
+
+type UsersFields_dealerDiscountPercent_Create {
+  permission: Boolean!
+}
+
+type UsersFields_dealerDiscountPercent_Read {
+  permission: Boolean!
+}
+
+type UsersFields_dealerDiscountPercent_Update {
+  permission: Boolean!
+}
+
+type UsersFields_dealerDiscountPercent_Delete {
   permission: Boolean!
 }
 
@@ -5457,6 +5557,7 @@ type ProductsFields {
   category: ProductsFields_category
   maniples: ProductsFields_maniples
   powerWatts: ProductsFields_powerWatts
+  oldprice: ProductsFields_oldprice
   details: ProductsFields_details
   shortDescription: ProductsFields_shortDescription
   gallery: ProductsFields_gallery
@@ -5657,6 +5758,29 @@ type ProductsFields_powerWatts_Update {
 }
 
 type ProductsFields_powerWatts_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_oldprice {
+  create: ProductsFields_oldprice_Create
+  read: ProductsFields_oldprice_Read
+  update: ProductsFields_oldprice_Update
+  delete: ProductsFields_oldprice_Delete
+}
+
+type ProductsFields_oldprice_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_oldprice_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_oldprice_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_oldprice_Delete {
   permission: Boolean!
 }
 
@@ -7452,6 +7576,7 @@ input mutationUserInput {
   lastName: String
   phone: String
   role: User_role_MutationInput!
+  dealerDiscountPercent: Float
   updatedAt: String
   createdAt: String
   email: String!
@@ -7482,6 +7607,7 @@ input mutationUserUpdateInput {
   lastName: String
   phone: String
   role: UserUpdate_role_MutationInput
+  dealerDiscountPercent: Float
   updatedAt: String
   createdAt: String
   email: String
@@ -7516,6 +7642,7 @@ type usersRefreshedUser {
 
 type usersJWT {
   role: usersJWT_role!
+  dealerDiscountPercent: Float
   email: EmailAddress!
   collection: String!
 }
@@ -7592,6 +7719,7 @@ input mutationProductInput {
   category: [Int]
   maniples: Float
   powerWatts: Float
+  oldprice: Float
   details: String
   shortDescription: String
   gallery: [Int]
@@ -7680,6 +7808,7 @@ input mutationProductUpdateInput {
   category: [Int]
   maniples: Float
   powerWatts: Float
+  oldprice: Float
   details: String
   shortDescription: String
   gallery: [Int]

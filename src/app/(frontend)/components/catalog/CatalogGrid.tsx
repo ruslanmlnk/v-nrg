@@ -6,9 +6,10 @@ import { motion } from 'motion/react'
 import compareIcon from '@public/icon/header/compare.svg'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import { ProductDiscountBadge, ProductPrice } from '../shared/ProductPrice'
 import cartIconAsset from '@public/icon/generated/catalog-cart.svg'
 import shareIconAsset from '@public/icon/generated/catalog-share.svg'
-import { formatPrice, type ProductId } from '../../data/products'
+import { type ProductId } from '../../data/products'
 import { type CatalogItem } from './catalogData'
 
 export function CatalogGrid({
@@ -38,6 +39,9 @@ export function CatalogGrid({
           className="overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
         >
           <div className="relative h-[300px] overflow-hidden rounded-[20px] bg-white">
+            <div className="absolute left-5 top-5 z-10">
+              <ProductDiscountBadge oldPrice={product.oldPrice} price={product.price} />
+            </div>
             <div className="absolute right-5 top-5 z-10 flex items-center gap-3">
               <button
                 type="button"
@@ -88,9 +92,11 @@ export function CatalogGrid({
             </div>
 
             <div className="flex items-center justify-between gap-4">
-              <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">
-                {formatPrice(product.price)}
-              </div>
+              <ProductPrice
+                oldPrice={product.oldPrice}
+                price={product.price}
+                regularPrice={product.regularPrice}
+              />
               <button
                 type="button"
                 onClick={() => onAddToCart(product.id)}

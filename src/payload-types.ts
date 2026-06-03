@@ -135,6 +135,10 @@ export interface User {
   lastName?: string | null;
   phone?: string | null;
   role: 'admin' | 'user' | 'dealer';
+  /**
+   * Відсоток знижки на товари для дилерського акаунта.
+   */
+  dealerDiscountPercent?: number | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -202,6 +206,7 @@ export interface Product {
   category?: (number | Category)[] | null;
   maniples?: number | null;
   powerWatts?: number | null;
+  oldprice?: number | null;
   /**
    * Наприклад: 18 маніпул · 800 Вт.
    */
@@ -436,6 +441,7 @@ export interface UsersSelect<T extends boolean = true> {
   lastName?: T;
   phone?: T;
   role?: T;
+  dealerDiscountPercent?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -495,6 +501,7 @@ export interface ProductsSelect<T extends boolean = true> {
   category?: T;
   maniples?: T;
   powerWatts?: T;
+  oldprice?: T;
   details?: T;
   shortDescription?: T;
   gallery?: T;

@@ -14,6 +14,7 @@ import {
   CheckoutOrderSummary,
   CheckoutSection,
   DeliveryOption,
+  NovaPoshtaWarehouseSearch,
   PaymentOption,
   checkoutFieldClasses,
 } from '../components/checkout/CheckoutSections'
@@ -52,10 +53,10 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="pt-5">
+    <div className="pt-12">
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
         <section className="flex flex-col gap-10">
-          <h1 className="text-[36px] font-medium leading-[145%] text-[#22354A] md:text-[48px]">
+          <h1 className="text-[36px] font-medium leading-[60px] text-[#22354A] md:text-[48px]">
             Оформлення замовлення
           </h1>
 
@@ -137,17 +138,15 @@ export default function CheckoutPage() {
                       setFormState((current) => ({ ...current, deliveryMethod: 'nova-poshta' }))
                     }
                   >
-                    <div className="pl-10">
-                      <input
+                    <div className="pl-0 sm:pl-10">
+                      <NovaPoshtaWarehouseSearch
                         value={formState.pickupPoint}
-                        onChange={(event) =>
+                        onChange={(pickupPoint) =>
                           setFormState((current) => ({
                             ...current,
-                            pickupPoint: event.target.value,
+                            pickupPoint,
                           }))
                         }
-                        placeholder="Виберіть відповідне відділення"
-                        className="h-[50px] w-full rounded-[16px] border border-[#D5E0E8] bg-white px-6 text-[18px] font-medium leading-[165%] text-[#22354A] outline-none"
                       />
                     </div>
                   </DeliveryOption>
@@ -186,8 +185,7 @@ export default function CheckoutPage() {
                     }
                   >
                     <div className="rounded-[20px] border border-[#D5E0E8] bg-white px-6 py-4 text-[18px] font-medium leading-[165%] text-[#22354A]">
-                      Після підтвердження замовлення ми надішлемо рахунок на вашу електронну
-                      пошту
+                      Після підтвердження замовлення ми надішлемо рахунок на вашу електронну пошту
                     </div>
                   </PaymentOption>
 

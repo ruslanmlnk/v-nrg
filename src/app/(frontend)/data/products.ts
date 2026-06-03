@@ -30,6 +30,7 @@ function toPayloadProductSource(product: PayloadProduct): ProductSource {
     galleryUrls: unwrapGalleryUrls(product.gallery),
     listFeatures: product.listFeatures?.map((item) => item.feature),
     maniples: product.maniples,
+    oldprice: product.oldprice,
     powerWatts: product.powerWatts,
     price: product.price,
     rating: product.rating,

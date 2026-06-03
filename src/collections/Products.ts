@@ -67,6 +67,12 @@ export const Products: CollectionConfig = {
       ],
     },
     {
+      name: 'oldprice',
+      type: 'number',
+      label: 'Стара ціна',
+      required: false,
+    },
+    {
       name: 'details',
       type: 'text',
       label: 'Короткі деталі',

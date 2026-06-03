@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { AnimatePresence, motion } from 'motion/react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
-import { logoutUser, fetchCurrentUser } from '../../lib/authClient'
+import { logoutUser, fetchCurrentUser, updateUserProfile } from '../../lib/authClient'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import closeIconAsset from '@public/icon/generated/commerce-close.svg'
 import miniChevronDownIconAsset from '@public/icon/generated/commerce-mini-chevron-down.svg'
@@ -29,6 +29,13 @@ type CartItem = {
   quantity: number
 }
 
+export type DeliveryAddress = {
+  apartment?: string
+  city: string
+  postalCode?: string
+  street: string
+}
+
 type LastOrder = {
   createdAt?: string
   customerName: string
@@ -45,6 +52,7 @@ type LastOrder = {
 type PersistedStore = {
   cartItems: CartItem[]
   compareIds: ProductId[]
+  deliveryAddress: DeliveryAddress | null
   lastOrder: LastOrder | null
   orderHistory: LastOrder[]
 }
@@ -59,6 +67,14 @@ type CompleteOrderInput = {
   email: string
   firstName: string
   lastName: string
+  phone: string
+}
+
+type UpdateProfileInput = {
+  email?: string
+  firstName: string
+  lastName: string
+  password?: string
   phone: string
 }
 
@@ -77,6 +93,7 @@ type CommerceContextValue = {
   compareProducts: ProductData[]
   completeOrder: (input: CompleteOrderInput) => LastOrder
   currentUser: FrontendUser | null
+  deliveryAddress: DeliveryAddress | null
   getProductById: (productId: ProductId) => ProductData | undefined
   isCartOpen: boolean
   isDealerModalOpen: boolean
@@ -92,9 +109,11 @@ type CommerceContextValue = {
   products: ProductData[]
   removeFromCart: (productId: ProductId) => void
   removeFromCompare: (productId: ProductId) => void
+  saveDeliveryAddress: (address: DeliveryAddress) => void
   signIn: (user: FrontendUser | null) => void
   signOut: () => Promise<void>
   toggleCompare: (productId: ProductId) => void
+  updateProfile: (input: UpdateProfileInput) => Promise<{ error: string | null }>
   updateCartQuantity: (productId: ProductId, quantity: number) => void
 }
 
@@ -109,6 +128,7 @@ const orderDateFormatter = new Intl.DateTimeFormat('uk-UA', {
 const defaultStore: PersistedStore = {
   cartItems: [],
   compareIds: [],
+  deliveryAddress: null,
   lastOrder: null,
   orderHistory: [],
 }
@@ -136,7 +156,12 @@ export function CommerceProvider({
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isDealerModalOpen, setIsDealerModalOpen] = useState(false)
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
-  const productsMap = useMemo(() => productsToMap(initialProducts), [initialProducts])
+  const dealerDiscountPercent = getDealerDiscountPercent(currentUser)
+  const products = useMemo(
+    () => applyDealerDiscountToProducts(initialProducts, dealerDiscountPercent),
+    [dealerDiscountPercent, initialProducts],
+  )
+  const productsMap = useMemo(() => productsToMap(products), [products])
   const getProductById = (productId: ProductId) => productsMap[productId]
 
   useEffect(() => {
@@ -374,6 +399,38 @@ export function CommerceProvider({
     return order
   }
 
+  const saveDeliveryAddress: CommerceContextValue['saveDeliveryAddress'] = (address) => {
+    setStore((currentStore) => ({
+      ...currentStore,
+      deliveryAddress: address,
+    }))
+  }
+
+  const updateProfile: CommerceContextValue['updateProfile'] = async (input) => {
+    if (!currentUser) {
+      return {
+        error: 'Потрібно увійти в акаунт.',
+      }
+    }
+
+    const result = await updateUserProfile({
+      ...input,
+      userId: currentUser.id,
+    })
+
+    if (result.error || !result.data) {
+      return {
+        error: result.error,
+      }
+    }
+
+    setCurrentUser(result.data)
+
+    return {
+      error: null,
+    }
+  }
+
   const contextValue: CommerceContextValue = {
     addToCart,
     cartCount,
@@ -389,6 +446,7 @@ export function CommerceProvider({
     compareProducts,
     completeOrder,
     currentUser,
+    deliveryAddress: store.deliveryAddress,
     getProductById,
     isCartOpen,
     isDealerModalOpen,
@@ -401,12 +459,14 @@ export function CommerceProvider({
     openCart: () => setIsCartOpen(true),
     openDealerModal: () => setIsDealerModalOpen(true),
     openLogoutModal: () => setIsLogoutModalOpen(true),
-    products: initialProducts,
+    products,
     removeFromCart,
     removeFromCompare,
+    saveDeliveryAddress,
     signIn,
     signOut,
     toggleCompare,
+    updateProfile,
     updateCartQuantity,
   }
 
@@ -535,17 +595,20 @@ function CommerceOverlays() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full max-w-[600px] overflow-hidden rounded-[28px] bg-white shadow-[0_24px_80px_rgba(34,53,74,0.2)]"
+            className="flex max-h-[95vh] w-full max-w-[600px] flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_24px_80px_rgba(34,53,74,0.2)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#E7EEF3] px-8 py-7">
+            <div className="flex flex-none items-center justify-between border-b border-[#E7EEF3] px-8 py-7">
               <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
                 Подати заявку
               </h2>
               <CloseButton onClick={closeDealerModal} />
             </div>
 
-            <form className="flex flex-col gap-6 p-8" onSubmit={handleDealerSubmit}>
+            <form
+              className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-8"
+              onSubmit={handleDealerSubmit}
+            >
               <DealerField label="Назва компанії *">
                 <input
                   required
@@ -737,6 +800,11 @@ function CartDrawerItem({
               <div className="mt-2 text-[18px] font-bold leading-[165%] text-[#22354A]">
                 {formatPrice(item.total)}
               </div>
+              {item.product.regularPrice && item.product.regularPrice > item.product.price ? (
+                <div className="mt-1 text-[14px] font-medium leading-[145%] text-[#B7CAD1]">
+                  РРЦ: {formatPrice(item.product.regularPrice * item.quantity)}
+                </div>
+              ) : null}
             </div>
 
             <QuantityControl
@@ -853,6 +921,7 @@ function normalizePersistedStore(store: Partial<PersistedStore>): PersistedStore
   return {
     cartItems: store.cartItems ?? [],
     compareIds: store.compareIds ?? [],
+    deliveryAddress: normalizeDeliveryAddress(store.deliveryAddress),
     lastOrder: store.lastOrder ? normalizeStoredOrder(store.lastOrder) : null,
     orderHistory:
       store.orderHistory?.map(normalizeStoredOrder) ??
@@ -867,4 +936,47 @@ function normalizeStoredOrder(order: LastOrder): LastOrder {
     expectedDate: order.expectedDate ?? order.createdAt ?? formatOrderDate(addDays(new Date(), 3)),
     status: order.status ?? 'processing',
   }
+}
+
+function normalizeDeliveryAddress(value: unknown): DeliveryAddress | null {
+  if (!value || typeof value !== 'object') {
+    return null
+  }
+
+  const address = value as Partial<DeliveryAddress>
+  const city = address.city?.trim()
+  const street = address.street?.trim()
+
+  if (!city || !street) {
+    return null
+  }
+
+  return {
+    apartment: address.apartment?.trim() || undefined,
+    city,
+    postalCode: address.postalCode?.trim() || undefined,
+    street,
+  }
+}
+
+function getDealerDiscountPercent(user: FrontendUser | null) {
+  if (user?.role !== 'dealer') {
+    return 0
+  }
+
+  return Math.min(100, Math.max(0, user.dealerDiscountPercent ?? 0))
+}
+
+function applyDealerDiscountToProducts(products: ProductData[], discountPercent: number) {
+  if (discountPercent <= 0) {
+    return products
+  }
+
+  const multiplier = (100 - discountPercent) / 100
+
+  return products.map((product) => ({
+    ...product,
+    price: Math.round(product.price * multiplier),
+    regularPrice: product.regularPrice ?? product.price,
+  }))
 }

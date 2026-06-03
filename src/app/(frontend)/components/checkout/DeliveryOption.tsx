@@ -18,12 +18,21 @@ export function DeliveryOption({
   title: string
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <div
       className={`flex flex-col gap-4 rounded-[20px] border px-6 py-6 text-left ${active ? 'border-[#4FACF5]' : 'border-[#D5E0E8]'}`}
     >
-      <div className="flex items-start gap-4">
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onClick()
+          }
+        }}
+        className="flex cursor-pointer items-start gap-4"
+      >
         <RadioIndicator active={active} />
         <div className="flex flex-col gap-1">
           <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">{title}</div>
@@ -31,6 +40,6 @@ export function DeliveryOption({
         </div>
       </div>
       {children}
-    </button>
+    </div>
   )
 }

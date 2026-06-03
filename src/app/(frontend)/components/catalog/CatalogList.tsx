@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { motion } from 'motion/react'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import { ProductDiscountBadge, ProductPrice } from '../shared/ProductPrice'
 import cartIconAsset from '@public/icon/generated/catalog-cart.svg'
-import { formatPrice, type ProductId } from '../../data/products'
+import { type ProductId } from '../../data/products'
 import { type CatalogItem } from './catalogData'
 
 export function CatalogList({
@@ -29,6 +30,9 @@ export function CatalogList({
         >
           <div className="grid items-stretch gap-0 md:grid-cols-[380px_minmax(0,1fr)]">
             <div className="relative min-h-[240px] md:min-h-full">
+              <div className="absolute left-5 top-5 z-10">
+                <ProductDiscountBadge oldPrice={product.oldPrice} price={product.price} />
+              </div>
               {product.catalogImage ? (
                 <Image
                   src={product.catalogImage}
@@ -64,9 +68,11 @@ export function CatalogList({
               </div>
 
               <div className="flex items-center justify-between gap-4">
-                <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">
-                  {formatPrice(product.price)}
-                </div>
+                <ProductPrice
+                  oldPrice={product.oldPrice}
+                  price={product.price}
+                  regularPrice={product.regularPrice}
+                />
                 <button
                   type="button"
                   onClick={() => onAddToCart(product.id)}

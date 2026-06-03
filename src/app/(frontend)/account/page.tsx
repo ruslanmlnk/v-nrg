@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { motion } from 'motion/react'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type FormEvent, type ReactNode, useMemo, useState } from 'react'
 
-import { useCommerce } from '../components/providers/CommerceProvider'
+import { useCommerce, type DeliveryAddress } from '../components/providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import addressIconAsset from '@public/icon/generated/account-account-page-address.svg'
 import dealerIconAsset from '@public/icon/generated/account-account-page-dealer.svg'
@@ -14,7 +14,6 @@ import ordersIconAsset from '@public/icon/generated/account-account-page-orders.
 import profileIconAsset from '@public/icon/generated/account-account-page-profile.svg'
 import {
   EmptyState,
-  InfoTile,
   OrderCard,
   PaginationArrowButton,
   SectionCard,
@@ -30,8 +29,6 @@ import {
   accountSidebarItems,
   dealerCta,
   orderLabels,
-  profileFieldLabels,
-  profileNotice,
   type AccountSection,
   type AccountSectionIconKey,
 } from '../components/account/data'
@@ -42,8 +39,45 @@ const accountSectionIconMap: Record<AccountSectionIconKey, ReactNode> = {
   profile: <IconAsset src={profileIconAsset} width={24} height={24} />,
 }
 
+function PriceListIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M2.1875 20.7273V3.27273C2.1875 2.40475 2.53255 1.57256 3.14631 0.958807C3.76006 0.345051 4.59225 0 5.46023 0H15.2784L15.386 0.0053267C15.6358 0.0300795 15.8707 0.140537 16.0497 0.319602L21.5043 5.77415C21.7088 5.97873 21.8239 6.25613 21.8239 6.54545V20.7273C21.8239 21.5953 21.4788 22.4274 20.8651 23.0412C20.2513 23.6549 19.4191 24 18.5511 24H5.46023C4.59225 24 3.76006 23.6549 3.14631 23.0412C2.53255 22.4274 2.1875 21.5953 2.1875 20.7273ZM4.36932 20.7273C4.36932 21.0166 4.48434 21.294 4.68892 21.4986C4.89351 21.7032 5.1709 21.8182 5.46023 21.8182H18.5511C18.8405 21.8182 19.1179 21.7032 19.3224 21.4986C19.527 21.294 19.642 21.0166 19.642 20.7273V6.99716L14.8267 2.18182H5.46023C5.1709 2.18182 4.89351 2.29684 4.68892 2.50142C4.48434 2.70601 4.36932 2.9834 4.36932 3.27273V20.7273Z"
+        fill="currentColor"
+      />
+      <path
+        d="M13.0938 5.45455V1.09091C13.0938 0.488417 13.5822 0 14.1847 0C14.7872 0 15.2756 0.488417 15.2756 1.09091V5.45455C15.2756 5.74387 15.3906 6.02127 15.5952 6.22585C15.7998 6.43044 16.0772 6.54545 16.3665 6.54545H20.7301C21.3326 6.54545 21.821 7.03387 21.821 7.63636C21.821 8.23886 21.3326 8.72727 20.7301 8.72727H16.3665C15.4985 8.72727 14.6663 8.38222 14.0526 7.76847C13.4388 7.15471 13.0938 6.32253 13.0938 5.45455Z"
+        fill="currentColor"
+      />
+      <path
+        d="M9.8196 7.63672C10.4221 7.63672 10.9105 8.12514 10.9105 8.72763C10.9105 9.33012 10.4221 9.81854 9.8196 9.81854H7.63778C7.03529 9.81854 6.54688 9.33012 6.54688 8.72763C6.54688 8.12514 7.03529 7.63672 7.63778 7.63672H9.8196Z"
+        fill="currentColor"
+      />
+      <path
+        d="M16.3651 12C16.9675 12 17.456 12.4884 17.456 13.0909C17.456 13.6934 16.9675 14.1818 16.3651 14.1818H7.63778C7.03529 14.1818 6.54688 13.6934 6.54688 13.0909C6.54688 12.4884 7.03529 12 7.63778 12H16.3651Z"
+        fill="currentColor"
+      />
+      <path
+        d="M16.3651 16.3633C16.9675 16.3633 17.456 16.8517 17.456 17.4542C17.456 18.0567 16.9675 18.5451 16.3651 18.5451H7.63778C7.03529 18.5451 6.54688 18.0567 6.54688 17.4542C6.54688 16.8517 7.03529 16.3633 7.63778 16.3633H16.3651Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
 export default function AccountPage() {
-  const { isLoggedIn, lastOrder, openDealerModal, openLogoutModal, orderHistory } = useCommerce()
+  const {
+    deliveryAddress,
+    currentUser,
+    isLoggedIn,
+    lastOrder,
+    openDealerModal,
+    openLogoutModal,
+    orderHistory,
+    saveDeliveryAddress,
+    updateProfile,
+  } = useCommerce()
 
   const [activeSection, setActiveSection] = useState<AccountSection>('orders')
   const [currentPage, setCurrentPage] = useState(1)
@@ -55,11 +89,14 @@ export default function AccountPage() {
     [orderHistory, safePage],
   )
 
-  const customerName = lastOrder?.customerName?.trim() || accountFallbacks.customerName
-  const customerEmail = lastOrder?.email || accountFallbacks.customerEmail
+  const userFullName = `${currentUser?.firstName ?? ''} ${currentUser?.lastName ?? ''}`.trim()
+  const customerName =
+    userFullName || lastOrder?.customerName?.trim() || accountFallbacks.customerName
+  const customerEmail = currentUser?.email || lastOrder?.email || accountFallbacks.customerEmail
   const ordersStart = orderHistory.length === 0 ? 0 : (safePage - 1) * ORDERS_PER_PAGE + 1
   const ordersEnd = Math.min(safePage * ORDERS_PER_PAGE, orderHistory.length)
   const avatarLetter = customerName[0]?.toUpperCase() ?? accountFallbacks.avatarLetter
+  const isDealer = currentUser?.role === 'dealer'
 
   if (!isLoggedIn) {
     return (
@@ -143,15 +180,25 @@ export default function AccountPage() {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  {accountSidebarItems.map((item) => (
-                    <SidebarButton
-                      key={item.id}
-                      active={activeSection === item.id}
-                      icon={accountSectionIconMap[item.iconKey]}
-                      label={item.label}
-                      onClick={() => setActiveSection(item.id)}
-                    />
-                  ))}
+                  {accountSidebarItems.map((item) =>
+                    isDealer && item.id === 'addresses' ? (
+                      <SidebarButton
+                        key="price-list"
+                        active={false}
+                        icon={<PriceListIcon />}
+                        label="Прайс-лист"
+                        onClick={() => undefined}
+                      />
+                    ) : (
+                      <SidebarButton
+                        key={item.id}
+                        active={activeSection === item.id}
+                        icon={accountSectionIconMap[item.iconKey]}
+                        label={item.label}
+                        onClick={() => setActiveSection(item.id)}
+                      />
+                    ),
+                  )}
                 </div>
               </div>
             </div>
@@ -202,8 +249,8 @@ export default function AccountPage() {
                   <section className="rounded-[24px] bg-white px-8 py-6 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
                     <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                       <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                        {orderLabels.shownPrefix} {ordersStart}-{ordersEnd} {orderLabels.shownSeparator}{' '}
-                        {orderHistory.length} замовлень
+                        {orderLabels.shownPrefix} {ordersStart}-{ordersEnd}{' '}
+                        {orderLabels.shownSeparator} {orderHistory.length} замовлень
                       </div>
 
                       <div className="flex items-center gap-[10px]">
@@ -249,41 +296,18 @@ export default function AccountPage() {
                 icon={<IconAsset src={profileIconAsset} width={24} height={24} />}
                 title={accountSectionTitles.profile}
               >
-                <div className="grid gap-4 md:grid-cols-2">
-                  <InfoTile
-                    label={profileFieldLabels.name}
-                    value={lastOrder?.customerName || accountFallbacks.emptyField}
-                  />
-                  <InfoTile
-                    label={profileFieldLabels.email}
-                    value={lastOrder?.email || accountFallbacks.emptyField}
-                  />
-                  <InfoTile
-                    label={profileFieldLabels.phone}
-                    value={lastOrder?.phone || accountFallbacks.emptyField}
-                  />
-                  <InfoTile
-                    label={profileFieldLabels.lastOrder}
-                    value={lastOrder ? `№${lastOrder.id}` : accountFallbacks.noOrders}
-                  />
-                </div>
-
-                <div className="rounded-[20px] bg-[#F5F8F9] px-6 py-5 text-[16px] font-medium leading-[165%] text-[#22354A]">
-                  {profileNotice}
-                </div>
+                <ProfilePanel currentUser={currentUser} onUpdateProfile={updateProfile} />
               </SectionCard>
             ) : null}
 
-            {activeSection === 'addresses' ? (
+            {!isDealer && activeSection === 'addresses' ? (
               <SectionCard
                 icon={<IconAsset src={addressIconAsset} width={24} height={24} />}
                 title={accountSectionTitles.addresses}
               >
-                <EmptyState
-                  actionHref={accountEmptyStates.addresses.actionHref}
-                  actionLabel={accountEmptyStates.addresses.actionLabel}
-                  description={accountEmptyStates.addresses.description}
-                  title={accountEmptyStates.addresses.title}
+                <DeliveryAddressPanel
+                  address={deliveryAddress}
+                  onSaveAddress={saveDeliveryAddress}
                 />
               </SectionCard>
             ) : null}
@@ -291,5 +315,304 @@ export default function AccountPage() {
         </section>
       </div>
     </div>
+  )
+}
+
+function ProfilePanel({
+  currentUser,
+  onUpdateProfile,
+}: {
+  currentUser: {
+    email: string
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+  } | null
+  onUpdateProfile: (input: {
+    email?: string
+    firstName: string
+    lastName: string
+    password?: string
+    phone: string
+  }) => Promise<{ error: string | null }>
+}) {
+  const [formState, setFormState] = useState({
+    email: currentUser?.email ?? '',
+    firstName: currentUser?.firstName ?? '',
+    lastName: currentUser?.lastName ?? '',
+    password: '',
+    phone: currentUser?.phone ?? '',
+  })
+  const [statusMessage, setStatusMessage] = useState<string | null>(null)
+
+  const saveProfile = async () => {
+    setStatusMessage(null)
+
+    const result = await onUpdateProfile({
+      email: formState.email,
+      firstName: formState.firstName,
+      lastName: formState.lastName,
+      password: formState.password || undefined,
+      phone: formState.phone,
+    })
+
+    if (result.error) {
+      setStatusMessage(result.error)
+      return
+    }
+
+    setFormState((current) => ({ ...current, password: '' }))
+    setStatusMessage('Профіль оновлено')
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    void saveProfile()
+  }
+
+  return (
+    <div className="flex flex-col gap-5">
+      <section className="rounded-[20px] border border-[#D5E0E8] bg-white p-6">
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+          <div className="grid gap-5 md:grid-cols-2">
+            <ProfileFormField label="Ім'я *">
+              <input
+                required
+                value={formState.firstName}
+                onChange={(event) =>
+                  setFormState((current) => ({ ...current, firstName: event.target.value }))
+                }
+                placeholder="Введіть ім'я"
+                className={profileFieldClasses}
+              />
+            </ProfileFormField>
+            <ProfileFormField label="Прізвище *">
+              <input
+                required
+                value={formState.lastName}
+                onChange={(event) =>
+                  setFormState((current) => ({ ...current, lastName: event.target.value }))
+                }
+                placeholder="Введіть прізвище"
+                className={profileFieldClasses}
+              />
+            </ProfileFormField>
+            <ProfileFormField className="md:col-span-2" label="Телефон *">
+              <input
+                required
+                value={formState.phone}
+                onChange={(event) =>
+                  setFormState((current) => ({ ...current, phone: event.target.value }))
+                }
+                placeholder="+380"
+                className={profileFieldClasses}
+              />
+            </ProfileFormField>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="submit"
+              className="inline-flex h-[50px] items-center justify-center rounded-full bg-[#4FACF5] px-8 text-[18px] font-bold leading-[145%] text-white transition-opacity hover:opacity-90"
+            >
+              Зберегти
+            </button>
+          </div>
+        </form>
+        {statusMessage ? (
+          <div className="mt-5 rounded-[16px] bg-[#F5F8F9] px-5 py-4 text-[16px] font-medium leading-[145%] text-[#22354A]">
+            {statusMessage}
+          </div>
+        ) : null}
+      </section>
+
+      <section className="rounded-[20px] border border-[#D5E0E8] bg-white p-6">
+        <div className="flex flex-col gap-5">
+          <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
+            Електронна адреса
+          </h3>
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <ProfileFormField label="Поточна електронна адреса">
+              <input
+                type="email"
+                value={formState.email}
+                onChange={(event) =>
+                  setFormState((current) => ({ ...current, email: event.target.value }))
+                }
+                placeholder="Введіть email"
+                className={profileFieldClasses}
+              />
+            </ProfileFormField>
+            <button
+              type="button"
+              onClick={() => void saveProfile()}
+              className="inline-flex h-[50px] items-center justify-center rounded-full bg-[#4FACF5] px-8 text-[18px] font-bold leading-[145%] text-white transition-opacity hover:opacity-90"
+            >
+              Змінити email
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-[20px] border border-[#D5E0E8] bg-white p-6">
+        <div className="flex flex-col gap-5">
+          <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">Пароль</h3>
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <ProfileFormField label="Новий пароль">
+              <input
+                type="password"
+                value={formState.password}
+                onChange={(event) =>
+                  setFormState((current) => ({ ...current, password: event.target.value }))
+                }
+                placeholder="Введіть новий пароль"
+                className={profileFieldClasses}
+              />
+            </ProfileFormField>
+            <button
+              type="button"
+              onClick={() => void saveProfile()}
+              className="inline-flex h-[50px] items-center justify-center rounded-full bg-[#4FACF5] px-8 text-[18px] font-bold leading-[145%] text-white transition-opacity hover:opacity-90"
+            >
+              Змінити пароль
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+const profileFieldClasses =
+  'h-[64px] w-full rounded-[20px] border border-transparent bg-[#F5F8F9] px-6 text-[20px] font-medium leading-[145%] text-[#22354A] outline-none transition-colors placeholder:text-[#B7CAD1] focus:border-[#4FACF5] focus:bg-white'
+
+function ProfileFormField({
+  children,
+  className = '',
+  label,
+}: {
+  children: ReactNode
+  className?: string
+  label: string
+}) {
+  return (
+    <label className={`flex flex-col gap-3 ${className}`}>
+      <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">{label}</span>
+      {children}
+    </label>
+  )
+}
+
+function DeliveryAddressPanel({
+  address,
+  onSaveAddress,
+}: {
+  address: DeliveryAddress | null
+  onSaveAddress: (address: DeliveryAddress) => void
+}) {
+  const [formState, setFormState] = useState<DeliveryAddress>(() => ({
+    apartment: address?.apartment ?? '',
+    city: address?.city ?? '',
+    postalCode: address?.postalCode ?? '',
+    street: address?.street ?? '',
+  }))
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const nextAddress: DeliveryAddress = {
+      apartment: formState.apartment?.trim() || undefined,
+      city: formState.city.trim(),
+      postalCode: formState.postalCode?.trim() || undefined,
+      street: formState.street.trim(),
+    }
+
+    onSaveAddress(nextAddress)
+    setFormState(nextAddress)
+  }
+
+  return (
+    <form className="rounded-[20px] border border-[#D5E0E8] bg-white p-6" onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-6">
+        <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">Адреса доставки</h3>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          <AddressFormField label="Місто *">
+            <input
+              required
+              value={formState.city}
+              onChange={(event) =>
+                setFormState((current) => ({ ...current, city: event.target.value }))
+              }
+              placeholder="Київ"
+              className={addressFieldClasses}
+            />
+          </AddressFormField>
+
+          <AddressFormField label="Поштовий індекс">
+            <input
+              value={formState.postalCode ?? ''}
+              onChange={(event) =>
+                setFormState((current) => ({ ...current, postalCode: event.target.value }))
+              }
+              placeholder="01001"
+              className={addressFieldClasses}
+            />
+          </AddressFormField>
+
+          <AddressFormField className="md:col-span-2" label="Вулиця і будинок *">
+            <input
+              required
+              value={formState.street}
+              onChange={(event) =>
+                setFormState((current) => ({ ...current, street: event.target.value }))
+              }
+              placeholder="вул. Хрещатик, 1"
+              className={addressFieldClasses}
+            />
+          </AddressFormField>
+
+          <AddressFormField label="Квартира">
+            <input
+              value={formState.apartment ?? ''}
+              onChange={(event) =>
+                setFormState((current) => ({ ...current, apartment: event.target.value }))
+              }
+              placeholder="15"
+              className={addressFieldClasses}
+            />
+          </AddressFormField>
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button
+            type="submit"
+            className="inline-flex h-[50px] items-center justify-center rounded-full bg-[#4FACF5] px-8 text-[18px] font-bold leading-[145%] text-white transition-opacity hover:opacity-90"
+          >
+            Зберегти
+          </button>
+        </div>
+      </div>
+    </form>
+  )
+}
+
+const addressFieldClasses =
+  'h-[64px] w-full rounded-[20px] border border-transparent bg-[#F5F8F9] px-6 text-[20px] font-medium leading-[145%] text-[#22354A] outline-none transition-colors placeholder:text-[#B7CAD1] focus:border-[#4FACF5] focus:bg-white'
+
+function AddressFormField({
+  children,
+  className = '',
+  label,
+}: {
+  children: ReactNode
+  className?: string
+  label: string
+}) {
+  return (
+    <label className={`flex flex-col gap-3 ${className}`}>
+      <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">{label}</span>
+      {children}
+    </label>
   )
 }

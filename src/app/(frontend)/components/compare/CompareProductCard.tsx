@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'motion/react'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
-import { formatPrice, type ProductData } from '../../data/products'
+import { ProductPrice } from '../shared/ProductPrice'
+import { type ProductData } from '../../data/products'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import cartIconAsset from '@public/icon/generated/compare-compare-page-cart.svg'
 import closeIconAsset from '@public/icon/generated/compare-compare-page-close.svg'
@@ -62,9 +63,11 @@ export function CompareProductCard({
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">
-              {formatPrice(product.price)}
-            </div>
+            <ProductPrice
+              oldPrice={product.oldPrice}
+              price={product.price}
+              regularPrice={product.regularPrice}
+            />
             <button
               type="button"
               onClick={onAddToCart}

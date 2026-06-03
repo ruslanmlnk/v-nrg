@@ -11,6 +11,15 @@ type RegisterInput = LoginInput & {
   phone: string
 }
 
+type UpdateProfileInput = {
+  email?: string
+  firstName: string
+  lastName: string
+  password?: string
+  phone: string
+  userId: number
+}
+
 type AuthActionResult<T> = {
   data: T | null
   error: string | null
@@ -98,6 +107,47 @@ export async function logoutUser() {
     credentials: 'include',
     method: 'POST',
   })
+}
+
+export async function updateUserProfile(
+  input: UpdateProfileInput,
+): Promise<AuthActionResult<FrontendUser>> {
+  const body: Record<string, string> = {
+    firstName: input.firstName,
+    lastName: input.lastName,
+    phone: input.phone,
+  }
+
+  if (input.email !== undefined) {
+    body.email = input.email
+  }
+
+  if (input.password) {
+    body.password = input.password
+  }
+
+  const response = await fetch(`/api/users/${input.userId}`, {
+    body: JSON.stringify(body),
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+  })
+
+  const payload = await parseJson(response)
+
+  if (!response.ok) {
+    return {
+      data: null,
+      error: extractErrorMessage(payload, 'Не вдалося оновити профіль. Перевірте дані.'),
+    }
+  }
+
+  return {
+    data: toFrontendUser(payload?.user ?? payload),
+    error: null,
+  }
 }
 
 async function parseJson(response: Response): Promise<ApiResponsePayload | null> {

@@ -363,6 +363,7 @@ export type User = {
   lastName?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   role: User_Role;
+  dealerDiscountPercent?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['EmailAddress']['output'];
@@ -408,6 +409,7 @@ export type User_Where = {
   lastName?: InputMaybe<User_LastName_Operator>;
   phone?: InputMaybe<User_Phone_Operator>;
   role?: InputMaybe<User_Role_Operator>;
+  dealerDiscountPercent?: InputMaybe<User_DealerDiscountPercent_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
@@ -465,6 +467,16 @@ export enum User_Role_Input {
   User = 'user',
   Dealer = 'dealer'
 }
+
+export type User_DealerDiscountPercent_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 export type User_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
@@ -544,6 +556,7 @@ export type User_Where_And = {
   lastName?: InputMaybe<User_LastName_Operator>;
   phone?: InputMaybe<User_Phone_Operator>;
   role?: InputMaybe<User_Role_Operator>;
+  dealerDiscountPercent?: InputMaybe<User_DealerDiscountPercent_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
@@ -560,6 +573,7 @@ export type User_Where_Or = {
   lastName?: InputMaybe<User_LastName_Operator>;
   phone?: InputMaybe<User_Phone_Operator>;
   role?: InputMaybe<User_Role_Operator>;
+  dealerDiscountPercent?: InputMaybe<User_DealerDiscountPercent_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
@@ -592,6 +606,7 @@ export type UsersDocAccessFields = {
   lastName?: Maybe<UsersDocAccessFields_LastName>;
   phone?: Maybe<UsersDocAccessFields_Phone>;
   role?: Maybe<UsersDocAccessFields_Role>;
+  dealerDiscountPercent?: Maybe<UsersDocAccessFields_DealerDiscountPercent>;
   updatedAt?: Maybe<UsersDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<UsersDocAccessFields_CreatedAt>;
   email?: Maybe<UsersDocAccessFields_Email>;
@@ -707,6 +722,34 @@ export type UsersDocAccessFields_Role_Update = {
 
 export type UsersDocAccessFields_Role_Delete = {
   __typename?: 'UsersDocAccessFields_role_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_DealerDiscountPercent = {
+  __typename?: 'UsersDocAccessFields_dealerDiscountPercent';
+  create?: Maybe<UsersDocAccessFields_DealerDiscountPercent_Create>;
+  read?: Maybe<UsersDocAccessFields_DealerDiscountPercent_Read>;
+  update?: Maybe<UsersDocAccessFields_DealerDiscountPercent_Update>;
+  delete?: Maybe<UsersDocAccessFields_DealerDiscountPercent_Delete>;
+};
+
+export type UsersDocAccessFields_DealerDiscountPercent_Create = {
+  __typename?: 'UsersDocAccessFields_dealerDiscountPercent_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_DealerDiscountPercent_Read = {
+  __typename?: 'UsersDocAccessFields_dealerDiscountPercent_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_DealerDiscountPercent_Update = {
+  __typename?: 'UsersDocAccessFields_dealerDiscountPercent_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_DealerDiscountPercent_Delete = {
+  __typename?: 'UsersDocAccessFields_dealerDiscountPercent_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -1883,6 +1926,7 @@ export type Product = {
   category?: Maybe<Array<Category>>;
   maniples?: Maybe<Scalars['Float']['output']>;
   powerWatts?: Maybe<Scalars['Float']['output']>;
+  oldprice?: Maybe<Scalars['Float']['output']>;
   details?: Maybe<Scalars['String']['output']>;
   shortDescription?: Maybe<Scalars['String']['output']>;
   gallery?: Maybe<Array<Media>>;
@@ -2015,6 +2059,7 @@ export type Product_Where = {
   category?: InputMaybe<Product_Category_Operator>;
   maniples?: InputMaybe<Product_Maniples_Operator>;
   powerWatts?: InputMaybe<Product_PowerWatts_Operator>;
+  oldprice?: InputMaybe<Product_Oldprice_Operator>;
   details?: InputMaybe<Product_Details_Operator>;
   shortDescription?: InputMaybe<Product_ShortDescription_Operator>;
   gallery?: InputMaybe<Product_Gallery_Operator>;
@@ -2114,6 +2159,16 @@ export type Product_Maniples_Operator = {
 };
 
 export type Product_PowerWatts_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Product_Oldprice_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   not_equals?: InputMaybe<Scalars['Float']['input']>;
   greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
@@ -2431,6 +2486,7 @@ export type Product_Where_And = {
   category?: InputMaybe<Product_Category_Operator>;
   maniples?: InputMaybe<Product_Maniples_Operator>;
   powerWatts?: InputMaybe<Product_PowerWatts_Operator>;
+  oldprice?: InputMaybe<Product_Oldprice_Operator>;
   details?: InputMaybe<Product_Details_Operator>;
   shortDescription?: InputMaybe<Product_ShortDescription_Operator>;
   gallery?: InputMaybe<Product_Gallery_Operator>;
@@ -2474,6 +2530,7 @@ export type Product_Where_Or = {
   category?: InputMaybe<Product_Category_Operator>;
   maniples?: InputMaybe<Product_Maniples_Operator>;
   powerWatts?: InputMaybe<Product_PowerWatts_Operator>;
+  oldprice?: InputMaybe<Product_Oldprice_Operator>;
   details?: InputMaybe<Product_Details_Operator>;
   shortDescription?: InputMaybe<Product_ShortDescription_Operator>;
   gallery?: InputMaybe<Product_Gallery_Operator>;
@@ -2532,6 +2589,7 @@ export type ProductsDocAccessFields = {
   category?: Maybe<ProductsDocAccessFields_Category>;
   maniples?: Maybe<ProductsDocAccessFields_Maniples>;
   powerWatts?: Maybe<ProductsDocAccessFields_PowerWatts>;
+  oldprice?: Maybe<ProductsDocAccessFields_Oldprice>;
   details?: Maybe<ProductsDocAccessFields_Details>;
   shortDescription?: Maybe<ProductsDocAccessFields_ShortDescription>;
   gallery?: Maybe<ProductsDocAccessFields_Gallery>;
@@ -2772,6 +2830,34 @@ export type ProductsDocAccessFields_PowerWatts_Update = {
 
 export type ProductsDocAccessFields_PowerWatts_Delete = {
   __typename?: 'ProductsDocAccessFields_powerWatts_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Oldprice = {
+  __typename?: 'ProductsDocAccessFields_oldprice';
+  create?: Maybe<ProductsDocAccessFields_Oldprice_Create>;
+  read?: Maybe<ProductsDocAccessFields_Oldprice_Read>;
+  update?: Maybe<ProductsDocAccessFields_Oldprice_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Oldprice_Delete>;
+};
+
+export type ProductsDocAccessFields_Oldprice_Create = {
+  __typename?: 'ProductsDocAccessFields_oldprice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Oldprice_Read = {
+  __typename?: 'ProductsDocAccessFields_oldprice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Oldprice_Update = {
+  __typename?: 'ProductsDocAccessFields_oldprice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Oldprice_Delete = {
+  __typename?: 'ProductsDocAccessFields_oldprice_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -5600,6 +5686,7 @@ export type UsersFields = {
   lastName?: Maybe<UsersFields_LastName>;
   phone?: Maybe<UsersFields_Phone>;
   role?: Maybe<UsersFields_Role>;
+  dealerDiscountPercent?: Maybe<UsersFields_DealerDiscountPercent>;
   updatedAt?: Maybe<UsersFields_UpdatedAt>;
   createdAt?: Maybe<UsersFields_CreatedAt>;
   email?: Maybe<UsersFields_Email>;
@@ -5715,6 +5802,34 @@ export type UsersFields_Role_Update = {
 
 export type UsersFields_Role_Delete = {
   __typename?: 'UsersFields_role_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_DealerDiscountPercent = {
+  __typename?: 'UsersFields_dealerDiscountPercent';
+  create?: Maybe<UsersFields_DealerDiscountPercent_Create>;
+  read?: Maybe<UsersFields_DealerDiscountPercent_Read>;
+  update?: Maybe<UsersFields_DealerDiscountPercent_Update>;
+  delete?: Maybe<UsersFields_DealerDiscountPercent_Delete>;
+};
+
+export type UsersFields_DealerDiscountPercent_Create = {
+  __typename?: 'UsersFields_dealerDiscountPercent_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_DealerDiscountPercent_Read = {
+  __typename?: 'UsersFields_dealerDiscountPercent_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_DealerDiscountPercent_Update = {
+  __typename?: 'UsersFields_dealerDiscountPercent_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_DealerDiscountPercent_Delete = {
+  __typename?: 'UsersFields_dealerDiscountPercent_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6538,6 +6653,7 @@ export type ProductsFields = {
   category?: Maybe<ProductsFields_Category>;
   maniples?: Maybe<ProductsFields_Maniples>;
   powerWatts?: Maybe<ProductsFields_PowerWatts>;
+  oldprice?: Maybe<ProductsFields_Oldprice>;
   details?: Maybe<ProductsFields_Details>;
   shortDescription?: Maybe<ProductsFields_ShortDescription>;
   gallery?: Maybe<ProductsFields_Gallery>;
@@ -6778,6 +6894,34 @@ export type ProductsFields_PowerWatts_Update = {
 
 export type ProductsFields_PowerWatts_Delete = {
   __typename?: 'ProductsFields_powerWatts_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Oldprice = {
+  __typename?: 'ProductsFields_oldprice';
+  create?: Maybe<ProductsFields_Oldprice_Create>;
+  read?: Maybe<ProductsFields_Oldprice_Read>;
+  update?: Maybe<ProductsFields_Oldprice_Update>;
+  delete?: Maybe<ProductsFields_Oldprice_Delete>;
+};
+
+export type ProductsFields_Oldprice_Create = {
+  __typename?: 'ProductsFields_oldprice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Oldprice_Read = {
+  __typename?: 'ProductsFields_oldprice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Oldprice_Update = {
+  __typename?: 'ProductsFields_oldprice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Oldprice_Delete = {
+  __typename?: 'ProductsFields_oldprice_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -9209,6 +9353,7 @@ export type MutationUserInput = {
   lastName?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   role: User_Role_MutationInput;
+  dealerDiscountPercent?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
@@ -9239,6 +9384,7 @@ export type MutationUserUpdateInput = {
   lastName?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<UserUpdate_Role_MutationInput>;
+  dealerDiscountPercent?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
@@ -9275,6 +9421,7 @@ export type UsersRefreshedUser = {
 export type UsersJwt = {
   __typename?: 'usersJWT';
   role: UsersJwt_Role;
+  dealerDiscountPercent?: Maybe<Scalars['Float']['output']>;
   email: Scalars['EmailAddress']['output'];
   collection: Scalars['String']['output'];
 };
@@ -9353,6 +9500,7 @@ export type MutationProductInput = {
   category?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   maniples?: InputMaybe<Scalars['Float']['input']>;
   powerWatts?: InputMaybe<Scalars['Float']['input']>;
+  oldprice?: InputMaybe<Scalars['Float']['input']>;
   details?: InputMaybe<Scalars['String']['input']>;
   shortDescription?: InputMaybe<Scalars['String']['input']>;
   gallery?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
@@ -9441,6 +9589,7 @@ export type MutationProductUpdateInput = {
   category?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   maniples?: InputMaybe<Scalars['Float']['input']>;
   powerWatts?: InputMaybe<Scalars['Float']['input']>;
+  oldprice?: InputMaybe<Scalars['Float']['input']>;
   details?: InputMaybe<Scalars['String']['input']>;
   shortDescription?: InputMaybe<Scalars['String']['input']>;
   gallery?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
@@ -9673,16 +9822,16 @@ export enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
 export type GetLayoutDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
 
-export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
+export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
 
 export const ProductFrontendFieldsFragmentDoc = gql`
     fragment ProductFrontendFields on Product {
@@ -9694,6 +9843,7 @@ export const ProductFrontendFieldsFragmentDoc = gql`
   details
   shortDescription
   maniples
+  oldprice
   powerWatts
   category {
     slug
@@ -9753,6 +9903,7 @@ export const GetLayoutDataDocument = gql`
       lastName
       phone
       role
+      dealerDiscountPercent
     }
   }
   Products(limit: 100, sort: "createdAt", where: {price: {greater_than: 0}}) {

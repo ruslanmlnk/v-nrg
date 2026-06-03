@@ -84,9 +84,11 @@ export type ProductData = {
   id: ProductId
   listFeatures: string[]
   maniples?: number
+  oldPrice?: number
   powerWatts?: number
   price: number
   rating: number
+  regularPrice?: number
   shortDescription: string
   slug: string
   tabs: ProductTabData[]
@@ -120,6 +122,7 @@ export type ProductSource = {
   galleryUrls?: Array<string | null | undefined> | null
   listFeatures?: Array<string | null | undefined> | null
   maniples?: number | null
+  oldprice?: number | null
   powerWatts?: number | null
   price?: number | null
   rating?: number | null
@@ -151,6 +154,7 @@ export function unwrapProduct(product: ProductSource): ProductData {
     id: slug,
     listFeatures: unwrapTextList(product.listFeatures),
     maniples: unwrapNumber(product.maniples),
+    oldPrice: unwrapNumber(product.oldprice),
     powerWatts: unwrapNumber(product.powerWatts),
     price: product.price ?? 0,
     rating: product.rating ?? 4.8,

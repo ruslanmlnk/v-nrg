@@ -4,10 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SectionHeading from '../shared/SectionHeading'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import { ProductDiscountBadge, ProductPrice } from '../shared/ProductPrice'
 import { useCommerce } from '../providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import cartIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-cart.svg'
-import { formatPrice, type ProductData, type ProductImage } from '../../data/products'
+import { type ProductData, type ProductImage } from '../../data/products'
 
 import { ProductPageSection } from './ProductPageSection'
 
@@ -30,8 +31,10 @@ export function ProductCardsSection({
             details={product.details}
             href={product.href}
             image={product.cartImage}
+            oldPrice={product.oldPrice}
             price={product.price}
             productId={product.id}
+            regularPrice={product.regularPrice}
             title={product.title}
           />
         ))}
@@ -44,15 +47,19 @@ function ProductCard({
   details,
   href,
   image,
+  oldPrice,
   price,
   productId,
+  regularPrice,
   title,
 }: {
   details: string
   href: string
   image: ProductImage
+  oldPrice?: number
   price: number
   productId: ProductData['id']
+  regularPrice?: number
   title: string
 }) {
   const { addToCart } = useCommerce()
@@ -63,6 +70,9 @@ function ProductCard({
       className="flex flex-col rounded-[20px] bg-white shadow-[0_20px_60px_rgba(34,53,74,0.05)]"
     >
       <div className="relative h-[300px] overflow-hidden rounded-[20px] bg-white">
+        <div className="absolute left-5 top-5 z-10">
+          <ProductDiscountBadge oldPrice={oldPrice} price={price} />
+        </div>
         {image ? (
           <Image
             src={image}
@@ -83,9 +93,7 @@ function ProductCard({
           </p>
         </div>
         <div className="flex items-center justify-between gap-4">
-          <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">
-            {formatPrice(price)}
-          </div>
+          <ProductPrice oldPrice={oldPrice} price={price} regularPrice={regularPrice} />
           <button
             type="button"
             aria-label={`Додати ${title} до кошика`}
