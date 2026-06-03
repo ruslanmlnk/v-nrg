@@ -497,7 +497,9 @@ function getDetailsMessage(details: unknown) {
   const record = details as Record<string, unknown>
 
   if (typeof record.message === 'string') {
-    return record.message
+    const nestedMessage = getNestedErrorMessage(record.errors)
+
+    return nestedMessage ? `${record.message}: ${nestedMessage}` : record.message
   }
 
   if (typeof record.errText === 'string') {
@@ -509,6 +511,22 @@ function getDetailsMessage(details: unknown) {
   }
 
   return ''
+}
+
+function getNestedErrorMessage(errors: unknown) {
+  if (!Array.isArray(errors)) {
+    return ''
+  }
+
+  const firstError = errors.find((error) => error && typeof error === 'object') as
+    | Record<string, unknown>
+    | undefined
+
+  if (!firstError) {
+    return ''
+  }
+
+  return typeof firstError.error === 'string' ? firstError.error : ''
 }
 
 function getFinancialPhone(financialPhone: string, phone: string) {
