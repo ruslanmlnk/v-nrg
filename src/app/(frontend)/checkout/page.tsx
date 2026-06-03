@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 
 import { useCommerce } from '../components/providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
@@ -38,7 +38,15 @@ type CreatedOrderResponse = {
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { cartItemsDetailed, cartTotal, completeOrder } = useCommerce()
+  const {
+    cartItemsDetailed,
+    cartTotal,
+    completeOrder,
+    currentUser,
+    deliveryAddress,
+    isLoggedIn,
+    isUserLoading,
+  } = useCommerce()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [paymentError, setPaymentError] = useState('')
   const [formState, setFormState] = useState({
@@ -54,6 +62,37 @@ export default function CheckoutPage() {
   })
 
   const isCartEmpty = cartItemsDetailed.length === 0
+
+  useEffect(() => {
+    if (!currentUser) {
+      return
+    }
+
+    setFormState((current) => ({
+      ...current,
+      email: current.email || currentUser.email || '',
+      financialPhone:
+        current.financialPhone && current.financialPhone !== '+38'
+          ? current.financialPhone
+          : currentUser.phone || '+38',
+      firstName: current.firstName || currentUser.firstName || '',
+      lastName: current.lastName || currentUser.lastName || '',
+      phone:
+        current.phone && current.phone !== '+380' ? current.phone : currentUser.phone || '+380',
+    }))
+  }, [currentUser])
+
+  useEffect(() => {
+    if (!deliveryAddress) {
+      return
+    }
+
+    setFormState((current) => ({
+      ...current,
+      deliveryMethod: 'courier',
+      pickupPoint: current.pickupPoint || formatDeliveryAddress(deliveryAddress),
+    }))
+  }, [deliveryAddress])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -156,7 +195,7 @@ export default function CheckoutPage() {
       setPaymentError(
         error instanceof Error
           ? error.message
-          : 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.',
+          : 'ĐťĐµ Đ˛Đ´Đ°Đ»ĐľŃŃŹ ŃŃ‚Đ˛ĐľŃ€Đ¸Ń‚Đ¸ ĐľĐżĐ»Đ°Ń‚Ń Monobank. ĐźĐµŃ€ĐµĐ˛Ń–Ń€Ń‚Đµ Đ´Đ°Đ˝Ń– Ń‚Đ° ŃĐżŃ€ĐľĐ±ŃĐąŃ‚Đµ Ń‰Đµ Ń€Đ°Đ·.',
       )
       setIsSubmitting(false)
     }
@@ -167,48 +206,50 @@ export default function CheckoutPage() {
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
         <section className="flex flex-col gap-10">
           <h1 className="text-[36px] font-medium leading-[60px] text-[#22354A] md:text-[48px]">
-            Оформлення замовлення
+            ĐžŃ„ĐľŃ€ĐĽĐ»ĐµĐ˝Đ˝ŃŹ Đ·Đ°ĐĽĐľĐ˛Đ»ĐµĐ˝Đ˝ŃŹ
           </h1>
 
           <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,820px)_400px]">
             <form id="checkout-form" className="flex flex-col gap-5" onSubmit={handleSubmit}>
               <CheckoutSection
                 icon={<IconAsset src={userIconAsset} width={24} height={24} />}
-                title="Контактні дані"
+                title="ĐšĐľĐ˝Ń‚Đ°ĐşŃ‚Đ˝Ń– Đ´Đ°Đ˝Ń–"
               >
-                <div className="rounded-[20px] border border-[#D5E0E8] bg-white px-6 py-4 text-[18px] font-medium leading-[165%] text-[#22354A]">
-                  <Link href="/login" className="font-bold text-[#4FACF5]">
-                    Увійдіть
-                  </Link>{' '}
-                  в акаунт або продовжіть як гість
-                </div>
+                {!isLoggedIn && !isUserLoading ? (
+                  <div className="rounded-[20px] border border-[#D5E0E8] bg-white px-6 py-4 text-[18px] font-medium leading-[165%] text-[#22354A]">
+                    <Link href="/login" className="font-bold text-[#4FACF5]">
+                      Увійдіть
+                    </Link>{' '}
+                    в акаунт або продовжіть як гість
+                  </div>
+                ) : null}
 
                 <div className="grid gap-5 md:grid-cols-2">
-                  <CheckoutField label="Ім'я *">
+                  <CheckoutField label="Đ†ĐĽ'ŃŹ *">
                     <input
                       required
                       value={formState.firstName}
                       onChange={(event) =>
                         setFormState((current) => ({ ...current, firstName: event.target.value }))
                       }
-                      placeholder="Введіть ім'я"
+                      placeholder="Đ’Đ˛ĐµĐ´Ń–Ń‚ŃŚ Ń–ĐĽ'ŃŹ"
                       className={`${checkoutFieldClasses} h-[64px]`}
                     />
                   </CheckoutField>
 
-                  <CheckoutField label="Прізвище *">
+                  <CheckoutField label="ĐźŃ€Ń–Đ·Đ˛Đ¸Ń‰Đµ *">
                     <input
                       required
                       value={formState.lastName}
                       onChange={(event) =>
                         setFormState((current) => ({ ...current, lastName: event.target.value }))
                       }
-                      placeholder="Введіть прізвище"
+                      placeholder="Đ’Đ˛ĐµĐ´Ń–Ń‚ŃŚ ĐżŃ€Ń–Đ·Đ˛Đ¸Ń‰Đµ"
                       className={`${checkoutFieldClasses} h-[64px]`}
                     />
                   </CheckoutField>
 
-                  <CheckoutField label="Телефон *">
+                  <CheckoutField label="Đ˘ĐµĐ»ĐµŃ„ĐľĐ˝ *">
                     <input
                       required
                       value={formState.phone}
@@ -237,13 +278,13 @@ export default function CheckoutPage() {
 
               <CheckoutSection
                 icon={<IconAsset src={truckIconAsset} width={24} height={24} />}
-                title="Доставка"
+                title="Đ”ĐľŃŃ‚Đ°Đ˛ĐşĐ°"
               >
                 <div className="flex flex-col gap-4">
                   <DeliveryOption
                     active={formState.deliveryMethod === 'nova-poshta'}
-                    description="1-3 дні · Безкоштовно"
-                    title="Нова Пошта"
+                    description="1-3 Đ´Đ˝Ń– Â· Đ‘ĐµĐ·ĐşĐľŃŃ‚ĐľĐ˛Đ˝Đľ"
+                    title="ĐťĐľĐ˛Đ° ĐźĐľŃŃ‚Đ°"
                     onClick={() =>
                       setFormState((current) => ({ ...current, deliveryMethod: 'nova-poshta' }))
                     }
@@ -263,8 +304,8 @@ export default function CheckoutPage() {
 
                   <DeliveryOption
                     active={formState.deliveryMethod === 'courier'}
-                    description="1-2 дні · 200 грн"
-                    title="Кур'єр по Києву"
+                    description="1-2 Đ´Đ˝Ń– Â· 200 ĐłŃ€Đ˝"
+                    title="ĐšŃŃ€'Ń”Ń€ ĐżĐľ ĐšĐ¸Ń”Đ˛Ń"
                     onClick={() =>
                       setFormState((current) => ({ ...current, deliveryMethod: 'courier' }))
                     }
@@ -272,8 +313,8 @@ export default function CheckoutPage() {
 
                   <DeliveryOption
                     active={formState.deliveryMethod === 'pickup'}
-                    description="Самовивіз зі складу"
-                    title="Самовивіз"
+                    description="ĐˇĐ°ĐĽĐľĐ˛Đ¸Đ˛Ń–Đ· Đ·Ń– ŃĐşĐ»Đ°Đ´Ń"
+                    title="ĐˇĐ°ĐĽĐľĐ˛Đ¸Đ˛Ń–Đ·"
                     onClick={() =>
                       setFormState((current) => ({ ...current, deliveryMethod: 'pickup' }))
                     }
@@ -283,13 +324,13 @@ export default function CheckoutPage() {
 
               <CheckoutSection
                 icon={<IconAsset src={cardIconAsset} width={24} height={24} />}
-                title="Спосіб оплати"
+                title="ĐˇĐżĐľŃŃ–Đ± ĐľĐżĐ»Đ°Ń‚Đ¸"
               >
                 <div className="flex flex-col gap-5">
                   <PaymentOption
                     active={formState.paymentMethod === 'card-online'}
                     description="Monobank"
-                    title="Оплата карткою онлайн"
+                    title="ĐžĐżĐ»Đ°Ń‚Đ° ĐşĐ°Ń€Ń‚ĐşĐľŃŽ ĐľĐ˝Đ»Đ°ĐąĐ˝"
                     onClick={() =>
                       setFormState((current) => ({ ...current, paymentMethod: 'card-online' }))
                     }
@@ -297,8 +338,8 @@ export default function CheckoutPage() {
 
                   <PaymentOption
                     active={formState.paymentMethod === 'monobank-parts'}
-                    description="Оформлення через менеджера після підтвердження замовлення"
-                    title="Оплата частинами Monobank"
+                    description="ĐžŃ„ĐľŃ€ĐĽĐ»ĐµĐ˝Đ˝ŃŹ Ń‡ĐµŃ€ĐµĐ· ĐĽĐµĐ˝ĐµĐ´Đ¶ĐµŃ€Đ° ĐżŃ–ŃĐ»ŃŹ ĐżŃ–Đ´Ń‚Đ˛ĐµŃ€Đ´Đ¶ĐµĐ˝Đ˝ŃŹ Đ·Đ°ĐĽĐľĐ˛Đ»ĐµĐ˝Đ˝ŃŹ"
+                    title="ĐžĐżĐ»Đ°Ń‚Đ° Ń‡Đ°ŃŃ‚Đ¸Đ˝Đ°ĐĽĐ¸ Monobank"
                     onClick={() =>
                       setFormState((current) => ({
                         ...current,
@@ -310,14 +351,14 @@ export default function CheckoutPage() {
                       <div className="flex flex-col gap-4">
                         <div>
                           <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                            Оплата частинами 8 платежів
+                            ĐžĐżĐ»Đ°Ń‚Đ° Ń‡Đ°ŃŃ‚Đ¸Đ˝Đ°ĐĽĐ¸ 8 ĐżĐ»Đ°Ń‚ĐµĐ¶Ń–Đ˛
                           </div>
                           <div className="text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
-                            8 платежів 7 місяців
+                            8 ĐżĐ»Đ°Ń‚ĐµĐ¶Ń–Đ˛ 7 ĐĽŃ–ŃŃŹŃ†Ń–Đ˛
                           </div>
                         </div>
 
-                        <CheckoutField label="Фінансовий номер">
+                        <CheckoutField label="Đ¤Ń–Đ˝Đ°Đ˝ŃĐľĐ˛Đ¸Đą Đ˝ĐľĐĽĐµŃ€">
                           <input
                             value={formState.financialPhone}
                             onChange={(event) =>
@@ -336,8 +377,8 @@ export default function CheckoutPage() {
 
                   <PaymentOption
                     active={formState.paymentMethod === 'invoice'}
-                    description="Оплата за рахунком"
-                    title="Безготівковий розрахунок"
+                    description="ĐžĐżĐ»Đ°Ń‚Đ° Đ·Đ° Ń€Đ°Ń…ŃĐ˝ĐşĐľĐĽ"
+                    title="Đ‘ĐµĐ·ĐłĐľŃ‚Ń–Đ˛ĐşĐľĐ˛Đ¸Đą Ń€ĐľĐ·Ń€Đ°Ń…ŃĐ˝ĐľĐş"
                     onClick={() =>
                       setFormState((current) => ({ ...current, paymentMethod: 'invoice' }))
                     }
@@ -345,8 +386,8 @@ export default function CheckoutPage() {
 
                   <PaymentOption
                     active={formState.paymentMethod === 'cash-on-delivery'}
-                    description="Оплата при отриманні"
-                    title="Накладений платіж"
+                    description="ĐžĐżĐ»Đ°Ń‚Đ° ĐżŃ€Đ¸ ĐľŃ‚Ń€Đ¸ĐĽĐ°Đ˝Đ˝Ń–"
+                    title="ĐťĐ°ĐşĐ»Đ°Đ´ĐµĐ˝Đ¸Đą ĐżĐ»Đ°Ń‚Ń–Đ¶"
                     onClick={() =>
                       setFormState((current) => ({
                         ...current,
@@ -355,13 +396,13 @@ export default function CheckoutPage() {
                     }
                   />
 
-                  <CheckoutField label="Коментар до замовлення">
+                  <CheckoutField label="ĐšĐľĐĽĐµĐ˝Ń‚Đ°Ń€ Đ´Đľ Đ·Đ°ĐĽĐľĐ˛Đ»ĐµĐ˝Đ˝ŃŹ">
                     <textarea
                       value={formState.comment}
                       onChange={(event) =>
                         setFormState((current) => ({ ...current, comment: event.target.value }))
                       }
-                      placeholder="Додаткова інформація, побажання щодо доставки..."
+                      placeholder="Đ”ĐľĐ´Đ°Ń‚ĐşĐľĐ˛Đ° Ń–Đ˝Ń„ĐľŃ€ĐĽĐ°Ń†Ń–ŃŹ, ĐżĐľĐ±Đ°Đ¶Đ°Đ˝Đ˝ŃŹ Ń‰ĐľĐ´Đľ Đ´ĐľŃŃ‚Đ°Đ˛ĐşĐ¸..."
                       className={`${checkoutFieldClasses} min-h-[128px] resize-none py-5`}
                     />
                   </CheckoutField>
@@ -444,7 +485,8 @@ function getMonobankErrorMessage(response: MonobankCreateResponse | null) {
   const detailsMessage = getDetailsMessage(response?.details)
 
   return (
-    detailsMessage || 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.'
+    detailsMessage ||
+    'ĐťĐµ Đ˛Đ´Đ°Đ»ĐľŃŃŹ ŃŃ‚Đ˛ĐľŃ€Đ¸Ń‚Đ¸ ĐľĐżĐ»Đ°Ń‚Ń Monobank. ĐźĐµŃ€ĐµĐ˛Ń–Ń€Ń‚Đµ Đ´Đ°Đ˝Ń– Ń‚Đ° ŃĐżŃ€ĐľĐ±ŃĐąŃ‚Đµ Ń‰Đµ Ń€Đ°Đ·.'
   )
 }
 
@@ -474,6 +516,17 @@ function getFinancialPhone(financialPhone: string, phone: string) {
   const digits = financialPhone.replace(/\D/g, '')
 
   return digits.length >= 12 ? financialPhone : phone
+}
+
+function formatDeliveryAddress(address: {
+  apartment?: string
+  city: string
+  postalCode?: string
+  street: string
+}) {
+  return [address.city, address.street, address.apartment, address.postalCode]
+    .filter(Boolean)
+    .join(', ')
 }
 
 function createCheckoutOrderId() {
