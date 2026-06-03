@@ -23,7 +23,10 @@ export async function POST(request: NextRequest) {
 
   if (!token) {
     return NextResponse.json(
-      { error: 'MONOBANK_ACQUIRING_TOKEN is not configured' },
+      {
+        error:
+          'Для оплати карткою онлайн не налаштований MONOBANK_ACQUIRING_TOKEN. Зараз доступна тільки оплата частинами.',
+      },
       { status: 500 },
     )
   }
@@ -66,7 +69,7 @@ export async function POST(request: NextRequest) {
   if (!response.ok) {
     return NextResponse.json(
       {
-        error: 'Monobank payment invoice failed',
+        error: getMonobankErrorMessage(payload, 'Monobank не створив оплату карткою.'),
         details: payload,
       },
       { status: response.status },
@@ -81,6 +84,21 @@ export async function POST(request: NextRequest) {
   })
 
   return NextResponse.json(payload)
+}
+
+function getMonobankErrorMessage(payload: unknown, fallback: string) {
+  if (!payload || typeof payload !== 'object') {
+    return fallback
+  }
+
+  const record = payload as Record<string, unknown>
+
+  return (
+    getStringValue(record, 'message') ||
+    getStringValue(record, 'errText') ||
+    getStringValue(record, 'error') ||
+    fallback
+  )
 }
 
 async function updateOrderMonobankData(orderNumber: string, monobank: Record<string, unknown>) {

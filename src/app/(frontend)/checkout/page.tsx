@@ -20,7 +20,10 @@ import {
 } from '../components/checkout/CheckoutSections'
 
 type MonobankCreateResponse = {
+  details?: unknown
+  error?: string
   invoiceUrl?: string
+  message?: string
   pageUrl?: string
   redirectUrl?: string
   redirect_url?: string
@@ -45,7 +48,7 @@ export default function CheckoutPage() {
     financialPhone: '+38',
     firstName: '',
     lastName: '',
-    paymentMethod: 'card-online',
+    paymentMethod: 'monobank-parts',
     phone: '+380',
     pickupPoint: '',
   })
@@ -118,7 +121,7 @@ export default function CheckoutPage() {
           amount: cartTotal,
           customerEmail: formState.email,
           customerName,
-          financialPhone: formState.financialPhone,
+          financialPhone: getFinancialPhone(formState.financialPhone, formState.phone),
           items: paymentItems,
           orderId: orderNumber,
         })
@@ -149,8 +152,12 @@ export default function CheckoutPage() {
       }
 
       router.push('/checkout/success')
-    } catch {
-      setPaymentError('Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.')
+    } catch (error) {
+      setPaymentError(
+        error instanceof Error
+          ? error.message
+          : 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.',
+      )
       setIsSubmitting(false)
     }
   }
@@ -410,7 +417,7 @@ async function createMonobankPayment(endpoint: string, payload: Record<string, u
   const data = (await response.json().catch(() => null)) as MonobankCreateResponse | null
 
   if (!response.ok || !data) {
-    throw new Error('Monobank request failed')
+    throw new Error(getMonobankErrorMessage(data))
   }
 
   return data
@@ -425,6 +432,48 @@ function getPaymentRedirectUrl(response: MonobankCreateResponse) {
     response.url ||
     ''
   )
+}
+
+function getMonobankErrorMessage(response: MonobankCreateResponse | null) {
+  const explicitMessage = response?.message || response?.error
+
+  if (explicitMessage) {
+    return explicitMessage
+  }
+
+  const detailsMessage = getDetailsMessage(response?.details)
+
+  return (
+    detailsMessage || 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.'
+  )
+}
+
+function getDetailsMessage(details: unknown) {
+  if (!details || typeof details !== 'object') {
+    return ''
+  }
+
+  const record = details as Record<string, unknown>
+
+  if (typeof record.message === 'string') {
+    return record.message
+  }
+
+  if (typeof record.errText === 'string') {
+    return record.errText
+  }
+
+  if (typeof record.error === 'string') {
+    return record.error
+  }
+
+  return ''
+}
+
+function getFinancialPhone(financialPhone: string, phone: string) {
+  const digits = financialPhone.replace(/\D/g, '')
+
+  return digits.length >= 12 ? financialPhone : phone
 }
 
 function createCheckoutOrderId() {

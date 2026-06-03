@@ -30,18 +30,21 @@ export async function POST(request: NextRequest) {
 
   if (!storeId || !secret) {
     return NextResponse.json(
-      { error: 'MONOBANK_PARTS_STORE_ID or MONOBANK_PARTS_SECRET is not configured' },
+      { error: 'Не налаштовані MONOBANK_PARTS_STORE_ID або MONOBANK_PARTS_SECRET.' },
       { status: 500 },
     )
   }
 
   const body = (await request.json()) as PartsRequestBody
-  const amount = normalizeAmount(body.amount)
+  const amount = normalizeMoney(body.amount)
   const orderId = normalizeReference(body.orderId)
   const phone = normalizePhone(body.financialPhone)
 
   if (!amount || !orderId || !phone) {
-    return NextResponse.json({ error: 'Invalid Monobank parts payload' }, { status: 400 })
+    return NextResponse.json(
+      { error: 'Для оплати частинами введіть фінансовий номер у форматі +380XXXXXXXXX.' },
+      { status: 400 },
+    )
   }
 
   const origin = getRequestOrigin(request)
@@ -56,7 +59,7 @@ export async function POST(request: NextRequest) {
     client_name: body.customerName || undefined,
     client_phone: phone,
     invoice: {
-      date: new Date().toISOString(),
+      date: formatInvoiceDate(new Date()),
       number: orderId,
       source: 'INTERNET',
     },
@@ -82,7 +85,7 @@ export async function POST(request: NextRequest) {
   if (!response.ok) {
     return NextResponse.json(
       {
-        error: 'Monobank payment parts request failed',
+        error: getMonobankErrorMessage(responsePayload, 'Monobank не створив оплату частинами.'),
         details: responsePayload,
       },
       { status: response.status },
@@ -100,6 +103,21 @@ export async function POST(request: NextRequest) {
   })
 
   return NextResponse.json(responsePayload)
+}
+
+function getMonobankErrorMessage(payload: unknown, fallback: string) {
+  if (!payload || typeof payload !== 'object') {
+    return fallback
+  }
+
+  const record = payload as Record<string, unknown>
+
+  return (
+    getStringValue(record, 'message') ||
+    getStringValue(record, 'errText') ||
+    getStringValue(record, 'error') ||
+    fallback
+  )
 }
 
 async function updateOrderMonobankData(orderNumber: string, monobank: Record<string, unknown>) {
@@ -131,15 +149,15 @@ async function updateOrderMonobankData(orderNumber: string, monobank: Record<str
 }
 
 function createSignature(payload: string, secret: string) {
-  return createHmac('sha256', secret).update(payload).digest('hex')
+  return createHmac('sha256', secret).update(payload).digest('base64')
 }
 
-function normalizeAmount(value: unknown) {
+function normalizeMoney(value: unknown) {
   if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
     return 0
   }
 
-  return Math.round(value * 100)
+  return Math.round(value * 100) / 100
 }
 
 function normalizeReference(value: unknown) {
@@ -168,7 +186,7 @@ function normalizeProducts(items: PartsItem[] | undefined) {
   return (Array.isArray(items) ? items : [])
     .map((item) => {
       const count = normalizeQuantity(item.quantity)
-      const sum = normalizeAmount(item.price)
+      const sum = normalizeMoney(item.price)
       const name = item.title?.trim()
 
       if (!name || !count || !sum) {
@@ -194,6 +212,10 @@ function getRequestOrigin(request: NextRequest) {
     process.env.NEXT_PUBLIC_SITE_URL ||
     `${request.nextUrl.protocol}//${request.headers.get('host') ?? request.nextUrl.host}`
   )
+}
+
+function formatInvoiceDate(date: Date) {
+  return date.toISOString().slice(0, 10)
 }
 
 function getStringValue(payload: unknown, key: string) {
