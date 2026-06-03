@@ -69,7 +69,7 @@ export const accountEmptyStates = {
     title: 'Адреси доставки ще не додані',
   },
   orders: {
-    actionHref: '/catalog/aparaty-vakuumnoho-masazhu',
+    actionHref: '/aparati-vakuumnogo-masazhu',
     actionLabel: 'Перейти в каталог',
     description:
       'Після першого оформленого замовлення тут з’явиться детальна історія з поточними статусами.',

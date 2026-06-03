@@ -12,7 +12,7 @@ export function CheckoutSuccessSection() {
       iconSrc={checkIconAsset}
       title="Дякуємо за замовлення!"
       description={<>Ваше замовлення №{lastOrder?.id ?? '12345'} успішно оформлено.</>}
-      primaryAction={{ href: '/catalog/aparaty-vakuumnoho-masazhu', label: 'Продовжити покупки' }}
+      primaryAction={{ href: '/aparati-vakuumnogo-masazhu', label: 'Продовжити покупки' }}
       secondaryAction={{ href: '/account', label: 'Мій кабінет', variant: 'secondary' }}
     />
   )

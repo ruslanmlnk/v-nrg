@@ -176,7 +176,7 @@ export function unwrapCatalogCategory(category: CatalogCategorySource): ProductC
 
   return {
     description: unwrapText(category.description) ?? '',
-    href: `/catalog/${slug}`,
+    href: `/${slug}`,
     id: String(category.id ?? slug),
     image: unwrapText(category.imageUrl) ?? null,
     slug,

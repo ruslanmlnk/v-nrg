@@ -10,7 +10,7 @@ import telegramIconAsset from '@public/icon/generated/components-site-footer-tel
 import whatsappIconAsset from '@public/icon/generated/components-site-footer-whatsapp.svg'
 
 const catalogLinks = [
-  { href: '/catalog/aparaty-vakuumnoho-masazhu', label: 'Апарати вакуумного масажу' },
+  { href: '/aparati-vakuumnogo-masazhu', label: 'Апарати вакуумного масажу' },
   { href: '/catalog', label: 'Апарати фізіотерапії' },
   { href: '/info?topic=components', label: 'Комплектуючі (маніпули / насадки, фільтри, шланги)' },
   { href: '/info?topic=materials', label: 'Витратні матеріали' },
@@ -43,8 +43,7 @@ export default function SiteFooter() {
               <Image src={footerLogoIconAsset} alt="V-NRG" width={108} height={48} />
 
               <p className="text-[16px] font-normal leading-[165%] text-white">
-                Професійне обладнання для вакуумного масажу. Більше 20 країн довіряють нашій
-                якості
+                Професійне обладнання для вакуумного масажу. Більше 20 країн довіряють нашій якості
               </p>
             </div>
 
@@ -150,9 +149,7 @@ function FooterColumn({
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-[20px] font-medium leading-[145%] text-white lg:text-[24px]">
-      {children}
-    </h2>
+    <h2 className="text-[20px] font-medium leading-[145%] text-white lg:text-[24px]">{children}</h2>
   )
 }
 

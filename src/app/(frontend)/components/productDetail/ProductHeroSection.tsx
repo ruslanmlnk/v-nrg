@@ -27,7 +27,7 @@ export function ProductHeroSection({
           {hasCategory ? (
             <>
               <span>/</span>
-              <Link href={`/catalog/${categorySlug}`}>{categoryLabel}</Link>
+              <Link href={`/${categorySlug}`}>{categoryLabel}</Link>
             </>
           ) : null}
           <span>/</span>
