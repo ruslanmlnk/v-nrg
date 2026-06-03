@@ -26,9 +26,10 @@ export default function CheckoutPage() {
     comment: '',
     deliveryMethod: 'nova-poshta',
     email: '',
+    financialPhone: '+38',
     firstName: '',
     lastName: '',
-    paymentMethod: 'invoice',
+    paymentMethod: 'card-online',
     phone: '+380',
     pickupPoint: '',
   })
@@ -177,17 +178,61 @@ export default function CheckoutPage() {
               >
                 <div className="flex flex-col gap-5">
                   <PaymentOption
+                    active={formState.paymentMethod === 'card-online'}
+                    description="Monobank"
+                    title="Оплата карткою онлайн"
+                    onClick={() =>
+                      setFormState((current) => ({ ...current, paymentMethod: 'card-online' }))
+                    }
+                  />
+
+                  <PaymentOption
+                    active={formState.paymentMethod === 'monobank-parts'}
+                    description="Оформлення через менеджера після підтвердження замовлення"
+                    title="Оплата частинами Monobank"
+                    onClick={() =>
+                      setFormState((current) => ({
+                        ...current,
+                        paymentMethod: 'monobank-parts',
+                      }))
+                    }
+                  >
+                    <div className="rounded-[20px] border border-[#D5E0E8] bg-white px-6 py-5">
+                      <div className="flex flex-col gap-4">
+                        <div>
+                          <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+                            Оплата частинами 8 платежів
+                          </div>
+                          <div className="text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
+                            8 платежів 7 місяців
+                          </div>
+                        </div>
+
+                        <CheckoutField label="Фінансовий номер">
+                          <input
+                            value={formState.financialPhone}
+                            onChange={(event) =>
+                              setFormState((current) => ({
+                                ...current,
+                                financialPhone: event.target.value,
+                              }))
+                            }
+                            placeholder="+38"
+                            className={`${checkoutFieldClasses} h-[64px]`}
+                          />
+                        </CheckoutField>
+                      </div>
+                    </div>
+                  </PaymentOption>
+
+                  <PaymentOption
                     active={formState.paymentMethod === 'invoice'}
                     description="Оплата за рахунком"
                     title="Безготівковий розрахунок"
                     onClick={() =>
                       setFormState((current) => ({ ...current, paymentMethod: 'invoice' }))
                     }
-                  >
-                    <div className="rounded-[20px] border border-[#D5E0E8] bg-white px-6 py-4 text-[18px] font-medium leading-[165%] text-[#22354A]">
-                      Після підтвердження замовлення ми надішлемо рахунок на вашу електронну пошту
-                    </div>
-                  </PaymentOption>
+                  />
 
                   <PaymentOption
                     active={formState.paymentMethod === 'cash-on-delivery'}

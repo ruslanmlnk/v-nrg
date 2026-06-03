@@ -18,8 +18,23 @@ export function PaymentOption({
   title: string
 }) {
   return (
-    <button type="button" onClick={onClick} className="flex flex-col gap-4 text-left">
-      <div className="flex items-start gap-4">
+    <div
+      className={`flex flex-col gap-4 text-left ${
+        active ? 'rounded-[20px] border border-[#4FACF5] p-6' : ''
+      }`}
+    >
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onClick()
+          }
+        }}
+        className="flex cursor-pointer items-start gap-4"
+      >
         <RadioIndicator active={active} />
         <div className="flex flex-col gap-1">
           <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">{title}</div>
@@ -27,6 +42,6 @@ export function PaymentOption({
         </div>
       </div>
       {active ? children : null}
-    </button>
+    </div>
   )
 }
