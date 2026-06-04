@@ -18,10 +18,11 @@ type PartsRequestBody = {
   financialPhone?: string
   items?: PartsItem[]
   orderId?: string
+  partsCount?: number
 }
 
 const DEFAULT_PARTS_CREATE_URL = 'https://u2.monobank.com.ua/api/order/create'
-const PARTS_COUNT = 8
+const DEFAULT_PARTS_COUNT = 8
 
 export async function POST(request: NextRequest) {
   const storeId = process.env.MONOBANK_PARTS_STORE_ID
@@ -38,6 +39,7 @@ export async function POST(request: NextRequest) {
   const body = (await request.json()) as PartsRequestBody
   const amount = normalizeMoney(body.amount)
   const orderId = normalizeReference(body.orderId)
+  const partsCount = normalizePartsCount(body.partsCount)
   const phone = normalizePhone(body.financialPhone)
 
   if (!amount || !orderId || !phone) {
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
   const payload = {
     available_programs: [
       {
-        available_parts_count: [PARTS_COUNT],
+        available_parts_count: [partsCount],
         type: 'payment_installments',
       },
     ],
@@ -95,6 +97,7 @@ export async function POST(request: NextRequest) {
   await updateOrderMonobankData(orderId, {
     orderId:
       getStringValue(responsePayload, 'order_id') || getStringValue(responsePayload, 'orderId'),
+    partsCount,
     paymentType: 'monobank-parts',
     raw: responsePayload,
     redirectUrl:
@@ -180,6 +183,14 @@ function normalizePhone(value: unknown) {
   }
 
   return ''
+}
+
+function normalizePartsCount(value: unknown) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return DEFAULT_PARTS_COUNT
+  }
+
+  return Math.min(8, Math.max(3, Math.floor(value)))
 }
 
 function normalizeProducts(items: PartsItem[] | undefined) {
