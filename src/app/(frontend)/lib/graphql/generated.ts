@@ -73,6 +73,8 @@ export type Query = {
   PayloadPreferences?: Maybe<PayloadPreferences>;
   countPayloadPreferences?: Maybe<CountPayloadPreferences>;
   docAccessPayloadPreference?: Maybe<Payload_PreferencesDocAccess>;
+  Home?: Maybe<Home>;
+  docAccessHome?: Maybe<HomeDocAccess>;
   Access?: Maybe<Access>;
 };
 
@@ -426,6 +428,12 @@ export type QueryCountPayloadPreferencesArgs = {
 
 export type QueryDocAccessPayloadPreferenceArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryHomeArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type User = {
@@ -5715,9 +5723,15 @@ export type LegalPage = {
   title: Scalars['String']['output'];
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
-  contentMarkdown: Scalars['String']['output'];
+  content?: Maybe<Scalars['JSON']['output']>;
+  contentMarkdown?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type LegalPageContentArgs = {
+  depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type LegalPages = {
@@ -5739,6 +5753,7 @@ export type LegalPage_Where = {
   title?: InputMaybe<LegalPage_Title_Operator>;
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
+  content?: InputMaybe<LegalPage_Content_Operator>;
   contentMarkdown?: InputMaybe<LegalPage_ContentMarkdown_Operator>;
   updatedAt?: InputMaybe<LegalPage_UpdatedAt_Operator>;
   createdAt?: InputMaybe<LegalPage_CreatedAt_Operator>;
@@ -5773,11 +5788,20 @@ export type LegalPage_Slug_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type LegalPage_Content_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  like?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type LegalPage_ContentMarkdown_Operator = {
   equals?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   like?: InputMaybe<Scalars['String']['input']>;
   contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type LegalPage_UpdatedAt_Operator = {
@@ -5816,6 +5840,7 @@ export type LegalPage_Where_And = {
   title?: InputMaybe<LegalPage_Title_Operator>;
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
+  content?: InputMaybe<LegalPage_Content_Operator>;
   contentMarkdown?: InputMaybe<LegalPage_ContentMarkdown_Operator>;
   updatedAt?: InputMaybe<LegalPage_UpdatedAt_Operator>;
   createdAt?: InputMaybe<LegalPage_CreatedAt_Operator>;
@@ -5828,6 +5853,7 @@ export type LegalPage_Where_Or = {
   title?: InputMaybe<LegalPage_Title_Operator>;
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
+  content?: InputMaybe<LegalPage_Content_Operator>;
   contentMarkdown?: InputMaybe<LegalPage_ContentMarkdown_Operator>;
   updatedAt?: InputMaybe<LegalPage_UpdatedAt_Operator>;
   createdAt?: InputMaybe<LegalPage_CreatedAt_Operator>;
@@ -5855,6 +5881,7 @@ export type LegalPagesDocAccessFields = {
   title?: Maybe<LegalPagesDocAccessFields_Title>;
   generateSlug?: Maybe<LegalPagesDocAccessFields_GenerateSlug>;
   slug?: Maybe<LegalPagesDocAccessFields_Slug>;
+  content?: Maybe<LegalPagesDocAccessFields_Content>;
   contentMarkdown?: Maybe<LegalPagesDocAccessFields_ContentMarkdown>;
   updatedAt?: Maybe<LegalPagesDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<LegalPagesDocAccessFields_CreatedAt>;
@@ -5941,6 +5968,34 @@ export type LegalPagesDocAccessFields_Slug_Update = {
 
 export type LegalPagesDocAccessFields_Slug_Delete = {
   __typename?: 'LegalPagesDocAccessFields_slug_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Content = {
+  __typename?: 'LegalPagesDocAccessFields_content';
+  create?: Maybe<LegalPagesDocAccessFields_Content_Create>;
+  read?: Maybe<LegalPagesDocAccessFields_Content_Read>;
+  update?: Maybe<LegalPagesDocAccessFields_Content_Update>;
+  delete?: Maybe<LegalPagesDocAccessFields_Content_Delete>;
+};
+
+export type LegalPagesDocAccessFields_Content_Create = {
+  __typename?: 'LegalPagesDocAccessFields_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Content_Read = {
+  __typename?: 'LegalPagesDocAccessFields_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Content_Update = {
+  __typename?: 'LegalPagesDocAccessFields_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Content_Delete = {
+  __typename?: 'LegalPagesDocAccessFields_content_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6890,6 +6945,1581 @@ export type PayloadPreferencesDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Home = {
+  __typename?: 'Home';
+  hero?: Maybe<Home_Hero>;
+  howItWork?: Maybe<Home_HowItWork>;
+  beforeAfter?: Maybe<Array<Home_BeforeAfter>>;
+  modelComparison?: Maybe<Home_ModelComparison>;
+  certificatesSection?: Maybe<Home_CertificatesSection>;
+  trainingSection?: Maybe<Home_TrainingSection>;
+  reviewsSection?: Maybe<Home_ReviewsSection>;
+  faqSection?: Maybe<Home_FaqSection>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Home_Hero = {
+  __typename?: 'Home_Hero';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Media>;
+};
+
+export type Home_HowItWork = {
+  __typename?: 'Home_HowItWork';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  cards?: Maybe<Array<Home_HowItWork_Cards>>;
+};
+
+export type Home_HowItWork_Cards = {
+  __typename?: 'Home_HowItWork_Cards';
+  icon?: Maybe<Media>;
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type Home_BeforeAfter = {
+  __typename?: 'Home_BeforeAfter';
+  before?: Maybe<Media>;
+  after?: Maybe<Media>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type Home_ModelComparison = {
+  __typename?: 'Home_ModelComparison';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  products?: Maybe<Array<Product>>;
+};
+
+export type Home_CertificatesSection = {
+  __typename?: 'Home_CertificatesSection';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  certificates?: Maybe<Array<Media>>;
+};
+
+export type Home_TrainingSection = {
+  __typename?: 'Home_TrainingSection';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  video?: Maybe<Home_TrainingSection_Video>;
+  cards?: Maybe<Array<Home_TrainingSection_Cards>>;
+};
+
+export type Home_TrainingSection_Video = {
+  __typename?: 'Home_TrainingSection_Video';
+  poster?: Maybe<Media>;
+  file?: Maybe<Media>;
+};
+
+export type Home_TrainingSection_Cards = {
+  __typename?: 'Home_TrainingSection_Cards';
+  icon?: Maybe<Media>;
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type Home_ReviewsSection = {
+  __typename?: 'Home_ReviewsSection';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  reviews?: Maybe<Array<Review>>;
+};
+
+export type Home_FaqSection = {
+  __typename?: 'Home_FaqSection';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Home_FaqSection_Items>>;
+};
+
+export type Home_FaqSection_Items = {
+  __typename?: 'Home_FaqSection_Items';
+  question?: Maybe<Scalars['String']['output']>;
+  answer?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomeDocAccess = {
+  __typename?: 'homeDocAccess';
+  fields?: Maybe<HomeDocAccessFields>;
+  read?: Maybe<HomeReadDocAccess>;
+  update?: Maybe<HomeUpdateDocAccess>;
+};
+
+export type HomeDocAccessFields = {
+  __typename?: 'HomeDocAccessFields';
+  hero?: Maybe<HomeDocAccessFields_Hero>;
+  howItWork?: Maybe<HomeDocAccessFields_HowItWork>;
+  beforeAfter?: Maybe<HomeDocAccessFields_BeforeAfter>;
+  modelComparison?: Maybe<HomeDocAccessFields_ModelComparison>;
+  certificatesSection?: Maybe<HomeDocAccessFields_CertificatesSection>;
+  trainingSection?: Maybe<HomeDocAccessFields_TrainingSection>;
+  reviewsSection?: Maybe<HomeDocAccessFields_ReviewsSection>;
+  faqSection?: Maybe<HomeDocAccessFields_FaqSection>;
+  updatedAt?: Maybe<HomeDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<HomeDocAccessFields_CreatedAt>;
+};
+
+export type HomeDocAccessFields_Hero = {
+  __typename?: 'HomeDocAccessFields_hero';
+  create?: Maybe<HomeDocAccessFields_Hero_Create>;
+  read?: Maybe<HomeDocAccessFields_Hero_Read>;
+  update?: Maybe<HomeDocAccessFields_Hero_Update>;
+  delete?: Maybe<HomeDocAccessFields_Hero_Delete>;
+  fields?: Maybe<HomeDocAccessFields_Hero_Fields>;
+};
+
+export type HomeDocAccessFields_Hero_Create = {
+  __typename?: 'HomeDocAccessFields_hero_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Read = {
+  __typename?: 'HomeDocAccessFields_hero_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Update = {
+  __typename?: 'HomeDocAccessFields_hero_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Delete = {
+  __typename?: 'HomeDocAccessFields_hero_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Fields = {
+  __typename?: 'HomeDocAccessFields_hero_Fields';
+  title?: Maybe<HomeDocAccessFields_Hero_Title>;
+  description?: Maybe<HomeDocAccessFields_Hero_Description>;
+  image?: Maybe<HomeDocAccessFields_Hero_Image>;
+};
+
+export type HomeDocAccessFields_Hero_Title = {
+  __typename?: 'HomeDocAccessFields_hero_title';
+  create?: Maybe<HomeDocAccessFields_Hero_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_Hero_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_Hero_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_Hero_Title_Delete>;
+};
+
+export type HomeDocAccessFields_Hero_Title_Create = {
+  __typename?: 'HomeDocAccessFields_hero_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Title_Read = {
+  __typename?: 'HomeDocAccessFields_hero_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Title_Update = {
+  __typename?: 'HomeDocAccessFields_hero_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_hero_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Description = {
+  __typename?: 'HomeDocAccessFields_hero_description';
+  create?: Maybe<HomeDocAccessFields_Hero_Description_Create>;
+  read?: Maybe<HomeDocAccessFields_Hero_Description_Read>;
+  update?: Maybe<HomeDocAccessFields_Hero_Description_Update>;
+  delete?: Maybe<HomeDocAccessFields_Hero_Description_Delete>;
+};
+
+export type HomeDocAccessFields_Hero_Description_Create = {
+  __typename?: 'HomeDocAccessFields_hero_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Description_Read = {
+  __typename?: 'HomeDocAccessFields_hero_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Description_Update = {
+  __typename?: 'HomeDocAccessFields_hero_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Description_Delete = {
+  __typename?: 'HomeDocAccessFields_hero_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Image = {
+  __typename?: 'HomeDocAccessFields_hero_image';
+  create?: Maybe<HomeDocAccessFields_Hero_Image_Create>;
+  read?: Maybe<HomeDocAccessFields_Hero_Image_Read>;
+  update?: Maybe<HomeDocAccessFields_Hero_Image_Update>;
+  delete?: Maybe<HomeDocAccessFields_Hero_Image_Delete>;
+};
+
+export type HomeDocAccessFields_Hero_Image_Create = {
+  __typename?: 'HomeDocAccessFields_hero_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Image_Read = {
+  __typename?: 'HomeDocAccessFields_hero_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Image_Update = {
+  __typename?: 'HomeDocAccessFields_hero_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Hero_Image_Delete = {
+  __typename?: 'HomeDocAccessFields_hero_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork = {
+  __typename?: 'HomeDocAccessFields_howItWork';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Delete>;
+  fields?: Maybe<HomeDocAccessFields_HowItWork_Fields>;
+};
+
+export type HomeDocAccessFields_HowItWork_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Fields = {
+  __typename?: 'HomeDocAccessFields_howItWork_Fields';
+  title?: Maybe<HomeDocAccessFields_HowItWork_Title>;
+  subtitle?: Maybe<HomeDocAccessFields_HowItWork_Subtitle>;
+  cards?: Maybe<HomeDocAccessFields_HowItWork_Cards>;
+};
+
+export type HomeDocAccessFields_HowItWork_Title = {
+  __typename?: 'HomeDocAccessFields_howItWork_title';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Title_Delete>;
+};
+
+export type HomeDocAccessFields_HowItWork_Title_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Title_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Title_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Subtitle = {
+  __typename?: 'HomeDocAccessFields_howItWork_subtitle';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Subtitle_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Subtitle_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Subtitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Subtitle_Delete>;
+};
+
+export type HomeDocAccessFields_HowItWork_Subtitle_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Subtitle_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Subtitle_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Subtitle_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Cards_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Cards_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Cards_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Cards_Delete>;
+  fields?: Maybe<HomeDocAccessFields_HowItWork_Cards_Fields>;
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Fields = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_Fields';
+  icon?: Maybe<HomeDocAccessFields_HowItWork_Cards_Icon>;
+  title?: Maybe<HomeDocAccessFields_HowItWork_Cards_Title>;
+  description?: Maybe<HomeDocAccessFields_HowItWork_Cards_Description>;
+  id?: Maybe<HomeDocAccessFields_HowItWork_Cards_Id>;
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Icon = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_icon';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Cards_Icon_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Cards_Icon_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Cards_Icon_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Cards_Icon_Delete>;
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Icon_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Icon_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Icon_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Icon_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Title = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_title';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Cards_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Cards_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Cards_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Cards_Title_Delete>;
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Title_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Title_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Title_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Description = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_description';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Cards_Description_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Cards_Description_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Cards_Description_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Cards_Description_Delete>;
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Description_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Description_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Description_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Description_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Id = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_id';
+  create?: Maybe<HomeDocAccessFields_HowItWork_Cards_Id_Create>;
+  read?: Maybe<HomeDocAccessFields_HowItWork_Cards_Id_Read>;
+  update?: Maybe<HomeDocAccessFields_HowItWork_Cards_Id_Update>;
+  delete?: Maybe<HomeDocAccessFields_HowItWork_Cards_Id_Delete>;
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Id_Create = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Id_Read = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Id_Update = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_HowItWork_Cards_Id_Delete = {
+  __typename?: 'HomeDocAccessFields_howItWork_cards_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter = {
+  __typename?: 'HomeDocAccessFields_beforeAfter';
+  create?: Maybe<HomeDocAccessFields_BeforeAfter_Create>;
+  read?: Maybe<HomeDocAccessFields_BeforeAfter_Read>;
+  update?: Maybe<HomeDocAccessFields_BeforeAfter_Update>;
+  delete?: Maybe<HomeDocAccessFields_BeforeAfter_Delete>;
+  fields?: Maybe<HomeDocAccessFields_BeforeAfter_Fields>;
+};
+
+export type HomeDocAccessFields_BeforeAfter_Create = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Read = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Update = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Delete = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Fields = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_Fields';
+  before?: Maybe<HomeDocAccessFields_BeforeAfter_Before>;
+  after?: Maybe<HomeDocAccessFields_BeforeAfter_After>;
+  id?: Maybe<HomeDocAccessFields_BeforeAfter_Id>;
+};
+
+export type HomeDocAccessFields_BeforeAfter_Before = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_before';
+  create?: Maybe<HomeDocAccessFields_BeforeAfter_Before_Create>;
+  read?: Maybe<HomeDocAccessFields_BeforeAfter_Before_Read>;
+  update?: Maybe<HomeDocAccessFields_BeforeAfter_Before_Update>;
+  delete?: Maybe<HomeDocAccessFields_BeforeAfter_Before_Delete>;
+};
+
+export type HomeDocAccessFields_BeforeAfter_Before_Create = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_before_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Before_Read = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_before_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Before_Update = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_before_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Before_Delete = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_before_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_After = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_after';
+  create?: Maybe<HomeDocAccessFields_BeforeAfter_After_Create>;
+  read?: Maybe<HomeDocAccessFields_BeforeAfter_After_Read>;
+  update?: Maybe<HomeDocAccessFields_BeforeAfter_After_Update>;
+  delete?: Maybe<HomeDocAccessFields_BeforeAfter_After_Delete>;
+};
+
+export type HomeDocAccessFields_BeforeAfter_After_Create = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_after_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_After_Read = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_after_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_After_Update = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_after_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_After_Delete = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_after_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Id = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_id';
+  create?: Maybe<HomeDocAccessFields_BeforeAfter_Id_Create>;
+  read?: Maybe<HomeDocAccessFields_BeforeAfter_Id_Read>;
+  update?: Maybe<HomeDocAccessFields_BeforeAfter_Id_Update>;
+  delete?: Maybe<HomeDocAccessFields_BeforeAfter_Id_Delete>;
+};
+
+export type HomeDocAccessFields_BeforeAfter_Id_Create = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Id_Read = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Id_Update = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_BeforeAfter_Id_Delete = {
+  __typename?: 'HomeDocAccessFields_beforeAfter_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison = {
+  __typename?: 'HomeDocAccessFields_modelComparison';
+  create?: Maybe<HomeDocAccessFields_ModelComparison_Create>;
+  read?: Maybe<HomeDocAccessFields_ModelComparison_Read>;
+  update?: Maybe<HomeDocAccessFields_ModelComparison_Update>;
+  delete?: Maybe<HomeDocAccessFields_ModelComparison_Delete>;
+  fields?: Maybe<HomeDocAccessFields_ModelComparison_Fields>;
+};
+
+export type HomeDocAccessFields_ModelComparison_Create = {
+  __typename?: 'HomeDocAccessFields_modelComparison_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Read = {
+  __typename?: 'HomeDocAccessFields_modelComparison_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Update = {
+  __typename?: 'HomeDocAccessFields_modelComparison_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Delete = {
+  __typename?: 'HomeDocAccessFields_modelComparison_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Fields = {
+  __typename?: 'HomeDocAccessFields_modelComparison_Fields';
+  title?: Maybe<HomeDocAccessFields_ModelComparison_Title>;
+  subtitle?: Maybe<HomeDocAccessFields_ModelComparison_Subtitle>;
+  products?: Maybe<HomeDocAccessFields_ModelComparison_Products>;
+};
+
+export type HomeDocAccessFields_ModelComparison_Title = {
+  __typename?: 'HomeDocAccessFields_modelComparison_title';
+  create?: Maybe<HomeDocAccessFields_ModelComparison_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_ModelComparison_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_ModelComparison_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_ModelComparison_Title_Delete>;
+};
+
+export type HomeDocAccessFields_ModelComparison_Title_Create = {
+  __typename?: 'HomeDocAccessFields_modelComparison_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Title_Read = {
+  __typename?: 'HomeDocAccessFields_modelComparison_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Title_Update = {
+  __typename?: 'HomeDocAccessFields_modelComparison_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_modelComparison_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Subtitle = {
+  __typename?: 'HomeDocAccessFields_modelComparison_subtitle';
+  create?: Maybe<HomeDocAccessFields_ModelComparison_Subtitle_Create>;
+  read?: Maybe<HomeDocAccessFields_ModelComparison_Subtitle_Read>;
+  update?: Maybe<HomeDocAccessFields_ModelComparison_Subtitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_ModelComparison_Subtitle_Delete>;
+};
+
+export type HomeDocAccessFields_ModelComparison_Subtitle_Create = {
+  __typename?: 'HomeDocAccessFields_modelComparison_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Subtitle_Read = {
+  __typename?: 'HomeDocAccessFields_modelComparison_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Subtitle_Update = {
+  __typename?: 'HomeDocAccessFields_modelComparison_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Subtitle_Delete = {
+  __typename?: 'HomeDocAccessFields_modelComparison_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Products = {
+  __typename?: 'HomeDocAccessFields_modelComparison_products';
+  create?: Maybe<HomeDocAccessFields_ModelComparison_Products_Create>;
+  read?: Maybe<HomeDocAccessFields_ModelComparison_Products_Read>;
+  update?: Maybe<HomeDocAccessFields_ModelComparison_Products_Update>;
+  delete?: Maybe<HomeDocAccessFields_ModelComparison_Products_Delete>;
+};
+
+export type HomeDocAccessFields_ModelComparison_Products_Create = {
+  __typename?: 'HomeDocAccessFields_modelComparison_products_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Products_Read = {
+  __typename?: 'HomeDocAccessFields_modelComparison_products_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Products_Update = {
+  __typename?: 'HomeDocAccessFields_modelComparison_products_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ModelComparison_Products_Delete = {
+  __typename?: 'HomeDocAccessFields_modelComparison_products_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection = {
+  __typename?: 'HomeDocAccessFields_certificatesSection';
+  create?: Maybe<HomeDocAccessFields_CertificatesSection_Create>;
+  read?: Maybe<HomeDocAccessFields_CertificatesSection_Read>;
+  update?: Maybe<HomeDocAccessFields_CertificatesSection_Update>;
+  delete?: Maybe<HomeDocAccessFields_CertificatesSection_Delete>;
+  fields?: Maybe<HomeDocAccessFields_CertificatesSection_Fields>;
+};
+
+export type HomeDocAccessFields_CertificatesSection_Create = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Read = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Update = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Delete = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Fields = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_Fields';
+  title?: Maybe<HomeDocAccessFields_CertificatesSection_Title>;
+  subtitle?: Maybe<HomeDocAccessFields_CertificatesSection_Subtitle>;
+  certificates?: Maybe<HomeDocAccessFields_CertificatesSection_Certificates>;
+};
+
+export type HomeDocAccessFields_CertificatesSection_Title = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_title';
+  create?: Maybe<HomeDocAccessFields_CertificatesSection_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_CertificatesSection_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_CertificatesSection_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_CertificatesSection_Title_Delete>;
+};
+
+export type HomeDocAccessFields_CertificatesSection_Title_Create = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Title_Read = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Title_Update = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Subtitle = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_subtitle';
+  create?: Maybe<HomeDocAccessFields_CertificatesSection_Subtitle_Create>;
+  read?: Maybe<HomeDocAccessFields_CertificatesSection_Subtitle_Read>;
+  update?: Maybe<HomeDocAccessFields_CertificatesSection_Subtitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_CertificatesSection_Subtitle_Delete>;
+};
+
+export type HomeDocAccessFields_CertificatesSection_Subtitle_Create = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Subtitle_Read = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Subtitle_Update = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Subtitle_Delete = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Certificates = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_certificates';
+  create?: Maybe<HomeDocAccessFields_CertificatesSection_Certificates_Create>;
+  read?: Maybe<HomeDocAccessFields_CertificatesSection_Certificates_Read>;
+  update?: Maybe<HomeDocAccessFields_CertificatesSection_Certificates_Update>;
+  delete?: Maybe<HomeDocAccessFields_CertificatesSection_Certificates_Delete>;
+};
+
+export type HomeDocAccessFields_CertificatesSection_Certificates_Create = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_certificates_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Certificates_Read = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_certificates_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Certificates_Update = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_certificates_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CertificatesSection_Certificates_Delete = {
+  __typename?: 'HomeDocAccessFields_certificatesSection_certificates_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection = {
+  __typename?: 'HomeDocAccessFields_trainingSection';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Delete>;
+  fields?: Maybe<HomeDocAccessFields_TrainingSection_Fields>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Fields = {
+  __typename?: 'HomeDocAccessFields_trainingSection_Fields';
+  title?: Maybe<HomeDocAccessFields_TrainingSection_Title>;
+  subtitle?: Maybe<HomeDocAccessFields_TrainingSection_Subtitle>;
+  video?: Maybe<HomeDocAccessFields_TrainingSection_Video>;
+  cards?: Maybe<HomeDocAccessFields_TrainingSection_Cards>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Title = {
+  __typename?: 'HomeDocAccessFields_trainingSection_title';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Title_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Title_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Title_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Title_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Subtitle = {
+  __typename?: 'HomeDocAccessFields_trainingSection_subtitle';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Subtitle_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Subtitle_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Subtitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Subtitle_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Subtitle_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Subtitle_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Subtitle_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Subtitle_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Video_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Video_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Video_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Video_Delete>;
+  fields?: Maybe<HomeDocAccessFields_TrainingSection_Video_Fields>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Fields = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_Fields';
+  poster?: Maybe<HomeDocAccessFields_TrainingSection_Video_Poster>;
+  file?: Maybe<HomeDocAccessFields_TrainingSection_Video_File>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Poster = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_poster';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Video_Poster_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Video_Poster_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Video_Poster_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Video_Poster_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Poster_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_poster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Poster_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_poster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Poster_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_poster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_Poster_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_poster_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_File = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_file';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Video_File_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Video_File_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Video_File_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Video_File_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_File_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_file_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_File_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_file_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_File_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_file_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Video_File_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_video_file_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Delete>;
+  fields?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Fields>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Fields = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_Fields';
+  icon?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Icon>;
+  title?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Title>;
+  description?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Description>;
+  id?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Id>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Icon = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_icon';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Icon_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Icon_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Icon_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Icon_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Icon_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Icon_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Icon_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Icon_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Title = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_title';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Title_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Title_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Title_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Title_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Description = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_description';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Description_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Description_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Description_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Description_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Description_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Description_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Description_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Description_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Id = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_id';
+  create?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Id_Create>;
+  read?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Id_Read>;
+  update?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Id_Update>;
+  delete?: Maybe<HomeDocAccessFields_TrainingSection_Cards_Id_Delete>;
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Id_Create = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Id_Read = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Id_Update = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_TrainingSection_Cards_Id_Delete = {
+  __typename?: 'HomeDocAccessFields_trainingSection_cards_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection = {
+  __typename?: 'HomeDocAccessFields_reviewsSection';
+  create?: Maybe<HomeDocAccessFields_ReviewsSection_Create>;
+  read?: Maybe<HomeDocAccessFields_ReviewsSection_Read>;
+  update?: Maybe<HomeDocAccessFields_ReviewsSection_Update>;
+  delete?: Maybe<HomeDocAccessFields_ReviewsSection_Delete>;
+  fields?: Maybe<HomeDocAccessFields_ReviewsSection_Fields>;
+};
+
+export type HomeDocAccessFields_ReviewsSection_Create = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Read = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Update = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Delete = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Fields = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_Fields';
+  title?: Maybe<HomeDocAccessFields_ReviewsSection_Title>;
+  subtitle?: Maybe<HomeDocAccessFields_ReviewsSection_Subtitle>;
+  reviews?: Maybe<HomeDocAccessFields_ReviewsSection_Reviews>;
+};
+
+export type HomeDocAccessFields_ReviewsSection_Title = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_title';
+  create?: Maybe<HomeDocAccessFields_ReviewsSection_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_ReviewsSection_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_ReviewsSection_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_ReviewsSection_Title_Delete>;
+};
+
+export type HomeDocAccessFields_ReviewsSection_Title_Create = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Title_Read = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Title_Update = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Subtitle = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_subtitle';
+  create?: Maybe<HomeDocAccessFields_ReviewsSection_Subtitle_Create>;
+  read?: Maybe<HomeDocAccessFields_ReviewsSection_Subtitle_Read>;
+  update?: Maybe<HomeDocAccessFields_ReviewsSection_Subtitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_ReviewsSection_Subtitle_Delete>;
+};
+
+export type HomeDocAccessFields_ReviewsSection_Subtitle_Create = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Subtitle_Read = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Subtitle_Update = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Subtitle_Delete = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Reviews = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_reviews';
+  create?: Maybe<HomeDocAccessFields_ReviewsSection_Reviews_Create>;
+  read?: Maybe<HomeDocAccessFields_ReviewsSection_Reviews_Read>;
+  update?: Maybe<HomeDocAccessFields_ReviewsSection_Reviews_Update>;
+  delete?: Maybe<HomeDocAccessFields_ReviewsSection_Reviews_Delete>;
+};
+
+export type HomeDocAccessFields_ReviewsSection_Reviews_Create = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_reviews_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Reviews_Read = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_reviews_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Reviews_Update = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_reviews_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_ReviewsSection_Reviews_Delete = {
+  __typename?: 'HomeDocAccessFields_reviewsSection_reviews_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection = {
+  __typename?: 'HomeDocAccessFields_faqSection';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Delete>;
+  fields?: Maybe<HomeDocAccessFields_FaqSection_Fields>;
+};
+
+export type HomeDocAccessFields_FaqSection_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Fields = {
+  __typename?: 'HomeDocAccessFields_faqSection_Fields';
+  title?: Maybe<HomeDocAccessFields_FaqSection_Title>;
+  subtitle?: Maybe<HomeDocAccessFields_FaqSection_Subtitle>;
+  items?: Maybe<HomeDocAccessFields_FaqSection_Items>;
+};
+
+export type HomeDocAccessFields_FaqSection_Title = {
+  __typename?: 'HomeDocAccessFields_faqSection_title';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Title_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Title_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Title_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Title_Delete>;
+};
+
+export type HomeDocAccessFields_FaqSection_Title_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Title_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Title_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Title_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Subtitle = {
+  __typename?: 'HomeDocAccessFields_faqSection_subtitle';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Subtitle_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Subtitle_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Subtitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Subtitle_Delete>;
+};
+
+export type HomeDocAccessFields_FaqSection_Subtitle_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Subtitle_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Subtitle_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Subtitle_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items = {
+  __typename?: 'HomeDocAccessFields_faqSection_items';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Items_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Items_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Items_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Items_Delete>;
+  fields?: Maybe<HomeDocAccessFields_FaqSection_Items_Fields>;
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Fields = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_Fields';
+  question?: Maybe<HomeDocAccessFields_FaqSection_Items_Question>;
+  answer?: Maybe<HomeDocAccessFields_FaqSection_Items_Answer>;
+  id?: Maybe<HomeDocAccessFields_FaqSection_Items_Id>;
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Question = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_question';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Items_Question_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Items_Question_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Items_Question_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Items_Question_Delete>;
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Question_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_question_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Question_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_question_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Question_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_question_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Question_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_question_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Answer = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_answer';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Items_Answer_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Items_Answer_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Items_Answer_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Items_Answer_Delete>;
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Answer_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_answer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Answer_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_answer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Answer_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_answer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Answer_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_answer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Id = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_id';
+  create?: Maybe<HomeDocAccessFields_FaqSection_Items_Id_Create>;
+  read?: Maybe<HomeDocAccessFields_FaqSection_Items_Id_Read>;
+  update?: Maybe<HomeDocAccessFields_FaqSection_Items_Id_Update>;
+  delete?: Maybe<HomeDocAccessFields_FaqSection_Items_Id_Delete>;
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Id_Create = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Id_Read = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Id_Update = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_FaqSection_Items_Id_Delete = {
+  __typename?: 'HomeDocAccessFields_faqSection_items_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_UpdatedAt = {
+  __typename?: 'HomeDocAccessFields_updatedAt';
+  create?: Maybe<HomeDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<HomeDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<HomeDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<HomeDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type HomeDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'HomeDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'HomeDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'HomeDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'HomeDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CreatedAt = {
+  __typename?: 'HomeDocAccessFields_createdAt';
+  create?: Maybe<HomeDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<HomeDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<HomeDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<HomeDocAccessFields_CreatedAt_Delete>;
+};
+
+export type HomeDocAccessFields_CreatedAt_Create = {
+  __typename?: 'HomeDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CreatedAt_Read = {
+  __typename?: 'HomeDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CreatedAt_Update = {
+  __typename?: 'HomeDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'HomeDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeReadDocAccess = {
+  __typename?: 'HomeReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type HomeUpdateDocAccess = {
+  __typename?: 'HomeUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Access = {
   __typename?: 'Access';
   canAccessAdmin: Scalars['Boolean']['output'];
@@ -6904,6 +8534,7 @@ export type Access = {
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
+  home?: Maybe<HomeAccess>;
 };
 
 export type UsersAccess = {
@@ -10325,6 +11956,7 @@ export type LegalPagesFields = {
   title?: Maybe<LegalPagesFields_Title>;
   generateSlug?: Maybe<LegalPagesFields_GenerateSlug>;
   slug?: Maybe<LegalPagesFields_Slug>;
+  content?: Maybe<LegalPagesFields_Content>;
   contentMarkdown?: Maybe<LegalPagesFields_ContentMarkdown>;
   updatedAt?: Maybe<LegalPagesFields_UpdatedAt>;
   createdAt?: Maybe<LegalPagesFields_CreatedAt>;
@@ -10411,6 +12043,34 @@ export type LegalPagesFields_Slug_Update = {
 
 export type LegalPagesFields_Slug_Delete = {
   __typename?: 'LegalPagesFields_slug_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Content = {
+  __typename?: 'LegalPagesFields_content';
+  create?: Maybe<LegalPagesFields_Content_Create>;
+  read?: Maybe<LegalPagesFields_Content_Read>;
+  update?: Maybe<LegalPagesFields_Content_Update>;
+  delete?: Maybe<LegalPagesFields_Content_Delete>;
+};
+
+export type LegalPagesFields_Content_Create = {
+  __typename?: 'LegalPagesFields_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Content_Read = {
+  __typename?: 'LegalPagesFields_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Content_Update = {
+  __typename?: 'LegalPagesFields_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Content_Delete = {
+  __typename?: 'LegalPagesFields_content_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -10981,6 +12641,1481 @@ export type PayloadPreferencesDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type HomeAccess = {
+  __typename?: 'homeAccess';
+  fields?: Maybe<HomeFields>;
+  read?: Maybe<HomeReadAccess>;
+  update?: Maybe<HomeUpdateAccess>;
+};
+
+export type HomeFields = {
+  __typename?: 'HomeFields';
+  hero?: Maybe<HomeFields_Hero>;
+  howItWork?: Maybe<HomeFields_HowItWork>;
+  beforeAfter?: Maybe<HomeFields_BeforeAfter>;
+  modelComparison?: Maybe<HomeFields_ModelComparison>;
+  certificatesSection?: Maybe<HomeFields_CertificatesSection>;
+  trainingSection?: Maybe<HomeFields_TrainingSection>;
+  reviewsSection?: Maybe<HomeFields_ReviewsSection>;
+  faqSection?: Maybe<HomeFields_FaqSection>;
+  updatedAt?: Maybe<HomeFields_UpdatedAt>;
+  createdAt?: Maybe<HomeFields_CreatedAt>;
+};
+
+export type HomeFields_Hero = {
+  __typename?: 'HomeFields_hero';
+  create?: Maybe<HomeFields_Hero_Create>;
+  read?: Maybe<HomeFields_Hero_Read>;
+  update?: Maybe<HomeFields_Hero_Update>;
+  delete?: Maybe<HomeFields_Hero_Delete>;
+  fields?: Maybe<HomeFields_Hero_Fields>;
+};
+
+export type HomeFields_Hero_Create = {
+  __typename?: 'HomeFields_hero_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Read = {
+  __typename?: 'HomeFields_hero_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Update = {
+  __typename?: 'HomeFields_hero_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Delete = {
+  __typename?: 'HomeFields_hero_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Fields = {
+  __typename?: 'HomeFields_hero_Fields';
+  title?: Maybe<HomeFields_Hero_Title>;
+  description?: Maybe<HomeFields_Hero_Description>;
+  image?: Maybe<HomeFields_Hero_Image>;
+};
+
+export type HomeFields_Hero_Title = {
+  __typename?: 'HomeFields_hero_title';
+  create?: Maybe<HomeFields_Hero_Title_Create>;
+  read?: Maybe<HomeFields_Hero_Title_Read>;
+  update?: Maybe<HomeFields_Hero_Title_Update>;
+  delete?: Maybe<HomeFields_Hero_Title_Delete>;
+};
+
+export type HomeFields_Hero_Title_Create = {
+  __typename?: 'HomeFields_hero_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Title_Read = {
+  __typename?: 'HomeFields_hero_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Title_Update = {
+  __typename?: 'HomeFields_hero_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Title_Delete = {
+  __typename?: 'HomeFields_hero_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Description = {
+  __typename?: 'HomeFields_hero_description';
+  create?: Maybe<HomeFields_Hero_Description_Create>;
+  read?: Maybe<HomeFields_Hero_Description_Read>;
+  update?: Maybe<HomeFields_Hero_Description_Update>;
+  delete?: Maybe<HomeFields_Hero_Description_Delete>;
+};
+
+export type HomeFields_Hero_Description_Create = {
+  __typename?: 'HomeFields_hero_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Description_Read = {
+  __typename?: 'HomeFields_hero_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Description_Update = {
+  __typename?: 'HomeFields_hero_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Description_Delete = {
+  __typename?: 'HomeFields_hero_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Image = {
+  __typename?: 'HomeFields_hero_image';
+  create?: Maybe<HomeFields_Hero_Image_Create>;
+  read?: Maybe<HomeFields_Hero_Image_Read>;
+  update?: Maybe<HomeFields_Hero_Image_Update>;
+  delete?: Maybe<HomeFields_Hero_Image_Delete>;
+};
+
+export type HomeFields_Hero_Image_Create = {
+  __typename?: 'HomeFields_hero_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Image_Read = {
+  __typename?: 'HomeFields_hero_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Image_Update = {
+  __typename?: 'HomeFields_hero_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Hero_Image_Delete = {
+  __typename?: 'HomeFields_hero_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork = {
+  __typename?: 'HomeFields_howItWork';
+  create?: Maybe<HomeFields_HowItWork_Create>;
+  read?: Maybe<HomeFields_HowItWork_Read>;
+  update?: Maybe<HomeFields_HowItWork_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Delete>;
+  fields?: Maybe<HomeFields_HowItWork_Fields>;
+};
+
+export type HomeFields_HowItWork_Create = {
+  __typename?: 'HomeFields_howItWork_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Read = {
+  __typename?: 'HomeFields_howItWork_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Update = {
+  __typename?: 'HomeFields_howItWork_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Delete = {
+  __typename?: 'HomeFields_howItWork_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Fields = {
+  __typename?: 'HomeFields_howItWork_Fields';
+  title?: Maybe<HomeFields_HowItWork_Title>;
+  subtitle?: Maybe<HomeFields_HowItWork_Subtitle>;
+  cards?: Maybe<HomeFields_HowItWork_Cards>;
+};
+
+export type HomeFields_HowItWork_Title = {
+  __typename?: 'HomeFields_howItWork_title';
+  create?: Maybe<HomeFields_HowItWork_Title_Create>;
+  read?: Maybe<HomeFields_HowItWork_Title_Read>;
+  update?: Maybe<HomeFields_HowItWork_Title_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Title_Delete>;
+};
+
+export type HomeFields_HowItWork_Title_Create = {
+  __typename?: 'HomeFields_howItWork_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Title_Read = {
+  __typename?: 'HomeFields_howItWork_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Title_Update = {
+  __typename?: 'HomeFields_howItWork_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Title_Delete = {
+  __typename?: 'HomeFields_howItWork_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Subtitle = {
+  __typename?: 'HomeFields_howItWork_subtitle';
+  create?: Maybe<HomeFields_HowItWork_Subtitle_Create>;
+  read?: Maybe<HomeFields_HowItWork_Subtitle_Read>;
+  update?: Maybe<HomeFields_HowItWork_Subtitle_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Subtitle_Delete>;
+};
+
+export type HomeFields_HowItWork_Subtitle_Create = {
+  __typename?: 'HomeFields_howItWork_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Subtitle_Read = {
+  __typename?: 'HomeFields_howItWork_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Subtitle_Update = {
+  __typename?: 'HomeFields_howItWork_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Subtitle_Delete = {
+  __typename?: 'HomeFields_howItWork_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards = {
+  __typename?: 'HomeFields_howItWork_cards';
+  create?: Maybe<HomeFields_HowItWork_Cards_Create>;
+  read?: Maybe<HomeFields_HowItWork_Cards_Read>;
+  update?: Maybe<HomeFields_HowItWork_Cards_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Cards_Delete>;
+  fields?: Maybe<HomeFields_HowItWork_Cards_Fields>;
+};
+
+export type HomeFields_HowItWork_Cards_Create = {
+  __typename?: 'HomeFields_howItWork_cards_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Read = {
+  __typename?: 'HomeFields_howItWork_cards_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Update = {
+  __typename?: 'HomeFields_howItWork_cards_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Delete = {
+  __typename?: 'HomeFields_howItWork_cards_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Fields = {
+  __typename?: 'HomeFields_howItWork_cards_Fields';
+  icon?: Maybe<HomeFields_HowItWork_Cards_Icon>;
+  title?: Maybe<HomeFields_HowItWork_Cards_Title>;
+  description?: Maybe<HomeFields_HowItWork_Cards_Description>;
+  id?: Maybe<HomeFields_HowItWork_Cards_Id>;
+};
+
+export type HomeFields_HowItWork_Cards_Icon = {
+  __typename?: 'HomeFields_howItWork_cards_icon';
+  create?: Maybe<HomeFields_HowItWork_Cards_Icon_Create>;
+  read?: Maybe<HomeFields_HowItWork_Cards_Icon_Read>;
+  update?: Maybe<HomeFields_HowItWork_Cards_Icon_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Cards_Icon_Delete>;
+};
+
+export type HomeFields_HowItWork_Cards_Icon_Create = {
+  __typename?: 'HomeFields_howItWork_cards_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Icon_Read = {
+  __typename?: 'HomeFields_howItWork_cards_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Icon_Update = {
+  __typename?: 'HomeFields_howItWork_cards_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Icon_Delete = {
+  __typename?: 'HomeFields_howItWork_cards_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Title = {
+  __typename?: 'HomeFields_howItWork_cards_title';
+  create?: Maybe<HomeFields_HowItWork_Cards_Title_Create>;
+  read?: Maybe<HomeFields_HowItWork_Cards_Title_Read>;
+  update?: Maybe<HomeFields_HowItWork_Cards_Title_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Cards_Title_Delete>;
+};
+
+export type HomeFields_HowItWork_Cards_Title_Create = {
+  __typename?: 'HomeFields_howItWork_cards_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Title_Read = {
+  __typename?: 'HomeFields_howItWork_cards_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Title_Update = {
+  __typename?: 'HomeFields_howItWork_cards_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Title_Delete = {
+  __typename?: 'HomeFields_howItWork_cards_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Description = {
+  __typename?: 'HomeFields_howItWork_cards_description';
+  create?: Maybe<HomeFields_HowItWork_Cards_Description_Create>;
+  read?: Maybe<HomeFields_HowItWork_Cards_Description_Read>;
+  update?: Maybe<HomeFields_HowItWork_Cards_Description_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Cards_Description_Delete>;
+};
+
+export type HomeFields_HowItWork_Cards_Description_Create = {
+  __typename?: 'HomeFields_howItWork_cards_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Description_Read = {
+  __typename?: 'HomeFields_howItWork_cards_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Description_Update = {
+  __typename?: 'HomeFields_howItWork_cards_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Description_Delete = {
+  __typename?: 'HomeFields_howItWork_cards_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Id = {
+  __typename?: 'HomeFields_howItWork_cards_id';
+  create?: Maybe<HomeFields_HowItWork_Cards_Id_Create>;
+  read?: Maybe<HomeFields_HowItWork_Cards_Id_Read>;
+  update?: Maybe<HomeFields_HowItWork_Cards_Id_Update>;
+  delete?: Maybe<HomeFields_HowItWork_Cards_Id_Delete>;
+};
+
+export type HomeFields_HowItWork_Cards_Id_Create = {
+  __typename?: 'HomeFields_howItWork_cards_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Id_Read = {
+  __typename?: 'HomeFields_howItWork_cards_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Id_Update = {
+  __typename?: 'HomeFields_howItWork_cards_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_HowItWork_Cards_Id_Delete = {
+  __typename?: 'HomeFields_howItWork_cards_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter = {
+  __typename?: 'HomeFields_beforeAfter';
+  create?: Maybe<HomeFields_BeforeAfter_Create>;
+  read?: Maybe<HomeFields_BeforeAfter_Read>;
+  update?: Maybe<HomeFields_BeforeAfter_Update>;
+  delete?: Maybe<HomeFields_BeforeAfter_Delete>;
+  fields?: Maybe<HomeFields_BeforeAfter_Fields>;
+};
+
+export type HomeFields_BeforeAfter_Create = {
+  __typename?: 'HomeFields_beforeAfter_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Read = {
+  __typename?: 'HomeFields_beforeAfter_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Update = {
+  __typename?: 'HomeFields_beforeAfter_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Delete = {
+  __typename?: 'HomeFields_beforeAfter_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Fields = {
+  __typename?: 'HomeFields_beforeAfter_Fields';
+  before?: Maybe<HomeFields_BeforeAfter_Before>;
+  after?: Maybe<HomeFields_BeforeAfter_After>;
+  id?: Maybe<HomeFields_BeforeAfter_Id>;
+};
+
+export type HomeFields_BeforeAfter_Before = {
+  __typename?: 'HomeFields_beforeAfter_before';
+  create?: Maybe<HomeFields_BeforeAfter_Before_Create>;
+  read?: Maybe<HomeFields_BeforeAfter_Before_Read>;
+  update?: Maybe<HomeFields_BeforeAfter_Before_Update>;
+  delete?: Maybe<HomeFields_BeforeAfter_Before_Delete>;
+};
+
+export type HomeFields_BeforeAfter_Before_Create = {
+  __typename?: 'HomeFields_beforeAfter_before_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Before_Read = {
+  __typename?: 'HomeFields_beforeAfter_before_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Before_Update = {
+  __typename?: 'HomeFields_beforeAfter_before_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Before_Delete = {
+  __typename?: 'HomeFields_beforeAfter_before_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_After = {
+  __typename?: 'HomeFields_beforeAfter_after';
+  create?: Maybe<HomeFields_BeforeAfter_After_Create>;
+  read?: Maybe<HomeFields_BeforeAfter_After_Read>;
+  update?: Maybe<HomeFields_BeforeAfter_After_Update>;
+  delete?: Maybe<HomeFields_BeforeAfter_After_Delete>;
+};
+
+export type HomeFields_BeforeAfter_After_Create = {
+  __typename?: 'HomeFields_beforeAfter_after_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_After_Read = {
+  __typename?: 'HomeFields_beforeAfter_after_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_After_Update = {
+  __typename?: 'HomeFields_beforeAfter_after_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_After_Delete = {
+  __typename?: 'HomeFields_beforeAfter_after_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Id = {
+  __typename?: 'HomeFields_beforeAfter_id';
+  create?: Maybe<HomeFields_BeforeAfter_Id_Create>;
+  read?: Maybe<HomeFields_BeforeAfter_Id_Read>;
+  update?: Maybe<HomeFields_BeforeAfter_Id_Update>;
+  delete?: Maybe<HomeFields_BeforeAfter_Id_Delete>;
+};
+
+export type HomeFields_BeforeAfter_Id_Create = {
+  __typename?: 'HomeFields_beforeAfter_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Id_Read = {
+  __typename?: 'HomeFields_beforeAfter_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Id_Update = {
+  __typename?: 'HomeFields_beforeAfter_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_BeforeAfter_Id_Delete = {
+  __typename?: 'HomeFields_beforeAfter_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison = {
+  __typename?: 'HomeFields_modelComparison';
+  create?: Maybe<HomeFields_ModelComparison_Create>;
+  read?: Maybe<HomeFields_ModelComparison_Read>;
+  update?: Maybe<HomeFields_ModelComparison_Update>;
+  delete?: Maybe<HomeFields_ModelComparison_Delete>;
+  fields?: Maybe<HomeFields_ModelComparison_Fields>;
+};
+
+export type HomeFields_ModelComparison_Create = {
+  __typename?: 'HomeFields_modelComparison_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Read = {
+  __typename?: 'HomeFields_modelComparison_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Update = {
+  __typename?: 'HomeFields_modelComparison_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Delete = {
+  __typename?: 'HomeFields_modelComparison_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Fields = {
+  __typename?: 'HomeFields_modelComparison_Fields';
+  title?: Maybe<HomeFields_ModelComparison_Title>;
+  subtitle?: Maybe<HomeFields_ModelComparison_Subtitle>;
+  products?: Maybe<HomeFields_ModelComparison_Products>;
+};
+
+export type HomeFields_ModelComparison_Title = {
+  __typename?: 'HomeFields_modelComparison_title';
+  create?: Maybe<HomeFields_ModelComparison_Title_Create>;
+  read?: Maybe<HomeFields_ModelComparison_Title_Read>;
+  update?: Maybe<HomeFields_ModelComparison_Title_Update>;
+  delete?: Maybe<HomeFields_ModelComparison_Title_Delete>;
+};
+
+export type HomeFields_ModelComparison_Title_Create = {
+  __typename?: 'HomeFields_modelComparison_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Title_Read = {
+  __typename?: 'HomeFields_modelComparison_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Title_Update = {
+  __typename?: 'HomeFields_modelComparison_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Title_Delete = {
+  __typename?: 'HomeFields_modelComparison_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Subtitle = {
+  __typename?: 'HomeFields_modelComparison_subtitle';
+  create?: Maybe<HomeFields_ModelComparison_Subtitle_Create>;
+  read?: Maybe<HomeFields_ModelComparison_Subtitle_Read>;
+  update?: Maybe<HomeFields_ModelComparison_Subtitle_Update>;
+  delete?: Maybe<HomeFields_ModelComparison_Subtitle_Delete>;
+};
+
+export type HomeFields_ModelComparison_Subtitle_Create = {
+  __typename?: 'HomeFields_modelComparison_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Subtitle_Read = {
+  __typename?: 'HomeFields_modelComparison_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Subtitle_Update = {
+  __typename?: 'HomeFields_modelComparison_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Subtitle_Delete = {
+  __typename?: 'HomeFields_modelComparison_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Products = {
+  __typename?: 'HomeFields_modelComparison_products';
+  create?: Maybe<HomeFields_ModelComparison_Products_Create>;
+  read?: Maybe<HomeFields_ModelComparison_Products_Read>;
+  update?: Maybe<HomeFields_ModelComparison_Products_Update>;
+  delete?: Maybe<HomeFields_ModelComparison_Products_Delete>;
+};
+
+export type HomeFields_ModelComparison_Products_Create = {
+  __typename?: 'HomeFields_modelComparison_products_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Products_Read = {
+  __typename?: 'HomeFields_modelComparison_products_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Products_Update = {
+  __typename?: 'HomeFields_modelComparison_products_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ModelComparison_Products_Delete = {
+  __typename?: 'HomeFields_modelComparison_products_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection = {
+  __typename?: 'HomeFields_certificatesSection';
+  create?: Maybe<HomeFields_CertificatesSection_Create>;
+  read?: Maybe<HomeFields_CertificatesSection_Read>;
+  update?: Maybe<HomeFields_CertificatesSection_Update>;
+  delete?: Maybe<HomeFields_CertificatesSection_Delete>;
+  fields?: Maybe<HomeFields_CertificatesSection_Fields>;
+};
+
+export type HomeFields_CertificatesSection_Create = {
+  __typename?: 'HomeFields_certificatesSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Read = {
+  __typename?: 'HomeFields_certificatesSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Update = {
+  __typename?: 'HomeFields_certificatesSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Delete = {
+  __typename?: 'HomeFields_certificatesSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Fields = {
+  __typename?: 'HomeFields_certificatesSection_Fields';
+  title?: Maybe<HomeFields_CertificatesSection_Title>;
+  subtitle?: Maybe<HomeFields_CertificatesSection_Subtitle>;
+  certificates?: Maybe<HomeFields_CertificatesSection_Certificates>;
+};
+
+export type HomeFields_CertificatesSection_Title = {
+  __typename?: 'HomeFields_certificatesSection_title';
+  create?: Maybe<HomeFields_CertificatesSection_Title_Create>;
+  read?: Maybe<HomeFields_CertificatesSection_Title_Read>;
+  update?: Maybe<HomeFields_CertificatesSection_Title_Update>;
+  delete?: Maybe<HomeFields_CertificatesSection_Title_Delete>;
+};
+
+export type HomeFields_CertificatesSection_Title_Create = {
+  __typename?: 'HomeFields_certificatesSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Title_Read = {
+  __typename?: 'HomeFields_certificatesSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Title_Update = {
+  __typename?: 'HomeFields_certificatesSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Title_Delete = {
+  __typename?: 'HomeFields_certificatesSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Subtitle = {
+  __typename?: 'HomeFields_certificatesSection_subtitle';
+  create?: Maybe<HomeFields_CertificatesSection_Subtitle_Create>;
+  read?: Maybe<HomeFields_CertificatesSection_Subtitle_Read>;
+  update?: Maybe<HomeFields_CertificatesSection_Subtitle_Update>;
+  delete?: Maybe<HomeFields_CertificatesSection_Subtitle_Delete>;
+};
+
+export type HomeFields_CertificatesSection_Subtitle_Create = {
+  __typename?: 'HomeFields_certificatesSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Subtitle_Read = {
+  __typename?: 'HomeFields_certificatesSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Subtitle_Update = {
+  __typename?: 'HomeFields_certificatesSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Subtitle_Delete = {
+  __typename?: 'HomeFields_certificatesSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Certificates = {
+  __typename?: 'HomeFields_certificatesSection_certificates';
+  create?: Maybe<HomeFields_CertificatesSection_Certificates_Create>;
+  read?: Maybe<HomeFields_CertificatesSection_Certificates_Read>;
+  update?: Maybe<HomeFields_CertificatesSection_Certificates_Update>;
+  delete?: Maybe<HomeFields_CertificatesSection_Certificates_Delete>;
+};
+
+export type HomeFields_CertificatesSection_Certificates_Create = {
+  __typename?: 'HomeFields_certificatesSection_certificates_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Certificates_Read = {
+  __typename?: 'HomeFields_certificatesSection_certificates_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Certificates_Update = {
+  __typename?: 'HomeFields_certificatesSection_certificates_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CertificatesSection_Certificates_Delete = {
+  __typename?: 'HomeFields_certificatesSection_certificates_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection = {
+  __typename?: 'HomeFields_trainingSection';
+  create?: Maybe<HomeFields_TrainingSection_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Delete>;
+  fields?: Maybe<HomeFields_TrainingSection_Fields>;
+};
+
+export type HomeFields_TrainingSection_Create = {
+  __typename?: 'HomeFields_trainingSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Read = {
+  __typename?: 'HomeFields_trainingSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Update = {
+  __typename?: 'HomeFields_trainingSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Delete = {
+  __typename?: 'HomeFields_trainingSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Fields = {
+  __typename?: 'HomeFields_trainingSection_Fields';
+  title?: Maybe<HomeFields_TrainingSection_Title>;
+  subtitle?: Maybe<HomeFields_TrainingSection_Subtitle>;
+  video?: Maybe<HomeFields_TrainingSection_Video>;
+  cards?: Maybe<HomeFields_TrainingSection_Cards>;
+};
+
+export type HomeFields_TrainingSection_Title = {
+  __typename?: 'HomeFields_trainingSection_title';
+  create?: Maybe<HomeFields_TrainingSection_Title_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Title_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Title_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Title_Delete>;
+};
+
+export type HomeFields_TrainingSection_Title_Create = {
+  __typename?: 'HomeFields_trainingSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Title_Read = {
+  __typename?: 'HomeFields_trainingSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Title_Update = {
+  __typename?: 'HomeFields_trainingSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Title_Delete = {
+  __typename?: 'HomeFields_trainingSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Subtitle = {
+  __typename?: 'HomeFields_trainingSection_subtitle';
+  create?: Maybe<HomeFields_TrainingSection_Subtitle_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Subtitle_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Subtitle_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Subtitle_Delete>;
+};
+
+export type HomeFields_TrainingSection_Subtitle_Create = {
+  __typename?: 'HomeFields_trainingSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Subtitle_Read = {
+  __typename?: 'HomeFields_trainingSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Subtitle_Update = {
+  __typename?: 'HomeFields_trainingSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Subtitle_Delete = {
+  __typename?: 'HomeFields_trainingSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video = {
+  __typename?: 'HomeFields_trainingSection_video';
+  create?: Maybe<HomeFields_TrainingSection_Video_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Video_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Video_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Video_Delete>;
+  fields?: Maybe<HomeFields_TrainingSection_Video_Fields>;
+};
+
+export type HomeFields_TrainingSection_Video_Create = {
+  __typename?: 'HomeFields_trainingSection_video_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Read = {
+  __typename?: 'HomeFields_trainingSection_video_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Update = {
+  __typename?: 'HomeFields_trainingSection_video_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Delete = {
+  __typename?: 'HomeFields_trainingSection_video_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Fields = {
+  __typename?: 'HomeFields_trainingSection_video_Fields';
+  poster?: Maybe<HomeFields_TrainingSection_Video_Poster>;
+  file?: Maybe<HomeFields_TrainingSection_Video_File>;
+};
+
+export type HomeFields_TrainingSection_Video_Poster = {
+  __typename?: 'HomeFields_trainingSection_video_poster';
+  create?: Maybe<HomeFields_TrainingSection_Video_Poster_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Video_Poster_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Video_Poster_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Video_Poster_Delete>;
+};
+
+export type HomeFields_TrainingSection_Video_Poster_Create = {
+  __typename?: 'HomeFields_trainingSection_video_poster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Poster_Read = {
+  __typename?: 'HomeFields_trainingSection_video_poster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Poster_Update = {
+  __typename?: 'HomeFields_trainingSection_video_poster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_Poster_Delete = {
+  __typename?: 'HomeFields_trainingSection_video_poster_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_File = {
+  __typename?: 'HomeFields_trainingSection_video_file';
+  create?: Maybe<HomeFields_TrainingSection_Video_File_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Video_File_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Video_File_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Video_File_Delete>;
+};
+
+export type HomeFields_TrainingSection_Video_File_Create = {
+  __typename?: 'HomeFields_trainingSection_video_file_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_File_Read = {
+  __typename?: 'HomeFields_trainingSection_video_file_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_File_Update = {
+  __typename?: 'HomeFields_trainingSection_video_file_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Video_File_Delete = {
+  __typename?: 'HomeFields_trainingSection_video_file_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards = {
+  __typename?: 'HomeFields_trainingSection_cards';
+  create?: Maybe<HomeFields_TrainingSection_Cards_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Cards_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Cards_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Cards_Delete>;
+  fields?: Maybe<HomeFields_TrainingSection_Cards_Fields>;
+};
+
+export type HomeFields_TrainingSection_Cards_Create = {
+  __typename?: 'HomeFields_trainingSection_cards_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Read = {
+  __typename?: 'HomeFields_trainingSection_cards_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Update = {
+  __typename?: 'HomeFields_trainingSection_cards_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Delete = {
+  __typename?: 'HomeFields_trainingSection_cards_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Fields = {
+  __typename?: 'HomeFields_trainingSection_cards_Fields';
+  icon?: Maybe<HomeFields_TrainingSection_Cards_Icon>;
+  title?: Maybe<HomeFields_TrainingSection_Cards_Title>;
+  description?: Maybe<HomeFields_TrainingSection_Cards_Description>;
+  id?: Maybe<HomeFields_TrainingSection_Cards_Id>;
+};
+
+export type HomeFields_TrainingSection_Cards_Icon = {
+  __typename?: 'HomeFields_trainingSection_cards_icon';
+  create?: Maybe<HomeFields_TrainingSection_Cards_Icon_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Cards_Icon_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Cards_Icon_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Cards_Icon_Delete>;
+};
+
+export type HomeFields_TrainingSection_Cards_Icon_Create = {
+  __typename?: 'HomeFields_trainingSection_cards_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Icon_Read = {
+  __typename?: 'HomeFields_trainingSection_cards_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Icon_Update = {
+  __typename?: 'HomeFields_trainingSection_cards_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Icon_Delete = {
+  __typename?: 'HomeFields_trainingSection_cards_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Title = {
+  __typename?: 'HomeFields_trainingSection_cards_title';
+  create?: Maybe<HomeFields_TrainingSection_Cards_Title_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Cards_Title_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Cards_Title_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Cards_Title_Delete>;
+};
+
+export type HomeFields_TrainingSection_Cards_Title_Create = {
+  __typename?: 'HomeFields_trainingSection_cards_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Title_Read = {
+  __typename?: 'HomeFields_trainingSection_cards_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Title_Update = {
+  __typename?: 'HomeFields_trainingSection_cards_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Title_Delete = {
+  __typename?: 'HomeFields_trainingSection_cards_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Description = {
+  __typename?: 'HomeFields_trainingSection_cards_description';
+  create?: Maybe<HomeFields_TrainingSection_Cards_Description_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Cards_Description_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Cards_Description_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Cards_Description_Delete>;
+};
+
+export type HomeFields_TrainingSection_Cards_Description_Create = {
+  __typename?: 'HomeFields_trainingSection_cards_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Description_Read = {
+  __typename?: 'HomeFields_trainingSection_cards_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Description_Update = {
+  __typename?: 'HomeFields_trainingSection_cards_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Description_Delete = {
+  __typename?: 'HomeFields_trainingSection_cards_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Id = {
+  __typename?: 'HomeFields_trainingSection_cards_id';
+  create?: Maybe<HomeFields_TrainingSection_Cards_Id_Create>;
+  read?: Maybe<HomeFields_TrainingSection_Cards_Id_Read>;
+  update?: Maybe<HomeFields_TrainingSection_Cards_Id_Update>;
+  delete?: Maybe<HomeFields_TrainingSection_Cards_Id_Delete>;
+};
+
+export type HomeFields_TrainingSection_Cards_Id_Create = {
+  __typename?: 'HomeFields_trainingSection_cards_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Id_Read = {
+  __typename?: 'HomeFields_trainingSection_cards_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Id_Update = {
+  __typename?: 'HomeFields_trainingSection_cards_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_TrainingSection_Cards_Id_Delete = {
+  __typename?: 'HomeFields_trainingSection_cards_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection = {
+  __typename?: 'HomeFields_reviewsSection';
+  create?: Maybe<HomeFields_ReviewsSection_Create>;
+  read?: Maybe<HomeFields_ReviewsSection_Read>;
+  update?: Maybe<HomeFields_ReviewsSection_Update>;
+  delete?: Maybe<HomeFields_ReviewsSection_Delete>;
+  fields?: Maybe<HomeFields_ReviewsSection_Fields>;
+};
+
+export type HomeFields_ReviewsSection_Create = {
+  __typename?: 'HomeFields_reviewsSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Read = {
+  __typename?: 'HomeFields_reviewsSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Update = {
+  __typename?: 'HomeFields_reviewsSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Delete = {
+  __typename?: 'HomeFields_reviewsSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Fields = {
+  __typename?: 'HomeFields_reviewsSection_Fields';
+  title?: Maybe<HomeFields_ReviewsSection_Title>;
+  subtitle?: Maybe<HomeFields_ReviewsSection_Subtitle>;
+  reviews?: Maybe<HomeFields_ReviewsSection_Reviews>;
+};
+
+export type HomeFields_ReviewsSection_Title = {
+  __typename?: 'HomeFields_reviewsSection_title';
+  create?: Maybe<HomeFields_ReviewsSection_Title_Create>;
+  read?: Maybe<HomeFields_ReviewsSection_Title_Read>;
+  update?: Maybe<HomeFields_ReviewsSection_Title_Update>;
+  delete?: Maybe<HomeFields_ReviewsSection_Title_Delete>;
+};
+
+export type HomeFields_ReviewsSection_Title_Create = {
+  __typename?: 'HomeFields_reviewsSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Title_Read = {
+  __typename?: 'HomeFields_reviewsSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Title_Update = {
+  __typename?: 'HomeFields_reviewsSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Title_Delete = {
+  __typename?: 'HomeFields_reviewsSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Subtitle = {
+  __typename?: 'HomeFields_reviewsSection_subtitle';
+  create?: Maybe<HomeFields_ReviewsSection_Subtitle_Create>;
+  read?: Maybe<HomeFields_ReviewsSection_Subtitle_Read>;
+  update?: Maybe<HomeFields_ReviewsSection_Subtitle_Update>;
+  delete?: Maybe<HomeFields_ReviewsSection_Subtitle_Delete>;
+};
+
+export type HomeFields_ReviewsSection_Subtitle_Create = {
+  __typename?: 'HomeFields_reviewsSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Subtitle_Read = {
+  __typename?: 'HomeFields_reviewsSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Subtitle_Update = {
+  __typename?: 'HomeFields_reviewsSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Subtitle_Delete = {
+  __typename?: 'HomeFields_reviewsSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Reviews = {
+  __typename?: 'HomeFields_reviewsSection_reviews';
+  create?: Maybe<HomeFields_ReviewsSection_Reviews_Create>;
+  read?: Maybe<HomeFields_ReviewsSection_Reviews_Read>;
+  update?: Maybe<HomeFields_ReviewsSection_Reviews_Update>;
+  delete?: Maybe<HomeFields_ReviewsSection_Reviews_Delete>;
+};
+
+export type HomeFields_ReviewsSection_Reviews_Create = {
+  __typename?: 'HomeFields_reviewsSection_reviews_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Reviews_Read = {
+  __typename?: 'HomeFields_reviewsSection_reviews_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Reviews_Update = {
+  __typename?: 'HomeFields_reviewsSection_reviews_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_ReviewsSection_Reviews_Delete = {
+  __typename?: 'HomeFields_reviewsSection_reviews_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection = {
+  __typename?: 'HomeFields_faqSection';
+  create?: Maybe<HomeFields_FaqSection_Create>;
+  read?: Maybe<HomeFields_FaqSection_Read>;
+  update?: Maybe<HomeFields_FaqSection_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Delete>;
+  fields?: Maybe<HomeFields_FaqSection_Fields>;
+};
+
+export type HomeFields_FaqSection_Create = {
+  __typename?: 'HomeFields_faqSection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Read = {
+  __typename?: 'HomeFields_faqSection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Update = {
+  __typename?: 'HomeFields_faqSection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Delete = {
+  __typename?: 'HomeFields_faqSection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Fields = {
+  __typename?: 'HomeFields_faqSection_Fields';
+  title?: Maybe<HomeFields_FaqSection_Title>;
+  subtitle?: Maybe<HomeFields_FaqSection_Subtitle>;
+  items?: Maybe<HomeFields_FaqSection_Items>;
+};
+
+export type HomeFields_FaqSection_Title = {
+  __typename?: 'HomeFields_faqSection_title';
+  create?: Maybe<HomeFields_FaqSection_Title_Create>;
+  read?: Maybe<HomeFields_FaqSection_Title_Read>;
+  update?: Maybe<HomeFields_FaqSection_Title_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Title_Delete>;
+};
+
+export type HomeFields_FaqSection_Title_Create = {
+  __typename?: 'HomeFields_faqSection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Title_Read = {
+  __typename?: 'HomeFields_faqSection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Title_Update = {
+  __typename?: 'HomeFields_faqSection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Title_Delete = {
+  __typename?: 'HomeFields_faqSection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Subtitle = {
+  __typename?: 'HomeFields_faqSection_subtitle';
+  create?: Maybe<HomeFields_FaqSection_Subtitle_Create>;
+  read?: Maybe<HomeFields_FaqSection_Subtitle_Read>;
+  update?: Maybe<HomeFields_FaqSection_Subtitle_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Subtitle_Delete>;
+};
+
+export type HomeFields_FaqSection_Subtitle_Create = {
+  __typename?: 'HomeFields_faqSection_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Subtitle_Read = {
+  __typename?: 'HomeFields_faqSection_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Subtitle_Update = {
+  __typename?: 'HomeFields_faqSection_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Subtitle_Delete = {
+  __typename?: 'HomeFields_faqSection_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items = {
+  __typename?: 'HomeFields_faqSection_items';
+  create?: Maybe<HomeFields_FaqSection_Items_Create>;
+  read?: Maybe<HomeFields_FaqSection_Items_Read>;
+  update?: Maybe<HomeFields_FaqSection_Items_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Items_Delete>;
+  fields?: Maybe<HomeFields_FaqSection_Items_Fields>;
+};
+
+export type HomeFields_FaqSection_Items_Create = {
+  __typename?: 'HomeFields_faqSection_items_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Read = {
+  __typename?: 'HomeFields_faqSection_items_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Update = {
+  __typename?: 'HomeFields_faqSection_items_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Delete = {
+  __typename?: 'HomeFields_faqSection_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Fields = {
+  __typename?: 'HomeFields_faqSection_items_Fields';
+  question?: Maybe<HomeFields_FaqSection_Items_Question>;
+  answer?: Maybe<HomeFields_FaqSection_Items_Answer>;
+  id?: Maybe<HomeFields_FaqSection_Items_Id>;
+};
+
+export type HomeFields_FaqSection_Items_Question = {
+  __typename?: 'HomeFields_faqSection_items_question';
+  create?: Maybe<HomeFields_FaqSection_Items_Question_Create>;
+  read?: Maybe<HomeFields_FaqSection_Items_Question_Read>;
+  update?: Maybe<HomeFields_FaqSection_Items_Question_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Items_Question_Delete>;
+};
+
+export type HomeFields_FaqSection_Items_Question_Create = {
+  __typename?: 'HomeFields_faqSection_items_question_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Question_Read = {
+  __typename?: 'HomeFields_faqSection_items_question_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Question_Update = {
+  __typename?: 'HomeFields_faqSection_items_question_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Question_Delete = {
+  __typename?: 'HomeFields_faqSection_items_question_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Answer = {
+  __typename?: 'HomeFields_faqSection_items_answer';
+  create?: Maybe<HomeFields_FaqSection_Items_Answer_Create>;
+  read?: Maybe<HomeFields_FaqSection_Items_Answer_Read>;
+  update?: Maybe<HomeFields_FaqSection_Items_Answer_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Items_Answer_Delete>;
+};
+
+export type HomeFields_FaqSection_Items_Answer_Create = {
+  __typename?: 'HomeFields_faqSection_items_answer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Answer_Read = {
+  __typename?: 'HomeFields_faqSection_items_answer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Answer_Update = {
+  __typename?: 'HomeFields_faqSection_items_answer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Answer_Delete = {
+  __typename?: 'HomeFields_faqSection_items_answer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Id = {
+  __typename?: 'HomeFields_faqSection_items_id';
+  create?: Maybe<HomeFields_FaqSection_Items_Id_Create>;
+  read?: Maybe<HomeFields_FaqSection_Items_Id_Read>;
+  update?: Maybe<HomeFields_FaqSection_Items_Id_Update>;
+  delete?: Maybe<HomeFields_FaqSection_Items_Id_Delete>;
+};
+
+export type HomeFields_FaqSection_Items_Id_Create = {
+  __typename?: 'HomeFields_faqSection_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Id_Read = {
+  __typename?: 'HomeFields_faqSection_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Id_Update = {
+  __typename?: 'HomeFields_faqSection_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_FaqSection_Items_Id_Delete = {
+  __typename?: 'HomeFields_faqSection_items_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_UpdatedAt = {
+  __typename?: 'HomeFields_updatedAt';
+  create?: Maybe<HomeFields_UpdatedAt_Create>;
+  read?: Maybe<HomeFields_UpdatedAt_Read>;
+  update?: Maybe<HomeFields_UpdatedAt_Update>;
+  delete?: Maybe<HomeFields_UpdatedAt_Delete>;
+};
+
+export type HomeFields_UpdatedAt_Create = {
+  __typename?: 'HomeFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_UpdatedAt_Read = {
+  __typename?: 'HomeFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_UpdatedAt_Update = {
+  __typename?: 'HomeFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_UpdatedAt_Delete = {
+  __typename?: 'HomeFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CreatedAt = {
+  __typename?: 'HomeFields_createdAt';
+  create?: Maybe<HomeFields_CreatedAt_Create>;
+  read?: Maybe<HomeFields_CreatedAt_Read>;
+  update?: Maybe<HomeFields_CreatedAt_Update>;
+  delete?: Maybe<HomeFields_CreatedAt_Delete>;
+};
+
+export type HomeFields_CreatedAt_Create = {
+  __typename?: 'HomeFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CreatedAt_Read = {
+  __typename?: 'HomeFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CreatedAt_Update = {
+  __typename?: 'HomeFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_CreatedAt_Delete = {
+  __typename?: 'HomeFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeReadAccess = {
+  __typename?: 'HomeReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type HomeUpdateAccess = {
+  __typename?: 'HomeUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
@@ -11033,6 +14168,7 @@ export type Mutation = {
   updatePayloadPreference?: Maybe<PayloadPreference>;
   deletePayloadPreference?: Maybe<PayloadPreference>;
   duplicatePayloadPreference?: Maybe<PayloadPreference>;
+  updateHome?: Maybe<Home>;
 };
 
 
@@ -11356,6 +14492,12 @@ export type MutationDeletePayloadPreferenceArgs = {
 export type MutationDuplicatePayloadPreferenceArgs = {
   id: Scalars['Int']['input'];
   data: MutationPayloadPreferenceInput;
+};
+
+
+export type MutationUpdateHomeArgs = {
+  data: MutationHomeInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MutationUserInput = {
@@ -11811,7 +14953,8 @@ export type MutationLegalPageInput = {
   title: Scalars['String']['input'];
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
-  contentMarkdown: Scalars['String']['input'];
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  contentMarkdown?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -11820,6 +14963,7 @@ export type MutationLegalPageUpdateInput = {
   title?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['JSON']['input']>;
   contentMarkdown?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
@@ -11934,6 +15078,93 @@ export type PayloadPreferenceUpdate_UserRelationshipInput = {
 export enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
+
+export type MutationHomeInput = {
+  hero: MutationHome_HeroInput;
+  howItWork: MutationHome_HowItWorkInput;
+  beforeAfter?: InputMaybe<Array<InputMaybe<MutationHome_BeforeAfterInput>>>;
+  modelComparison: MutationHome_ModelComparisonInput;
+  certificatesSection: MutationHome_CertificatesSectionInput;
+  trainingSection: MutationHome_TrainingSectionInput;
+  reviewsSection: MutationHome_ReviewsSectionInput;
+  faqSection: MutationHome_FaqSectionInput;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationHome_HeroInput = {
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  image?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationHome_HowItWorkInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  cards?: InputMaybe<Array<InputMaybe<MutationHome_HowItWork_CardsInput>>>;
+};
+
+export type MutationHome_HowItWork_CardsInput = {
+  icon?: InputMaybe<Scalars['Int']['input']>;
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationHome_BeforeAfterInput = {
+  before?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationHome_ModelComparisonInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  products?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+};
+
+export type MutationHome_CertificatesSectionInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  certificates?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+};
+
+export type MutationHome_TrainingSectionInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  video: MutationHome_TrainingSection_VideoInput;
+  cards?: InputMaybe<Array<InputMaybe<MutationHome_TrainingSection_CardsInput>>>;
+};
+
+export type MutationHome_TrainingSection_VideoInput = {
+  poster?: InputMaybe<Scalars['Int']['input']>;
+  file?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationHome_TrainingSection_CardsInput = {
+  icon?: InputMaybe<Scalars['Int']['input']>;
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationHome_ReviewsSectionInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  reviews?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+};
+
+export type MutationHome_FaqSectionInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  items?: InputMaybe<Array<InputMaybe<MutationHome_FaqSection_ItemsInput>>>;
+};
+
+export type MutationHome_FaqSection_ItemsInput = {
+  question: Scalars['String']['input'];
+  answer: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type GetLayoutDataQueryVariables = Exact<{ [key: string]: never; }>;
 

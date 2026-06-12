@@ -99,8 +99,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -775,6 +779,174 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Контент головної сторінки.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  hero: {
+    title: string;
+    description: string;
+    image: number | Media;
+  };
+  howItWork: {
+    title: string;
+    subtitle: string;
+    cards?:
+      | {
+          icon: number | Media;
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  beforeAfter?:
+    | {
+        before: number | Media;
+        after: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  modelComparison: {
+    title: string;
+    subtitle: string;
+    products?: (number | Product)[] | null;
+  };
+  certificatesSection: {
+    title: string;
+    subtitle: string;
+    certificates?: (number | Media)[] | null;
+  };
+  trainingSection: {
+    title: string;
+    subtitle: string;
+    video: {
+      poster: number | Media;
+      file: number | Media;
+    };
+    cards?:
+      | {
+          icon: number | Media;
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  reviewsSection: {
+    title: string;
+    subtitle: string;
+    reviews?: (number | Review)[] | null;
+  };
+  faqSection: {
+    title: string;
+    subtitle: string;
+    items?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  howItWork?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  beforeAfter?:
+    | T
+    | {
+        before?: T;
+        after?: T;
+        id?: T;
+      };
+  modelComparison?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        products?: T;
+      };
+  certificatesSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        certificates?: T;
+      };
+  trainingSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        video?:
+          | T
+          | {
+              poster?: T;
+              file?: T;
+            };
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  reviewsSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        reviews?: T;
+      };
+  faqSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        items?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

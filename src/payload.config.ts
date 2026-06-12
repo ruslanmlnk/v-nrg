@@ -13,6 +13,7 @@ import { Category } from './collections/Category'
 import { Articles } from './collections/Articles'
 import { Orders } from './collections/Orders'
 import { LegalPages } from './collections/LegalPages'
+import { Home } from './globals/Home'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,6 +37,7 @@ export default buildConfig({
       'schema.graphql',
     ),
   },
+  globals: [Home],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

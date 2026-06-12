@@ -1,7 +1,5 @@
 'use client'
 
-import type { StaticImageData } from 'next/image'
-
 import { motion } from 'motion/react'
 
 import BeforeAfterSlider from './BeforeAfterSlider'
@@ -14,8 +12,8 @@ type BeforeAfterGridProps = {
 }
 
 type BeforeAfterGridCard = {
-  afterImage: StaticImageData
-  beforeImage: StaticImageData
+  afterImage: string
+  beforeImage: string
   defaultPosition?: number
 }
 

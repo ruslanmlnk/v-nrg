@@ -1,7 +1,5 @@
 'use client'
 
-import type { StaticImageData } from 'next/image'
-
 import Image from 'next/image'
 import { motion } from 'motion/react'
 import { ReactCompareSlider } from 'react-compare-slider'
@@ -10,9 +8,9 @@ import handleIconAsset from '@public/icon/generated/components-ui-before-after-s
 
 type BeforeAfterSliderProps = {
   afterAlt: string
-  afterImage: StaticImageData
+  afterImage: string
   beforeAlt: string
-  beforeImage: StaticImageData
+  beforeImage: string
   className?: string
   defaultPosition?: number
 }
@@ -63,7 +61,7 @@ export default function BeforeAfterSlider({
   )
 }
 
-function CompareImage({ alt, image }: { alt: string; image: StaticImageData }) {
+function CompareImage({ alt, image }: { alt: string; image: string }) {
   return (
     <div className="relative h-full w-full">
       <Image

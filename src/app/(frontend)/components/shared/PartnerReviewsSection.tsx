@@ -1,7 +1,6 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import type { StaticImageData } from 'next/image'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,7 +17,7 @@ import SectionHeading from './SectionHeading'
 
 export type PartnerReview = {
   author: string
-  image?: StaticImageData
+  image?: string
   quote: string
 }
 
@@ -97,6 +96,8 @@ function PartnerReviewCard({ review }: { review: PartnerReview }) {
         <Image
           src={review.image ?? partner}
           alt={review.author}
+          height={148}
+          width={195}
           className="h-[148px] w-full rounded-[20px] object-cover md:h-auto md:w-[194.779px] md:flex-none"
         />
         <div className="flex min-w-0 flex-1 flex-col justify-center gap-8">

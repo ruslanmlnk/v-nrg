@@ -1,31 +1,35 @@
 'use client'
 
-import Link from 'next/link'
 import SectionHeading from '../shared/SectionHeading'
 import BeforeAfterGrid from '../ui/BeforeAfterGrid'
-import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
-import demoArrowIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-demo-arrow.svg'
-import { beforeAfterCards } from './data'
-
-import { ProductPageSection } from './ProductPageSection'
 import ArrowPillButton from '../ui/ArrowPillButton'
+import { ProductPageSection } from './ProductPageSection'
+import beforeAfterAfter from '@public/assets/product/before-after-after.jpg'
+import beforeAfterBefore from '@public/assets/product/before-after-before.jpg'
 
-export function ProductComparisonSection({ demoHref, title = "Як працює технологія V-NRG" }: { demoHref: string, title?: String }) {
+export function ProductComparisonSection({
+  cards = [
+    { afterImage: beforeAfterAfter.src, beforeImage: beforeAfterBefore.src, defaultPosition: 44 },
+    { afterImage: beforeAfterAfter.src, beforeImage: beforeAfterBefore.src, defaultPosition: 58 },
+    { afterImage: beforeAfterAfter.src, beforeImage: beforeAfterBefore.src, defaultPosition: 71 },
+  ],
+  demoHref: _demoHref,
+  title = 'Результати наших клієнтів',
+}: {
+  cards?: Array<{ afterImage: string; beforeImage: string; defaultPosition?: number }>
+  demoHref?: string
+  title?: string
+}) {
   return (
     <ProductPageSection
       fullWidth
-      className="gap-6 md:gap-12 rounded-t-[48px] bg-[#22354A] pt-[48px] pb-6 md:pb-[140px] md:pt-[100px] text-white"
+      className="gap-6 rounded-t-[48px] bg-[#22354A] pb-6 pt-[48px] text-white md:gap-12 md:pb-[140px] md:pt-[100px]"
     >
-      <SectionHeading
-        align="center"
-        eyebrow="До / Після"
-        title={title}
-        titleClassName="text-white"
-      />
+      <SectionHeading align="center" eyebrow="До / Після" title={title} titleClassName="text-white" />
       <BeforeAfterGrid
         beforeAlt="Стан до процедури V-NRG"
         afterAlt="Стан після процедури V-NRG"
-        cards={beforeAfterCards}
+        cards={cards}
       />
       <ArrowPillButton className="mr-[50px] self-center md:mr-[54px]">
         Записатися на демонстрацію
@@ -33,4 +37,3 @@ export function ProductComparisonSection({ demoHref, title = "Як працює 
     </ProductPageSection>
   )
 }
-

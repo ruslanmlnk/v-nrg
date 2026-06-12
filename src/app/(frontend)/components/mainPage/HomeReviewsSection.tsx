@@ -3,23 +3,34 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import PartnerReviewsSection from '../shared/PartnerReviewsSection'
-import { chunkItems, partnerReviews } from '../productDetail/data'
+import { chunkItems } from '../productDetail/data'
+import type { PartnerReview } from '../shared/PartnerReviewsSection'
 
-export default function HomeReviewsSection() {
+export default function HomeReviewsSection({
+  reviews,
+  subtitle,
+  title,
+}: {
+  reviews: PartnerReview[]
+  subtitle: string
+  title: string
+}) {
   const itemsPerPage = useResponsiveReviewPageSize()
-  const reviewPages = useMemo(() => chunkItems(partnerReviews, itemsPerPage), [itemsPerPage])
+  const reviewPages = useMemo(() => chunkItems(reviews, itemsPerPage), [itemsPerPage, reviews])
   const [activePage, setActivePage] = useState(0)
   const visibleReviews = reviewPages[activePage] ?? reviewPages[0] ?? []
 
-  useEffect(() => {
-    setActivePage(0)
-  }, [itemsPerPage])
+  if (reviews.length === 0) {
+    return null
+  }
 
   return (
     <PartnerReviewsSection
       activePage={activePage}
       pageCount={reviewPages.length}
       reviews={visibleReviews}
+      eyebrow={subtitle}
+      title={title}
       onNext={() => setActivePage((current) => (current + 1) % reviewPages.length)}
       onPrev={() => setActivePage((current) => (current - 1 + reviewPages.length) % reviewPages.length)}
       onSelect={setActivePage}

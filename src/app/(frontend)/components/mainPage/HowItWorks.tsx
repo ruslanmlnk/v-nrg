@@ -1,34 +1,33 @@
-import icon1 from '@public/icon/icon1.svg'
-import icon2 from '@public/icon/icon2.svg'
-import icon3 from '@public/icon/icon3.svg'
-
 import Image from 'next/image'
 
-const HowItWorks = () => {
-    return (
-        <div className="max-w-[1288px] px-6 mx-auto py-12 md:py-[100px]">
-            <p className="text-[#4FACF5] uppercase text-center text-base font-bold leading-[165%]">Принцип дії</p>
-            <h2 className="mt-4 text-[#22354A] font-medium text-[26px] md:text-[48px] leading-[125%] text-center">Як працює технологія<br />V-NRG</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-[26px] md:mt-12">
-                <div className="bg-white p-8 rounded-[20px]">
-                    <Image src={icon1} alt="" />
-                    <div className="font-medium text-[20px] md:text-[24px] leading-[29px] md:leading-[35px] mt-6">Стимуляція кровообігу</div>
-                    <p className="font-medium text-base md:text-[18px] leading-[26px] md:leading-[30px] mt-4">Активує мікроциркуляцію, покращує живлення тканин та прискорює природне відновлення</p>
-                </div>
-                <div className="bg-white p-8 rounded-[20px]">
-                    <Image src={icon2} alt="" />
-                    <div className="font-medium text-[20px] md:text-[24px] leading-[29px] md:leading-[35px] mt-6">Розслаблення м’язів</div>
-                    <p className="font-medium text-base md:text-[18px] leading-[26px] md:leading-[30px] mt-4">Знімає напруження і спазми, зменшує дискомфорт під час руху та після навантажень</p>
-                </div>
-                <div className="bg-white p-8 rounded-[20px]">
-                    <Image src={icon3} alt="" />
-                    <div className="font-medium text-[20px] md:text-[24px] leading-[29px] md:leading-[35px] mt-6">Лімфодренаж</div>
-                    <p className="font-medium text-base md:text-[18px] leading-[26px] md:leading-[30px] mt-4">Покращує відтік рідини, допомагає зменшити набряки та застійні явища у тканинах</p>
-                </div>
-            </div>
-        </div>
-    );
+type HowItWorksCard = {
+  description: string
+  icon: string
+  title: string
 }
 
-export default HowItWorks;
+export default function HowItWorks({
+  cards,
+  subtitle,
+  title,
+}: {
+  cards: HowItWorksCard[]
+  subtitle: string
+  title: string
+}) {
+  return (
+    <section className="mx-auto max-w-[1288px] px-6 py-12 md:py-[100px]">
+      <p className="text-center text-base font-bold uppercase leading-[165%] text-[#4FACF5]">{subtitle}</p>
+      <h2 className="mt-4 text-center text-[26px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">{title}</h2>
+      <div className="mt-[26px] grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-3">
+        {cards.map((card) => (
+          <article key={card.title} className="rounded-[20px] bg-white p-8">
+            <Image src={card.icon} alt="" width={32} height={32} />
+            <h3 className="mt-6 text-[20px] font-medium leading-[29px] md:text-[24px] md:leading-[35px]">{card.title}</h3>
+            <p className="mt-4 text-base font-medium leading-[26px] md:text-[18px] md:leading-[30px]">{card.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}

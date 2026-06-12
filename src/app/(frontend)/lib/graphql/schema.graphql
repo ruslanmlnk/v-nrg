@@ -45,6 +45,8 @@ type Query {
   PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadPreferences
   countPayloadPreferences(draft: Boolean, trash: Boolean, where: PayloadPreference_where): countPayloadPreferences
   docAccessPayloadPreference(id: Int!): payload_preferencesDocAccess
+  Home(draft: Boolean, select: Boolean): Home
+  docAccessHome: homeDocAccess
   Access: Access
 }
 
@@ -4723,7 +4725,8 @@ type LegalPage {
   title: String!
   generateSlug: Boolean
   slug: String!
-  contentMarkdown: String!
+  content(depth: Int): JSON
+  contentMarkdown: String
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -4746,6 +4749,7 @@ input LegalPage_where {
   title: LegalPage_title_operator
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
+  content: LegalPage_content_operator
   contentMarkdown: LegalPage_contentMarkdown_operator
   updatedAt: LegalPage_updatedAt_operator
   createdAt: LegalPage_createdAt_operator
@@ -4780,11 +4784,20 @@ input LegalPage_slug_operator {
   all: [String]
 }
 
+input LegalPage_content_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
+}
+
 input LegalPage_contentMarkdown_operator {
   equals: String
   not_equals: String
   like: String
   contains: String
+  exists: Boolean
 }
 
 input LegalPage_updatedAt_operator {
@@ -4823,6 +4836,7 @@ input LegalPage_where_and {
   title: LegalPage_title_operator
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
+  content: LegalPage_content_operator
   contentMarkdown: LegalPage_contentMarkdown_operator
   updatedAt: LegalPage_updatedAt_operator
   createdAt: LegalPage_createdAt_operator
@@ -4835,6 +4849,7 @@ input LegalPage_where_or {
   title: LegalPage_title_operator
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
+  content: LegalPage_content_operator
   contentMarkdown: LegalPage_contentMarkdown_operator
   updatedAt: LegalPage_updatedAt_operator
   createdAt: LegalPage_createdAt_operator
@@ -4859,6 +4874,7 @@ type LegalPagesDocAccessFields {
   title: LegalPagesDocAccessFields_title
   generateSlug: LegalPagesDocAccessFields_generateSlug
   slug: LegalPagesDocAccessFields_slug
+  content: LegalPagesDocAccessFields_content
   contentMarkdown: LegalPagesDocAccessFields_contentMarkdown
   updatedAt: LegalPagesDocAccessFields_updatedAt
   createdAt: LegalPagesDocAccessFields_createdAt
@@ -4930,6 +4946,29 @@ type LegalPagesDocAccessFields_slug_Update {
 }
 
 type LegalPagesDocAccessFields_slug_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_content {
+  create: LegalPagesDocAccessFields_content_Create
+  read: LegalPagesDocAccessFields_content_Read
+  update: LegalPagesDocAccessFields_content_Update
+  delete: LegalPagesDocAccessFields_content_Delete
+}
+
+type LegalPagesDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_content_Delete {
   permission: Boolean!
 }
 
@@ -5770,6 +5809,1312 @@ type PayloadPreferencesDeleteDocAccess {
   where: JSONObject
 }
 
+type Home {
+  hero: Home_Hero
+  howItWork: Home_HowItWork
+  beforeAfter: [Home_BeforeAfter!]
+  modelComparison: Home_ModelComparison
+  certificatesSection: Home_CertificatesSection
+  trainingSection: Home_TrainingSection
+  reviewsSection: Home_ReviewsSection
+  faqSection: Home_FaqSection
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Home_Hero {
+  title: String
+  description: String
+  image: Media
+}
+
+type Home_HowItWork {
+  title: String
+  subtitle: String
+  cards: [Home_HowItWork_Cards!]
+}
+
+type Home_HowItWork_Cards {
+  icon: Media
+  title: String
+  description: String
+  id: String
+}
+
+type Home_BeforeAfter {
+  before: Media
+  after: Media
+  id: String
+}
+
+type Home_ModelComparison {
+  title: String
+  subtitle: String
+  products: [Product!]
+}
+
+type Home_CertificatesSection {
+  title: String
+  subtitle: String
+  certificates: [Media!]
+}
+
+type Home_TrainingSection {
+  title: String
+  subtitle: String
+  video: Home_TrainingSection_Video
+  cards: [Home_TrainingSection_Cards!]
+}
+
+type Home_TrainingSection_Video {
+  poster: Media
+  file: Media
+}
+
+type Home_TrainingSection_Cards {
+  icon: Media
+  title: String
+  description: String
+  id: String
+}
+
+type Home_ReviewsSection {
+  title: String
+  subtitle: String
+  reviews: [Review!]
+}
+
+type Home_FaqSection {
+  title: String
+  subtitle: String
+  items: [Home_FaqSection_Items!]
+}
+
+type Home_FaqSection_Items {
+  question: String
+  answer: String
+  id: String
+}
+
+type homeDocAccess {
+  fields: HomeDocAccessFields
+  read: HomeReadDocAccess
+  update: HomeUpdateDocAccess
+}
+
+type HomeDocAccessFields {
+  hero: HomeDocAccessFields_hero
+  howItWork: HomeDocAccessFields_howItWork
+  beforeAfter: HomeDocAccessFields_beforeAfter
+  modelComparison: HomeDocAccessFields_modelComparison
+  certificatesSection: HomeDocAccessFields_certificatesSection
+  trainingSection: HomeDocAccessFields_trainingSection
+  reviewsSection: HomeDocAccessFields_reviewsSection
+  faqSection: HomeDocAccessFields_faqSection
+  updatedAt: HomeDocAccessFields_updatedAt
+  createdAt: HomeDocAccessFields_createdAt
+}
+
+type HomeDocAccessFields_hero {
+  create: HomeDocAccessFields_hero_Create
+  read: HomeDocAccessFields_hero_Read
+  update: HomeDocAccessFields_hero_Update
+  delete: HomeDocAccessFields_hero_Delete
+  fields: HomeDocAccessFields_hero_Fields
+}
+
+type HomeDocAccessFields_hero_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_Fields {
+  title: HomeDocAccessFields_hero_title
+  description: HomeDocAccessFields_hero_description
+  image: HomeDocAccessFields_hero_image
+}
+
+type HomeDocAccessFields_hero_title {
+  create: HomeDocAccessFields_hero_title_Create
+  read: HomeDocAccessFields_hero_title_Read
+  update: HomeDocAccessFields_hero_title_Update
+  delete: HomeDocAccessFields_hero_title_Delete
+}
+
+type HomeDocAccessFields_hero_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_description {
+  create: HomeDocAccessFields_hero_description_Create
+  read: HomeDocAccessFields_hero_description_Read
+  update: HomeDocAccessFields_hero_description_Update
+  delete: HomeDocAccessFields_hero_description_Delete
+}
+
+type HomeDocAccessFields_hero_description_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_description_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_description_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_description_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_image {
+  create: HomeDocAccessFields_hero_image_Create
+  read: HomeDocAccessFields_hero_image_Read
+  update: HomeDocAccessFields_hero_image_Update
+  delete: HomeDocAccessFields_hero_image_Delete
+}
+
+type HomeDocAccessFields_hero_image_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_image_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_image_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_hero_image_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork {
+  create: HomeDocAccessFields_howItWork_Create
+  read: HomeDocAccessFields_howItWork_Read
+  update: HomeDocAccessFields_howItWork_Update
+  delete: HomeDocAccessFields_howItWork_Delete
+  fields: HomeDocAccessFields_howItWork_Fields
+}
+
+type HomeDocAccessFields_howItWork_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_Fields {
+  title: HomeDocAccessFields_howItWork_title
+  subtitle: HomeDocAccessFields_howItWork_subtitle
+  cards: HomeDocAccessFields_howItWork_cards
+}
+
+type HomeDocAccessFields_howItWork_title {
+  create: HomeDocAccessFields_howItWork_title_Create
+  read: HomeDocAccessFields_howItWork_title_Read
+  update: HomeDocAccessFields_howItWork_title_Update
+  delete: HomeDocAccessFields_howItWork_title_Delete
+}
+
+type HomeDocAccessFields_howItWork_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_subtitle {
+  create: HomeDocAccessFields_howItWork_subtitle_Create
+  read: HomeDocAccessFields_howItWork_subtitle_Read
+  update: HomeDocAccessFields_howItWork_subtitle_Update
+  delete: HomeDocAccessFields_howItWork_subtitle_Delete
+}
+
+type HomeDocAccessFields_howItWork_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards {
+  create: HomeDocAccessFields_howItWork_cards_Create
+  read: HomeDocAccessFields_howItWork_cards_Read
+  update: HomeDocAccessFields_howItWork_cards_Update
+  delete: HomeDocAccessFields_howItWork_cards_Delete
+  fields: HomeDocAccessFields_howItWork_cards_Fields
+}
+
+type HomeDocAccessFields_howItWork_cards_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_Fields {
+  icon: HomeDocAccessFields_howItWork_cards_icon
+  title: HomeDocAccessFields_howItWork_cards_title
+  description: HomeDocAccessFields_howItWork_cards_description
+  id: HomeDocAccessFields_howItWork_cards_id
+}
+
+type HomeDocAccessFields_howItWork_cards_icon {
+  create: HomeDocAccessFields_howItWork_cards_icon_Create
+  read: HomeDocAccessFields_howItWork_cards_icon_Read
+  update: HomeDocAccessFields_howItWork_cards_icon_Update
+  delete: HomeDocAccessFields_howItWork_cards_icon_Delete
+}
+
+type HomeDocAccessFields_howItWork_cards_icon_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_icon_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_icon_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_icon_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_title {
+  create: HomeDocAccessFields_howItWork_cards_title_Create
+  read: HomeDocAccessFields_howItWork_cards_title_Read
+  update: HomeDocAccessFields_howItWork_cards_title_Update
+  delete: HomeDocAccessFields_howItWork_cards_title_Delete
+}
+
+type HomeDocAccessFields_howItWork_cards_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_description {
+  create: HomeDocAccessFields_howItWork_cards_description_Create
+  read: HomeDocAccessFields_howItWork_cards_description_Read
+  update: HomeDocAccessFields_howItWork_cards_description_Update
+  delete: HomeDocAccessFields_howItWork_cards_description_Delete
+}
+
+type HomeDocAccessFields_howItWork_cards_description_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_description_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_description_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_description_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_id {
+  create: HomeDocAccessFields_howItWork_cards_id_Create
+  read: HomeDocAccessFields_howItWork_cards_id_Read
+  update: HomeDocAccessFields_howItWork_cards_id_Update
+  delete: HomeDocAccessFields_howItWork_cards_id_Delete
+}
+
+type HomeDocAccessFields_howItWork_cards_id_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_id_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_id_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_howItWork_cards_id_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter {
+  create: HomeDocAccessFields_beforeAfter_Create
+  read: HomeDocAccessFields_beforeAfter_Read
+  update: HomeDocAccessFields_beforeAfter_Update
+  delete: HomeDocAccessFields_beforeAfter_Delete
+  fields: HomeDocAccessFields_beforeAfter_Fields
+}
+
+type HomeDocAccessFields_beforeAfter_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_Fields {
+  before: HomeDocAccessFields_beforeAfter_before
+  after: HomeDocAccessFields_beforeAfter_after
+  id: HomeDocAccessFields_beforeAfter_id
+}
+
+type HomeDocAccessFields_beforeAfter_before {
+  create: HomeDocAccessFields_beforeAfter_before_Create
+  read: HomeDocAccessFields_beforeAfter_before_Read
+  update: HomeDocAccessFields_beforeAfter_before_Update
+  delete: HomeDocAccessFields_beforeAfter_before_Delete
+}
+
+type HomeDocAccessFields_beforeAfter_before_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_before_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_before_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_before_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_after {
+  create: HomeDocAccessFields_beforeAfter_after_Create
+  read: HomeDocAccessFields_beforeAfter_after_Read
+  update: HomeDocAccessFields_beforeAfter_after_Update
+  delete: HomeDocAccessFields_beforeAfter_after_Delete
+}
+
+type HomeDocAccessFields_beforeAfter_after_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_after_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_after_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_after_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_id {
+  create: HomeDocAccessFields_beforeAfter_id_Create
+  read: HomeDocAccessFields_beforeAfter_id_Read
+  update: HomeDocAccessFields_beforeAfter_id_Update
+  delete: HomeDocAccessFields_beforeAfter_id_Delete
+}
+
+type HomeDocAccessFields_beforeAfter_id_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_id_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_id_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_beforeAfter_id_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison {
+  create: HomeDocAccessFields_modelComparison_Create
+  read: HomeDocAccessFields_modelComparison_Read
+  update: HomeDocAccessFields_modelComparison_Update
+  delete: HomeDocAccessFields_modelComparison_Delete
+  fields: HomeDocAccessFields_modelComparison_Fields
+}
+
+type HomeDocAccessFields_modelComparison_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_Fields {
+  title: HomeDocAccessFields_modelComparison_title
+  subtitle: HomeDocAccessFields_modelComparison_subtitle
+  products: HomeDocAccessFields_modelComparison_products
+}
+
+type HomeDocAccessFields_modelComparison_title {
+  create: HomeDocAccessFields_modelComparison_title_Create
+  read: HomeDocAccessFields_modelComparison_title_Read
+  update: HomeDocAccessFields_modelComparison_title_Update
+  delete: HomeDocAccessFields_modelComparison_title_Delete
+}
+
+type HomeDocAccessFields_modelComparison_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_subtitle {
+  create: HomeDocAccessFields_modelComparison_subtitle_Create
+  read: HomeDocAccessFields_modelComparison_subtitle_Read
+  update: HomeDocAccessFields_modelComparison_subtitle_Update
+  delete: HomeDocAccessFields_modelComparison_subtitle_Delete
+}
+
+type HomeDocAccessFields_modelComparison_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_products {
+  create: HomeDocAccessFields_modelComparison_products_Create
+  read: HomeDocAccessFields_modelComparison_products_Read
+  update: HomeDocAccessFields_modelComparison_products_Update
+  delete: HomeDocAccessFields_modelComparison_products_Delete
+}
+
+type HomeDocAccessFields_modelComparison_products_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_products_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_products_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_modelComparison_products_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection {
+  create: HomeDocAccessFields_certificatesSection_Create
+  read: HomeDocAccessFields_certificatesSection_Read
+  update: HomeDocAccessFields_certificatesSection_Update
+  delete: HomeDocAccessFields_certificatesSection_Delete
+  fields: HomeDocAccessFields_certificatesSection_Fields
+}
+
+type HomeDocAccessFields_certificatesSection_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_Fields {
+  title: HomeDocAccessFields_certificatesSection_title
+  subtitle: HomeDocAccessFields_certificatesSection_subtitle
+  certificates: HomeDocAccessFields_certificatesSection_certificates
+}
+
+type HomeDocAccessFields_certificatesSection_title {
+  create: HomeDocAccessFields_certificatesSection_title_Create
+  read: HomeDocAccessFields_certificatesSection_title_Read
+  update: HomeDocAccessFields_certificatesSection_title_Update
+  delete: HomeDocAccessFields_certificatesSection_title_Delete
+}
+
+type HomeDocAccessFields_certificatesSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_subtitle {
+  create: HomeDocAccessFields_certificatesSection_subtitle_Create
+  read: HomeDocAccessFields_certificatesSection_subtitle_Read
+  update: HomeDocAccessFields_certificatesSection_subtitle_Update
+  delete: HomeDocAccessFields_certificatesSection_subtitle_Delete
+}
+
+type HomeDocAccessFields_certificatesSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_certificates {
+  create: HomeDocAccessFields_certificatesSection_certificates_Create
+  read: HomeDocAccessFields_certificatesSection_certificates_Read
+  update: HomeDocAccessFields_certificatesSection_certificates_Update
+  delete: HomeDocAccessFields_certificatesSection_certificates_Delete
+}
+
+type HomeDocAccessFields_certificatesSection_certificates_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_certificates_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_certificates_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_certificatesSection_certificates_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection {
+  create: HomeDocAccessFields_trainingSection_Create
+  read: HomeDocAccessFields_trainingSection_Read
+  update: HomeDocAccessFields_trainingSection_Update
+  delete: HomeDocAccessFields_trainingSection_Delete
+  fields: HomeDocAccessFields_trainingSection_Fields
+}
+
+type HomeDocAccessFields_trainingSection_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_Fields {
+  title: HomeDocAccessFields_trainingSection_title
+  subtitle: HomeDocAccessFields_trainingSection_subtitle
+  video: HomeDocAccessFields_trainingSection_video
+  cards: HomeDocAccessFields_trainingSection_cards
+}
+
+type HomeDocAccessFields_trainingSection_title {
+  create: HomeDocAccessFields_trainingSection_title_Create
+  read: HomeDocAccessFields_trainingSection_title_Read
+  update: HomeDocAccessFields_trainingSection_title_Update
+  delete: HomeDocAccessFields_trainingSection_title_Delete
+}
+
+type HomeDocAccessFields_trainingSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_subtitle {
+  create: HomeDocAccessFields_trainingSection_subtitle_Create
+  read: HomeDocAccessFields_trainingSection_subtitle_Read
+  update: HomeDocAccessFields_trainingSection_subtitle_Update
+  delete: HomeDocAccessFields_trainingSection_subtitle_Delete
+}
+
+type HomeDocAccessFields_trainingSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video {
+  create: HomeDocAccessFields_trainingSection_video_Create
+  read: HomeDocAccessFields_trainingSection_video_Read
+  update: HomeDocAccessFields_trainingSection_video_Update
+  delete: HomeDocAccessFields_trainingSection_video_Delete
+  fields: HomeDocAccessFields_trainingSection_video_Fields
+}
+
+type HomeDocAccessFields_trainingSection_video_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_Fields {
+  poster: HomeDocAccessFields_trainingSection_video_poster
+  file: HomeDocAccessFields_trainingSection_video_file
+}
+
+type HomeDocAccessFields_trainingSection_video_poster {
+  create: HomeDocAccessFields_trainingSection_video_poster_Create
+  read: HomeDocAccessFields_trainingSection_video_poster_Read
+  update: HomeDocAccessFields_trainingSection_video_poster_Update
+  delete: HomeDocAccessFields_trainingSection_video_poster_Delete
+}
+
+type HomeDocAccessFields_trainingSection_video_poster_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_poster_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_poster_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_poster_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_file {
+  create: HomeDocAccessFields_trainingSection_video_file_Create
+  read: HomeDocAccessFields_trainingSection_video_file_Read
+  update: HomeDocAccessFields_trainingSection_video_file_Update
+  delete: HomeDocAccessFields_trainingSection_video_file_Delete
+}
+
+type HomeDocAccessFields_trainingSection_video_file_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_file_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_file_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_video_file_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards {
+  create: HomeDocAccessFields_trainingSection_cards_Create
+  read: HomeDocAccessFields_trainingSection_cards_Read
+  update: HomeDocAccessFields_trainingSection_cards_Update
+  delete: HomeDocAccessFields_trainingSection_cards_Delete
+  fields: HomeDocAccessFields_trainingSection_cards_Fields
+}
+
+type HomeDocAccessFields_trainingSection_cards_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_Fields {
+  icon: HomeDocAccessFields_trainingSection_cards_icon
+  title: HomeDocAccessFields_trainingSection_cards_title
+  description: HomeDocAccessFields_trainingSection_cards_description
+  id: HomeDocAccessFields_trainingSection_cards_id
+}
+
+type HomeDocAccessFields_trainingSection_cards_icon {
+  create: HomeDocAccessFields_trainingSection_cards_icon_Create
+  read: HomeDocAccessFields_trainingSection_cards_icon_Read
+  update: HomeDocAccessFields_trainingSection_cards_icon_Update
+  delete: HomeDocAccessFields_trainingSection_cards_icon_Delete
+}
+
+type HomeDocAccessFields_trainingSection_cards_icon_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_icon_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_icon_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_icon_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_title {
+  create: HomeDocAccessFields_trainingSection_cards_title_Create
+  read: HomeDocAccessFields_trainingSection_cards_title_Read
+  update: HomeDocAccessFields_trainingSection_cards_title_Update
+  delete: HomeDocAccessFields_trainingSection_cards_title_Delete
+}
+
+type HomeDocAccessFields_trainingSection_cards_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_description {
+  create: HomeDocAccessFields_trainingSection_cards_description_Create
+  read: HomeDocAccessFields_trainingSection_cards_description_Read
+  update: HomeDocAccessFields_trainingSection_cards_description_Update
+  delete: HomeDocAccessFields_trainingSection_cards_description_Delete
+}
+
+type HomeDocAccessFields_trainingSection_cards_description_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_description_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_description_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_description_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_id {
+  create: HomeDocAccessFields_trainingSection_cards_id_Create
+  read: HomeDocAccessFields_trainingSection_cards_id_Read
+  update: HomeDocAccessFields_trainingSection_cards_id_Update
+  delete: HomeDocAccessFields_trainingSection_cards_id_Delete
+}
+
+type HomeDocAccessFields_trainingSection_cards_id_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_id_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_id_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_trainingSection_cards_id_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection {
+  create: HomeDocAccessFields_reviewsSection_Create
+  read: HomeDocAccessFields_reviewsSection_Read
+  update: HomeDocAccessFields_reviewsSection_Update
+  delete: HomeDocAccessFields_reviewsSection_Delete
+  fields: HomeDocAccessFields_reviewsSection_Fields
+}
+
+type HomeDocAccessFields_reviewsSection_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_Fields {
+  title: HomeDocAccessFields_reviewsSection_title
+  subtitle: HomeDocAccessFields_reviewsSection_subtitle
+  reviews: HomeDocAccessFields_reviewsSection_reviews
+}
+
+type HomeDocAccessFields_reviewsSection_title {
+  create: HomeDocAccessFields_reviewsSection_title_Create
+  read: HomeDocAccessFields_reviewsSection_title_Read
+  update: HomeDocAccessFields_reviewsSection_title_Update
+  delete: HomeDocAccessFields_reviewsSection_title_Delete
+}
+
+type HomeDocAccessFields_reviewsSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_subtitle {
+  create: HomeDocAccessFields_reviewsSection_subtitle_Create
+  read: HomeDocAccessFields_reviewsSection_subtitle_Read
+  update: HomeDocAccessFields_reviewsSection_subtitle_Update
+  delete: HomeDocAccessFields_reviewsSection_subtitle_Delete
+}
+
+type HomeDocAccessFields_reviewsSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_reviews {
+  create: HomeDocAccessFields_reviewsSection_reviews_Create
+  read: HomeDocAccessFields_reviewsSection_reviews_Read
+  update: HomeDocAccessFields_reviewsSection_reviews_Update
+  delete: HomeDocAccessFields_reviewsSection_reviews_Delete
+}
+
+type HomeDocAccessFields_reviewsSection_reviews_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_reviews_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_reviews_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_reviewsSection_reviews_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection {
+  create: HomeDocAccessFields_faqSection_Create
+  read: HomeDocAccessFields_faqSection_Read
+  update: HomeDocAccessFields_faqSection_Update
+  delete: HomeDocAccessFields_faqSection_Delete
+  fields: HomeDocAccessFields_faqSection_Fields
+}
+
+type HomeDocAccessFields_faqSection_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_Fields {
+  title: HomeDocAccessFields_faqSection_title
+  subtitle: HomeDocAccessFields_faqSection_subtitle
+  items: HomeDocAccessFields_faqSection_items
+}
+
+type HomeDocAccessFields_faqSection_title {
+  create: HomeDocAccessFields_faqSection_title_Create
+  read: HomeDocAccessFields_faqSection_title_Read
+  update: HomeDocAccessFields_faqSection_title_Update
+  delete: HomeDocAccessFields_faqSection_title_Delete
+}
+
+type HomeDocAccessFields_faqSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_subtitle {
+  create: HomeDocAccessFields_faqSection_subtitle_Create
+  read: HomeDocAccessFields_faqSection_subtitle_Read
+  update: HomeDocAccessFields_faqSection_subtitle_Update
+  delete: HomeDocAccessFields_faqSection_subtitle_Delete
+}
+
+type HomeDocAccessFields_faqSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items {
+  create: HomeDocAccessFields_faqSection_items_Create
+  read: HomeDocAccessFields_faqSection_items_Read
+  update: HomeDocAccessFields_faqSection_items_Update
+  delete: HomeDocAccessFields_faqSection_items_Delete
+  fields: HomeDocAccessFields_faqSection_items_Fields
+}
+
+type HomeDocAccessFields_faqSection_items_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_Fields {
+  question: HomeDocAccessFields_faqSection_items_question
+  answer: HomeDocAccessFields_faqSection_items_answer
+  id: HomeDocAccessFields_faqSection_items_id
+}
+
+type HomeDocAccessFields_faqSection_items_question {
+  create: HomeDocAccessFields_faqSection_items_question_Create
+  read: HomeDocAccessFields_faqSection_items_question_Read
+  update: HomeDocAccessFields_faqSection_items_question_Update
+  delete: HomeDocAccessFields_faqSection_items_question_Delete
+}
+
+type HomeDocAccessFields_faqSection_items_question_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_question_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_question_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_question_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_answer {
+  create: HomeDocAccessFields_faqSection_items_answer_Create
+  read: HomeDocAccessFields_faqSection_items_answer_Read
+  update: HomeDocAccessFields_faqSection_items_answer_Update
+  delete: HomeDocAccessFields_faqSection_items_answer_Delete
+}
+
+type HomeDocAccessFields_faqSection_items_answer_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_answer_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_answer_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_answer_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_id {
+  create: HomeDocAccessFields_faqSection_items_id_Create
+  read: HomeDocAccessFields_faqSection_items_id_Read
+  update: HomeDocAccessFields_faqSection_items_id_Update
+  delete: HomeDocAccessFields_faqSection_items_id_Delete
+}
+
+type HomeDocAccessFields_faqSection_items_id_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_id_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_id_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_faqSection_items_id_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_updatedAt {
+  create: HomeDocAccessFields_updatedAt_Create
+  read: HomeDocAccessFields_updatedAt_Read
+  update: HomeDocAccessFields_updatedAt_Update
+  delete: HomeDocAccessFields_updatedAt_Delete
+}
+
+type HomeDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_createdAt {
+  create: HomeDocAccessFields_createdAt_Create
+  read: HomeDocAccessFields_createdAt_Read
+  update: HomeDocAccessFields_createdAt_Update
+  delete: HomeDocAccessFields_createdAt_Delete
+}
+
+type HomeDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type HomeReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type HomeUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -5783,6 +7128,7 @@ type Access {
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
+  home: homeAccess
 }
 
 type usersAccess {
@@ -8616,6 +9962,7 @@ type LegalPagesFields {
   title: LegalPagesFields_title
   generateSlug: LegalPagesFields_generateSlug
   slug: LegalPagesFields_slug
+  content: LegalPagesFields_content
   contentMarkdown: LegalPagesFields_contentMarkdown
   updatedAt: LegalPagesFields_updatedAt
   createdAt: LegalPagesFields_createdAt
@@ -8687,6 +10034,29 @@ type LegalPagesFields_slug_Update {
 }
 
 type LegalPagesFields_slug_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_content {
+  create: LegalPagesFields_content_Create
+  read: LegalPagesFields_content_Read
+  update: LegalPagesFields_content_Update
+  delete: LegalPagesFields_content_Delete
+}
+
+type LegalPagesFields_content_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_content_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_content_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_content_Delete {
   permission: Boolean!
 }
 
@@ -9160,6 +10530,1225 @@ type PayloadPreferencesDeleteAccess {
   where: JSONObject
 }
 
+type homeAccess {
+  fields: HomeFields
+  read: HomeReadAccess
+  update: HomeUpdateAccess
+}
+
+type HomeFields {
+  hero: HomeFields_hero
+  howItWork: HomeFields_howItWork
+  beforeAfter: HomeFields_beforeAfter
+  modelComparison: HomeFields_modelComparison
+  certificatesSection: HomeFields_certificatesSection
+  trainingSection: HomeFields_trainingSection
+  reviewsSection: HomeFields_reviewsSection
+  faqSection: HomeFields_faqSection
+  updatedAt: HomeFields_updatedAt
+  createdAt: HomeFields_createdAt
+}
+
+type HomeFields_hero {
+  create: HomeFields_hero_Create
+  read: HomeFields_hero_Read
+  update: HomeFields_hero_Update
+  delete: HomeFields_hero_Delete
+  fields: HomeFields_hero_Fields
+}
+
+type HomeFields_hero_Create {
+  permission: Boolean!
+}
+
+type HomeFields_hero_Read {
+  permission: Boolean!
+}
+
+type HomeFields_hero_Update {
+  permission: Boolean!
+}
+
+type HomeFields_hero_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_hero_Fields {
+  title: HomeFields_hero_title
+  description: HomeFields_hero_description
+  image: HomeFields_hero_image
+}
+
+type HomeFields_hero_title {
+  create: HomeFields_hero_title_Create
+  read: HomeFields_hero_title_Read
+  update: HomeFields_hero_title_Update
+  delete: HomeFields_hero_title_Delete
+}
+
+type HomeFields_hero_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_hero_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_hero_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_hero_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_hero_description {
+  create: HomeFields_hero_description_Create
+  read: HomeFields_hero_description_Read
+  update: HomeFields_hero_description_Update
+  delete: HomeFields_hero_description_Delete
+}
+
+type HomeFields_hero_description_Create {
+  permission: Boolean!
+}
+
+type HomeFields_hero_description_Read {
+  permission: Boolean!
+}
+
+type HomeFields_hero_description_Update {
+  permission: Boolean!
+}
+
+type HomeFields_hero_description_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_hero_image {
+  create: HomeFields_hero_image_Create
+  read: HomeFields_hero_image_Read
+  update: HomeFields_hero_image_Update
+  delete: HomeFields_hero_image_Delete
+}
+
+type HomeFields_hero_image_Create {
+  permission: Boolean!
+}
+
+type HomeFields_hero_image_Read {
+  permission: Boolean!
+}
+
+type HomeFields_hero_image_Update {
+  permission: Boolean!
+}
+
+type HomeFields_hero_image_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork {
+  create: HomeFields_howItWork_Create
+  read: HomeFields_howItWork_Read
+  update: HomeFields_howItWork_Update
+  delete: HomeFields_howItWork_Delete
+  fields: HomeFields_howItWork_Fields
+}
+
+type HomeFields_howItWork_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_Fields {
+  title: HomeFields_howItWork_title
+  subtitle: HomeFields_howItWork_subtitle
+  cards: HomeFields_howItWork_cards
+}
+
+type HomeFields_howItWork_title {
+  create: HomeFields_howItWork_title_Create
+  read: HomeFields_howItWork_title_Read
+  update: HomeFields_howItWork_title_Update
+  delete: HomeFields_howItWork_title_Delete
+}
+
+type HomeFields_howItWork_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_subtitle {
+  create: HomeFields_howItWork_subtitle_Create
+  read: HomeFields_howItWork_subtitle_Read
+  update: HomeFields_howItWork_subtitle_Update
+  delete: HomeFields_howItWork_subtitle_Delete
+}
+
+type HomeFields_howItWork_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards {
+  create: HomeFields_howItWork_cards_Create
+  read: HomeFields_howItWork_cards_Read
+  update: HomeFields_howItWork_cards_Update
+  delete: HomeFields_howItWork_cards_Delete
+  fields: HomeFields_howItWork_cards_Fields
+}
+
+type HomeFields_howItWork_cards_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_Fields {
+  icon: HomeFields_howItWork_cards_icon
+  title: HomeFields_howItWork_cards_title
+  description: HomeFields_howItWork_cards_description
+  id: HomeFields_howItWork_cards_id
+}
+
+type HomeFields_howItWork_cards_icon {
+  create: HomeFields_howItWork_cards_icon_Create
+  read: HomeFields_howItWork_cards_icon_Read
+  update: HomeFields_howItWork_cards_icon_Update
+  delete: HomeFields_howItWork_cards_icon_Delete
+}
+
+type HomeFields_howItWork_cards_icon_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_icon_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_icon_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_icon_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_title {
+  create: HomeFields_howItWork_cards_title_Create
+  read: HomeFields_howItWork_cards_title_Read
+  update: HomeFields_howItWork_cards_title_Update
+  delete: HomeFields_howItWork_cards_title_Delete
+}
+
+type HomeFields_howItWork_cards_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_description {
+  create: HomeFields_howItWork_cards_description_Create
+  read: HomeFields_howItWork_cards_description_Read
+  update: HomeFields_howItWork_cards_description_Update
+  delete: HomeFields_howItWork_cards_description_Delete
+}
+
+type HomeFields_howItWork_cards_description_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_description_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_description_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_description_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_id {
+  create: HomeFields_howItWork_cards_id_Create
+  read: HomeFields_howItWork_cards_id_Read
+  update: HomeFields_howItWork_cards_id_Update
+  delete: HomeFields_howItWork_cards_id_Delete
+}
+
+type HomeFields_howItWork_cards_id_Create {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_id_Read {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_id_Update {
+  permission: Boolean!
+}
+
+type HomeFields_howItWork_cards_id_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter {
+  create: HomeFields_beforeAfter_Create
+  read: HomeFields_beforeAfter_Read
+  update: HomeFields_beforeAfter_Update
+  delete: HomeFields_beforeAfter_Delete
+  fields: HomeFields_beforeAfter_Fields
+}
+
+type HomeFields_beforeAfter_Create {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_Read {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_Update {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_Fields {
+  before: HomeFields_beforeAfter_before
+  after: HomeFields_beforeAfter_after
+  id: HomeFields_beforeAfter_id
+}
+
+type HomeFields_beforeAfter_before {
+  create: HomeFields_beforeAfter_before_Create
+  read: HomeFields_beforeAfter_before_Read
+  update: HomeFields_beforeAfter_before_Update
+  delete: HomeFields_beforeAfter_before_Delete
+}
+
+type HomeFields_beforeAfter_before_Create {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_before_Read {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_before_Update {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_before_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_after {
+  create: HomeFields_beforeAfter_after_Create
+  read: HomeFields_beforeAfter_after_Read
+  update: HomeFields_beforeAfter_after_Update
+  delete: HomeFields_beforeAfter_after_Delete
+}
+
+type HomeFields_beforeAfter_after_Create {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_after_Read {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_after_Update {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_after_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_id {
+  create: HomeFields_beforeAfter_id_Create
+  read: HomeFields_beforeAfter_id_Read
+  update: HomeFields_beforeAfter_id_Update
+  delete: HomeFields_beforeAfter_id_Delete
+}
+
+type HomeFields_beforeAfter_id_Create {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_id_Read {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_id_Update {
+  permission: Boolean!
+}
+
+type HomeFields_beforeAfter_id_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison {
+  create: HomeFields_modelComparison_Create
+  read: HomeFields_modelComparison_Read
+  update: HomeFields_modelComparison_Update
+  delete: HomeFields_modelComparison_Delete
+  fields: HomeFields_modelComparison_Fields
+}
+
+type HomeFields_modelComparison_Create {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_Read {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_Update {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_Fields {
+  title: HomeFields_modelComparison_title
+  subtitle: HomeFields_modelComparison_subtitle
+  products: HomeFields_modelComparison_products
+}
+
+type HomeFields_modelComparison_title {
+  create: HomeFields_modelComparison_title_Create
+  read: HomeFields_modelComparison_title_Read
+  update: HomeFields_modelComparison_title_Update
+  delete: HomeFields_modelComparison_title_Delete
+}
+
+type HomeFields_modelComparison_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_subtitle {
+  create: HomeFields_modelComparison_subtitle_Create
+  read: HomeFields_modelComparison_subtitle_Read
+  update: HomeFields_modelComparison_subtitle_Update
+  delete: HomeFields_modelComparison_subtitle_Delete
+}
+
+type HomeFields_modelComparison_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_products {
+  create: HomeFields_modelComparison_products_Create
+  read: HomeFields_modelComparison_products_Read
+  update: HomeFields_modelComparison_products_Update
+  delete: HomeFields_modelComparison_products_Delete
+}
+
+type HomeFields_modelComparison_products_Create {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_products_Read {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_products_Update {
+  permission: Boolean!
+}
+
+type HomeFields_modelComparison_products_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection {
+  create: HomeFields_certificatesSection_Create
+  read: HomeFields_certificatesSection_Read
+  update: HomeFields_certificatesSection_Update
+  delete: HomeFields_certificatesSection_Delete
+  fields: HomeFields_certificatesSection_Fields
+}
+
+type HomeFields_certificatesSection_Create {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_Read {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_Update {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_Fields {
+  title: HomeFields_certificatesSection_title
+  subtitle: HomeFields_certificatesSection_subtitle
+  certificates: HomeFields_certificatesSection_certificates
+}
+
+type HomeFields_certificatesSection_title {
+  create: HomeFields_certificatesSection_title_Create
+  read: HomeFields_certificatesSection_title_Read
+  update: HomeFields_certificatesSection_title_Update
+  delete: HomeFields_certificatesSection_title_Delete
+}
+
+type HomeFields_certificatesSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_subtitle {
+  create: HomeFields_certificatesSection_subtitle_Create
+  read: HomeFields_certificatesSection_subtitle_Read
+  update: HomeFields_certificatesSection_subtitle_Update
+  delete: HomeFields_certificatesSection_subtitle_Delete
+}
+
+type HomeFields_certificatesSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_certificates {
+  create: HomeFields_certificatesSection_certificates_Create
+  read: HomeFields_certificatesSection_certificates_Read
+  update: HomeFields_certificatesSection_certificates_Update
+  delete: HomeFields_certificatesSection_certificates_Delete
+}
+
+type HomeFields_certificatesSection_certificates_Create {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_certificates_Read {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_certificates_Update {
+  permission: Boolean!
+}
+
+type HomeFields_certificatesSection_certificates_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection {
+  create: HomeFields_trainingSection_Create
+  read: HomeFields_trainingSection_Read
+  update: HomeFields_trainingSection_Update
+  delete: HomeFields_trainingSection_Delete
+  fields: HomeFields_trainingSection_Fields
+}
+
+type HomeFields_trainingSection_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_Fields {
+  title: HomeFields_trainingSection_title
+  subtitle: HomeFields_trainingSection_subtitle
+  video: HomeFields_trainingSection_video
+  cards: HomeFields_trainingSection_cards
+}
+
+type HomeFields_trainingSection_title {
+  create: HomeFields_trainingSection_title_Create
+  read: HomeFields_trainingSection_title_Read
+  update: HomeFields_trainingSection_title_Update
+  delete: HomeFields_trainingSection_title_Delete
+}
+
+type HomeFields_trainingSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_subtitle {
+  create: HomeFields_trainingSection_subtitle_Create
+  read: HomeFields_trainingSection_subtitle_Read
+  update: HomeFields_trainingSection_subtitle_Update
+  delete: HomeFields_trainingSection_subtitle_Delete
+}
+
+type HomeFields_trainingSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video {
+  create: HomeFields_trainingSection_video_Create
+  read: HomeFields_trainingSection_video_Read
+  update: HomeFields_trainingSection_video_Update
+  delete: HomeFields_trainingSection_video_Delete
+  fields: HomeFields_trainingSection_video_Fields
+}
+
+type HomeFields_trainingSection_video_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_Fields {
+  poster: HomeFields_trainingSection_video_poster
+  file: HomeFields_trainingSection_video_file
+}
+
+type HomeFields_trainingSection_video_poster {
+  create: HomeFields_trainingSection_video_poster_Create
+  read: HomeFields_trainingSection_video_poster_Read
+  update: HomeFields_trainingSection_video_poster_Update
+  delete: HomeFields_trainingSection_video_poster_Delete
+}
+
+type HomeFields_trainingSection_video_poster_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_poster_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_poster_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_poster_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_file {
+  create: HomeFields_trainingSection_video_file_Create
+  read: HomeFields_trainingSection_video_file_Read
+  update: HomeFields_trainingSection_video_file_Update
+  delete: HomeFields_trainingSection_video_file_Delete
+}
+
+type HomeFields_trainingSection_video_file_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_file_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_file_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_video_file_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards {
+  create: HomeFields_trainingSection_cards_Create
+  read: HomeFields_trainingSection_cards_Read
+  update: HomeFields_trainingSection_cards_Update
+  delete: HomeFields_trainingSection_cards_Delete
+  fields: HomeFields_trainingSection_cards_Fields
+}
+
+type HomeFields_trainingSection_cards_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_Fields {
+  icon: HomeFields_trainingSection_cards_icon
+  title: HomeFields_trainingSection_cards_title
+  description: HomeFields_trainingSection_cards_description
+  id: HomeFields_trainingSection_cards_id
+}
+
+type HomeFields_trainingSection_cards_icon {
+  create: HomeFields_trainingSection_cards_icon_Create
+  read: HomeFields_trainingSection_cards_icon_Read
+  update: HomeFields_trainingSection_cards_icon_Update
+  delete: HomeFields_trainingSection_cards_icon_Delete
+}
+
+type HomeFields_trainingSection_cards_icon_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_icon_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_icon_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_icon_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_title {
+  create: HomeFields_trainingSection_cards_title_Create
+  read: HomeFields_trainingSection_cards_title_Read
+  update: HomeFields_trainingSection_cards_title_Update
+  delete: HomeFields_trainingSection_cards_title_Delete
+}
+
+type HomeFields_trainingSection_cards_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_description {
+  create: HomeFields_trainingSection_cards_description_Create
+  read: HomeFields_trainingSection_cards_description_Read
+  update: HomeFields_trainingSection_cards_description_Update
+  delete: HomeFields_trainingSection_cards_description_Delete
+}
+
+type HomeFields_trainingSection_cards_description_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_description_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_description_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_description_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_id {
+  create: HomeFields_trainingSection_cards_id_Create
+  read: HomeFields_trainingSection_cards_id_Read
+  update: HomeFields_trainingSection_cards_id_Update
+  delete: HomeFields_trainingSection_cards_id_Delete
+}
+
+type HomeFields_trainingSection_cards_id_Create {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_id_Read {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_id_Update {
+  permission: Boolean!
+}
+
+type HomeFields_trainingSection_cards_id_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection {
+  create: HomeFields_reviewsSection_Create
+  read: HomeFields_reviewsSection_Read
+  update: HomeFields_reviewsSection_Update
+  delete: HomeFields_reviewsSection_Delete
+  fields: HomeFields_reviewsSection_Fields
+}
+
+type HomeFields_reviewsSection_Create {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_Read {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_Update {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_Fields {
+  title: HomeFields_reviewsSection_title
+  subtitle: HomeFields_reviewsSection_subtitle
+  reviews: HomeFields_reviewsSection_reviews
+}
+
+type HomeFields_reviewsSection_title {
+  create: HomeFields_reviewsSection_title_Create
+  read: HomeFields_reviewsSection_title_Read
+  update: HomeFields_reviewsSection_title_Update
+  delete: HomeFields_reviewsSection_title_Delete
+}
+
+type HomeFields_reviewsSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_subtitle {
+  create: HomeFields_reviewsSection_subtitle_Create
+  read: HomeFields_reviewsSection_subtitle_Read
+  update: HomeFields_reviewsSection_subtitle_Update
+  delete: HomeFields_reviewsSection_subtitle_Delete
+}
+
+type HomeFields_reviewsSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_reviews {
+  create: HomeFields_reviewsSection_reviews_Create
+  read: HomeFields_reviewsSection_reviews_Read
+  update: HomeFields_reviewsSection_reviews_Update
+  delete: HomeFields_reviewsSection_reviews_Delete
+}
+
+type HomeFields_reviewsSection_reviews_Create {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_reviews_Read {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_reviews_Update {
+  permission: Boolean!
+}
+
+type HomeFields_reviewsSection_reviews_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection {
+  create: HomeFields_faqSection_Create
+  read: HomeFields_faqSection_Read
+  update: HomeFields_faqSection_Update
+  delete: HomeFields_faqSection_Delete
+  fields: HomeFields_faqSection_Fields
+}
+
+type HomeFields_faqSection_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_Fields {
+  title: HomeFields_faqSection_title
+  subtitle: HomeFields_faqSection_subtitle
+  items: HomeFields_faqSection_items
+}
+
+type HomeFields_faqSection_title {
+  create: HomeFields_faqSection_title_Create
+  read: HomeFields_faqSection_title_Read
+  update: HomeFields_faqSection_title_Update
+  delete: HomeFields_faqSection_title_Delete
+}
+
+type HomeFields_faqSection_title_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_title_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_title_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_title_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_subtitle {
+  create: HomeFields_faqSection_subtitle_Create
+  read: HomeFields_faqSection_subtitle_Read
+  update: HomeFields_faqSection_subtitle_Update
+  delete: HomeFields_faqSection_subtitle_Delete
+}
+
+type HomeFields_faqSection_subtitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_subtitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_subtitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_subtitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items {
+  create: HomeFields_faqSection_items_Create
+  read: HomeFields_faqSection_items_Read
+  update: HomeFields_faqSection_items_Update
+  delete: HomeFields_faqSection_items_Delete
+  fields: HomeFields_faqSection_items_Fields
+}
+
+type HomeFields_faqSection_items_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_Fields {
+  question: HomeFields_faqSection_items_question
+  answer: HomeFields_faqSection_items_answer
+  id: HomeFields_faqSection_items_id
+}
+
+type HomeFields_faqSection_items_question {
+  create: HomeFields_faqSection_items_question_Create
+  read: HomeFields_faqSection_items_question_Read
+  update: HomeFields_faqSection_items_question_Update
+  delete: HomeFields_faqSection_items_question_Delete
+}
+
+type HomeFields_faqSection_items_question_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_question_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_question_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_question_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_answer {
+  create: HomeFields_faqSection_items_answer_Create
+  read: HomeFields_faqSection_items_answer_Read
+  update: HomeFields_faqSection_items_answer_Update
+  delete: HomeFields_faqSection_items_answer_Delete
+}
+
+type HomeFields_faqSection_items_answer_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_answer_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_answer_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_answer_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_id {
+  create: HomeFields_faqSection_items_id_Create
+  read: HomeFields_faqSection_items_id_Read
+  update: HomeFields_faqSection_items_id_Update
+  delete: HomeFields_faqSection_items_id_Delete
+}
+
+type HomeFields_faqSection_items_id_Create {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_id_Read {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_id_Update {
+  permission: Boolean!
+}
+
+type HomeFields_faqSection_items_id_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_updatedAt {
+  create: HomeFields_updatedAt_Create
+  read: HomeFields_updatedAt_Read
+  update: HomeFields_updatedAt_Update
+  delete: HomeFields_updatedAt_Delete
+}
+
+type HomeFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type HomeFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type HomeFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type HomeFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_createdAt {
+  create: HomeFields_createdAt_Create
+  read: HomeFields_createdAt_Read
+  update: HomeFields_createdAt_Update
+  delete: HomeFields_createdAt_Delete
+}
+
+type HomeFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type HomeFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type HomeFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type HomeFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type HomeReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type HomeUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean): User
   updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, trash: Boolean): User
@@ -9211,6 +11800,7 @@ type Mutation {
   updatePayloadPreference(id: Int!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean, trash: Boolean): PayloadPreference
   deletePayloadPreference(id: Int!, trash: Boolean): PayloadPreference
   duplicatePayloadPreference(id: Int!, data: mutationPayloadPreferenceInput!): PayloadPreference
+  updateHome(data: mutationHomeInput!, draft: Boolean): Home
 }
 
 input mutationUserInput {
@@ -9662,7 +12252,8 @@ input mutationLegalPageInput {
   title: String!
   generateSlug: Boolean
   slug: String!
-  contentMarkdown: String!
+  content: JSON
+  contentMarkdown: String
   updatedAt: String
   createdAt: String
 }
@@ -9671,6 +12262,7 @@ input mutationLegalPageUpdateInput {
   title: String
   generateSlug: Boolean
   slug: String
+  content: JSON
   contentMarkdown: String
   updatedAt: String
   createdAt: String
@@ -9784,4 +12376,91 @@ input PayloadPreferenceUpdate_UserRelationshipInput {
 
 enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
   users
+}
+
+input mutationHomeInput {
+  hero: mutationHome_HeroInput!
+  howItWork: mutationHome_HowItWorkInput!
+  beforeAfter: [mutationHome_BeforeAfterInput]
+  modelComparison: mutationHome_ModelComparisonInput!
+  certificatesSection: mutationHome_CertificatesSectionInput!
+  trainingSection: mutationHome_TrainingSectionInput!
+  reviewsSection: mutationHome_ReviewsSectionInput!
+  faqSection: mutationHome_FaqSectionInput!
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationHome_HeroInput {
+  title: String!
+  description: String!
+  image: Int
+}
+
+input mutationHome_HowItWorkInput {
+  title: String!
+  subtitle: String!
+  cards: [mutationHome_HowItWork_CardsInput]
+}
+
+input mutationHome_HowItWork_CardsInput {
+  icon: Int
+  title: String!
+  description: String!
+  id: String
+}
+
+input mutationHome_BeforeAfterInput {
+  before: Int
+  after: Int
+  id: String
+}
+
+input mutationHome_ModelComparisonInput {
+  title: String!
+  subtitle: String!
+  products: [Int]
+}
+
+input mutationHome_CertificatesSectionInput {
+  title: String!
+  subtitle: String!
+  certificates: [Int]
+}
+
+input mutationHome_TrainingSectionInput {
+  title: String!
+  subtitle: String!
+  video: mutationHome_TrainingSection_VideoInput!
+  cards: [mutationHome_TrainingSection_CardsInput]
+}
+
+input mutationHome_TrainingSection_VideoInput {
+  poster: Int
+  file: Int
+}
+
+input mutationHome_TrainingSection_CardsInput {
+  icon: Int
+  title: String!
+  description: String!
+  id: String
+}
+
+input mutationHome_ReviewsSectionInput {
+  title: String!
+  subtitle: String!
+  reviews: [Int]
+}
+
+input mutationHome_FaqSectionInput {
+  title: String!
+  subtitle: String!
+  items: [mutationHome_FaqSection_ItemsInput]
+}
+
+input mutationHome_FaqSection_ItemsInput {
+  question: String!
+  answer: String!
+  id: String
 }

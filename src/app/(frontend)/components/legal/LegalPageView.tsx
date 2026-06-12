@@ -1,13 +1,9 @@
 import PageHero from '../shared/PageHero'
-import { LegalRichTextContent } from './LegalRichTextContent'
+import { LegalRichTextContent, type LexicalContent } from './LegalRichTextContent'
 import { MarkdownContent } from './MarkdownContent'
 
 type LegalPageViewProps = {
-  content?: {
-    root?: {
-      children?: unknown[]
-    }
-  } | null
+  content?: LexicalContent | null
   contentMarkdown?: string | null
   title: string
 }

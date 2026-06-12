@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-type LexicalContent = {
+export type LexicalContent = {
   root?: {
     children?: LexicalNode[]
   }
