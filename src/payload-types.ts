@@ -76,6 +76,8 @@ export interface Config {
     orders: Order;
     'legal-pages': LegalPage;
     locations: Location;
+    'training-categories': TrainingCategory;
+    'training-videos': TrainingVideo;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +94,8 @@ export interface Config {
     orders: OrdersSelect<false> | OrdersSelect<true>;
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
+    'training-categories': TrainingCategoriesSelect<false> | TrainingCategoriesSelect<true>;
+    'training-videos': TrainingVideosSelect<false> | TrainingVideosSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -103,9 +107,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     home: Home;
+    training: Training;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
+    training: TrainingSelect<false> | TrainingSelect<true>;
   };
   locale: null;
   widgets: {
@@ -455,6 +461,32 @@ export interface Location {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training-categories".
+ */
+export interface TrainingCategory {
+  id: number;
+  title: string;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training-videos".
+ */
+export interface TrainingVideo {
+  id: number;
+  title: string;
+  description: string;
+  category: number | TrainingCategory;
+  poster: number | Media;
+  video: number | Media;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -512,6 +544,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'locations';
         value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'training-categories';
+        value: number | TrainingCategory;
+      } | null)
+    | ({
+        relationTo: 'training-videos';
+        value: number | TrainingVideo;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -787,6 +827,30 @@ export interface LocationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training-categories_select".
+ */
+export interface TrainingCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training-videos_select".
+ */
+export interface TrainingVideosSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  poster?: T;
+  video?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -903,6 +967,46 @@ export interface Home {
   createdAt?: string | null;
 }
 /**
+ * Контент сторінки навчання.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training".
+ */
+export interface Training {
+  id: number;
+  title: string;
+  description: string;
+  formats: {
+    title: string;
+    subtitle: string;
+    cards?:
+      | {
+          icon: number | Media;
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  videoInstructions: {
+    title: string;
+    subtitle: string;
+  };
+  faq: {
+    title: string;
+    subtitle: string;
+    items?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
@@ -977,6 +1081,50 @@ export interface HomeSelect<T extends boolean = true> {
         reviews?: T;
       };
   faqSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        items?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "training_select".
+ */
+export interface TrainingSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  formats?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  videoInstructions?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+      };
+  faq?:
     | T
     | {
         title?: T;

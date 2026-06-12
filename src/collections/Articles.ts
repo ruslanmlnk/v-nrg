@@ -3,6 +3,7 @@ import { slugField, type CollectionConfig } from 'payload'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
+  labels: { plural: 'Статті', singular: 'Стаття' },
   admin: {
     defaultColumns: ['title', 'publishedAt', 'updatedAt'],
     useAsTitle: 'title',

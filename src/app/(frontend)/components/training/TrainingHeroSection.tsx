@@ -2,12 +2,18 @@
 
 import PageHero from '../shared/PageHero'
 
-export function TrainingHeroSection() {
+export function TrainingHeroSection({
+  description,
+  title,
+}: {
+  description: string
+  title: string
+}) {
   return (
     <PageHero
       currentLabel="Навчання"
-      title="Навчання та відеоінструкції V-NRG"
-      description="Повна підтримка від виробника: відеоуроки, інструкції та рекомендації для швидкого старту."
+      title={title}
+      description={description}
     />
   )
 }

@@ -29,6 +29,7 @@ const isAdminOrSelf: Access = ({ req: { user } }) => {
 }
 
 export const Users: CollectionConfig = {
+  labels: { plural: 'Користувачі', singular: 'Користувач' },
   slug: 'users',
   admin: {
     defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'role', 'dealerDiscountPercent'],

@@ -4,6 +4,7 @@ import { slugify as trSlugify } from 'transliteration'
 
 export const Category: CollectionConfig = {
     slug: 'category',
+    labels: { plural: 'Категорії товарів', singular: 'Категорія товарів' },
     access: {
         read: () => true,
     },

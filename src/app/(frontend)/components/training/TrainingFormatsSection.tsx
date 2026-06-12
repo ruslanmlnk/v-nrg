@@ -2,15 +2,27 @@
 
 import SectionHeading from '../shared/SectionHeading'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
-import { learningFormats } from './data'
+type TrainingFormat = {
+  description: string
+  icon: string
+  title: string
+}
 
-export function TrainingFormatsSection() {
+export function TrainingFormatsSection({
+  formats,
+  subtitle,
+  title,
+}: {
+  formats: TrainingFormat[]
+  subtitle: string
+  title: string
+}) {
   return (
     <section className="flex flex-col items-center gap-12">
-      <SectionHeading align="center" eyebrow="Формати навчання" title="Зручні способи навчання" />
+      <SectionHeading align="center" eyebrow={subtitle} title={title} />
 
       <div className="grid w-full gap-5 lg:grid-cols-3">
-        {learningFormats.map((format) => (
+        {formats.map((format) => (
           <article
             key={format.title}
             className="flex h-full flex-col gap-6 rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]"

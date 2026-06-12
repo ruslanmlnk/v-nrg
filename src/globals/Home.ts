@@ -4,7 +4,7 @@ const isAdmin: Access = ({ req: { user } }) => user?.collection === 'users' && u
 
 export const Home: GlobalConfig = {
   slug: 'home',
-  label: 'Home',
+  label: 'Головна сторінка',
   admin: {
     description: 'Контент головної сторінки.',
   },

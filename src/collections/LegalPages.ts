@@ -5,6 +5,7 @@ import { IconTextBlock } from '../blocks/IconTextBlock'
 
 export const LegalPages: CollectionConfig = {
   slug: 'legal-pages',
+  labels: { plural: 'Юридичні сторінки', singular: 'Юридична сторінка' },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     useAsTitle: 'title',

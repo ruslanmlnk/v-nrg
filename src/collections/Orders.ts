@@ -19,6 +19,7 @@ const adminOrOrderCustomer: Access = ({ req: { user } }) => {
 }
 
 export const Orders: CollectionConfig = {
+  labels: { plural: 'Замовлення', singular: 'Замовлення' },
   slug: 'orders',
   admin: {
     defaultColumns: ['orderNumber', 'customerEmail', 'paymentMethod', 'paymentStatus', 'total'],

@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 export const Reviews: CollectionConfig = {
     slug: 'reviews',
+    labels: { plural: 'Відгуки', singular: 'Відгук' },
     access: {
         read: () => true,
     },

@@ -37,6 +37,14 @@ type Query {
   Locations(draft: Boolean, where: Location_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Locations
   countLocations(draft: Boolean, trash: Boolean, where: Location_where): countLocations
   docAccessLocation(id: Int!): locationsDocAccess
+  TrainingCategory(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): TrainingCategory
+  TrainingCategories(draft: Boolean, where: TrainingCategory_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingCategories
+  countTrainingCategories(draft: Boolean, trash: Boolean, where: TrainingCategory_where): countTrainingCategories
+  docAccessTrainingCategory(id: Int!): training_categoriesDocAccess
+  TrainingVideo(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): TrainingVideo
+  TrainingVideos(draft: Boolean, where: TrainingVideo_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingVideos
+  countTrainingVideos(draft: Boolean, trash: Boolean, where: TrainingVideo_where): countTrainingVideos
+  docAccessTrainingVideo(id: Int!): training_videosDocAccess
   PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
@@ -51,6 +59,8 @@ type Query {
   docAccessPayloadPreference(id: Int!): payload_preferencesDocAccess
   Home(draft: Boolean, select: Boolean): Home
   docAccessHome: homeDocAccess
+  Training(draft: Boolean, select: Boolean): Training
+  docAccessTraining: trainingDocAccess
   Access: Access
 }
 
@@ -5637,6 +5647,619 @@ type LocationsDeleteDocAccess {
   where: JSONObject
 }
 
+type TrainingCategory {
+  id: Int!
+  title: String!
+  sortOrder: Float
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type TrainingCategories {
+  docs: [TrainingCategory!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input TrainingCategory_where {
+  title: TrainingCategory_title_operator
+  sortOrder: TrainingCategory_sortOrder_operator
+  updatedAt: TrainingCategory_updatedAt_operator
+  createdAt: TrainingCategory_createdAt_operator
+  id: TrainingCategory_id_operator
+  AND: [TrainingCategory_where_and]
+  OR: [TrainingCategory_where_or]
+}
+
+input TrainingCategory_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input TrainingCategory_sortOrder_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input TrainingCategory_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input TrainingCategory_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input TrainingCategory_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input TrainingCategory_where_and {
+  title: TrainingCategory_title_operator
+  sortOrder: TrainingCategory_sortOrder_operator
+  updatedAt: TrainingCategory_updatedAt_operator
+  createdAt: TrainingCategory_createdAt_operator
+  id: TrainingCategory_id_operator
+  AND: [TrainingCategory_where_and]
+  OR: [TrainingCategory_where_or]
+}
+
+input TrainingCategory_where_or {
+  title: TrainingCategory_title_operator
+  sortOrder: TrainingCategory_sortOrder_operator
+  updatedAt: TrainingCategory_updatedAt_operator
+  createdAt: TrainingCategory_createdAt_operator
+  id: TrainingCategory_id_operator
+  AND: [TrainingCategory_where_and]
+  OR: [TrainingCategory_where_or]
+}
+
+type countTrainingCategories {
+  totalDocs: Int
+}
+
+type training_categoriesDocAccess {
+  fields: TrainingCategoriesDocAccessFields
+  create: TrainingCategoriesCreateDocAccess
+  read: TrainingCategoriesReadDocAccess
+  update: TrainingCategoriesUpdateDocAccess
+  delete: TrainingCategoriesDeleteDocAccess
+}
+
+type TrainingCategoriesDocAccessFields {
+  title: TrainingCategoriesDocAccessFields_title
+  sortOrder: TrainingCategoriesDocAccessFields_sortOrder
+  updatedAt: TrainingCategoriesDocAccessFields_updatedAt
+  createdAt: TrainingCategoriesDocAccessFields_createdAt
+}
+
+type TrainingCategoriesDocAccessFields_title {
+  create: TrainingCategoriesDocAccessFields_title_Create
+  read: TrainingCategoriesDocAccessFields_title_Read
+  update: TrainingCategoriesDocAccessFields_title_Update
+  delete: TrainingCategoriesDocAccessFields_title_Delete
+}
+
+type TrainingCategoriesDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_sortOrder {
+  create: TrainingCategoriesDocAccessFields_sortOrder_Create
+  read: TrainingCategoriesDocAccessFields_sortOrder_Read
+  update: TrainingCategoriesDocAccessFields_sortOrder_Update
+  delete: TrainingCategoriesDocAccessFields_sortOrder_Delete
+}
+
+type TrainingCategoriesDocAccessFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_updatedAt {
+  create: TrainingCategoriesDocAccessFields_updatedAt_Create
+  read: TrainingCategoriesDocAccessFields_updatedAt_Read
+  update: TrainingCategoriesDocAccessFields_updatedAt_Update
+  delete: TrainingCategoriesDocAccessFields_updatedAt_Delete
+}
+
+type TrainingCategoriesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_createdAt {
+  create: TrainingCategoriesDocAccessFields_createdAt_Create
+  read: TrainingCategoriesDocAccessFields_createdAt_Read
+  update: TrainingCategoriesDocAccessFields_createdAt_Update
+  delete: TrainingCategoriesDocAccessFields_createdAt_Delete
+}
+
+type TrainingCategoriesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingCategoriesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingCategoriesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingCategoriesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideo {
+  id: Int!
+  title: String!
+  description: String!
+  category: TrainingCategory
+  poster: Media
+  video: Media
+  sortOrder: Float
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type TrainingVideos {
+  docs: [TrainingVideo!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input TrainingVideo_where {
+  title: TrainingVideo_title_operator
+  description: TrainingVideo_description_operator
+  category: TrainingVideo_category_operator
+  poster: TrainingVideo_poster_operator
+  video: TrainingVideo_video_operator
+  sortOrder: TrainingVideo_sortOrder_operator
+  updatedAt: TrainingVideo_updatedAt_operator
+  createdAt: TrainingVideo_createdAt_operator
+  id: TrainingVideo_id_operator
+  AND: [TrainingVideo_where_and]
+  OR: [TrainingVideo_where_or]
+}
+
+input TrainingVideo_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input TrainingVideo_description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input TrainingVideo_category_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input TrainingVideo_poster_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input TrainingVideo_video_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input TrainingVideo_sortOrder_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input TrainingVideo_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input TrainingVideo_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input TrainingVideo_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input TrainingVideo_where_and {
+  title: TrainingVideo_title_operator
+  description: TrainingVideo_description_operator
+  category: TrainingVideo_category_operator
+  poster: TrainingVideo_poster_operator
+  video: TrainingVideo_video_operator
+  sortOrder: TrainingVideo_sortOrder_operator
+  updatedAt: TrainingVideo_updatedAt_operator
+  createdAt: TrainingVideo_createdAt_operator
+  id: TrainingVideo_id_operator
+  AND: [TrainingVideo_where_and]
+  OR: [TrainingVideo_where_or]
+}
+
+input TrainingVideo_where_or {
+  title: TrainingVideo_title_operator
+  description: TrainingVideo_description_operator
+  category: TrainingVideo_category_operator
+  poster: TrainingVideo_poster_operator
+  video: TrainingVideo_video_operator
+  sortOrder: TrainingVideo_sortOrder_operator
+  updatedAt: TrainingVideo_updatedAt_operator
+  createdAt: TrainingVideo_createdAt_operator
+  id: TrainingVideo_id_operator
+  AND: [TrainingVideo_where_and]
+  OR: [TrainingVideo_where_or]
+}
+
+type countTrainingVideos {
+  totalDocs: Int
+}
+
+type training_videosDocAccess {
+  fields: TrainingVideosDocAccessFields
+  create: TrainingVideosCreateDocAccess
+  read: TrainingVideosReadDocAccess
+  update: TrainingVideosUpdateDocAccess
+  delete: TrainingVideosDeleteDocAccess
+}
+
+type TrainingVideosDocAccessFields {
+  title: TrainingVideosDocAccessFields_title
+  description: TrainingVideosDocAccessFields_description
+  category: TrainingVideosDocAccessFields_category
+  poster: TrainingVideosDocAccessFields_poster
+  video: TrainingVideosDocAccessFields_video
+  sortOrder: TrainingVideosDocAccessFields_sortOrder
+  updatedAt: TrainingVideosDocAccessFields_updatedAt
+  createdAt: TrainingVideosDocAccessFields_createdAt
+}
+
+type TrainingVideosDocAccessFields_title {
+  create: TrainingVideosDocAccessFields_title_Create
+  read: TrainingVideosDocAccessFields_title_Read
+  update: TrainingVideosDocAccessFields_title_Update
+  delete: TrainingVideosDocAccessFields_title_Delete
+}
+
+type TrainingVideosDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_description {
+  create: TrainingVideosDocAccessFields_description_Create
+  read: TrainingVideosDocAccessFields_description_Read
+  update: TrainingVideosDocAccessFields_description_Update
+  delete: TrainingVideosDocAccessFields_description_Delete
+}
+
+type TrainingVideosDocAccessFields_description_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_description_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_description_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_category {
+  create: TrainingVideosDocAccessFields_category_Create
+  read: TrainingVideosDocAccessFields_category_Read
+  update: TrainingVideosDocAccessFields_category_Update
+  delete: TrainingVideosDocAccessFields_category_Delete
+}
+
+type TrainingVideosDocAccessFields_category_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_category_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_category_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_category_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_poster {
+  create: TrainingVideosDocAccessFields_poster_Create
+  read: TrainingVideosDocAccessFields_poster_Read
+  update: TrainingVideosDocAccessFields_poster_Update
+  delete: TrainingVideosDocAccessFields_poster_Delete
+}
+
+type TrainingVideosDocAccessFields_poster_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_poster_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_poster_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_poster_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_video {
+  create: TrainingVideosDocAccessFields_video_Create
+  read: TrainingVideosDocAccessFields_video_Read
+  update: TrainingVideosDocAccessFields_video_Update
+  delete: TrainingVideosDocAccessFields_video_Delete
+}
+
+type TrainingVideosDocAccessFields_video_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_video_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_video_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_video_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_sortOrder {
+  create: TrainingVideosDocAccessFields_sortOrder_Create
+  read: TrainingVideosDocAccessFields_sortOrder_Read
+  update: TrainingVideosDocAccessFields_sortOrder_Update
+  delete: TrainingVideosDocAccessFields_sortOrder_Delete
+}
+
+type TrainingVideosDocAccessFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_updatedAt {
+  create: TrainingVideosDocAccessFields_updatedAt_Create
+  read: TrainingVideosDocAccessFields_updatedAt_Read
+  update: TrainingVideosDocAccessFields_updatedAt_Update
+  delete: TrainingVideosDocAccessFields_updatedAt_Delete
+}
+
+type TrainingVideosDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_createdAt {
+  create: TrainingVideosDocAccessFields_createdAt_Create
+  read: TrainingVideosDocAccessFields_createdAt_Read
+  update: TrainingVideosDocAccessFields_createdAt_Update
+  delete: TrainingVideosDocAccessFields_createdAt_Delete
+}
+
+type TrainingVideosDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideosReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideosUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideosDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -5817,9 +6440,11 @@ enum PayloadLockedDocument_Document_RelationTo {
   orders
   legal_pages
   locations
+  training_categories
+  training_videos
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -5872,6 +6497,8 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   orders
   legal_pages
   locations
+  training_categories
+  training_videos
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -7693,6 +8320,613 @@ type HomeUpdateDocAccess {
   where: JSONObject
 }
 
+type Training {
+  title: String!
+  description: String!
+  formats: Training_Formats
+  videoInstructions: Training_VideoInstructions
+  faq: Training_Faq
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Training_Formats {
+  title: String
+  subtitle: String
+  cards: [Training_Formats_Cards!]
+}
+
+type Training_Formats_Cards {
+  icon: Media
+  title: String
+  description: String
+  id: String
+}
+
+type Training_VideoInstructions {
+  title: String
+  subtitle: String
+}
+
+type Training_Faq {
+  title: String
+  subtitle: String
+  items: [Training_Faq_Items!]
+}
+
+type Training_Faq_Items {
+  question: String
+  answer: String
+  id: String
+}
+
+type trainingDocAccess {
+  fields: TrainingDocAccessFields
+  read: TrainingReadDocAccess
+  update: TrainingUpdateDocAccess
+}
+
+type TrainingDocAccessFields {
+  title: TrainingDocAccessFields_title
+  description: TrainingDocAccessFields_description
+  formats: TrainingDocAccessFields_formats
+  videoInstructions: TrainingDocAccessFields_videoInstructions
+  faq: TrainingDocAccessFields_faq
+  updatedAt: TrainingDocAccessFields_updatedAt
+  createdAt: TrainingDocAccessFields_createdAt
+}
+
+type TrainingDocAccessFields_title {
+  create: TrainingDocAccessFields_title_Create
+  read: TrainingDocAccessFields_title_Read
+  update: TrainingDocAccessFields_title_Update
+  delete: TrainingDocAccessFields_title_Delete
+}
+
+type TrainingDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_description {
+  create: TrainingDocAccessFields_description_Create
+  read: TrainingDocAccessFields_description_Read
+  update: TrainingDocAccessFields_description_Update
+  delete: TrainingDocAccessFields_description_Delete
+}
+
+type TrainingDocAccessFields_description_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_description_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_description_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats {
+  create: TrainingDocAccessFields_formats_Create
+  read: TrainingDocAccessFields_formats_Read
+  update: TrainingDocAccessFields_formats_Update
+  delete: TrainingDocAccessFields_formats_Delete
+  fields: TrainingDocAccessFields_formats_Fields
+}
+
+type TrainingDocAccessFields_formats_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_Fields {
+  title: TrainingDocAccessFields_formats_title
+  subtitle: TrainingDocAccessFields_formats_subtitle
+  cards: TrainingDocAccessFields_formats_cards
+}
+
+type TrainingDocAccessFields_formats_title {
+  create: TrainingDocAccessFields_formats_title_Create
+  read: TrainingDocAccessFields_formats_title_Read
+  update: TrainingDocAccessFields_formats_title_Update
+  delete: TrainingDocAccessFields_formats_title_Delete
+}
+
+type TrainingDocAccessFields_formats_title_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_title_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_title_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_subtitle {
+  create: TrainingDocAccessFields_formats_subtitle_Create
+  read: TrainingDocAccessFields_formats_subtitle_Read
+  update: TrainingDocAccessFields_formats_subtitle_Update
+  delete: TrainingDocAccessFields_formats_subtitle_Delete
+}
+
+type TrainingDocAccessFields_formats_subtitle_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_subtitle_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_subtitle_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_subtitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards {
+  create: TrainingDocAccessFields_formats_cards_Create
+  read: TrainingDocAccessFields_formats_cards_Read
+  update: TrainingDocAccessFields_formats_cards_Update
+  delete: TrainingDocAccessFields_formats_cards_Delete
+  fields: TrainingDocAccessFields_formats_cards_Fields
+}
+
+type TrainingDocAccessFields_formats_cards_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_Fields {
+  icon: TrainingDocAccessFields_formats_cards_icon
+  title: TrainingDocAccessFields_formats_cards_title
+  description: TrainingDocAccessFields_formats_cards_description
+  id: TrainingDocAccessFields_formats_cards_id
+}
+
+type TrainingDocAccessFields_formats_cards_icon {
+  create: TrainingDocAccessFields_formats_cards_icon_Create
+  read: TrainingDocAccessFields_formats_cards_icon_Read
+  update: TrainingDocAccessFields_formats_cards_icon_Update
+  delete: TrainingDocAccessFields_formats_cards_icon_Delete
+}
+
+type TrainingDocAccessFields_formats_cards_icon_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_icon_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_icon_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_icon_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_title {
+  create: TrainingDocAccessFields_formats_cards_title_Create
+  read: TrainingDocAccessFields_formats_cards_title_Read
+  update: TrainingDocAccessFields_formats_cards_title_Update
+  delete: TrainingDocAccessFields_formats_cards_title_Delete
+}
+
+type TrainingDocAccessFields_formats_cards_title_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_title_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_title_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_description {
+  create: TrainingDocAccessFields_formats_cards_description_Create
+  read: TrainingDocAccessFields_formats_cards_description_Read
+  update: TrainingDocAccessFields_formats_cards_description_Update
+  delete: TrainingDocAccessFields_formats_cards_description_Delete
+}
+
+type TrainingDocAccessFields_formats_cards_description_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_description_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_description_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_description_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_id {
+  create: TrainingDocAccessFields_formats_cards_id_Create
+  read: TrainingDocAccessFields_formats_cards_id_Read
+  update: TrainingDocAccessFields_formats_cards_id_Update
+  delete: TrainingDocAccessFields_formats_cards_id_Delete
+}
+
+type TrainingDocAccessFields_formats_cards_id_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_id_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_id_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_formats_cards_id_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions {
+  create: TrainingDocAccessFields_videoInstructions_Create
+  read: TrainingDocAccessFields_videoInstructions_Read
+  update: TrainingDocAccessFields_videoInstructions_Update
+  delete: TrainingDocAccessFields_videoInstructions_Delete
+  fields: TrainingDocAccessFields_videoInstructions_Fields
+}
+
+type TrainingDocAccessFields_videoInstructions_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_Fields {
+  title: TrainingDocAccessFields_videoInstructions_title
+  subtitle: TrainingDocAccessFields_videoInstructions_subtitle
+}
+
+type TrainingDocAccessFields_videoInstructions_title {
+  create: TrainingDocAccessFields_videoInstructions_title_Create
+  read: TrainingDocAccessFields_videoInstructions_title_Read
+  update: TrainingDocAccessFields_videoInstructions_title_Update
+  delete: TrainingDocAccessFields_videoInstructions_title_Delete
+}
+
+type TrainingDocAccessFields_videoInstructions_title_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_title_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_title_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_subtitle {
+  create: TrainingDocAccessFields_videoInstructions_subtitle_Create
+  read: TrainingDocAccessFields_videoInstructions_subtitle_Read
+  update: TrainingDocAccessFields_videoInstructions_subtitle_Update
+  delete: TrainingDocAccessFields_videoInstructions_subtitle_Delete
+}
+
+type TrainingDocAccessFields_videoInstructions_subtitle_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_subtitle_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_subtitle_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_videoInstructions_subtitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq {
+  create: TrainingDocAccessFields_faq_Create
+  read: TrainingDocAccessFields_faq_Read
+  update: TrainingDocAccessFields_faq_Update
+  delete: TrainingDocAccessFields_faq_Delete
+  fields: TrainingDocAccessFields_faq_Fields
+}
+
+type TrainingDocAccessFields_faq_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_Fields {
+  title: TrainingDocAccessFields_faq_title
+  subtitle: TrainingDocAccessFields_faq_subtitle
+  items: TrainingDocAccessFields_faq_items
+}
+
+type TrainingDocAccessFields_faq_title {
+  create: TrainingDocAccessFields_faq_title_Create
+  read: TrainingDocAccessFields_faq_title_Read
+  update: TrainingDocAccessFields_faq_title_Update
+  delete: TrainingDocAccessFields_faq_title_Delete
+}
+
+type TrainingDocAccessFields_faq_title_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_title_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_title_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_subtitle {
+  create: TrainingDocAccessFields_faq_subtitle_Create
+  read: TrainingDocAccessFields_faq_subtitle_Read
+  update: TrainingDocAccessFields_faq_subtitle_Update
+  delete: TrainingDocAccessFields_faq_subtitle_Delete
+}
+
+type TrainingDocAccessFields_faq_subtitle_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_subtitle_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_subtitle_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_subtitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items {
+  create: TrainingDocAccessFields_faq_items_Create
+  read: TrainingDocAccessFields_faq_items_Read
+  update: TrainingDocAccessFields_faq_items_Update
+  delete: TrainingDocAccessFields_faq_items_Delete
+  fields: TrainingDocAccessFields_faq_items_Fields
+}
+
+type TrainingDocAccessFields_faq_items_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_Fields {
+  question: TrainingDocAccessFields_faq_items_question
+  answer: TrainingDocAccessFields_faq_items_answer
+  id: TrainingDocAccessFields_faq_items_id
+}
+
+type TrainingDocAccessFields_faq_items_question {
+  create: TrainingDocAccessFields_faq_items_question_Create
+  read: TrainingDocAccessFields_faq_items_question_Read
+  update: TrainingDocAccessFields_faq_items_question_Update
+  delete: TrainingDocAccessFields_faq_items_question_Delete
+}
+
+type TrainingDocAccessFields_faq_items_question_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_question_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_question_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_question_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_answer {
+  create: TrainingDocAccessFields_faq_items_answer_Create
+  read: TrainingDocAccessFields_faq_items_answer_Read
+  update: TrainingDocAccessFields_faq_items_answer_Update
+  delete: TrainingDocAccessFields_faq_items_answer_Delete
+}
+
+type TrainingDocAccessFields_faq_items_answer_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_answer_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_answer_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_answer_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_id {
+  create: TrainingDocAccessFields_faq_items_id_Create
+  read: TrainingDocAccessFields_faq_items_id_Read
+  update: TrainingDocAccessFields_faq_items_id_Update
+  delete: TrainingDocAccessFields_faq_items_id_Delete
+}
+
+type TrainingDocAccessFields_faq_items_id_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_id_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_id_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_faq_items_id_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_updatedAt {
+  create: TrainingDocAccessFields_updatedAt_Create
+  read: TrainingDocAccessFields_updatedAt_Read
+  update: TrainingDocAccessFields_updatedAt_Update
+  delete: TrainingDocAccessFields_updatedAt_Delete
+}
+
+type TrainingDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_createdAt {
+  create: TrainingDocAccessFields_createdAt_Create
+  read: TrainingDocAccessFields_createdAt_Read
+  update: TrainingDocAccessFields_createdAt_Update
+  delete: TrainingDocAccessFields_createdAt_Delete
+}
+
+type TrainingDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -7704,10 +8938,13 @@ type Access {
   orders: ordersAccess
   legal_pages: legal_pagesAccess
   locations: locationsAccess
+  training_categories: training_categoriesAccess
+  training_videos: training_videosAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
   home: homeAccess
+  training: trainingAccess
 }
 
 type usersAccess {
@@ -11071,6 +12308,356 @@ type LocationsDeleteAccess {
   where: JSONObject
 }
 
+type training_categoriesAccess {
+  fields: TrainingCategoriesFields
+  create: TrainingCategoriesCreateAccess
+  read: TrainingCategoriesReadAccess
+  update: TrainingCategoriesUpdateAccess
+  delete: TrainingCategoriesDeleteAccess
+}
+
+type TrainingCategoriesFields {
+  title: TrainingCategoriesFields_title
+  sortOrder: TrainingCategoriesFields_sortOrder
+  updatedAt: TrainingCategoriesFields_updatedAt
+  createdAt: TrainingCategoriesFields_createdAt
+}
+
+type TrainingCategoriesFields_title {
+  create: TrainingCategoriesFields_title_Create
+  read: TrainingCategoriesFields_title_Read
+  update: TrainingCategoriesFields_title_Update
+  delete: TrainingCategoriesFields_title_Delete
+}
+
+type TrainingCategoriesFields_title_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_title_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_title_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_sortOrder {
+  create: TrainingCategoriesFields_sortOrder_Create
+  read: TrainingCategoriesFields_sortOrder_Read
+  update: TrainingCategoriesFields_sortOrder_Update
+  delete: TrainingCategoriesFields_sortOrder_Delete
+}
+
+type TrainingCategoriesFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_updatedAt {
+  create: TrainingCategoriesFields_updatedAt_Create
+  read: TrainingCategoriesFields_updatedAt_Read
+  update: TrainingCategoriesFields_updatedAt_Update
+  delete: TrainingCategoriesFields_updatedAt_Delete
+}
+
+type TrainingCategoriesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_createdAt {
+  create: TrainingCategoriesFields_createdAt_Create
+  read: TrainingCategoriesFields_createdAt_Read
+  update: TrainingCategoriesFields_createdAt_Update
+  delete: TrainingCategoriesFields_createdAt_Delete
+}
+
+type TrainingCategoriesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type TrainingCategoriesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingCategoriesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingCategoriesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingCategoriesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingCategoriesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type training_videosAccess {
+  fields: TrainingVideosFields
+  create: TrainingVideosCreateAccess
+  read: TrainingVideosReadAccess
+  update: TrainingVideosUpdateAccess
+  delete: TrainingVideosDeleteAccess
+}
+
+type TrainingVideosFields {
+  title: TrainingVideosFields_title
+  description: TrainingVideosFields_description
+  category: TrainingVideosFields_category
+  poster: TrainingVideosFields_poster
+  video: TrainingVideosFields_video
+  sortOrder: TrainingVideosFields_sortOrder
+  updatedAt: TrainingVideosFields_updatedAt
+  createdAt: TrainingVideosFields_createdAt
+}
+
+type TrainingVideosFields_title {
+  create: TrainingVideosFields_title_Create
+  read: TrainingVideosFields_title_Read
+  update: TrainingVideosFields_title_Update
+  delete: TrainingVideosFields_title_Delete
+}
+
+type TrainingVideosFields_title_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_title_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_title_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_description {
+  create: TrainingVideosFields_description_Create
+  read: TrainingVideosFields_description_Read
+  update: TrainingVideosFields_description_Update
+  delete: TrainingVideosFields_description_Delete
+}
+
+type TrainingVideosFields_description_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_description_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_description_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_description_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_category {
+  create: TrainingVideosFields_category_Create
+  read: TrainingVideosFields_category_Read
+  update: TrainingVideosFields_category_Update
+  delete: TrainingVideosFields_category_Delete
+}
+
+type TrainingVideosFields_category_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_category_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_category_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_category_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_poster {
+  create: TrainingVideosFields_poster_Create
+  read: TrainingVideosFields_poster_Read
+  update: TrainingVideosFields_poster_Update
+  delete: TrainingVideosFields_poster_Delete
+}
+
+type TrainingVideosFields_poster_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_poster_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_poster_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_poster_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_video {
+  create: TrainingVideosFields_video_Create
+  read: TrainingVideosFields_video_Read
+  update: TrainingVideosFields_video_Update
+  delete: TrainingVideosFields_video_Delete
+}
+
+type TrainingVideosFields_video_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_video_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_video_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_video_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_sortOrder {
+  create: TrainingVideosFields_sortOrder_Create
+  read: TrainingVideosFields_sortOrder_Read
+  update: TrainingVideosFields_sortOrder_Update
+  delete: TrainingVideosFields_sortOrder_Delete
+}
+
+type TrainingVideosFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_updatedAt {
+  create: TrainingVideosFields_updatedAt_Create
+  read: TrainingVideosFields_updatedAt_Read
+  update: TrainingVideosFields_updatedAt_Update
+  delete: TrainingVideosFields_updatedAt_Delete
+}
+
+type TrainingVideosFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_createdAt {
+  create: TrainingVideosFields_createdAt_Create
+  read: TrainingVideosFields_createdAt_Read
+  update: TrainingVideosFields_createdAt_Update
+  delete: TrainingVideosFields_createdAt_Delete
+}
+
+type TrainingVideosFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type TrainingVideosFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingVideosCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideosReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideosUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingVideosDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -12671,6 +14258,573 @@ type HomeUpdateAccess {
   where: JSONObject
 }
 
+type trainingAccess {
+  fields: TrainingFields
+  read: TrainingReadAccess
+  update: TrainingUpdateAccess
+}
+
+type TrainingFields {
+  title: TrainingFields_title
+  description: TrainingFields_description
+  formats: TrainingFields_formats
+  videoInstructions: TrainingFields_videoInstructions
+  faq: TrainingFields_faq
+  updatedAt: TrainingFields_updatedAt
+  createdAt: TrainingFields_createdAt
+}
+
+type TrainingFields_title {
+  create: TrainingFields_title_Create
+  read: TrainingFields_title_Read
+  update: TrainingFields_title_Update
+  delete: TrainingFields_title_Delete
+}
+
+type TrainingFields_title_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_title_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_title_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_description {
+  create: TrainingFields_description_Create
+  read: TrainingFields_description_Read
+  update: TrainingFields_description_Update
+  delete: TrainingFields_description_Delete
+}
+
+type TrainingFields_description_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_description_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_description_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_description_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats {
+  create: TrainingFields_formats_Create
+  read: TrainingFields_formats_Read
+  update: TrainingFields_formats_Update
+  delete: TrainingFields_formats_Delete
+  fields: TrainingFields_formats_Fields
+}
+
+type TrainingFields_formats_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_Fields {
+  title: TrainingFields_formats_title
+  subtitle: TrainingFields_formats_subtitle
+  cards: TrainingFields_formats_cards
+}
+
+type TrainingFields_formats_title {
+  create: TrainingFields_formats_title_Create
+  read: TrainingFields_formats_title_Read
+  update: TrainingFields_formats_title_Update
+  delete: TrainingFields_formats_title_Delete
+}
+
+type TrainingFields_formats_title_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_title_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_title_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_subtitle {
+  create: TrainingFields_formats_subtitle_Create
+  read: TrainingFields_formats_subtitle_Read
+  update: TrainingFields_formats_subtitle_Update
+  delete: TrainingFields_formats_subtitle_Delete
+}
+
+type TrainingFields_formats_subtitle_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_subtitle_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_subtitle_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_subtitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards {
+  create: TrainingFields_formats_cards_Create
+  read: TrainingFields_formats_cards_Read
+  update: TrainingFields_formats_cards_Update
+  delete: TrainingFields_formats_cards_Delete
+  fields: TrainingFields_formats_cards_Fields
+}
+
+type TrainingFields_formats_cards_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_Fields {
+  icon: TrainingFields_formats_cards_icon
+  title: TrainingFields_formats_cards_title
+  description: TrainingFields_formats_cards_description
+  id: TrainingFields_formats_cards_id
+}
+
+type TrainingFields_formats_cards_icon {
+  create: TrainingFields_formats_cards_icon_Create
+  read: TrainingFields_formats_cards_icon_Read
+  update: TrainingFields_formats_cards_icon_Update
+  delete: TrainingFields_formats_cards_icon_Delete
+}
+
+type TrainingFields_formats_cards_icon_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_icon_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_icon_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_icon_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_title {
+  create: TrainingFields_formats_cards_title_Create
+  read: TrainingFields_formats_cards_title_Read
+  update: TrainingFields_formats_cards_title_Update
+  delete: TrainingFields_formats_cards_title_Delete
+}
+
+type TrainingFields_formats_cards_title_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_title_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_title_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_description {
+  create: TrainingFields_formats_cards_description_Create
+  read: TrainingFields_formats_cards_description_Read
+  update: TrainingFields_formats_cards_description_Update
+  delete: TrainingFields_formats_cards_description_Delete
+}
+
+type TrainingFields_formats_cards_description_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_description_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_description_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_description_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_id {
+  create: TrainingFields_formats_cards_id_Create
+  read: TrainingFields_formats_cards_id_Read
+  update: TrainingFields_formats_cards_id_Update
+  delete: TrainingFields_formats_cards_id_Delete
+}
+
+type TrainingFields_formats_cards_id_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_id_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_id_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_formats_cards_id_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions {
+  create: TrainingFields_videoInstructions_Create
+  read: TrainingFields_videoInstructions_Read
+  update: TrainingFields_videoInstructions_Update
+  delete: TrainingFields_videoInstructions_Delete
+  fields: TrainingFields_videoInstructions_Fields
+}
+
+type TrainingFields_videoInstructions_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_Fields {
+  title: TrainingFields_videoInstructions_title
+  subtitle: TrainingFields_videoInstructions_subtitle
+}
+
+type TrainingFields_videoInstructions_title {
+  create: TrainingFields_videoInstructions_title_Create
+  read: TrainingFields_videoInstructions_title_Read
+  update: TrainingFields_videoInstructions_title_Update
+  delete: TrainingFields_videoInstructions_title_Delete
+}
+
+type TrainingFields_videoInstructions_title_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_title_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_title_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_subtitle {
+  create: TrainingFields_videoInstructions_subtitle_Create
+  read: TrainingFields_videoInstructions_subtitle_Read
+  update: TrainingFields_videoInstructions_subtitle_Update
+  delete: TrainingFields_videoInstructions_subtitle_Delete
+}
+
+type TrainingFields_videoInstructions_subtitle_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_subtitle_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_subtitle_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_videoInstructions_subtitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq {
+  create: TrainingFields_faq_Create
+  read: TrainingFields_faq_Read
+  update: TrainingFields_faq_Update
+  delete: TrainingFields_faq_Delete
+  fields: TrainingFields_faq_Fields
+}
+
+type TrainingFields_faq_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_Fields {
+  title: TrainingFields_faq_title
+  subtitle: TrainingFields_faq_subtitle
+  items: TrainingFields_faq_items
+}
+
+type TrainingFields_faq_title {
+  create: TrainingFields_faq_title_Create
+  read: TrainingFields_faq_title_Read
+  update: TrainingFields_faq_title_Update
+  delete: TrainingFields_faq_title_Delete
+}
+
+type TrainingFields_faq_title_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_title_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_title_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_title_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_subtitle {
+  create: TrainingFields_faq_subtitle_Create
+  read: TrainingFields_faq_subtitle_Read
+  update: TrainingFields_faq_subtitle_Update
+  delete: TrainingFields_faq_subtitle_Delete
+}
+
+type TrainingFields_faq_subtitle_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_subtitle_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_subtitle_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_subtitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items {
+  create: TrainingFields_faq_items_Create
+  read: TrainingFields_faq_items_Read
+  update: TrainingFields_faq_items_Update
+  delete: TrainingFields_faq_items_Delete
+  fields: TrainingFields_faq_items_Fields
+}
+
+type TrainingFields_faq_items_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_Fields {
+  question: TrainingFields_faq_items_question
+  answer: TrainingFields_faq_items_answer
+  id: TrainingFields_faq_items_id
+}
+
+type TrainingFields_faq_items_question {
+  create: TrainingFields_faq_items_question_Create
+  read: TrainingFields_faq_items_question_Read
+  update: TrainingFields_faq_items_question_Update
+  delete: TrainingFields_faq_items_question_Delete
+}
+
+type TrainingFields_faq_items_question_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_question_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_question_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_question_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_answer {
+  create: TrainingFields_faq_items_answer_Create
+  read: TrainingFields_faq_items_answer_Read
+  update: TrainingFields_faq_items_answer_Update
+  delete: TrainingFields_faq_items_answer_Delete
+}
+
+type TrainingFields_faq_items_answer_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_answer_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_answer_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_answer_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_id {
+  create: TrainingFields_faq_items_id_Create
+  read: TrainingFields_faq_items_id_Read
+  update: TrainingFields_faq_items_id_Update
+  delete: TrainingFields_faq_items_id_Delete
+}
+
+type TrainingFields_faq_items_id_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_id_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_id_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_faq_items_id_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_updatedAt {
+  create: TrainingFields_updatedAt_Create
+  read: TrainingFields_updatedAt_Read
+  update: TrainingFields_updatedAt_Update
+  delete: TrainingFields_updatedAt_Delete
+}
+
+type TrainingFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_createdAt {
+  create: TrainingFields_createdAt_Create
+  read: TrainingFields_createdAt_Read
+  update: TrainingFields_createdAt_Update
+  delete: TrainingFields_createdAt_Delete
+}
+
+type TrainingFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type TrainingReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type TrainingUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean): User
   updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, trash: Boolean): User
@@ -12714,6 +14868,14 @@ type Mutation {
   updateLocation(id: Int!, autosave: Boolean, data: mutationLocationUpdateInput!, draft: Boolean, trash: Boolean): Location
   deleteLocation(id: Int!, trash: Boolean): Location
   duplicateLocation(id: Int!, data: mutationLocationInput!): Location
+  createTrainingCategory(data: mutationTrainingCategoryInput!, draft: Boolean): TrainingCategory
+  updateTrainingCategory(id: Int!, autosave: Boolean, data: mutationTrainingCategoryUpdateInput!, draft: Boolean, trash: Boolean): TrainingCategory
+  deleteTrainingCategory(id: Int!, trash: Boolean): TrainingCategory
+  duplicateTrainingCategory(id: Int!, data: mutationTrainingCategoryInput!): TrainingCategory
+  createTrainingVideo(data: mutationTrainingVideoInput!, draft: Boolean): TrainingVideo
+  updateTrainingVideo(id: Int!, autosave: Boolean, data: mutationTrainingVideoUpdateInput!, draft: Boolean, trash: Boolean): TrainingVideo
+  deleteTrainingVideo(id: Int!, trash: Boolean): TrainingVideo
+  duplicateTrainingVideo(id: Int!, data: mutationTrainingVideoInput!): TrainingVideo
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -12727,6 +14889,7 @@ type Mutation {
   deletePayloadPreference(id: Int!, trash: Boolean): PayloadPreference
   duplicatePayloadPreference(id: Int!, data: mutationPayloadPreferenceInput!): PayloadPreference
   updateHome(data: mutationHomeInput!, draft: Boolean): Home
+  updateTraining(data: mutationTrainingInput!, draft: Boolean): Training
 }
 
 input mutationUserInput {
@@ -13226,6 +15389,42 @@ input mutationLocationUpdateInput {
   createdAt: String
 }
 
+input mutationTrainingCategoryInput {
+  title: String!
+  sortOrder: Float
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationTrainingCategoryUpdateInput {
+  title: String
+  sortOrder: Float
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationTrainingVideoInput {
+  title: String!
+  description: String!
+  category: Int
+  poster: Int
+  video: Int
+  sortOrder: Float
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationTrainingVideoUpdateInput {
+  title: String
+  description: String
+  category: Int
+  poster: Int
+  video: Int
+  sortOrder: Float
+  updatedAt: String
+  createdAt: String
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -13259,6 +15458,8 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   orders
   legal_pages
   locations
+  training_categories
+  training_videos
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -13293,6 +15494,8 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   orders
   legal_pages
   locations
+  training_categories
+  training_videos
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {
@@ -13420,6 +15623,46 @@ input mutationHome_FaqSectionInput {
 }
 
 input mutationHome_FaqSection_ItemsInput {
+  question: String!
+  answer: String!
+  id: String
+}
+
+input mutationTrainingInput {
+  title: String!
+  description: String!
+  formats: mutationTraining_FormatsInput!
+  videoInstructions: mutationTraining_VideoInstructionsInput!
+  faq: mutationTraining_FaqInput!
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationTraining_FormatsInput {
+  title: String!
+  subtitle: String!
+  cards: [mutationTraining_Formats_CardsInput]
+}
+
+input mutationTraining_Formats_CardsInput {
+  icon: Int
+  title: String!
+  description: String!
+  id: String
+}
+
+input mutationTraining_VideoInstructionsInput {
+  title: String!
+  subtitle: String!
+}
+
+input mutationTraining_FaqInput {
+  title: String!
+  subtitle: String!
+  items: [mutationTraining_Faq_ItemsInput]
+}
+
+input mutationTraining_Faq_ItemsInput {
   question: String!
   answer: String!
   id: String

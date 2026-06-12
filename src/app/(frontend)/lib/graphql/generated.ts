@@ -65,6 +65,14 @@ export type Query = {
   Locations?: Maybe<Locations>;
   countLocations?: Maybe<CountLocations>;
   docAccessLocation?: Maybe<LocationsDocAccess>;
+  TrainingCategory?: Maybe<TrainingCategory>;
+  TrainingCategories?: Maybe<TrainingCategories>;
+  countTrainingCategories?: Maybe<CountTrainingCategories>;
+  docAccessTrainingCategory?: Maybe<Training_CategoriesDocAccess>;
+  TrainingVideo?: Maybe<TrainingVideo>;
+  TrainingVideos?: Maybe<TrainingVideos>;
+  countTrainingVideos?: Maybe<CountTrainingVideos>;
+  docAccessTrainingVideo?: Maybe<Training_VideosDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -79,6 +87,8 @@ export type Query = {
   docAccessPayloadPreference?: Maybe<Payload_PreferencesDocAccess>;
   Home?: Maybe<Home>;
   docAccessHome?: Maybe<HomeDocAccess>;
+  Training?: Maybe<Training>;
+  docAccessTraining?: Maybe<TrainingDocAccess>;
   Access?: Maybe<Access>;
 };
 
@@ -371,6 +381,70 @@ export type QueryDocAccessLocationArgs = {
 };
 
 
+export type QueryTrainingCategoryArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryTrainingCategoriesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<TrainingCategory_Where>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountTrainingCategoriesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<TrainingCategory_Where>;
+};
+
+
+export type QueryDocAccessTrainingCategoryArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryTrainingVideoArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryTrainingVideosArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<TrainingVideo_Where>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountTrainingVideosArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<TrainingVideo_Where>;
+};
+
+
+export type QueryDocAccessTrainingVideoArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type QueryPayloadKvArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
@@ -468,6 +542,12 @@ export type QueryDocAccessPayloadPreferenceArgs = {
 
 
 export type QueryHomeArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryTrainingArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -6789,6 +6869,697 @@ export type LocationsDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type TrainingCategory = {
+  __typename?: 'TrainingCategory';
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  sortOrder?: Maybe<Scalars['Float']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TrainingCategories = {
+  __typename?: 'TrainingCategories';
+  docs: Array<TrainingCategory>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type TrainingCategory_Where = {
+  title?: InputMaybe<TrainingCategory_Title_Operator>;
+  sortOrder?: InputMaybe<TrainingCategory_SortOrder_Operator>;
+  updatedAt?: InputMaybe<TrainingCategory_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<TrainingCategory_CreatedAt_Operator>;
+  id?: InputMaybe<TrainingCategory_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<TrainingCategory_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<TrainingCategory_Where_Or>>>;
+};
+
+export type TrainingCategory_Title_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TrainingCategory_SortOrder_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingCategory_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingCategory_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingCategory_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingCategory_Where_And = {
+  title?: InputMaybe<TrainingCategory_Title_Operator>;
+  sortOrder?: InputMaybe<TrainingCategory_SortOrder_Operator>;
+  updatedAt?: InputMaybe<TrainingCategory_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<TrainingCategory_CreatedAt_Operator>;
+  id?: InputMaybe<TrainingCategory_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<TrainingCategory_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<TrainingCategory_Where_Or>>>;
+};
+
+export type TrainingCategory_Where_Or = {
+  title?: InputMaybe<TrainingCategory_Title_Operator>;
+  sortOrder?: InputMaybe<TrainingCategory_SortOrder_Operator>;
+  updatedAt?: InputMaybe<TrainingCategory_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<TrainingCategory_CreatedAt_Operator>;
+  id?: InputMaybe<TrainingCategory_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<TrainingCategory_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<TrainingCategory_Where_Or>>>;
+};
+
+export type CountTrainingCategories = {
+  __typename?: 'countTrainingCategories';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Training_CategoriesDocAccess = {
+  __typename?: 'training_categoriesDocAccess';
+  fields?: Maybe<TrainingCategoriesDocAccessFields>;
+  create?: Maybe<TrainingCategoriesCreateDocAccess>;
+  read?: Maybe<TrainingCategoriesReadDocAccess>;
+  update?: Maybe<TrainingCategoriesUpdateDocAccess>;
+  delete?: Maybe<TrainingCategoriesDeleteDocAccess>;
+};
+
+export type TrainingCategoriesDocAccessFields = {
+  __typename?: 'TrainingCategoriesDocAccessFields';
+  title?: Maybe<TrainingCategoriesDocAccessFields_Title>;
+  sortOrder?: Maybe<TrainingCategoriesDocAccessFields_SortOrder>;
+  updatedAt?: Maybe<TrainingCategoriesDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<TrainingCategoriesDocAccessFields_CreatedAt>;
+};
+
+export type TrainingCategoriesDocAccessFields_Title = {
+  __typename?: 'TrainingCategoriesDocAccessFields_title';
+  create?: Maybe<TrainingCategoriesDocAccessFields_Title_Create>;
+  read?: Maybe<TrainingCategoriesDocAccessFields_Title_Read>;
+  update?: Maybe<TrainingCategoriesDocAccessFields_Title_Update>;
+  delete?: Maybe<TrainingCategoriesDocAccessFields_Title_Delete>;
+};
+
+export type TrainingCategoriesDocAccessFields_Title_Create = {
+  __typename?: 'TrainingCategoriesDocAccessFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_Title_Read = {
+  __typename?: 'TrainingCategoriesDocAccessFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_Title_Update = {
+  __typename?: 'TrainingCategoriesDocAccessFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_Title_Delete = {
+  __typename?: 'TrainingCategoriesDocAccessFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_SortOrder = {
+  __typename?: 'TrainingCategoriesDocAccessFields_sortOrder';
+  create?: Maybe<TrainingCategoriesDocAccessFields_SortOrder_Create>;
+  read?: Maybe<TrainingCategoriesDocAccessFields_SortOrder_Read>;
+  update?: Maybe<TrainingCategoriesDocAccessFields_SortOrder_Update>;
+  delete?: Maybe<TrainingCategoriesDocAccessFields_SortOrder_Delete>;
+};
+
+export type TrainingCategoriesDocAccessFields_SortOrder_Create = {
+  __typename?: 'TrainingCategoriesDocAccessFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_SortOrder_Read = {
+  __typename?: 'TrainingCategoriesDocAccessFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_SortOrder_Update = {
+  __typename?: 'TrainingCategoriesDocAccessFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_SortOrder_Delete = {
+  __typename?: 'TrainingCategoriesDocAccessFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_UpdatedAt = {
+  __typename?: 'TrainingCategoriesDocAccessFields_updatedAt';
+  create?: Maybe<TrainingCategoriesDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<TrainingCategoriesDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<TrainingCategoriesDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<TrainingCategoriesDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type TrainingCategoriesDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'TrainingCategoriesDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'TrainingCategoriesDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'TrainingCategoriesDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'TrainingCategoriesDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_CreatedAt = {
+  __typename?: 'TrainingCategoriesDocAccessFields_createdAt';
+  create?: Maybe<TrainingCategoriesDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<TrainingCategoriesDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<TrainingCategoriesDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<TrainingCategoriesDocAccessFields_CreatedAt_Delete>;
+};
+
+export type TrainingCategoriesDocAccessFields_CreatedAt_Create = {
+  __typename?: 'TrainingCategoriesDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_CreatedAt_Read = {
+  __typename?: 'TrainingCategoriesDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_CreatedAt_Update = {
+  __typename?: 'TrainingCategoriesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'TrainingCategoriesDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesCreateDocAccess = {
+  __typename?: 'TrainingCategoriesCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingCategoriesReadDocAccess = {
+  __typename?: 'TrainingCategoriesReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingCategoriesUpdateDocAccess = {
+  __typename?: 'TrainingCategoriesUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingCategoriesDeleteDocAccess = {
+  __typename?: 'TrainingCategoriesDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideo = {
+  __typename?: 'TrainingVideo';
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  category?: Maybe<TrainingCategory>;
+  poster?: Maybe<Media>;
+  video?: Maybe<Media>;
+  sortOrder?: Maybe<Scalars['Float']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TrainingVideos = {
+  __typename?: 'TrainingVideos';
+  docs: Array<TrainingVideo>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type TrainingVideo_Where = {
+  title?: InputMaybe<TrainingVideo_Title_Operator>;
+  description?: InputMaybe<TrainingVideo_Description_Operator>;
+  category?: InputMaybe<TrainingVideo_Category_Operator>;
+  poster?: InputMaybe<TrainingVideo_Poster_Operator>;
+  video?: InputMaybe<TrainingVideo_Video_Operator>;
+  sortOrder?: InputMaybe<TrainingVideo_SortOrder_Operator>;
+  updatedAt?: InputMaybe<TrainingVideo_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<TrainingVideo_CreatedAt_Operator>;
+  id?: InputMaybe<TrainingVideo_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<TrainingVideo_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<TrainingVideo_Where_Or>>>;
+};
+
+export type TrainingVideo_Title_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TrainingVideo_Description_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TrainingVideo_Category_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type TrainingVideo_Poster_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type TrainingVideo_Video_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type TrainingVideo_SortOrder_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingVideo_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingVideo_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingVideo_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TrainingVideo_Where_And = {
+  title?: InputMaybe<TrainingVideo_Title_Operator>;
+  description?: InputMaybe<TrainingVideo_Description_Operator>;
+  category?: InputMaybe<TrainingVideo_Category_Operator>;
+  poster?: InputMaybe<TrainingVideo_Poster_Operator>;
+  video?: InputMaybe<TrainingVideo_Video_Operator>;
+  sortOrder?: InputMaybe<TrainingVideo_SortOrder_Operator>;
+  updatedAt?: InputMaybe<TrainingVideo_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<TrainingVideo_CreatedAt_Operator>;
+  id?: InputMaybe<TrainingVideo_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<TrainingVideo_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<TrainingVideo_Where_Or>>>;
+};
+
+export type TrainingVideo_Where_Or = {
+  title?: InputMaybe<TrainingVideo_Title_Operator>;
+  description?: InputMaybe<TrainingVideo_Description_Operator>;
+  category?: InputMaybe<TrainingVideo_Category_Operator>;
+  poster?: InputMaybe<TrainingVideo_Poster_Operator>;
+  video?: InputMaybe<TrainingVideo_Video_Operator>;
+  sortOrder?: InputMaybe<TrainingVideo_SortOrder_Operator>;
+  updatedAt?: InputMaybe<TrainingVideo_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<TrainingVideo_CreatedAt_Operator>;
+  id?: InputMaybe<TrainingVideo_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<TrainingVideo_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<TrainingVideo_Where_Or>>>;
+};
+
+export type CountTrainingVideos = {
+  __typename?: 'countTrainingVideos';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Training_VideosDocAccess = {
+  __typename?: 'training_videosDocAccess';
+  fields?: Maybe<TrainingVideosDocAccessFields>;
+  create?: Maybe<TrainingVideosCreateDocAccess>;
+  read?: Maybe<TrainingVideosReadDocAccess>;
+  update?: Maybe<TrainingVideosUpdateDocAccess>;
+  delete?: Maybe<TrainingVideosDeleteDocAccess>;
+};
+
+export type TrainingVideosDocAccessFields = {
+  __typename?: 'TrainingVideosDocAccessFields';
+  title?: Maybe<TrainingVideosDocAccessFields_Title>;
+  description?: Maybe<TrainingVideosDocAccessFields_Description>;
+  category?: Maybe<TrainingVideosDocAccessFields_Category>;
+  poster?: Maybe<TrainingVideosDocAccessFields_Poster>;
+  video?: Maybe<TrainingVideosDocAccessFields_Video>;
+  sortOrder?: Maybe<TrainingVideosDocAccessFields_SortOrder>;
+  updatedAt?: Maybe<TrainingVideosDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<TrainingVideosDocAccessFields_CreatedAt>;
+};
+
+export type TrainingVideosDocAccessFields_Title = {
+  __typename?: 'TrainingVideosDocAccessFields_title';
+  create?: Maybe<TrainingVideosDocAccessFields_Title_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_Title_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_Title_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_Title_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_Title_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Title_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Title_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Title_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Description = {
+  __typename?: 'TrainingVideosDocAccessFields_description';
+  create?: Maybe<TrainingVideosDocAccessFields_Description_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_Description_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_Description_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_Description_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_Description_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Description_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Description_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Description_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Category = {
+  __typename?: 'TrainingVideosDocAccessFields_category';
+  create?: Maybe<TrainingVideosDocAccessFields_Category_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_Category_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_Category_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_Category_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_Category_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_category_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Category_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_category_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Category_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_category_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Category_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_category_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Poster = {
+  __typename?: 'TrainingVideosDocAccessFields_poster';
+  create?: Maybe<TrainingVideosDocAccessFields_Poster_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_Poster_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_Poster_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_Poster_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_Poster_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_poster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Poster_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_poster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Poster_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_poster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Poster_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_poster_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Video = {
+  __typename?: 'TrainingVideosDocAccessFields_video';
+  create?: Maybe<TrainingVideosDocAccessFields_Video_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_Video_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_Video_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_Video_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_Video_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_video_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Video_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_video_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Video_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_video_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_Video_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_video_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_SortOrder = {
+  __typename?: 'TrainingVideosDocAccessFields_sortOrder';
+  create?: Maybe<TrainingVideosDocAccessFields_SortOrder_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_SortOrder_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_SortOrder_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_SortOrder_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_SortOrder_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_SortOrder_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_SortOrder_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_SortOrder_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_UpdatedAt = {
+  __typename?: 'TrainingVideosDocAccessFields_updatedAt';
+  create?: Maybe<TrainingVideosDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_CreatedAt = {
+  __typename?: 'TrainingVideosDocAccessFields_createdAt';
+  create?: Maybe<TrainingVideosDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<TrainingVideosDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<TrainingVideosDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<TrainingVideosDocAccessFields_CreatedAt_Delete>;
+};
+
+export type TrainingVideosDocAccessFields_CreatedAt_Create = {
+  __typename?: 'TrainingVideosDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_CreatedAt_Read = {
+  __typename?: 'TrainingVideosDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_CreatedAt_Update = {
+  __typename?: 'TrainingVideosDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'TrainingVideosDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosCreateDocAccess = {
+  __typename?: 'TrainingVideosCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideosReadDocAccess = {
+  __typename?: 'TrainingVideosReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideosUpdateDocAccess = {
+  __typename?: 'TrainingVideosUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideosDeleteDocAccess = {
+  __typename?: 'TrainingVideosDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -6989,10 +7760,12 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Articles = 'articles',
   Orders = 'orders',
   LegalPages = 'legal_pages',
-  Locations = 'locations'
+  Locations = 'locations',
+  TrainingCategories = 'training_categories',
+  TrainingVideos = 'training_videos'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -7046,7 +7819,9 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Articles = 'articles',
   Orders = 'orders',
   LegalPages = 'legal_pages',
-  Locations = 'locations'
+  Locations = 'locations',
+  TrainingCategories = 'training_categories',
+  TrainingVideos = 'training_videos'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -9204,6 +9979,738 @@ export type HomeUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Training = {
+  __typename?: 'Training';
+  title: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  formats?: Maybe<Training_Formats>;
+  videoInstructions?: Maybe<Training_VideoInstructions>;
+  faq?: Maybe<Training_Faq>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Training_Formats = {
+  __typename?: 'Training_Formats';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  cards?: Maybe<Array<Training_Formats_Cards>>;
+};
+
+export type Training_Formats_Cards = {
+  __typename?: 'Training_Formats_Cards';
+  icon?: Maybe<Media>;
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type Training_VideoInstructions = {
+  __typename?: 'Training_VideoInstructions';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+};
+
+export type Training_Faq = {
+  __typename?: 'Training_Faq';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Training_Faq_Items>>;
+};
+
+export type Training_Faq_Items = {
+  __typename?: 'Training_Faq_Items';
+  question?: Maybe<Scalars['String']['output']>;
+  answer?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type TrainingDocAccess = {
+  __typename?: 'trainingDocAccess';
+  fields?: Maybe<TrainingDocAccessFields>;
+  read?: Maybe<TrainingReadDocAccess>;
+  update?: Maybe<TrainingUpdateDocAccess>;
+};
+
+export type TrainingDocAccessFields = {
+  __typename?: 'TrainingDocAccessFields';
+  title?: Maybe<TrainingDocAccessFields_Title>;
+  description?: Maybe<TrainingDocAccessFields_Description>;
+  formats?: Maybe<TrainingDocAccessFields_Formats>;
+  videoInstructions?: Maybe<TrainingDocAccessFields_VideoInstructions>;
+  faq?: Maybe<TrainingDocAccessFields_Faq>;
+  updatedAt?: Maybe<TrainingDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<TrainingDocAccessFields_CreatedAt>;
+};
+
+export type TrainingDocAccessFields_Title = {
+  __typename?: 'TrainingDocAccessFields_title';
+  create?: Maybe<TrainingDocAccessFields_Title_Create>;
+  read?: Maybe<TrainingDocAccessFields_Title_Read>;
+  update?: Maybe<TrainingDocAccessFields_Title_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Title_Delete>;
+};
+
+export type TrainingDocAccessFields_Title_Create = {
+  __typename?: 'TrainingDocAccessFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Title_Read = {
+  __typename?: 'TrainingDocAccessFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Title_Update = {
+  __typename?: 'TrainingDocAccessFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Title_Delete = {
+  __typename?: 'TrainingDocAccessFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Description = {
+  __typename?: 'TrainingDocAccessFields_description';
+  create?: Maybe<TrainingDocAccessFields_Description_Create>;
+  read?: Maybe<TrainingDocAccessFields_Description_Read>;
+  update?: Maybe<TrainingDocAccessFields_Description_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Description_Delete>;
+};
+
+export type TrainingDocAccessFields_Description_Create = {
+  __typename?: 'TrainingDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Description_Read = {
+  __typename?: 'TrainingDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Description_Update = {
+  __typename?: 'TrainingDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Description_Delete = {
+  __typename?: 'TrainingDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats = {
+  __typename?: 'TrainingDocAccessFields_formats';
+  create?: Maybe<TrainingDocAccessFields_Formats_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Delete>;
+  fields?: Maybe<TrainingDocAccessFields_Formats_Fields>;
+};
+
+export type TrainingDocAccessFields_Formats_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Fields = {
+  __typename?: 'TrainingDocAccessFields_formats_Fields';
+  title?: Maybe<TrainingDocAccessFields_Formats_Title>;
+  subtitle?: Maybe<TrainingDocAccessFields_Formats_Subtitle>;
+  cards?: Maybe<TrainingDocAccessFields_Formats_Cards>;
+};
+
+export type TrainingDocAccessFields_Formats_Title = {
+  __typename?: 'TrainingDocAccessFields_formats_title';
+  create?: Maybe<TrainingDocAccessFields_Formats_Title_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Title_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Title_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Title_Delete>;
+};
+
+export type TrainingDocAccessFields_Formats_Title_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Title_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Title_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Title_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Subtitle = {
+  __typename?: 'TrainingDocAccessFields_formats_subtitle';
+  create?: Maybe<TrainingDocAccessFields_Formats_Subtitle_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Subtitle_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Subtitle_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Subtitle_Delete>;
+};
+
+export type TrainingDocAccessFields_Formats_Subtitle_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Subtitle_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Subtitle_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Subtitle_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards = {
+  __typename?: 'TrainingDocAccessFields_formats_cards';
+  create?: Maybe<TrainingDocAccessFields_Formats_Cards_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Cards_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Cards_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Cards_Delete>;
+  fields?: Maybe<TrainingDocAccessFields_Formats_Cards_Fields>;
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Fields = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_Fields';
+  icon?: Maybe<TrainingDocAccessFields_Formats_Cards_Icon>;
+  title?: Maybe<TrainingDocAccessFields_Formats_Cards_Title>;
+  description?: Maybe<TrainingDocAccessFields_Formats_Cards_Description>;
+  id?: Maybe<TrainingDocAccessFields_Formats_Cards_Id>;
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Icon = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_icon';
+  create?: Maybe<TrainingDocAccessFields_Formats_Cards_Icon_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Cards_Icon_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Cards_Icon_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Cards_Icon_Delete>;
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Icon_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Icon_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Icon_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Icon_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Title = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_title';
+  create?: Maybe<TrainingDocAccessFields_Formats_Cards_Title_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Cards_Title_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Cards_Title_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Cards_Title_Delete>;
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Title_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Title_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Title_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Title_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Description = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_description';
+  create?: Maybe<TrainingDocAccessFields_Formats_Cards_Description_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Cards_Description_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Cards_Description_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Cards_Description_Delete>;
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Description_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Description_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Description_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Description_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Id = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_id';
+  create?: Maybe<TrainingDocAccessFields_Formats_Cards_Id_Create>;
+  read?: Maybe<TrainingDocAccessFields_Formats_Cards_Id_Read>;
+  update?: Maybe<TrainingDocAccessFields_Formats_Cards_Id_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Formats_Cards_Id_Delete>;
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Id_Create = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Id_Read = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Id_Update = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Formats_Cards_Id_Delete = {
+  __typename?: 'TrainingDocAccessFields_formats_cards_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions';
+  create?: Maybe<TrainingDocAccessFields_VideoInstructions_Create>;
+  read?: Maybe<TrainingDocAccessFields_VideoInstructions_Read>;
+  update?: Maybe<TrainingDocAccessFields_VideoInstructions_Update>;
+  delete?: Maybe<TrainingDocAccessFields_VideoInstructions_Delete>;
+  fields?: Maybe<TrainingDocAccessFields_VideoInstructions_Fields>;
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Create = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Read = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Update = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Delete = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Fields = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_Fields';
+  title?: Maybe<TrainingDocAccessFields_VideoInstructions_Title>;
+  subtitle?: Maybe<TrainingDocAccessFields_VideoInstructions_Subtitle>;
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Title = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_title';
+  create?: Maybe<TrainingDocAccessFields_VideoInstructions_Title_Create>;
+  read?: Maybe<TrainingDocAccessFields_VideoInstructions_Title_Read>;
+  update?: Maybe<TrainingDocAccessFields_VideoInstructions_Title_Update>;
+  delete?: Maybe<TrainingDocAccessFields_VideoInstructions_Title_Delete>;
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Title_Create = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Title_Read = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Title_Update = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Title_Delete = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Subtitle = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_subtitle';
+  create?: Maybe<TrainingDocAccessFields_VideoInstructions_Subtitle_Create>;
+  read?: Maybe<TrainingDocAccessFields_VideoInstructions_Subtitle_Read>;
+  update?: Maybe<TrainingDocAccessFields_VideoInstructions_Subtitle_Update>;
+  delete?: Maybe<TrainingDocAccessFields_VideoInstructions_Subtitle_Delete>;
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Subtitle_Create = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Subtitle_Read = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Subtitle_Update = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_VideoInstructions_Subtitle_Delete = {
+  __typename?: 'TrainingDocAccessFields_videoInstructions_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq = {
+  __typename?: 'TrainingDocAccessFields_faq';
+  create?: Maybe<TrainingDocAccessFields_Faq_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Delete>;
+  fields?: Maybe<TrainingDocAccessFields_Faq_Fields>;
+};
+
+export type TrainingDocAccessFields_Faq_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Fields = {
+  __typename?: 'TrainingDocAccessFields_faq_Fields';
+  title?: Maybe<TrainingDocAccessFields_Faq_Title>;
+  subtitle?: Maybe<TrainingDocAccessFields_Faq_Subtitle>;
+  items?: Maybe<TrainingDocAccessFields_Faq_Items>;
+};
+
+export type TrainingDocAccessFields_Faq_Title = {
+  __typename?: 'TrainingDocAccessFields_faq_title';
+  create?: Maybe<TrainingDocAccessFields_Faq_Title_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Title_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Title_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Title_Delete>;
+};
+
+export type TrainingDocAccessFields_Faq_Title_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Title_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Title_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Title_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Subtitle = {
+  __typename?: 'TrainingDocAccessFields_faq_subtitle';
+  create?: Maybe<TrainingDocAccessFields_Faq_Subtitle_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Subtitle_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Subtitle_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Subtitle_Delete>;
+};
+
+export type TrainingDocAccessFields_Faq_Subtitle_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Subtitle_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Subtitle_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Subtitle_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items = {
+  __typename?: 'TrainingDocAccessFields_faq_items';
+  create?: Maybe<TrainingDocAccessFields_Faq_Items_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Items_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Items_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Items_Delete>;
+  fields?: Maybe<TrainingDocAccessFields_Faq_Items_Fields>;
+};
+
+export type TrainingDocAccessFields_Faq_Items_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_items_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_items_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_items_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Fields = {
+  __typename?: 'TrainingDocAccessFields_faq_items_Fields';
+  question?: Maybe<TrainingDocAccessFields_Faq_Items_Question>;
+  answer?: Maybe<TrainingDocAccessFields_Faq_Items_Answer>;
+  id?: Maybe<TrainingDocAccessFields_Faq_Items_Id>;
+};
+
+export type TrainingDocAccessFields_Faq_Items_Question = {
+  __typename?: 'TrainingDocAccessFields_faq_items_question';
+  create?: Maybe<TrainingDocAccessFields_Faq_Items_Question_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Items_Question_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Items_Question_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Items_Question_Delete>;
+};
+
+export type TrainingDocAccessFields_Faq_Items_Question_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_items_question_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Question_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_items_question_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Question_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_items_question_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Question_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_items_question_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Answer = {
+  __typename?: 'TrainingDocAccessFields_faq_items_answer';
+  create?: Maybe<TrainingDocAccessFields_Faq_Items_Answer_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Items_Answer_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Items_Answer_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Items_Answer_Delete>;
+};
+
+export type TrainingDocAccessFields_Faq_Items_Answer_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_items_answer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Answer_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_items_answer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Answer_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_items_answer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Answer_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_items_answer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Id = {
+  __typename?: 'TrainingDocAccessFields_faq_items_id';
+  create?: Maybe<TrainingDocAccessFields_Faq_Items_Id_Create>;
+  read?: Maybe<TrainingDocAccessFields_Faq_Items_Id_Read>;
+  update?: Maybe<TrainingDocAccessFields_Faq_Items_Id_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Faq_Items_Id_Delete>;
+};
+
+export type TrainingDocAccessFields_Faq_Items_Id_Create = {
+  __typename?: 'TrainingDocAccessFields_faq_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Id_Read = {
+  __typename?: 'TrainingDocAccessFields_faq_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Id_Update = {
+  __typename?: 'TrainingDocAccessFields_faq_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Faq_Items_Id_Delete = {
+  __typename?: 'TrainingDocAccessFields_faq_items_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_UpdatedAt = {
+  __typename?: 'TrainingDocAccessFields_updatedAt';
+  create?: Maybe<TrainingDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<TrainingDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<TrainingDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<TrainingDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type TrainingDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'TrainingDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'TrainingDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'TrainingDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'TrainingDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_CreatedAt = {
+  __typename?: 'TrainingDocAccessFields_createdAt';
+  create?: Maybe<TrainingDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<TrainingDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<TrainingDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<TrainingDocAccessFields_CreatedAt_Delete>;
+};
+
+export type TrainingDocAccessFields_CreatedAt_Create = {
+  __typename?: 'TrainingDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_CreatedAt_Read = {
+  __typename?: 'TrainingDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_CreatedAt_Update = {
+  __typename?: 'TrainingDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'TrainingDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingReadDocAccess = {
+  __typename?: 'TrainingReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingUpdateDocAccess = {
+  __typename?: 'TrainingUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Access = {
   __typename?: 'Access';
   canAccessAdmin: Scalars['Boolean']['output'];
@@ -9216,10 +10723,13 @@ export type Access = {
   orders?: Maybe<OrdersAccess>;
   legal_pages?: Maybe<Legal_PagesAccess>;
   locations?: Maybe<LocationsAccess>;
+  training_categories?: Maybe<Training_CategoriesAccess>;
+  training_videos?: Maybe<Training_VideosAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
   home?: Maybe<HomeAccess>;
+  training?: Maybe<TrainingAccess>;
 };
 
 export type UsersAccess = {
@@ -13281,6 +14791,428 @@ export type LocationsDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Training_CategoriesAccess = {
+  __typename?: 'training_categoriesAccess';
+  fields?: Maybe<TrainingCategoriesFields>;
+  create?: Maybe<TrainingCategoriesCreateAccess>;
+  read?: Maybe<TrainingCategoriesReadAccess>;
+  update?: Maybe<TrainingCategoriesUpdateAccess>;
+  delete?: Maybe<TrainingCategoriesDeleteAccess>;
+};
+
+export type TrainingCategoriesFields = {
+  __typename?: 'TrainingCategoriesFields';
+  title?: Maybe<TrainingCategoriesFields_Title>;
+  sortOrder?: Maybe<TrainingCategoriesFields_SortOrder>;
+  updatedAt?: Maybe<TrainingCategoriesFields_UpdatedAt>;
+  createdAt?: Maybe<TrainingCategoriesFields_CreatedAt>;
+};
+
+export type TrainingCategoriesFields_Title = {
+  __typename?: 'TrainingCategoriesFields_title';
+  create?: Maybe<TrainingCategoriesFields_Title_Create>;
+  read?: Maybe<TrainingCategoriesFields_Title_Read>;
+  update?: Maybe<TrainingCategoriesFields_Title_Update>;
+  delete?: Maybe<TrainingCategoriesFields_Title_Delete>;
+};
+
+export type TrainingCategoriesFields_Title_Create = {
+  __typename?: 'TrainingCategoriesFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_Title_Read = {
+  __typename?: 'TrainingCategoriesFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_Title_Update = {
+  __typename?: 'TrainingCategoriesFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_Title_Delete = {
+  __typename?: 'TrainingCategoriesFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_SortOrder = {
+  __typename?: 'TrainingCategoriesFields_sortOrder';
+  create?: Maybe<TrainingCategoriesFields_SortOrder_Create>;
+  read?: Maybe<TrainingCategoriesFields_SortOrder_Read>;
+  update?: Maybe<TrainingCategoriesFields_SortOrder_Update>;
+  delete?: Maybe<TrainingCategoriesFields_SortOrder_Delete>;
+};
+
+export type TrainingCategoriesFields_SortOrder_Create = {
+  __typename?: 'TrainingCategoriesFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_SortOrder_Read = {
+  __typename?: 'TrainingCategoriesFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_SortOrder_Update = {
+  __typename?: 'TrainingCategoriesFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_SortOrder_Delete = {
+  __typename?: 'TrainingCategoriesFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_UpdatedAt = {
+  __typename?: 'TrainingCategoriesFields_updatedAt';
+  create?: Maybe<TrainingCategoriesFields_UpdatedAt_Create>;
+  read?: Maybe<TrainingCategoriesFields_UpdatedAt_Read>;
+  update?: Maybe<TrainingCategoriesFields_UpdatedAt_Update>;
+  delete?: Maybe<TrainingCategoriesFields_UpdatedAt_Delete>;
+};
+
+export type TrainingCategoriesFields_UpdatedAt_Create = {
+  __typename?: 'TrainingCategoriesFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_UpdatedAt_Read = {
+  __typename?: 'TrainingCategoriesFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_UpdatedAt_Update = {
+  __typename?: 'TrainingCategoriesFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_UpdatedAt_Delete = {
+  __typename?: 'TrainingCategoriesFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_CreatedAt = {
+  __typename?: 'TrainingCategoriesFields_createdAt';
+  create?: Maybe<TrainingCategoriesFields_CreatedAt_Create>;
+  read?: Maybe<TrainingCategoriesFields_CreatedAt_Read>;
+  update?: Maybe<TrainingCategoriesFields_CreatedAt_Update>;
+  delete?: Maybe<TrainingCategoriesFields_CreatedAt_Delete>;
+};
+
+export type TrainingCategoriesFields_CreatedAt_Create = {
+  __typename?: 'TrainingCategoriesFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_CreatedAt_Read = {
+  __typename?: 'TrainingCategoriesFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_CreatedAt_Update = {
+  __typename?: 'TrainingCategoriesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesFields_CreatedAt_Delete = {
+  __typename?: 'TrainingCategoriesFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingCategoriesCreateAccess = {
+  __typename?: 'TrainingCategoriesCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingCategoriesReadAccess = {
+  __typename?: 'TrainingCategoriesReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingCategoriesUpdateAccess = {
+  __typename?: 'TrainingCategoriesUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingCategoriesDeleteAccess = {
+  __typename?: 'TrainingCategoriesDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Training_VideosAccess = {
+  __typename?: 'training_videosAccess';
+  fields?: Maybe<TrainingVideosFields>;
+  create?: Maybe<TrainingVideosCreateAccess>;
+  read?: Maybe<TrainingVideosReadAccess>;
+  update?: Maybe<TrainingVideosUpdateAccess>;
+  delete?: Maybe<TrainingVideosDeleteAccess>;
+};
+
+export type TrainingVideosFields = {
+  __typename?: 'TrainingVideosFields';
+  title?: Maybe<TrainingVideosFields_Title>;
+  description?: Maybe<TrainingVideosFields_Description>;
+  category?: Maybe<TrainingVideosFields_Category>;
+  poster?: Maybe<TrainingVideosFields_Poster>;
+  video?: Maybe<TrainingVideosFields_Video>;
+  sortOrder?: Maybe<TrainingVideosFields_SortOrder>;
+  updatedAt?: Maybe<TrainingVideosFields_UpdatedAt>;
+  createdAt?: Maybe<TrainingVideosFields_CreatedAt>;
+};
+
+export type TrainingVideosFields_Title = {
+  __typename?: 'TrainingVideosFields_title';
+  create?: Maybe<TrainingVideosFields_Title_Create>;
+  read?: Maybe<TrainingVideosFields_Title_Read>;
+  update?: Maybe<TrainingVideosFields_Title_Update>;
+  delete?: Maybe<TrainingVideosFields_Title_Delete>;
+};
+
+export type TrainingVideosFields_Title_Create = {
+  __typename?: 'TrainingVideosFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Title_Read = {
+  __typename?: 'TrainingVideosFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Title_Update = {
+  __typename?: 'TrainingVideosFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Title_Delete = {
+  __typename?: 'TrainingVideosFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Description = {
+  __typename?: 'TrainingVideosFields_description';
+  create?: Maybe<TrainingVideosFields_Description_Create>;
+  read?: Maybe<TrainingVideosFields_Description_Read>;
+  update?: Maybe<TrainingVideosFields_Description_Update>;
+  delete?: Maybe<TrainingVideosFields_Description_Delete>;
+};
+
+export type TrainingVideosFields_Description_Create = {
+  __typename?: 'TrainingVideosFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Description_Read = {
+  __typename?: 'TrainingVideosFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Description_Update = {
+  __typename?: 'TrainingVideosFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Description_Delete = {
+  __typename?: 'TrainingVideosFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Category = {
+  __typename?: 'TrainingVideosFields_category';
+  create?: Maybe<TrainingVideosFields_Category_Create>;
+  read?: Maybe<TrainingVideosFields_Category_Read>;
+  update?: Maybe<TrainingVideosFields_Category_Update>;
+  delete?: Maybe<TrainingVideosFields_Category_Delete>;
+};
+
+export type TrainingVideosFields_Category_Create = {
+  __typename?: 'TrainingVideosFields_category_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Category_Read = {
+  __typename?: 'TrainingVideosFields_category_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Category_Update = {
+  __typename?: 'TrainingVideosFields_category_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Category_Delete = {
+  __typename?: 'TrainingVideosFields_category_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Poster = {
+  __typename?: 'TrainingVideosFields_poster';
+  create?: Maybe<TrainingVideosFields_Poster_Create>;
+  read?: Maybe<TrainingVideosFields_Poster_Read>;
+  update?: Maybe<TrainingVideosFields_Poster_Update>;
+  delete?: Maybe<TrainingVideosFields_Poster_Delete>;
+};
+
+export type TrainingVideosFields_Poster_Create = {
+  __typename?: 'TrainingVideosFields_poster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Poster_Read = {
+  __typename?: 'TrainingVideosFields_poster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Poster_Update = {
+  __typename?: 'TrainingVideosFields_poster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Poster_Delete = {
+  __typename?: 'TrainingVideosFields_poster_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Video = {
+  __typename?: 'TrainingVideosFields_video';
+  create?: Maybe<TrainingVideosFields_Video_Create>;
+  read?: Maybe<TrainingVideosFields_Video_Read>;
+  update?: Maybe<TrainingVideosFields_Video_Update>;
+  delete?: Maybe<TrainingVideosFields_Video_Delete>;
+};
+
+export type TrainingVideosFields_Video_Create = {
+  __typename?: 'TrainingVideosFields_video_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Video_Read = {
+  __typename?: 'TrainingVideosFields_video_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Video_Update = {
+  __typename?: 'TrainingVideosFields_video_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_Video_Delete = {
+  __typename?: 'TrainingVideosFields_video_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_SortOrder = {
+  __typename?: 'TrainingVideosFields_sortOrder';
+  create?: Maybe<TrainingVideosFields_SortOrder_Create>;
+  read?: Maybe<TrainingVideosFields_SortOrder_Read>;
+  update?: Maybe<TrainingVideosFields_SortOrder_Update>;
+  delete?: Maybe<TrainingVideosFields_SortOrder_Delete>;
+};
+
+export type TrainingVideosFields_SortOrder_Create = {
+  __typename?: 'TrainingVideosFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_SortOrder_Read = {
+  __typename?: 'TrainingVideosFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_SortOrder_Update = {
+  __typename?: 'TrainingVideosFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_SortOrder_Delete = {
+  __typename?: 'TrainingVideosFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_UpdatedAt = {
+  __typename?: 'TrainingVideosFields_updatedAt';
+  create?: Maybe<TrainingVideosFields_UpdatedAt_Create>;
+  read?: Maybe<TrainingVideosFields_UpdatedAt_Read>;
+  update?: Maybe<TrainingVideosFields_UpdatedAt_Update>;
+  delete?: Maybe<TrainingVideosFields_UpdatedAt_Delete>;
+};
+
+export type TrainingVideosFields_UpdatedAt_Create = {
+  __typename?: 'TrainingVideosFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_UpdatedAt_Read = {
+  __typename?: 'TrainingVideosFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_UpdatedAt_Update = {
+  __typename?: 'TrainingVideosFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_UpdatedAt_Delete = {
+  __typename?: 'TrainingVideosFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_CreatedAt = {
+  __typename?: 'TrainingVideosFields_createdAt';
+  create?: Maybe<TrainingVideosFields_CreatedAt_Create>;
+  read?: Maybe<TrainingVideosFields_CreatedAt_Read>;
+  update?: Maybe<TrainingVideosFields_CreatedAt_Update>;
+  delete?: Maybe<TrainingVideosFields_CreatedAt_Delete>;
+};
+
+export type TrainingVideosFields_CreatedAt_Create = {
+  __typename?: 'TrainingVideosFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_CreatedAt_Read = {
+  __typename?: 'TrainingVideosFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_CreatedAt_Update = {
+  __typename?: 'TrainingVideosFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosFields_CreatedAt_Delete = {
+  __typename?: 'TrainingVideosFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingVideosCreateAccess = {
+  __typename?: 'TrainingVideosCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideosReadAccess = {
+  __typename?: 'TrainingVideosReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideosUpdateAccess = {
+  __typename?: 'TrainingVideosUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingVideosDeleteAccess = {
+  __typename?: 'TrainingVideosDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -15215,6 +17147,692 @@ export type HomeUpdateAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type TrainingAccess = {
+  __typename?: 'trainingAccess';
+  fields?: Maybe<TrainingFields>;
+  read?: Maybe<TrainingReadAccess>;
+  update?: Maybe<TrainingUpdateAccess>;
+};
+
+export type TrainingFields = {
+  __typename?: 'TrainingFields';
+  title?: Maybe<TrainingFields_Title>;
+  description?: Maybe<TrainingFields_Description>;
+  formats?: Maybe<TrainingFields_Formats>;
+  videoInstructions?: Maybe<TrainingFields_VideoInstructions>;
+  faq?: Maybe<TrainingFields_Faq>;
+  updatedAt?: Maybe<TrainingFields_UpdatedAt>;
+  createdAt?: Maybe<TrainingFields_CreatedAt>;
+};
+
+export type TrainingFields_Title = {
+  __typename?: 'TrainingFields_title';
+  create?: Maybe<TrainingFields_Title_Create>;
+  read?: Maybe<TrainingFields_Title_Read>;
+  update?: Maybe<TrainingFields_Title_Update>;
+  delete?: Maybe<TrainingFields_Title_Delete>;
+};
+
+export type TrainingFields_Title_Create = {
+  __typename?: 'TrainingFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Title_Read = {
+  __typename?: 'TrainingFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Title_Update = {
+  __typename?: 'TrainingFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Title_Delete = {
+  __typename?: 'TrainingFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Description = {
+  __typename?: 'TrainingFields_description';
+  create?: Maybe<TrainingFields_Description_Create>;
+  read?: Maybe<TrainingFields_Description_Read>;
+  update?: Maybe<TrainingFields_Description_Update>;
+  delete?: Maybe<TrainingFields_Description_Delete>;
+};
+
+export type TrainingFields_Description_Create = {
+  __typename?: 'TrainingFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Description_Read = {
+  __typename?: 'TrainingFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Description_Update = {
+  __typename?: 'TrainingFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Description_Delete = {
+  __typename?: 'TrainingFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats = {
+  __typename?: 'TrainingFields_formats';
+  create?: Maybe<TrainingFields_Formats_Create>;
+  read?: Maybe<TrainingFields_Formats_Read>;
+  update?: Maybe<TrainingFields_Formats_Update>;
+  delete?: Maybe<TrainingFields_Formats_Delete>;
+  fields?: Maybe<TrainingFields_Formats_Fields>;
+};
+
+export type TrainingFields_Formats_Create = {
+  __typename?: 'TrainingFields_formats_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Read = {
+  __typename?: 'TrainingFields_formats_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Update = {
+  __typename?: 'TrainingFields_formats_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Delete = {
+  __typename?: 'TrainingFields_formats_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Fields = {
+  __typename?: 'TrainingFields_formats_Fields';
+  title?: Maybe<TrainingFields_Formats_Title>;
+  subtitle?: Maybe<TrainingFields_Formats_Subtitle>;
+  cards?: Maybe<TrainingFields_Formats_Cards>;
+};
+
+export type TrainingFields_Formats_Title = {
+  __typename?: 'TrainingFields_formats_title';
+  create?: Maybe<TrainingFields_Formats_Title_Create>;
+  read?: Maybe<TrainingFields_Formats_Title_Read>;
+  update?: Maybe<TrainingFields_Formats_Title_Update>;
+  delete?: Maybe<TrainingFields_Formats_Title_Delete>;
+};
+
+export type TrainingFields_Formats_Title_Create = {
+  __typename?: 'TrainingFields_formats_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Title_Read = {
+  __typename?: 'TrainingFields_formats_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Title_Update = {
+  __typename?: 'TrainingFields_formats_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Title_Delete = {
+  __typename?: 'TrainingFields_formats_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Subtitle = {
+  __typename?: 'TrainingFields_formats_subtitle';
+  create?: Maybe<TrainingFields_Formats_Subtitle_Create>;
+  read?: Maybe<TrainingFields_Formats_Subtitle_Read>;
+  update?: Maybe<TrainingFields_Formats_Subtitle_Update>;
+  delete?: Maybe<TrainingFields_Formats_Subtitle_Delete>;
+};
+
+export type TrainingFields_Formats_Subtitle_Create = {
+  __typename?: 'TrainingFields_formats_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Subtitle_Read = {
+  __typename?: 'TrainingFields_formats_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Subtitle_Update = {
+  __typename?: 'TrainingFields_formats_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Subtitle_Delete = {
+  __typename?: 'TrainingFields_formats_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards = {
+  __typename?: 'TrainingFields_formats_cards';
+  create?: Maybe<TrainingFields_Formats_Cards_Create>;
+  read?: Maybe<TrainingFields_Formats_Cards_Read>;
+  update?: Maybe<TrainingFields_Formats_Cards_Update>;
+  delete?: Maybe<TrainingFields_Formats_Cards_Delete>;
+  fields?: Maybe<TrainingFields_Formats_Cards_Fields>;
+};
+
+export type TrainingFields_Formats_Cards_Create = {
+  __typename?: 'TrainingFields_formats_cards_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Read = {
+  __typename?: 'TrainingFields_formats_cards_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Update = {
+  __typename?: 'TrainingFields_formats_cards_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Delete = {
+  __typename?: 'TrainingFields_formats_cards_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Fields = {
+  __typename?: 'TrainingFields_formats_cards_Fields';
+  icon?: Maybe<TrainingFields_Formats_Cards_Icon>;
+  title?: Maybe<TrainingFields_Formats_Cards_Title>;
+  description?: Maybe<TrainingFields_Formats_Cards_Description>;
+  id?: Maybe<TrainingFields_Formats_Cards_Id>;
+};
+
+export type TrainingFields_Formats_Cards_Icon = {
+  __typename?: 'TrainingFields_formats_cards_icon';
+  create?: Maybe<TrainingFields_Formats_Cards_Icon_Create>;
+  read?: Maybe<TrainingFields_Formats_Cards_Icon_Read>;
+  update?: Maybe<TrainingFields_Formats_Cards_Icon_Update>;
+  delete?: Maybe<TrainingFields_Formats_Cards_Icon_Delete>;
+};
+
+export type TrainingFields_Formats_Cards_Icon_Create = {
+  __typename?: 'TrainingFields_formats_cards_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Icon_Read = {
+  __typename?: 'TrainingFields_formats_cards_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Icon_Update = {
+  __typename?: 'TrainingFields_formats_cards_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Icon_Delete = {
+  __typename?: 'TrainingFields_formats_cards_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Title = {
+  __typename?: 'TrainingFields_formats_cards_title';
+  create?: Maybe<TrainingFields_Formats_Cards_Title_Create>;
+  read?: Maybe<TrainingFields_Formats_Cards_Title_Read>;
+  update?: Maybe<TrainingFields_Formats_Cards_Title_Update>;
+  delete?: Maybe<TrainingFields_Formats_Cards_Title_Delete>;
+};
+
+export type TrainingFields_Formats_Cards_Title_Create = {
+  __typename?: 'TrainingFields_formats_cards_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Title_Read = {
+  __typename?: 'TrainingFields_formats_cards_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Title_Update = {
+  __typename?: 'TrainingFields_formats_cards_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Title_Delete = {
+  __typename?: 'TrainingFields_formats_cards_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Description = {
+  __typename?: 'TrainingFields_formats_cards_description';
+  create?: Maybe<TrainingFields_Formats_Cards_Description_Create>;
+  read?: Maybe<TrainingFields_Formats_Cards_Description_Read>;
+  update?: Maybe<TrainingFields_Formats_Cards_Description_Update>;
+  delete?: Maybe<TrainingFields_Formats_Cards_Description_Delete>;
+};
+
+export type TrainingFields_Formats_Cards_Description_Create = {
+  __typename?: 'TrainingFields_formats_cards_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Description_Read = {
+  __typename?: 'TrainingFields_formats_cards_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Description_Update = {
+  __typename?: 'TrainingFields_formats_cards_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Description_Delete = {
+  __typename?: 'TrainingFields_formats_cards_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Id = {
+  __typename?: 'TrainingFields_formats_cards_id';
+  create?: Maybe<TrainingFields_Formats_Cards_Id_Create>;
+  read?: Maybe<TrainingFields_Formats_Cards_Id_Read>;
+  update?: Maybe<TrainingFields_Formats_Cards_Id_Update>;
+  delete?: Maybe<TrainingFields_Formats_Cards_Id_Delete>;
+};
+
+export type TrainingFields_Formats_Cards_Id_Create = {
+  __typename?: 'TrainingFields_formats_cards_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Id_Read = {
+  __typename?: 'TrainingFields_formats_cards_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Id_Update = {
+  __typename?: 'TrainingFields_formats_cards_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Formats_Cards_Id_Delete = {
+  __typename?: 'TrainingFields_formats_cards_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions = {
+  __typename?: 'TrainingFields_videoInstructions';
+  create?: Maybe<TrainingFields_VideoInstructions_Create>;
+  read?: Maybe<TrainingFields_VideoInstructions_Read>;
+  update?: Maybe<TrainingFields_VideoInstructions_Update>;
+  delete?: Maybe<TrainingFields_VideoInstructions_Delete>;
+  fields?: Maybe<TrainingFields_VideoInstructions_Fields>;
+};
+
+export type TrainingFields_VideoInstructions_Create = {
+  __typename?: 'TrainingFields_videoInstructions_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Read = {
+  __typename?: 'TrainingFields_videoInstructions_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Update = {
+  __typename?: 'TrainingFields_videoInstructions_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Delete = {
+  __typename?: 'TrainingFields_videoInstructions_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Fields = {
+  __typename?: 'TrainingFields_videoInstructions_Fields';
+  title?: Maybe<TrainingFields_VideoInstructions_Title>;
+  subtitle?: Maybe<TrainingFields_VideoInstructions_Subtitle>;
+};
+
+export type TrainingFields_VideoInstructions_Title = {
+  __typename?: 'TrainingFields_videoInstructions_title';
+  create?: Maybe<TrainingFields_VideoInstructions_Title_Create>;
+  read?: Maybe<TrainingFields_VideoInstructions_Title_Read>;
+  update?: Maybe<TrainingFields_VideoInstructions_Title_Update>;
+  delete?: Maybe<TrainingFields_VideoInstructions_Title_Delete>;
+};
+
+export type TrainingFields_VideoInstructions_Title_Create = {
+  __typename?: 'TrainingFields_videoInstructions_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Title_Read = {
+  __typename?: 'TrainingFields_videoInstructions_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Title_Update = {
+  __typename?: 'TrainingFields_videoInstructions_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Title_Delete = {
+  __typename?: 'TrainingFields_videoInstructions_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Subtitle = {
+  __typename?: 'TrainingFields_videoInstructions_subtitle';
+  create?: Maybe<TrainingFields_VideoInstructions_Subtitle_Create>;
+  read?: Maybe<TrainingFields_VideoInstructions_Subtitle_Read>;
+  update?: Maybe<TrainingFields_VideoInstructions_Subtitle_Update>;
+  delete?: Maybe<TrainingFields_VideoInstructions_Subtitle_Delete>;
+};
+
+export type TrainingFields_VideoInstructions_Subtitle_Create = {
+  __typename?: 'TrainingFields_videoInstructions_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Subtitle_Read = {
+  __typename?: 'TrainingFields_videoInstructions_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Subtitle_Update = {
+  __typename?: 'TrainingFields_videoInstructions_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_VideoInstructions_Subtitle_Delete = {
+  __typename?: 'TrainingFields_videoInstructions_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq = {
+  __typename?: 'TrainingFields_faq';
+  create?: Maybe<TrainingFields_Faq_Create>;
+  read?: Maybe<TrainingFields_Faq_Read>;
+  update?: Maybe<TrainingFields_Faq_Update>;
+  delete?: Maybe<TrainingFields_Faq_Delete>;
+  fields?: Maybe<TrainingFields_Faq_Fields>;
+};
+
+export type TrainingFields_Faq_Create = {
+  __typename?: 'TrainingFields_faq_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Read = {
+  __typename?: 'TrainingFields_faq_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Update = {
+  __typename?: 'TrainingFields_faq_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Delete = {
+  __typename?: 'TrainingFields_faq_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Fields = {
+  __typename?: 'TrainingFields_faq_Fields';
+  title?: Maybe<TrainingFields_Faq_Title>;
+  subtitle?: Maybe<TrainingFields_Faq_Subtitle>;
+  items?: Maybe<TrainingFields_Faq_Items>;
+};
+
+export type TrainingFields_Faq_Title = {
+  __typename?: 'TrainingFields_faq_title';
+  create?: Maybe<TrainingFields_Faq_Title_Create>;
+  read?: Maybe<TrainingFields_Faq_Title_Read>;
+  update?: Maybe<TrainingFields_Faq_Title_Update>;
+  delete?: Maybe<TrainingFields_Faq_Title_Delete>;
+};
+
+export type TrainingFields_Faq_Title_Create = {
+  __typename?: 'TrainingFields_faq_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Title_Read = {
+  __typename?: 'TrainingFields_faq_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Title_Update = {
+  __typename?: 'TrainingFields_faq_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Title_Delete = {
+  __typename?: 'TrainingFields_faq_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Subtitle = {
+  __typename?: 'TrainingFields_faq_subtitle';
+  create?: Maybe<TrainingFields_Faq_Subtitle_Create>;
+  read?: Maybe<TrainingFields_Faq_Subtitle_Read>;
+  update?: Maybe<TrainingFields_Faq_Subtitle_Update>;
+  delete?: Maybe<TrainingFields_Faq_Subtitle_Delete>;
+};
+
+export type TrainingFields_Faq_Subtitle_Create = {
+  __typename?: 'TrainingFields_faq_subtitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Subtitle_Read = {
+  __typename?: 'TrainingFields_faq_subtitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Subtitle_Update = {
+  __typename?: 'TrainingFields_faq_subtitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Subtitle_Delete = {
+  __typename?: 'TrainingFields_faq_subtitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items = {
+  __typename?: 'TrainingFields_faq_items';
+  create?: Maybe<TrainingFields_Faq_Items_Create>;
+  read?: Maybe<TrainingFields_Faq_Items_Read>;
+  update?: Maybe<TrainingFields_Faq_Items_Update>;
+  delete?: Maybe<TrainingFields_Faq_Items_Delete>;
+  fields?: Maybe<TrainingFields_Faq_Items_Fields>;
+};
+
+export type TrainingFields_Faq_Items_Create = {
+  __typename?: 'TrainingFields_faq_items_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Read = {
+  __typename?: 'TrainingFields_faq_items_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Update = {
+  __typename?: 'TrainingFields_faq_items_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Delete = {
+  __typename?: 'TrainingFields_faq_items_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Fields = {
+  __typename?: 'TrainingFields_faq_items_Fields';
+  question?: Maybe<TrainingFields_Faq_Items_Question>;
+  answer?: Maybe<TrainingFields_Faq_Items_Answer>;
+  id?: Maybe<TrainingFields_Faq_Items_Id>;
+};
+
+export type TrainingFields_Faq_Items_Question = {
+  __typename?: 'TrainingFields_faq_items_question';
+  create?: Maybe<TrainingFields_Faq_Items_Question_Create>;
+  read?: Maybe<TrainingFields_Faq_Items_Question_Read>;
+  update?: Maybe<TrainingFields_Faq_Items_Question_Update>;
+  delete?: Maybe<TrainingFields_Faq_Items_Question_Delete>;
+};
+
+export type TrainingFields_Faq_Items_Question_Create = {
+  __typename?: 'TrainingFields_faq_items_question_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Question_Read = {
+  __typename?: 'TrainingFields_faq_items_question_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Question_Update = {
+  __typename?: 'TrainingFields_faq_items_question_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Question_Delete = {
+  __typename?: 'TrainingFields_faq_items_question_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Answer = {
+  __typename?: 'TrainingFields_faq_items_answer';
+  create?: Maybe<TrainingFields_Faq_Items_Answer_Create>;
+  read?: Maybe<TrainingFields_Faq_Items_Answer_Read>;
+  update?: Maybe<TrainingFields_Faq_Items_Answer_Update>;
+  delete?: Maybe<TrainingFields_Faq_Items_Answer_Delete>;
+};
+
+export type TrainingFields_Faq_Items_Answer_Create = {
+  __typename?: 'TrainingFields_faq_items_answer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Answer_Read = {
+  __typename?: 'TrainingFields_faq_items_answer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Answer_Update = {
+  __typename?: 'TrainingFields_faq_items_answer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Answer_Delete = {
+  __typename?: 'TrainingFields_faq_items_answer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Id = {
+  __typename?: 'TrainingFields_faq_items_id';
+  create?: Maybe<TrainingFields_Faq_Items_Id_Create>;
+  read?: Maybe<TrainingFields_Faq_Items_Id_Read>;
+  update?: Maybe<TrainingFields_Faq_Items_Id_Update>;
+  delete?: Maybe<TrainingFields_Faq_Items_Id_Delete>;
+};
+
+export type TrainingFields_Faq_Items_Id_Create = {
+  __typename?: 'TrainingFields_faq_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Id_Read = {
+  __typename?: 'TrainingFields_faq_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Id_Update = {
+  __typename?: 'TrainingFields_faq_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Faq_Items_Id_Delete = {
+  __typename?: 'TrainingFields_faq_items_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_UpdatedAt = {
+  __typename?: 'TrainingFields_updatedAt';
+  create?: Maybe<TrainingFields_UpdatedAt_Create>;
+  read?: Maybe<TrainingFields_UpdatedAt_Read>;
+  update?: Maybe<TrainingFields_UpdatedAt_Update>;
+  delete?: Maybe<TrainingFields_UpdatedAt_Delete>;
+};
+
+export type TrainingFields_UpdatedAt_Create = {
+  __typename?: 'TrainingFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_UpdatedAt_Read = {
+  __typename?: 'TrainingFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_UpdatedAt_Update = {
+  __typename?: 'TrainingFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_UpdatedAt_Delete = {
+  __typename?: 'TrainingFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_CreatedAt = {
+  __typename?: 'TrainingFields_createdAt';
+  create?: Maybe<TrainingFields_CreatedAt_Create>;
+  read?: Maybe<TrainingFields_CreatedAt_Read>;
+  update?: Maybe<TrainingFields_CreatedAt_Update>;
+  delete?: Maybe<TrainingFields_CreatedAt_Delete>;
+};
+
+export type TrainingFields_CreatedAt_Create = {
+  __typename?: 'TrainingFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_CreatedAt_Read = {
+  __typename?: 'TrainingFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_CreatedAt_Update = {
+  __typename?: 'TrainingFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_CreatedAt_Delete = {
+  __typename?: 'TrainingFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingReadAccess = {
+  __typename?: 'TrainingReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TrainingUpdateAccess = {
+  __typename?: 'TrainingUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
@@ -15259,6 +17877,14 @@ export type Mutation = {
   updateLocation?: Maybe<Location>;
   deleteLocation?: Maybe<Location>;
   duplicateLocation?: Maybe<Location>;
+  createTrainingCategory?: Maybe<TrainingCategory>;
+  updateTrainingCategory?: Maybe<TrainingCategory>;
+  deleteTrainingCategory?: Maybe<TrainingCategory>;
+  duplicateTrainingCategory?: Maybe<TrainingCategory>;
+  createTrainingVideo?: Maybe<TrainingVideo>;
+  updateTrainingVideo?: Maybe<TrainingVideo>;
+  deleteTrainingVideo?: Maybe<TrainingVideo>;
+  duplicateTrainingVideo?: Maybe<TrainingVideo>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -15272,6 +17898,7 @@ export type Mutation = {
   deletePayloadPreference?: Maybe<PayloadPreference>;
   duplicatePayloadPreference?: Maybe<PayloadPreference>;
   updateHome?: Maybe<Home>;
+  updateTraining?: Maybe<Training>;
 };
 
 
@@ -15544,6 +18171,60 @@ export type MutationDuplicateLocationArgs = {
 };
 
 
+export type MutationCreateTrainingCategoryArgs = {
+  data: MutationTrainingCategoryInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateTrainingCategoryArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationTrainingCategoryUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteTrainingCategoryArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateTrainingCategoryArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationTrainingCategoryInput;
+};
+
+
+export type MutationCreateTrainingVideoArgs = {
+  data: MutationTrainingVideoInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateTrainingVideoArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationTrainingVideoUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteTrainingVideoArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateTrainingVideoArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationTrainingVideoInput;
+};
+
+
 export type MutationCreatePayloadKvArgs = {
   data: MutationPayloadKvInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15627,6 +18308,12 @@ export type MutationDuplicatePayloadPreferenceArgs = {
 
 export type MutationUpdateHomeArgs = {
   data: MutationHomeInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateTrainingArgs = {
+  data: MutationTrainingInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -16131,6 +18818,42 @@ export type MutationLocationUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationTrainingCategoryInput = {
+  title: Scalars['String']['input'];
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTrainingCategoryUpdateInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTrainingVideoInput = {
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  category?: InputMaybe<Scalars['Int']['input']>;
+  poster?: InputMaybe<Scalars['Int']['input']>;
+  video?: InputMaybe<Scalars['Int']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTrainingVideoUpdateInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['Int']['input']>;
+  poster?: InputMaybe<Scalars['Int']['input']>;
+  video?: InputMaybe<Scalars['Int']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -16163,7 +18886,9 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Articles = 'articles',
   Orders = 'orders',
   LegalPages = 'legal_pages',
-  Locations = 'locations'
+  Locations = 'locations',
+  TrainingCategories = 'training_categories',
+  TrainingVideos = 'training_videos'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -16197,7 +18922,9 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Articles = 'articles',
   Orders = 'orders',
   LegalPages = 'legal_pages',
-  Locations = 'locations'
+  Locations = 'locations',
+  TrainingCategories = 'training_categories',
+  TrainingVideos = 'training_videos'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
@@ -16325,6 +19052,46 @@ export type MutationHome_FaqSectionInput = {
 };
 
 export type MutationHome_FaqSection_ItemsInput = {
+  question: Scalars['String']['input'];
+  answer: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTrainingInput = {
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  formats: MutationTraining_FormatsInput;
+  videoInstructions: MutationTraining_VideoInstructionsInput;
+  faq: MutationTraining_FaqInput;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTraining_FormatsInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  cards?: InputMaybe<Array<InputMaybe<MutationTraining_Formats_CardsInput>>>;
+};
+
+export type MutationTraining_Formats_CardsInput = {
+  icon?: InputMaybe<Scalars['Int']['input']>;
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTraining_VideoInstructionsInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+};
+
+export type MutationTraining_FaqInput = {
+  title: Scalars['String']['input'];
+  subtitle: Scalars['String']['input'];
+  items?: InputMaybe<Array<InputMaybe<MutationTraining_Faq_ItemsInput>>>;
+};
+
+export type MutationTraining_Faq_ItemsInput = {
   question: Scalars['String']['input'];
   answer: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
