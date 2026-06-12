@@ -4,6 +4,8 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { getOrderPaymentData } from '../../orderPaymentData'
+
 type PartsItem = {
   id?: string
   price?: number
@@ -37,16 +39,21 @@ export async function POST(request: NextRequest) {
   }
 
   const body = (await request.json()) as PartsRequestBody
-  const amount = normalizeMoney(body.amount)
   const orderId = normalizeReference(body.orderId)
   const partsCount = normalizePartsCount(body.partsCount)
   const phone = normalizePhone(body.financialPhone)
 
-  if (!amount || !orderId || !phone) {
+  if (!orderId || !phone) {
     return NextResponse.json(
       { error: 'Для оплати частинами введіть фінансовий номер у форматі +380XXXXXXXXX.' },
       { status: 400 },
     )
+  }
+
+  const orderData = await getOrderPaymentData(orderId, 'monobank-parts')
+
+  if (!orderData) {
+    return NextResponse.json({ error: 'Order not found or payment method is invalid' }, { status: 404 })
   }
 
   const origin = getRequestOrigin(request)
@@ -57,19 +64,19 @@ export async function POST(request: NextRequest) {
         type: 'payment_installments',
       },
     ],
-    client_email: body.customerEmail || undefined,
-    client_name: body.customerName || undefined,
+    client_email: orderData.customerEmail || undefined,
+    client_name: orderData.customerName || undefined,
     client_phone: phone,
     invoice: {
       date: formatInvoiceDate(new Date()),
       number: orderId,
       source: 'INTERNET',
     },
-    products: normalizeProducts(body.items),
+    products: normalizeProducts(orderData.items),
     redirect_url: `${origin}/checkout/success?orderId=${encodeURIComponent(orderId)}`,
     result_callback: `${origin}/api/monobank/parts/webhook`,
     store_order_id: orderId,
-    total_sum: amount,
+    total_sum: orderData.total,
   }
   const jsonPayload = JSON.stringify(payload)
   const response = await fetch(createUrl, {

@@ -1,9 +1,19 @@
+import { createVerify } from 'crypto'
+
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
+const MONOBANK_PUBLIC_KEY_URL = 'https://api.monobank.ua/api/merchant/pubkey'
+
 export async function POST(request: NextRequest) {
-  const payload = await request.json().catch(() => null)
+  const rawBody = await request.text()
+
+  if (!(await hasValidMonobankSignature(rawBody, request.headers.get('x-sign')))) {
+    return NextResponse.json({ error: 'Invalid webhook signature' }, { status: 401 })
+  }
+
+  const payload = parseJson(rawBody)
   const reference = getStringValue(payload, 'reference')
   const status = getStringValue(payload, 'status')
 
@@ -22,6 +32,39 @@ export async function POST(request: NextRequest) {
     reference: getStringValue(payload, 'reference'),
     status: getStringValue(payload, 'status'),
   })
+}
+
+async function hasValidMonobankSignature(rawBody: string, signature: string | null) {
+  const token = process.env.MONOBANK_ACQUIRING_TOKEN
+
+  if (!token || !signature) {
+    return false
+  }
+
+  const response = await fetch(MONOBANK_PUBLIC_KEY_URL, {
+    headers: {
+      'X-Token': token,
+    },
+  })
+  const payload = (await response.json().catch(() => null)) as { key?: unknown } | null
+
+  if (!response.ok || typeof payload?.key !== 'string') {
+    return false
+  }
+
+  const verifier = createVerify('SHA256')
+  verifier.update(rawBody)
+  verifier.end()
+
+  return verifier.verify(Buffer.from(payload.key, 'base64'), Buffer.from(signature, 'base64'))
+}
+
+function parseJson(value: string) {
+  try {
+    return JSON.parse(value) as unknown
+  } catch {
+    return null
+  }
 }
 
 async function updateOrderPaymentStatus(orderNumber: string, monobank: Record<string, unknown>) {

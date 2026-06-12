@@ -2,6 +2,8 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { getOrderPaymentData } from '../../orderPaymentData'
+
 type PaymentItem = {
   id?: string
   price?: number
@@ -32,24 +34,29 @@ export async function POST(request: NextRequest) {
   }
 
   const body = (await request.json()) as PaymentRequestBody
-  const amount = normalizeAmount(body.amount)
   const orderId = normalizeReference(body.orderId)
 
-  if (!amount || !orderId) {
+  if (!orderId) {
     return NextResponse.json({ error: 'Invalid payment payload' }, { status: 400 })
+  }
+
+  const orderData = await getOrderPaymentData(orderId, 'card-online')
+
+  if (!orderData) {
+    return NextResponse.json({ error: 'Order not found or payment method is invalid' }, { status: 404 })
   }
 
   const origin = getRequestOrigin(request)
   const response = await fetch(MONOBANK_ACQUIRING_URL, {
     body: JSON.stringify({
-      amount,
+      amount: normalizeAmount(orderData.total),
       ccy: 980,
       merchantPaymInfo: {
         reference: orderId,
         destination: `Оплата замовлення №${orderId}`,
         comment: `Оплата замовлення №${orderId}`,
-        customerEmails: body.customerEmail ? [body.customerEmail] : [],
-        basketOrder: normalizeBasket(body.items),
+        customerEmails: orderData.customerEmail ? [orderData.customerEmail] : [],
+        basketOrder: normalizeBasket(orderData.items),
       },
       redirectUrl: `${origin}/checkout/success?orderId=${encodeURIComponent(orderId)}`,
       webHookUrl: `${origin}/api/monobank/payment/webhook`,

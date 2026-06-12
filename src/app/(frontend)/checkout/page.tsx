@@ -114,8 +114,6 @@ export default function CheckoutPage() {
       title: item.product.title,
     }))
     const orderId = createCheckoutOrderId()
-    const customerName = `${formState.firstName} ${formState.lastName}`.trim()
-
     try {
       const createdOrder = await createCheckoutOrder({
         comment: formState.comment,
@@ -136,9 +134,6 @@ export default function CheckoutPage() {
 
       if (formState.paymentMethod === 'card-online') {
         const response = await createMonobankPayment('/api/monobank/payment/create', {
-          amount: cartTotal,
-          customerEmail: formState.email,
-          items: paymentItems,
           orderId: orderNumber,
         })
         const redirectUrl = getPaymentRedirectUrl(response)
@@ -160,11 +155,7 @@ export default function CheckoutPage() {
 
       if (formState.paymentMethod === 'monobank-parts') {
         const response = await createMonobankPayment('/api/monobank/parts/create', {
-          amount: cartTotal,
-          customerEmail: formState.email,
-          customerName,
           financialPhone: getFinancialPhone(formState.financialPhone, formState.phone),
-          items: paymentItems,
           orderId: orderNumber,
           partsCount,
         })
@@ -356,7 +347,7 @@ export default function CheckoutPage() {
                         </button>
                       ) : null
                     }
-                    description="Оформлення через менеджера після підтвердження замовлення"
+                    description="Оформлення онлайн через monobank"
                     title="Оплата частинами Monobank"
                     onClick={() =>
                       setFormState((current) => ({

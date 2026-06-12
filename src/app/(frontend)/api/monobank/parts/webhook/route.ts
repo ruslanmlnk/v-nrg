@@ -1,9 +1,17 @@
+import { createHmac, timingSafeEqual } from 'crypto'
+
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  const payload = await request.json().catch(() => null)
+  const rawBody = await request.text()
+
+  if (!hasValidSignature(rawBody, request.headers.get('signature'))) {
+    return NextResponse.json({ error: 'Invalid webhook signature' }, { status: 401 })
+  }
+
+  const payload = parseJson(rawBody)
   const orderId = getStringValue(payload, 'store_order_id') || getStringValue(payload, 'order_id')
   const status = getStringValue(payload, 'status')
 
@@ -21,6 +29,27 @@ export async function POST(request: NextRequest) {
     orderId: getStringValue(payload, 'store_order_id') || getStringValue(payload, 'order_id'),
     status: getStringValue(payload, 'status'),
   })
+}
+
+function hasValidSignature(rawBody: string, signature: string | null) {
+  const secret = process.env.MONOBANK_PARTS_SECRET
+
+  if (!secret || !signature) {
+    return false
+  }
+
+  const expected = Buffer.from(createHmac('sha256', secret).update(rawBody).digest('base64'))
+  const received = Buffer.from(signature)
+
+  return expected.length === received.length && timingSafeEqual(expected, received)
+}
+
+function parseJson(value: string) {
+  try {
+    return JSON.parse(value) as unknown
+  } catch {
+    return null
+  }
 }
 
 async function updateOrderPaymentStatus(orderNumber: string, monobank: Record<string, unknown>) {

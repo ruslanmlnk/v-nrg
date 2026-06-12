@@ -1,6 +1,7 @@
 import * as migration_20260420_084925_products_cms_fields from './20260420_084925_products_cms_fields'
 import * as migration_20260603_000000_users_dealer_discount from './20260603_000000_users_dealer_discount'
 import * as migration_20260603_010000_orders_collection from './20260603_010000_orders_collection'
+import * as migration_20260605_010000_legal_pages from './20260605_010000_legal_pages'
 
 export const migrations = [
   {
@@ -17,5 +18,10 @@ export const migrations = [
     up: migration_20260603_010000_orders_collection.up,
     down: migration_20260603_010000_orders_collection.down,
     name: '20260603_010000_orders_collection',
+  },
+  {
+    up: migration_20260605_010000_legal_pages.up,
+    down: migration_20260605_010000_legal_pages.down,
+    name: '20260605_010000_legal_pages',
   },
 ]

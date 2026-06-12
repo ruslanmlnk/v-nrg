@@ -29,6 +29,10 @@ type Query {
   Orders(draft: Boolean, where: Order_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Orders
   countOrders(draft: Boolean, trash: Boolean, where: Order_where): countOrders
   docAccessOrder(id: Int!): ordersDocAccess
+  LegalPage(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): LegalPage
+  LegalPages(draft: Boolean, where: LegalPage_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): LegalPages
+  countLegalPages(draft: Boolean, trash: Boolean, where: LegalPage_where): countLegalPages
+  docAccessLegalPage(id: Int!): legal_pagesDocAccess
   PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
@@ -4714,6 +4718,310 @@ type OrdersDeleteDocAccess {
   where: JSONObject
 }
 
+type LegalPage {
+  id: Int!
+  title: String!
+  generateSlug: Boolean
+  slug: String!
+  contentMarkdown: String!
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type LegalPages {
+  docs: [LegalPage!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input LegalPage_where {
+  title: LegalPage_title_operator
+  generateSlug: LegalPage_generateSlug_operator
+  slug: LegalPage_slug_operator
+  contentMarkdown: LegalPage_contentMarkdown_operator
+  updatedAt: LegalPage_updatedAt_operator
+  createdAt: LegalPage_createdAt_operator
+  id: LegalPage_id_operator
+  AND: [LegalPage_where_and]
+  OR: [LegalPage_where_or]
+}
+
+input LegalPage_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input LegalPage_generateSlug_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input LegalPage_slug_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input LegalPage_contentMarkdown_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input LegalPage_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input LegalPage_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input LegalPage_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input LegalPage_where_and {
+  title: LegalPage_title_operator
+  generateSlug: LegalPage_generateSlug_operator
+  slug: LegalPage_slug_operator
+  contentMarkdown: LegalPage_contentMarkdown_operator
+  updatedAt: LegalPage_updatedAt_operator
+  createdAt: LegalPage_createdAt_operator
+  id: LegalPage_id_operator
+  AND: [LegalPage_where_and]
+  OR: [LegalPage_where_or]
+}
+
+input LegalPage_where_or {
+  title: LegalPage_title_operator
+  generateSlug: LegalPage_generateSlug_operator
+  slug: LegalPage_slug_operator
+  contentMarkdown: LegalPage_contentMarkdown_operator
+  updatedAt: LegalPage_updatedAt_operator
+  createdAt: LegalPage_createdAt_operator
+  id: LegalPage_id_operator
+  AND: [LegalPage_where_and]
+  OR: [LegalPage_where_or]
+}
+
+type countLegalPages {
+  totalDocs: Int
+}
+
+type legal_pagesDocAccess {
+  fields: LegalPagesDocAccessFields
+  create: LegalPagesCreateDocAccess
+  read: LegalPagesReadDocAccess
+  update: LegalPagesUpdateDocAccess
+  delete: LegalPagesDeleteDocAccess
+}
+
+type LegalPagesDocAccessFields {
+  title: LegalPagesDocAccessFields_title
+  generateSlug: LegalPagesDocAccessFields_generateSlug
+  slug: LegalPagesDocAccessFields_slug
+  contentMarkdown: LegalPagesDocAccessFields_contentMarkdown
+  updatedAt: LegalPagesDocAccessFields_updatedAt
+  createdAt: LegalPagesDocAccessFields_createdAt
+}
+
+type LegalPagesDocAccessFields_title {
+  create: LegalPagesDocAccessFields_title_Create
+  read: LegalPagesDocAccessFields_title_Read
+  update: LegalPagesDocAccessFields_title_Update
+  delete: LegalPagesDocAccessFields_title_Delete
+}
+
+type LegalPagesDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_generateSlug {
+  create: LegalPagesDocAccessFields_generateSlug_Create
+  read: LegalPagesDocAccessFields_generateSlug_Read
+  update: LegalPagesDocAccessFields_generateSlug_Update
+  delete: LegalPagesDocAccessFields_generateSlug_Delete
+}
+
+type LegalPagesDocAccessFields_generateSlug_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_generateSlug_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_generateSlug_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_generateSlug_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_slug {
+  create: LegalPagesDocAccessFields_slug_Create
+  read: LegalPagesDocAccessFields_slug_Read
+  update: LegalPagesDocAccessFields_slug_Update
+  delete: LegalPagesDocAccessFields_slug_Delete
+}
+
+type LegalPagesDocAccessFields_slug_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_slug_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_slug_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_slug_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_contentMarkdown {
+  create: LegalPagesDocAccessFields_contentMarkdown_Create
+  read: LegalPagesDocAccessFields_contentMarkdown_Read
+  update: LegalPagesDocAccessFields_contentMarkdown_Update
+  delete: LegalPagesDocAccessFields_contentMarkdown_Delete
+}
+
+type LegalPagesDocAccessFields_contentMarkdown_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_contentMarkdown_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_contentMarkdown_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_contentMarkdown_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_updatedAt {
+  create: LegalPagesDocAccessFields_updatedAt_Create
+  read: LegalPagesDocAccessFields_updatedAt_Read
+  update: LegalPagesDocAccessFields_updatedAt_Update
+  delete: LegalPagesDocAccessFields_updatedAt_Delete
+}
+
+type LegalPagesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_createdAt {
+  create: LegalPagesDocAccessFields_createdAt_Create
+  read: LegalPagesDocAccessFields_createdAt_Read
+  update: LegalPagesDocAccessFields_createdAt_Update
+  delete: LegalPagesDocAccessFields_createdAt_Delete
+}
+
+type LegalPagesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LegalPagesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LegalPagesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LegalPagesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -4892,9 +5200,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   category
   articles
   orders
+  legal_pages
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -4945,6 +5254,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   category
   articles
   orders
+  legal_pages
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -5469,6 +5779,7 @@ type Access {
   category: categoryAccess
   articles: articlesAccess
   orders: ordersAccess
+  legal_pages: legal_pagesAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -8293,6 +8604,181 @@ type OrdersDeleteAccess {
   where: JSONObject
 }
 
+type legal_pagesAccess {
+  fields: LegalPagesFields
+  create: LegalPagesCreateAccess
+  read: LegalPagesReadAccess
+  update: LegalPagesUpdateAccess
+  delete: LegalPagesDeleteAccess
+}
+
+type LegalPagesFields {
+  title: LegalPagesFields_title
+  generateSlug: LegalPagesFields_generateSlug
+  slug: LegalPagesFields_slug
+  contentMarkdown: LegalPagesFields_contentMarkdown
+  updatedAt: LegalPagesFields_updatedAt
+  createdAt: LegalPagesFields_createdAt
+}
+
+type LegalPagesFields_title {
+  create: LegalPagesFields_title_Create
+  read: LegalPagesFields_title_Read
+  update: LegalPagesFields_title_Update
+  delete: LegalPagesFields_title_Delete
+}
+
+type LegalPagesFields_title_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_title_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_title_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_title_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_generateSlug {
+  create: LegalPagesFields_generateSlug_Create
+  read: LegalPagesFields_generateSlug_Read
+  update: LegalPagesFields_generateSlug_Update
+  delete: LegalPagesFields_generateSlug_Delete
+}
+
+type LegalPagesFields_generateSlug_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_generateSlug_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_generateSlug_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_generateSlug_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_slug {
+  create: LegalPagesFields_slug_Create
+  read: LegalPagesFields_slug_Read
+  update: LegalPagesFields_slug_Update
+  delete: LegalPagesFields_slug_Delete
+}
+
+type LegalPagesFields_slug_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_slug_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_slug_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_slug_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_contentMarkdown {
+  create: LegalPagesFields_contentMarkdown_Create
+  read: LegalPagesFields_contentMarkdown_Read
+  update: LegalPagesFields_contentMarkdown_Update
+  delete: LegalPagesFields_contentMarkdown_Delete
+}
+
+type LegalPagesFields_contentMarkdown_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_contentMarkdown_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_contentMarkdown_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_contentMarkdown_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_updatedAt {
+  create: LegalPagesFields_updatedAt_Create
+  read: LegalPagesFields_updatedAt_Read
+  update: LegalPagesFields_updatedAt_Update
+  delete: LegalPagesFields_updatedAt_Delete
+}
+
+type LegalPagesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_createdAt {
+  create: LegalPagesFields_createdAt_Create
+  read: LegalPagesFields_createdAt_Read
+  update: LegalPagesFields_createdAt_Update
+  delete: LegalPagesFields_createdAt_Delete
+}
+
+type LegalPagesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LegalPagesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LegalPagesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LegalPagesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -8709,6 +9195,10 @@ type Mutation {
   updateOrder(id: Int!, autosave: Boolean, data: mutationOrderUpdateInput!, draft: Boolean, trash: Boolean): Order
   deleteOrder(id: Int!, trash: Boolean): Order
   duplicateOrder(id: Int!, data: mutationOrderInput!): Order
+  createLegalPage(data: mutationLegalPageInput!, draft: Boolean): LegalPage
+  updateLegalPage(id: Int!, autosave: Boolean, data: mutationLegalPageUpdateInput!, draft: Boolean, trash: Boolean): LegalPage
+  deleteLegalPage(id: Int!, trash: Boolean): LegalPage
+  duplicateLegalPage(id: Int!, data: mutationLegalPageInput!): LegalPage
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -9168,6 +9658,24 @@ enum OrderUpdate_paymentMethod_MutationInput {
   cash_on_delivery
 }
 
+input mutationLegalPageInput {
+  title: String!
+  generateSlug: Boolean
+  slug: String!
+  contentMarkdown: String!
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationLegalPageUpdateInput {
+  title: String
+  generateSlug: Boolean
+  slug: String
+  contentMarkdown: String
+  updatedAt: String
+  createdAt: String
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -9199,6 +9707,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   category
   articles
   orders
+  legal_pages
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -9231,6 +9740,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   category
   articles
   orders
+  legal_pages
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

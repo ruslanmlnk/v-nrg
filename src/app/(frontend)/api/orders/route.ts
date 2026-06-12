@@ -41,19 +41,20 @@ export async function POST(request: NextRequest) {
   const phone = normalizeText(body.phone)
   const customerEmail = normalizeText(body.customerEmail)
   const paymentMethod = normalizePaymentMethod(body.paymentMethod)
-  const total = normalizeMoney(body.total)
-  const items = normalizeItems(body.items)
 
   if (!orderNumber || !firstName || !lastName || !phone || !customerEmail || !paymentMethod) {
     return NextResponse.json({ error: 'Missing required order fields' }, { status: 400 })
   }
 
-  if (!total || items.length === 0) {
-    return NextResponse.json({ error: 'Order total or items are invalid' }, { status: 400 })
-  }
-
   const payload = await getPayload({ config: configPromise })
   const user = await getRequestUser(payload, request)
+  const items = await getServerPricedItems(payload, body.items, getDealerDiscountPercent(user))
+  const total = normalizeMoney(items.reduce((sum, item) => sum + item.total, 0))
+
+  if (!total || items.length === 0) {
+    return NextResponse.json({ error: 'Order items are invalid' }, { status: 400 })
+  }
+
   const order = await payload.create({
     collection: 'orders',
     data: {
@@ -103,27 +104,69 @@ function getInitialPaymentStatus(paymentMethod: (typeof paymentMethods)[number])
   return 'processing'
 }
 
-function normalizeItems(items: CheckoutOrderItem[] | undefined) {
-  return (Array.isArray(items) ? items : [])
-    .map((item) => {
-      const productId = normalizeText(item.id)
-      const title = normalizeText(item.title)
-      const price = normalizeMoney(item.price)
-      const quantity = normalizeQuantity(item.quantity)
+async function getServerPricedItems(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  requestedItems: CheckoutOrderItem[] | undefined,
+  discountPercent: number,
+) {
+  const requestedQuantities = new Map<string, number>()
 
-      if (!productId || !title || !price || !quantity) {
-        return null
-      }
+  for (const item of Array.isArray(requestedItems) ? requestedItems : []) {
+    const productId = normalizeIdentifier(item.id)
+    const quantity = normalizeQuantity(item.quantity)
 
-      return {
+    if (productId && quantity) {
+      requestedQuantities.set(productId, (requestedQuantities.get(productId) ?? 0) + quantity)
+    }
+  }
+
+  const productIds = [...requestedQuantities.keys()]
+
+  if (productIds.length === 0) {
+    return []
+  }
+
+  const { docs } = await payload.find({
+    collection: 'products',
+    depth: 0,
+    limit: productIds.length,
+    where: {
+      id: {
+        in: productIds,
+      },
+    },
+  })
+  const discountMultiplier = (100 - discountPercent) / 100
+
+  return docs.flatMap((product) => {
+    const productId = String(product.id)
+    const quantity = requestedQuantities.get(productId)
+    const basePrice = normalizeMoney(product.price)
+
+    if (!quantity || !basePrice) {
+      return []
+    }
+
+    const price = normalizeMoney(basePrice * discountMultiplier)
+
+    return [
+      {
         productId,
         price,
         quantity,
-        title,
-        total: price * quantity,
-      }
-    })
-    .filter((item): item is NonNullable<typeof item> => Boolean(item))
+        title: product.title,
+        total: normalizeMoney(price * quantity),
+      },
+    ]
+  })
+}
+
+function getDealerDiscountPercent(user: User | null) {
+  if (user?.role !== 'dealer') {
+    return 0
+  }
+
+  return Math.min(100, Math.max(0, user.dealerDiscountPercent ?? 0))
 }
 
 function normalizeJson(value: unknown): JsonValue {
@@ -163,6 +206,14 @@ function normalizePaymentMethod(value: unknown) {
 
 function normalizeText(value: unknown) {
   return typeof value === 'string' ? value.trim() : ''
+}
+
+function normalizeIdentifier(value: unknown) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return String(value)
+  }
+
+  return normalizeText(value)
 }
 
 function normalizeMoney(value: unknown) {

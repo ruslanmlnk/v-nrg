@@ -20,17 +20,17 @@ const catalogLinks = [
 
 const infoLinks = [
   { href: '/about', label: 'Про V-NRG' },
-  { href: '/info?topic=delivery', label: 'Доставка та оплата' },
-  { href: '/info?topic=warranty', label: 'Гарантія та сервіс' },
+  { href: '/deliverypayment', label: 'Доставка та оплата' },
+  { href: '/warranty', label: 'Гарантія та сервіс' },
   { href: '/training', label: 'Навчання' },
   { href: '/review', label: 'Відгуки' },
   { href: '/blog', label: 'Блог' },
 ]
 
 const legalLinks = [
-  { href: '/info?topic=privacy', label: 'Політика конфіденційності' },
-  { href: '/info?topic=terms', label: 'Умови користування' },
-  { href: '/info?topic=offer', label: 'Публічна оферта' },
+  { href: '/privacy', label: 'Політика конфіденційності' },
+  { href: '/terms', label: 'Умови користування' },
+  { href: '/offer', label: 'Публічна оферта' },
 ]
 
 export default function SiteFooter() {
