@@ -32,7 +32,7 @@ const serverFunction: ServerFunctionClient = async function (args) {
 const Layout = ({ children }: Args) => (
   <RootLayout
     config={config}
-    htmlProps={{ className: googleSans.className }}
+    htmlProps={{ className: googleSans.className, lang: 'uk' }}
     importMap={importMap}
     serverFunction={serverFunction}
   >

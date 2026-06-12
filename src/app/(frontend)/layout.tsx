@@ -23,7 +23,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
   const { initialCategories, initialProducts, initialUser } = await getLayoutData()
 
   return (
-    <html lang="en">
+    <html lang="uk">
       <body className={googleSans.className}>
         <CommerceProvider
           initialCategories={initialCategories}
