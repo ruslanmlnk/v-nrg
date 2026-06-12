@@ -27,8 +27,8 @@ export function AboutCertificatesSection({
       <div className="mx-auto flex max-w-[1288px] flex-col items-center gap-12 px-6">
         <SectionHeading align="center" eyebrow={subtitle} title={title} titleClassName="max-w-[700px] text-white" />
         <div ref={sliderRef} className="-mx-6 flex w-[calc(100%+48px)] snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:w-auto md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
-          {certificates.map((certificate) => (
-            <div key={certificate.url} className="flex w-[149px] shrink-0 snap-center justify-center rounded-[14px] bg-white p-[22px] shadow-[0_24px_64px_rgba(0,0,0,0.08)] md:w-auto md:shrink md:rounded-[20px] md:p-8">
+          {certificates.map((certificate, index) => (
+            <div key={`${certificate.url}-${index}`} className="flex w-[149px] shrink-0 snap-center justify-center rounded-[14px] bg-white p-[22px] shadow-[0_24px_64px_rgba(0,0,0,0.08)] md:w-auto md:shrink md:rounded-[20px] md:p-8">
               <Image src={certificate.url} alt={certificate.alt} width={150} height={210} className="h-[146px] w-[104px] rounded-[3.5px] border border-[#D5E0E8] object-cover md:h-[210px] md:w-[150px] md:rounded-[5px]" />
             </div>
           ))}

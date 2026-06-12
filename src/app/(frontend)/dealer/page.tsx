@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
+import IconAsset from '../components/ui/IconAsset'
 import facebookIconAsset from '@public/icon/generated/components-site-footer-facebook.svg'
 import instagramIconAsset from '@public/icon/generated/components-site-footer-instagram.svg'
 import telegramIconAsset from '@public/icon/generated/components-site-footer-telegram.svg'
@@ -82,9 +82,9 @@ export default function DealerPage() {
                     key={item.label}
                     href={item.href}
                     aria-label={item.label}
-                    className="flex h-11 w-11 items-center justify-center rounded-full bg-[#4FACF5] transition-transform duration-300 hover:scale-105"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-[#4FACF5] text-white transition-transform duration-300 hover:scale-105"
                   >
-                    <Image src={item.icon} alt="" aria-hidden="true" className="h-5 w-5" />
+                    <IconAsset src={item.icon} height={20} width={20} />
                   </Link>
                 ))}
               </div>

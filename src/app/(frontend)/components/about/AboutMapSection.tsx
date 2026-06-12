@@ -189,11 +189,20 @@ export default function AboutMapSection() {
   }, [activeSalon, isMapReady, isOpen, normalizedQuery, visibleSalons])
 
   if (!isOpen) {
-    return <AboutMapPreview onClick={() => setIsOpen(true)} />
+    return (
+      <>
+        <MobileLocationsList locations={salons} />
+        <div className="hidden md:block">
+          <AboutMapPreview onClick={() => setIsOpen(true)} />
+        </div>
+      </>
+    )
   }
 
   return (
-    <div className="overflow-hidden rounded-[20px] bg-[#F5F8F9] lg:h-[740px]">
+    <>
+      <MobileLocationsList locations={salons} />
+      <div className="hidden overflow-hidden rounded-[20px] bg-[#F5F8F9] md:block lg:h-[740px]">
       <div className="flex h-full flex-col lg:flex-row">
         <div className="flex shrink-0 flex-col gap-4 bg-[#F5F8F9] p-8 lg:w-[449px]">
           {visibleSalons.length ? (
@@ -283,7 +292,166 @@ export default function AboutMapSection() {
           </div>
         </div>
       </div>
+      </div>
+    </>
+  )
+}
+
+function MobileLocationsList({ locations }: { locations: Salon[] }) {
+  const [country, setCountry] = useState('Україна')
+  const [city, setCity] = useState('Київ')
+  const [activeSlide, setActiveSlide] = useState(0)
+  const sliderRef = useRef<HTMLDivElement | null>(null)
+  const displayedLocations = locations
+  const slides = chunkLocations(displayedLocations, 3)
+
+  const scrollToSlide = (slideIndex: number) => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    slider.scrollTo({ behavior: 'smooth', left: slider.clientWidth * slideIndex })
+  }
+
+  return (
+    <div className="flex flex-col gap-6 md:hidden">
+      <div className="flex flex-col gap-4">
+        <MobileLocationFilter
+          ariaLabel="Оберіть країну"
+          onChange={setCountry}
+          options={['Україна']}
+          value={country}
+        />
+        <MobileLocationFilter
+          ariaLabel="Оберіть місто"
+          onChange={setCity}
+          options={['Київ']}
+          value={city}
+        />
+      </div>
+
+      <div
+        ref={sliderRef}
+        className="-mx-6 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        onScroll={(event) => {
+          const slider = event.currentTarget
+          setActiveSlide(Math.round(slider.scrollLeft / slider.clientWidth))
+        }}
+      >
+        {slides.map((slide, slideIndex) => (
+          <div
+            className="flex w-full shrink-0 snap-start flex-col gap-4 px-6"
+            key={`locations-slide-${slideIndex}`}
+          >
+            {slide.map((salon) => (
+              <article className="flex flex-col gap-6 rounded-[20px] bg-white p-8" key={salon.id}>
+                <div className="flex items-center gap-4">
+                  <Image
+                    src={salon.image}
+                    alt={salon.name}
+                    className="h-[86px] w-[86px] shrink-0 rounded-[20px] object-cover"
+                  />
+                  <div className="min-w-0">
+                    <h3 className="text-[18px] font-medium leading-[145%] text-[#22354A]">
+                      {salon.name}
+                    </h3>
+                    <p className="mt-1 text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
+                      Київ, Україна
+                    </p>
+                    <p className="text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
+                      {mobileLocationAddresses[salon.id] ?? salon.address}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-4">
+                  <p className="max-w-[145px] text-[16px] font-bold leading-[145%] text-[#22354A]">
+                    Контакти для зв&apos;язку:
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <CircleLink ariaLabel="Instagram салону">
+                      <IconAsset src={instagramIconAsset} width={20} height={20} />
+                    </CircleLink>
+                    <CircleLink ariaLabel="Телефон салону">
+                      <IconAsset src={phoneIconAsset} width={20} height={20} />
+                    </CircleLink>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center gap-2">
+        {slides.map((_, index) => (
+          <button
+            aria-label={`Перейти до слайда ${index + 1}`}
+            className={`h-2 w-2 rounded-full ${index === activeSlide ? 'bg-[#4FACF5]' : 'bg-[#D5E0E8]'}`}
+            key={`locations-dot-${index}`}
+            onClick={() => scrollToSlide(index)}
+            type="button"
+          />
+        ))}
+      </div>
     </div>
+  )
+}
+
+function chunkLocations(locations: Salon[], chunkSize: number) {
+  return Array.from({ length: Math.ceil(locations.length / chunkSize) }, (_, index) =>
+    locations.slice(index * chunkSize, index * chunkSize + chunkSize),
+  )
+}
+
+const mobileLocationAddresses: Record<string, string> = {
+  'salon-1': 'вул. Хрещатик, 25',
+  'salon-2': 'вул. Ярославська, 11',
+  'salon-3': 'бул. Лесі Українки, 7Б',
+}
+
+function MobileLocationFilter({
+  ariaLabel,
+  onChange,
+  options,
+  value,
+}: {
+  ariaLabel: string
+  onChange: (value: string) => void
+  options: string[]
+  value: string
+}) {
+  return (
+    <label className="relative block">
+      <span className="sr-only">{ariaLabel}</span>
+      <select
+        aria-label={ariaLabel}
+        className="w-full appearance-none rounded-[20px] bg-white px-6 py-4 text-[16px] font-medium leading-[145%] text-[#22354A] outline-none"
+        onChange={(event) => onChange(event.target.value)}
+        value={value}
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute right-6 top-1/2 -translate-y-1/2"
+        fill="none"
+        height="18"
+        viewBox="0 0 18 18"
+        width="18"
+      >
+        <path
+          d="m2 5.5 7 7 7-7"
+          stroke="#22354A"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        />
+      </svg>
+    </label>
   )
 }
 
@@ -369,7 +537,7 @@ function CircleLink({
   return (
     <span
       aria-label={ariaLabel}
-      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5]"
+      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5] text-white"
     >
       {children}
     </span>

@@ -215,7 +215,7 @@ function ShareButton({ children, label }: { children: React.ReactNode; label: st
     <button
       type="button"
       aria-label={label}
-      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5]"
+      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5] text-white"
     >
       {children}
     </button>

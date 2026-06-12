@@ -16,7 +16,7 @@ export function CircleAction({
     <Link
       href={href}
       aria-label={label}
-      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5]"
+      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5] text-white"
     >
       {children}
     </Link>

@@ -188,7 +188,7 @@ function CircleAction({
     <Link
       href={href}
       aria-label={label}
-      className={`flex items-center justify-center rounded-full bg-[#4FACF5] ${dimensions}`}
+      className={`flex items-center justify-center rounded-full bg-[#4FACF5] text-white ${dimensions}`}
     >
       {children}
     </Link>

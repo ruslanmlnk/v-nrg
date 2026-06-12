@@ -166,7 +166,7 @@ function FooterSocialLink({
     <Link
       href={href}
       aria-label={label}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#4FACF5] transition-opacity duration-200 hover:opacity-80"
+      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#4FACF5] text-white transition-opacity duration-200 hover:opacity-80"
     >
       {children}
     </Link>
