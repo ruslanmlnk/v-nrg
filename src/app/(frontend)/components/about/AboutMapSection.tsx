@@ -17,13 +17,16 @@ import phoneIconAsset from '@public/icon/generated/components-about-about-map-se
 
 type LeafletModule = typeof import('leaflet')
 
-type Salon = {
+export type Salon = {
   id: string
   name: string
   city: string
+  country?: string
   address: string
-  image: StaticImageData
+  image: StaticImageData | string
   coordinates: [number, number]
+  instagram?: string
+  phone?: string
 }
 
 const DEFAULT_CENTER: [number, number] = [50.4501, 30.5234]
@@ -56,10 +59,10 @@ const salons: Salon[] = [
   },
 ]
 
-export default function AboutMapSection() {
+export default function AboutMapSection({ locations = salons }: { locations?: Salon[] }) {
   const [isOpen, setIsOpen] = useState(false)
   const [isMapReady, setIsMapReady] = useState(false)
-  const [activeSalonId, setActiveSalonId] = useState(salons[0].id)
+  const [activeSalonId, setActiveSalonId] = useState(locations[0]?.id ?? '')
   const [searchQuery, setSearchQuery] = useState('')
 
   const mapContainerRef = useRef<HTMLDivElement | null>(null)
@@ -69,10 +72,10 @@ export default function AboutMapSection() {
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
   const visibleSalons = normalizedQuery
-    ? salons.filter((salon) =>
+    ? locations.filter((salon) =>
         `${salon.name} ${salon.city} ${salon.address}`.toLowerCase().includes(normalizedQuery),
       )
-    : salons
+    : locations
   const activeSalon = visibleSalons.find((salon) => salon.id === activeSalonId) ?? visibleSalons[0] ?? null
 
   useEffect(() => {
@@ -191,7 +194,7 @@ export default function AboutMapSection() {
   if (!isOpen) {
     return (
       <>
-        <MobileLocationsList locations={salons} />
+        <MobileLocationsList locations={locations} />
         <div className="hidden md:block">
           <AboutMapPreview onClick={() => setIsOpen(true)} />
         </div>
@@ -201,7 +204,7 @@ export default function AboutMapSection() {
 
   return (
     <>
-      <MobileLocationsList locations={salons} />
+      <MobileLocationsList locations={locations} />
       <div className="hidden overflow-hidden rounded-[20px] bg-[#F5F8F9] md:block lg:h-[740px]">
       <div className="flex h-full flex-col lg:flex-row">
         <div className="flex shrink-0 flex-col gap-4 bg-[#F5F8F9] p-8 lg:w-[449px]">
@@ -224,6 +227,8 @@ export default function AboutMapSection() {
                     <Image
                       src={salon.image}
                       alt={salon.name}
+                      height={86}
+                      width={86}
                       className="h-[86px] w-[86px] rounded-[20px] object-cover"
                     />
                     <div className="flex flex-col gap-1">
@@ -282,7 +287,7 @@ export default function AboutMapSection() {
               onClick={() => {
                 setIsOpen(false)
                 setSearchQuery('')
-                setActiveSalonId(salons[0].id)
+                setActiveSalonId(locations[0]?.id ?? '')
               }}
               className="flex h-[50px] items-center gap-2 self-start rounded-[40px] bg-[#22354A] px-6 text-[16px] font-medium leading-[145%] text-white"
             >
@@ -298,11 +303,21 @@ export default function AboutMapSection() {
 }
 
 function MobileLocationsList({ locations }: { locations: Salon[] }) {
-  const [country, setCountry] = useState('Україна')
-  const [city, setCity] = useState('Київ')
+  const countries = Array.from(new Set(locations.map((location) => location.country ?? 'Україна')))
+  const [country, setCountry] = useState(countries[0] ?? '')
+  const cities = Array.from(
+    new Set(
+      locations
+        .filter((location) => (location.country ?? 'Україна') === country)
+        .map((location) => location.city),
+    ),
+  )
+  const [city, setCity] = useState(cities[0] ?? '')
   const [activeSlide, setActiveSlide] = useState(0)
   const sliderRef = useRef<HTMLDivElement | null>(null)
-  const displayedLocations = locations
+  const displayedLocations = locations.filter(
+    (location) => (location.country ?? 'Україна') === country && location.city === city,
+  )
   const slides = chunkLocations(displayedLocations, 3)
 
   const scrollToSlide = (slideIndex: number) => {
@@ -317,14 +332,24 @@ function MobileLocationsList({ locations }: { locations: Salon[] }) {
       <div className="flex flex-col gap-4">
         <MobileLocationFilter
           ariaLabel="Оберіть країну"
-          onChange={setCountry}
-          options={['Україна']}
+          onChange={(value) => {
+            const firstCity = locations.find(
+              (location) => (location.country ?? 'Україна') === value,
+            )?.city
+            setCountry(value)
+            setCity(firstCity ?? '')
+            setActiveSlide(0)
+          }}
+          options={countries}
           value={country}
         />
         <MobileLocationFilter
           ariaLabel="Оберіть місто"
-          onChange={setCity}
-          options={['Київ']}
+          onChange={(value) => {
+            setCity(value)
+            setActiveSlide(0)
+          }}
+          options={cities}
           value={city}
         />
       </div>
@@ -348,6 +373,8 @@ function MobileLocationsList({ locations }: { locations: Salon[] }) {
                   <Image
                     src={salon.image}
                     alt={salon.name}
+                    height={86}
+                    width={86}
                     className="h-[86px] w-[86px] shrink-0 rounded-[20px] object-cover"
                   />
                   <div className="min-w-0">
@@ -355,10 +382,10 @@ function MobileLocationsList({ locations }: { locations: Salon[] }) {
                       {salon.name}
                     </h3>
                     <p className="mt-1 text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
-                      Київ, Україна
+                      {salon.city}, {salon.country ?? 'Україна'}
                     </p>
                     <p className="text-[16px] font-medium leading-[165%] text-[#B7CAD1]">
-                      {mobileLocationAddresses[salon.id] ?? salon.address}
+                      {salon.address}
                     </p>
                   </div>
                 </div>
@@ -368,10 +395,13 @@ function MobileLocationsList({ locations }: { locations: Salon[] }) {
                     Контакти для зв&apos;язку:
                   </p>
                   <div className="flex items-center gap-2">
-                    <CircleLink ariaLabel="Instagram салону">
+                    <CircleLink ariaLabel="Instagram салону" href={salon.instagram}>
                       <IconAsset src={instagramIconAsset} width={20} height={20} />
                     </CircleLink>
-                    <CircleLink ariaLabel="Телефон салону">
+                    <CircleLink
+                      ariaLabel="Телефон салону"
+                      href={salon.phone ? `tel:${salon.phone}` : undefined}
+                    >
                       <IconAsset src={phoneIconAsset} width={20} height={20} />
                     </CircleLink>
                   </div>
@@ -401,12 +431,6 @@ function chunkLocations(locations: Salon[], chunkSize: number) {
   return Array.from({ length: Math.ceil(locations.length / chunkSize) }, (_, index) =>
     locations.slice(index * chunkSize, index * chunkSize + chunkSize),
   )
-}
-
-const mobileLocationAddresses: Record<string, string> = {
-  'salon-1': 'вул. Хрещатик, 25',
-  'salon-2': 'вул. Ярославська, 11',
-  'salon-3': 'бул. Лесі Українки, 7Б',
 }
 
 function MobileLocationFilter({
@@ -509,7 +533,7 @@ function createPopupMarkup(salon: Salon) {
   return `
     <div class="about-map-popup-card">
       <div class="about-map-popup-row">
-        <img class="about-map-popup-image" src="${salon.image.src}" alt="${salon.name}" />
+        <img class="about-map-popup-image" src="${getAssetUrl(salon.image)}" alt="${salon.name}" />
         <div class="about-map-popup-copy">
           <div class="about-map-popup-title">${salon.name}</div>
           <div class="about-map-popup-subtitle">${salon.city}</div>
@@ -530,15 +554,21 @@ function createPopupMarkup(salon: Salon) {
 function CircleLink({
   ariaLabel,
   children,
+  href,
 }: {
   ariaLabel: string
   children: React.ReactNode
+  href?: string
 }) {
-  return (
-    <span
-      aria-label={ariaLabel}
-      className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5] text-white"
-    >
+  const className =
+    'flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#4FACF5] text-white'
+
+  return href ? (
+    <Link aria-label={ariaLabel} className={className} href={href}>
+      {children}
+    </Link>
+  ) : (
+    <span aria-label={ariaLabel} className={className}>
       {children}
     </span>
   )

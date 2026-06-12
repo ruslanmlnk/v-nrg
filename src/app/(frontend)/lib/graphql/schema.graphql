@@ -33,6 +33,10 @@ type Query {
   LegalPages(draft: Boolean, where: LegalPage_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): LegalPages
   countLegalPages(draft: Boolean, trash: Boolean, where: LegalPage_where): countLegalPages
   docAccessLegalPage(id: Int!): legal_pagesDocAccess
+  Location(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Location
+  Locations(draft: Boolean, where: Location_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Locations
+  countLocations(draft: Boolean, trash: Boolean, where: Location_where): countLocations
+  docAccessLocation(id: Int!): locationsDocAccess
   PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
@@ -5061,6 +5065,578 @@ type LegalPagesDeleteDocAccess {
   where: JSONObject
 }
 
+type Location {
+  id: Int!
+  name: String!
+  country: String!
+  city: String!
+  address: String!
+  image: Media
+  latitude: Float!
+  longitude: Float!
+  phone: String
+  instagram: String
+  sortOrder: Float
+  isActive: Boolean
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Locations {
+  docs: [Location!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input Location_where {
+  name: Location_name_operator
+  country: Location_country_operator
+  city: Location_city_operator
+  address: Location_address_operator
+  image: Location_image_operator
+  latitude: Location_latitude_operator
+  longitude: Location_longitude_operator
+  phone: Location_phone_operator
+  instagram: Location_instagram_operator
+  sortOrder: Location_sortOrder_operator
+  isActive: Location_isActive_operator
+  updatedAt: Location_updatedAt_operator
+  createdAt: Location_createdAt_operator
+  id: Location_id_operator
+  AND: [Location_where_and]
+  OR: [Location_where_or]
+}
+
+input Location_name_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Location_country_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Location_city_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Location_address_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Location_image_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Location_latitude_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Location_longitude_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Location_phone_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Location_instagram_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Location_sortOrder_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Location_isActive_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input Location_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Location_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Location_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input Location_where_and {
+  name: Location_name_operator
+  country: Location_country_operator
+  city: Location_city_operator
+  address: Location_address_operator
+  image: Location_image_operator
+  latitude: Location_latitude_operator
+  longitude: Location_longitude_operator
+  phone: Location_phone_operator
+  instagram: Location_instagram_operator
+  sortOrder: Location_sortOrder_operator
+  isActive: Location_isActive_operator
+  updatedAt: Location_updatedAt_operator
+  createdAt: Location_createdAt_operator
+  id: Location_id_operator
+  AND: [Location_where_and]
+  OR: [Location_where_or]
+}
+
+input Location_where_or {
+  name: Location_name_operator
+  country: Location_country_operator
+  city: Location_city_operator
+  address: Location_address_operator
+  image: Location_image_operator
+  latitude: Location_latitude_operator
+  longitude: Location_longitude_operator
+  phone: Location_phone_operator
+  instagram: Location_instagram_operator
+  sortOrder: Location_sortOrder_operator
+  isActive: Location_isActive_operator
+  updatedAt: Location_updatedAt_operator
+  createdAt: Location_createdAt_operator
+  id: Location_id_operator
+  AND: [Location_where_and]
+  OR: [Location_where_or]
+}
+
+type countLocations {
+  totalDocs: Int
+}
+
+type locationsDocAccess {
+  fields: LocationsDocAccessFields
+  create: LocationsCreateDocAccess
+  read: LocationsReadDocAccess
+  update: LocationsUpdateDocAccess
+  delete: LocationsDeleteDocAccess
+}
+
+type LocationsDocAccessFields {
+  name: LocationsDocAccessFields_name
+  country: LocationsDocAccessFields_country
+  city: LocationsDocAccessFields_city
+  address: LocationsDocAccessFields_address
+  image: LocationsDocAccessFields_image
+  latitude: LocationsDocAccessFields_latitude
+  longitude: LocationsDocAccessFields_longitude
+  phone: LocationsDocAccessFields_phone
+  instagram: LocationsDocAccessFields_instagram
+  sortOrder: LocationsDocAccessFields_sortOrder
+  isActive: LocationsDocAccessFields_isActive
+  updatedAt: LocationsDocAccessFields_updatedAt
+  createdAt: LocationsDocAccessFields_createdAt
+}
+
+type LocationsDocAccessFields_name {
+  create: LocationsDocAccessFields_name_Create
+  read: LocationsDocAccessFields_name_Read
+  update: LocationsDocAccessFields_name_Update
+  delete: LocationsDocAccessFields_name_Delete
+}
+
+type LocationsDocAccessFields_name_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_name_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_name_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_name_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_country {
+  create: LocationsDocAccessFields_country_Create
+  read: LocationsDocAccessFields_country_Read
+  update: LocationsDocAccessFields_country_Update
+  delete: LocationsDocAccessFields_country_Delete
+}
+
+type LocationsDocAccessFields_country_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_country_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_country_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_country_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_city {
+  create: LocationsDocAccessFields_city_Create
+  read: LocationsDocAccessFields_city_Read
+  update: LocationsDocAccessFields_city_Update
+  delete: LocationsDocAccessFields_city_Delete
+}
+
+type LocationsDocAccessFields_city_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_city_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_city_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_city_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_address {
+  create: LocationsDocAccessFields_address_Create
+  read: LocationsDocAccessFields_address_Read
+  update: LocationsDocAccessFields_address_Update
+  delete: LocationsDocAccessFields_address_Delete
+}
+
+type LocationsDocAccessFields_address_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_address_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_address_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_address_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_image {
+  create: LocationsDocAccessFields_image_Create
+  read: LocationsDocAccessFields_image_Read
+  update: LocationsDocAccessFields_image_Update
+  delete: LocationsDocAccessFields_image_Delete
+}
+
+type LocationsDocAccessFields_image_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_image_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_image_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_image_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_latitude {
+  create: LocationsDocAccessFields_latitude_Create
+  read: LocationsDocAccessFields_latitude_Read
+  update: LocationsDocAccessFields_latitude_Update
+  delete: LocationsDocAccessFields_latitude_Delete
+}
+
+type LocationsDocAccessFields_latitude_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_latitude_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_latitude_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_latitude_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_longitude {
+  create: LocationsDocAccessFields_longitude_Create
+  read: LocationsDocAccessFields_longitude_Read
+  update: LocationsDocAccessFields_longitude_Update
+  delete: LocationsDocAccessFields_longitude_Delete
+}
+
+type LocationsDocAccessFields_longitude_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_longitude_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_longitude_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_longitude_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_phone {
+  create: LocationsDocAccessFields_phone_Create
+  read: LocationsDocAccessFields_phone_Read
+  update: LocationsDocAccessFields_phone_Update
+  delete: LocationsDocAccessFields_phone_Delete
+}
+
+type LocationsDocAccessFields_phone_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_phone_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_phone_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_phone_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_instagram {
+  create: LocationsDocAccessFields_instagram_Create
+  read: LocationsDocAccessFields_instagram_Read
+  update: LocationsDocAccessFields_instagram_Update
+  delete: LocationsDocAccessFields_instagram_Delete
+}
+
+type LocationsDocAccessFields_instagram_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_instagram_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_instagram_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_instagram_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_sortOrder {
+  create: LocationsDocAccessFields_sortOrder_Create
+  read: LocationsDocAccessFields_sortOrder_Read
+  update: LocationsDocAccessFields_sortOrder_Update
+  delete: LocationsDocAccessFields_sortOrder_Delete
+}
+
+type LocationsDocAccessFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_isActive {
+  create: LocationsDocAccessFields_isActive_Create
+  read: LocationsDocAccessFields_isActive_Read
+  update: LocationsDocAccessFields_isActive_Update
+  delete: LocationsDocAccessFields_isActive_Delete
+}
+
+type LocationsDocAccessFields_isActive_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_isActive_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_isActive_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_isActive_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_updatedAt {
+  create: LocationsDocAccessFields_updatedAt_Create
+  read: LocationsDocAccessFields_updatedAt_Read
+  update: LocationsDocAccessFields_updatedAt_Update
+  delete: LocationsDocAccessFields_updatedAt_Delete
+}
+
+type LocationsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_createdAt {
+  create: LocationsDocAccessFields_createdAt_Create
+  read: LocationsDocAccessFields_createdAt_Read
+  update: LocationsDocAccessFields_createdAt_Update
+  delete: LocationsDocAccessFields_createdAt_Delete
+}
+
+type LocationsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type LocationsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type LocationsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LocationsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LocationsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LocationsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -5240,9 +5816,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   articles
   orders
   legal_pages
+  locations
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -5294,6 +5871,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   articles
   orders
   legal_pages
+  locations
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -7125,6 +7703,7 @@ type Access {
   articles: articlesAccess
   orders: ordersAccess
   legal_pages: legal_pagesAccess
+  locations: locationsAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -10149,6 +10728,349 @@ type LegalPagesDeleteAccess {
   where: JSONObject
 }
 
+type locationsAccess {
+  fields: LocationsFields
+  create: LocationsCreateAccess
+  read: LocationsReadAccess
+  update: LocationsUpdateAccess
+  delete: LocationsDeleteAccess
+}
+
+type LocationsFields {
+  name: LocationsFields_name
+  country: LocationsFields_country
+  city: LocationsFields_city
+  address: LocationsFields_address
+  image: LocationsFields_image
+  latitude: LocationsFields_latitude
+  longitude: LocationsFields_longitude
+  phone: LocationsFields_phone
+  instagram: LocationsFields_instagram
+  sortOrder: LocationsFields_sortOrder
+  isActive: LocationsFields_isActive
+  updatedAt: LocationsFields_updatedAt
+  createdAt: LocationsFields_createdAt
+}
+
+type LocationsFields_name {
+  create: LocationsFields_name_Create
+  read: LocationsFields_name_Read
+  update: LocationsFields_name_Update
+  delete: LocationsFields_name_Delete
+}
+
+type LocationsFields_name_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_name_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_name_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_name_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_country {
+  create: LocationsFields_country_Create
+  read: LocationsFields_country_Read
+  update: LocationsFields_country_Update
+  delete: LocationsFields_country_Delete
+}
+
+type LocationsFields_country_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_country_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_country_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_country_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_city {
+  create: LocationsFields_city_Create
+  read: LocationsFields_city_Read
+  update: LocationsFields_city_Update
+  delete: LocationsFields_city_Delete
+}
+
+type LocationsFields_city_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_city_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_city_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_city_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_address {
+  create: LocationsFields_address_Create
+  read: LocationsFields_address_Read
+  update: LocationsFields_address_Update
+  delete: LocationsFields_address_Delete
+}
+
+type LocationsFields_address_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_address_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_address_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_address_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_image {
+  create: LocationsFields_image_Create
+  read: LocationsFields_image_Read
+  update: LocationsFields_image_Update
+  delete: LocationsFields_image_Delete
+}
+
+type LocationsFields_image_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_image_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_image_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_image_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_latitude {
+  create: LocationsFields_latitude_Create
+  read: LocationsFields_latitude_Read
+  update: LocationsFields_latitude_Update
+  delete: LocationsFields_latitude_Delete
+}
+
+type LocationsFields_latitude_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_latitude_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_latitude_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_latitude_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_longitude {
+  create: LocationsFields_longitude_Create
+  read: LocationsFields_longitude_Read
+  update: LocationsFields_longitude_Update
+  delete: LocationsFields_longitude_Delete
+}
+
+type LocationsFields_longitude_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_longitude_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_longitude_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_longitude_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_phone {
+  create: LocationsFields_phone_Create
+  read: LocationsFields_phone_Read
+  update: LocationsFields_phone_Update
+  delete: LocationsFields_phone_Delete
+}
+
+type LocationsFields_phone_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_phone_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_phone_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_phone_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_instagram {
+  create: LocationsFields_instagram_Create
+  read: LocationsFields_instagram_Read
+  update: LocationsFields_instagram_Update
+  delete: LocationsFields_instagram_Delete
+}
+
+type LocationsFields_instagram_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_instagram_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_instagram_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_instagram_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_sortOrder {
+  create: LocationsFields_sortOrder_Create
+  read: LocationsFields_sortOrder_Read
+  update: LocationsFields_sortOrder_Update
+  delete: LocationsFields_sortOrder_Delete
+}
+
+type LocationsFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_isActive {
+  create: LocationsFields_isActive_Create
+  read: LocationsFields_isActive_Read
+  update: LocationsFields_isActive_Update
+  delete: LocationsFields_isActive_Delete
+}
+
+type LocationsFields_isActive_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_isActive_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_isActive_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_isActive_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_updatedAt {
+  create: LocationsFields_updatedAt_Create
+  read: LocationsFields_updatedAt_Read
+  update: LocationsFields_updatedAt_Update
+  delete: LocationsFields_updatedAt_Delete
+}
+
+type LocationsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type LocationsFields_createdAt {
+  create: LocationsFields_createdAt_Create
+  read: LocationsFields_createdAt_Read
+  update: LocationsFields_createdAt_Update
+  delete: LocationsFields_createdAt_Delete
+}
+
+type LocationsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type LocationsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type LocationsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type LocationsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type LocationsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LocationsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LocationsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LocationsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -11788,6 +12710,10 @@ type Mutation {
   updateLegalPage(id: Int!, autosave: Boolean, data: mutationLegalPageUpdateInput!, draft: Boolean, trash: Boolean): LegalPage
   deleteLegalPage(id: Int!, trash: Boolean): LegalPage
   duplicateLegalPage(id: Int!, data: mutationLegalPageInput!): LegalPage
+  createLocation(data: mutationLocationInput!, draft: Boolean): Location
+  updateLocation(id: Int!, autosave: Boolean, data: mutationLocationUpdateInput!, draft: Boolean, trash: Boolean): Location
+  deleteLocation(id: Int!, trash: Boolean): Location
+  duplicateLocation(id: Int!, data: mutationLocationInput!): Location
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -12268,6 +13194,38 @@ input mutationLegalPageUpdateInput {
   createdAt: String
 }
 
+input mutationLocationInput {
+  name: String!
+  country: String!
+  city: String!
+  address: String!
+  image: Int
+  latitude: Float!
+  longitude: Float!
+  phone: String
+  instagram: String
+  sortOrder: Float
+  isActive: Boolean
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationLocationUpdateInput {
+  name: String
+  country: String
+  city: String
+  address: String
+  image: Int
+  latitude: Float
+  longitude: Float
+  phone: String
+  instagram: String
+  sortOrder: Float
+  isActive: Boolean
+  updatedAt: String
+  createdAt: String
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -12300,6 +13258,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   articles
   orders
   legal_pages
+  locations
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -12333,6 +13292,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   articles
   orders
   legal_pages
+  locations
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

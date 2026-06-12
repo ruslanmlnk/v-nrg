@@ -61,6 +61,10 @@ export type Query = {
   LegalPages?: Maybe<LegalPages>;
   countLegalPages?: Maybe<CountLegalPages>;
   docAccessLegalPage?: Maybe<Legal_PagesDocAccess>;
+  Location?: Maybe<Location>;
+  Locations?: Maybe<Locations>;
+  countLocations?: Maybe<CountLocations>;
+  docAccessLocation?: Maybe<LocationsDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -331,6 +335,38 @@ export type QueryCountLegalPagesArgs = {
 
 
 export type QueryDocAccessLegalPageArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryLocationArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryLocationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Location_Where>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountLocationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Location_Where>;
+};
+
+
+export type QueryDocAccessLocationArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -6107,6 +6143,652 @@ export type LegalPagesDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Location = {
+  __typename?: 'Location';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  country: Scalars['String']['output'];
+  city: Scalars['String']['output'];
+  address: Scalars['String']['output'];
+  image?: Maybe<Media>;
+  latitude: Scalars['Float']['output'];
+  longitude: Scalars['Float']['output'];
+  phone?: Maybe<Scalars['String']['output']>;
+  instagram?: Maybe<Scalars['String']['output']>;
+  sortOrder?: Maybe<Scalars['Float']['output']>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Locations = {
+  __typename?: 'Locations';
+  docs: Array<Location>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type Location_Where = {
+  name?: InputMaybe<Location_Name_Operator>;
+  country?: InputMaybe<Location_Country_Operator>;
+  city?: InputMaybe<Location_City_Operator>;
+  address?: InputMaybe<Location_Address_Operator>;
+  image?: InputMaybe<Location_Image_Operator>;
+  latitude?: InputMaybe<Location_Latitude_Operator>;
+  longitude?: InputMaybe<Location_Longitude_Operator>;
+  phone?: InputMaybe<Location_Phone_Operator>;
+  instagram?: InputMaybe<Location_Instagram_Operator>;
+  sortOrder?: InputMaybe<Location_SortOrder_Operator>;
+  isActive?: InputMaybe<Location_IsActive_Operator>;
+  updatedAt?: InputMaybe<Location_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Location_CreatedAt_Operator>;
+  id?: InputMaybe<Location_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Location_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Location_Where_Or>>>;
+};
+
+export type Location_Name_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Location_Country_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Location_City_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Location_Address_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Location_Image_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_Latitude_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Location_Longitude_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Location_Phone_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_Instagram_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_SortOrder_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_IsActive_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Location_Where_And = {
+  name?: InputMaybe<Location_Name_Operator>;
+  country?: InputMaybe<Location_Country_Operator>;
+  city?: InputMaybe<Location_City_Operator>;
+  address?: InputMaybe<Location_Address_Operator>;
+  image?: InputMaybe<Location_Image_Operator>;
+  latitude?: InputMaybe<Location_Latitude_Operator>;
+  longitude?: InputMaybe<Location_Longitude_Operator>;
+  phone?: InputMaybe<Location_Phone_Operator>;
+  instagram?: InputMaybe<Location_Instagram_Operator>;
+  sortOrder?: InputMaybe<Location_SortOrder_Operator>;
+  isActive?: InputMaybe<Location_IsActive_Operator>;
+  updatedAt?: InputMaybe<Location_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Location_CreatedAt_Operator>;
+  id?: InputMaybe<Location_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Location_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Location_Where_Or>>>;
+};
+
+export type Location_Where_Or = {
+  name?: InputMaybe<Location_Name_Operator>;
+  country?: InputMaybe<Location_Country_Operator>;
+  city?: InputMaybe<Location_City_Operator>;
+  address?: InputMaybe<Location_Address_Operator>;
+  image?: InputMaybe<Location_Image_Operator>;
+  latitude?: InputMaybe<Location_Latitude_Operator>;
+  longitude?: InputMaybe<Location_Longitude_Operator>;
+  phone?: InputMaybe<Location_Phone_Operator>;
+  instagram?: InputMaybe<Location_Instagram_Operator>;
+  sortOrder?: InputMaybe<Location_SortOrder_Operator>;
+  isActive?: InputMaybe<Location_IsActive_Operator>;
+  updatedAt?: InputMaybe<Location_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Location_CreatedAt_Operator>;
+  id?: InputMaybe<Location_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Location_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Location_Where_Or>>>;
+};
+
+export type CountLocations = {
+  __typename?: 'countLocations';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type LocationsDocAccess = {
+  __typename?: 'locationsDocAccess';
+  fields?: Maybe<LocationsDocAccessFields>;
+  create?: Maybe<LocationsCreateDocAccess>;
+  read?: Maybe<LocationsReadDocAccess>;
+  update?: Maybe<LocationsUpdateDocAccess>;
+  delete?: Maybe<LocationsDeleteDocAccess>;
+};
+
+export type LocationsDocAccessFields = {
+  __typename?: 'LocationsDocAccessFields';
+  name?: Maybe<LocationsDocAccessFields_Name>;
+  country?: Maybe<LocationsDocAccessFields_Country>;
+  city?: Maybe<LocationsDocAccessFields_City>;
+  address?: Maybe<LocationsDocAccessFields_Address>;
+  image?: Maybe<LocationsDocAccessFields_Image>;
+  latitude?: Maybe<LocationsDocAccessFields_Latitude>;
+  longitude?: Maybe<LocationsDocAccessFields_Longitude>;
+  phone?: Maybe<LocationsDocAccessFields_Phone>;
+  instagram?: Maybe<LocationsDocAccessFields_Instagram>;
+  sortOrder?: Maybe<LocationsDocAccessFields_SortOrder>;
+  isActive?: Maybe<LocationsDocAccessFields_IsActive>;
+  updatedAt?: Maybe<LocationsDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<LocationsDocAccessFields_CreatedAt>;
+};
+
+export type LocationsDocAccessFields_Name = {
+  __typename?: 'LocationsDocAccessFields_name';
+  create?: Maybe<LocationsDocAccessFields_Name_Create>;
+  read?: Maybe<LocationsDocAccessFields_Name_Read>;
+  update?: Maybe<LocationsDocAccessFields_Name_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Name_Delete>;
+};
+
+export type LocationsDocAccessFields_Name_Create = {
+  __typename?: 'LocationsDocAccessFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Name_Read = {
+  __typename?: 'LocationsDocAccessFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Name_Update = {
+  __typename?: 'LocationsDocAccessFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Name_Delete = {
+  __typename?: 'LocationsDocAccessFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Country = {
+  __typename?: 'LocationsDocAccessFields_country';
+  create?: Maybe<LocationsDocAccessFields_Country_Create>;
+  read?: Maybe<LocationsDocAccessFields_Country_Read>;
+  update?: Maybe<LocationsDocAccessFields_Country_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Country_Delete>;
+};
+
+export type LocationsDocAccessFields_Country_Create = {
+  __typename?: 'LocationsDocAccessFields_country_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Country_Read = {
+  __typename?: 'LocationsDocAccessFields_country_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Country_Update = {
+  __typename?: 'LocationsDocAccessFields_country_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Country_Delete = {
+  __typename?: 'LocationsDocAccessFields_country_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_City = {
+  __typename?: 'LocationsDocAccessFields_city';
+  create?: Maybe<LocationsDocAccessFields_City_Create>;
+  read?: Maybe<LocationsDocAccessFields_City_Read>;
+  update?: Maybe<LocationsDocAccessFields_City_Update>;
+  delete?: Maybe<LocationsDocAccessFields_City_Delete>;
+};
+
+export type LocationsDocAccessFields_City_Create = {
+  __typename?: 'LocationsDocAccessFields_city_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_City_Read = {
+  __typename?: 'LocationsDocAccessFields_city_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_City_Update = {
+  __typename?: 'LocationsDocAccessFields_city_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_City_Delete = {
+  __typename?: 'LocationsDocAccessFields_city_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Address = {
+  __typename?: 'LocationsDocAccessFields_address';
+  create?: Maybe<LocationsDocAccessFields_Address_Create>;
+  read?: Maybe<LocationsDocAccessFields_Address_Read>;
+  update?: Maybe<LocationsDocAccessFields_Address_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Address_Delete>;
+};
+
+export type LocationsDocAccessFields_Address_Create = {
+  __typename?: 'LocationsDocAccessFields_address_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Address_Read = {
+  __typename?: 'LocationsDocAccessFields_address_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Address_Update = {
+  __typename?: 'LocationsDocAccessFields_address_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Address_Delete = {
+  __typename?: 'LocationsDocAccessFields_address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Image = {
+  __typename?: 'LocationsDocAccessFields_image';
+  create?: Maybe<LocationsDocAccessFields_Image_Create>;
+  read?: Maybe<LocationsDocAccessFields_Image_Read>;
+  update?: Maybe<LocationsDocAccessFields_Image_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Image_Delete>;
+};
+
+export type LocationsDocAccessFields_Image_Create = {
+  __typename?: 'LocationsDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Image_Read = {
+  __typename?: 'LocationsDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Image_Update = {
+  __typename?: 'LocationsDocAccessFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Image_Delete = {
+  __typename?: 'LocationsDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Latitude = {
+  __typename?: 'LocationsDocAccessFields_latitude';
+  create?: Maybe<LocationsDocAccessFields_Latitude_Create>;
+  read?: Maybe<LocationsDocAccessFields_Latitude_Read>;
+  update?: Maybe<LocationsDocAccessFields_Latitude_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Latitude_Delete>;
+};
+
+export type LocationsDocAccessFields_Latitude_Create = {
+  __typename?: 'LocationsDocAccessFields_latitude_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Latitude_Read = {
+  __typename?: 'LocationsDocAccessFields_latitude_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Latitude_Update = {
+  __typename?: 'LocationsDocAccessFields_latitude_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Latitude_Delete = {
+  __typename?: 'LocationsDocAccessFields_latitude_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Longitude = {
+  __typename?: 'LocationsDocAccessFields_longitude';
+  create?: Maybe<LocationsDocAccessFields_Longitude_Create>;
+  read?: Maybe<LocationsDocAccessFields_Longitude_Read>;
+  update?: Maybe<LocationsDocAccessFields_Longitude_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Longitude_Delete>;
+};
+
+export type LocationsDocAccessFields_Longitude_Create = {
+  __typename?: 'LocationsDocAccessFields_longitude_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Longitude_Read = {
+  __typename?: 'LocationsDocAccessFields_longitude_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Longitude_Update = {
+  __typename?: 'LocationsDocAccessFields_longitude_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Longitude_Delete = {
+  __typename?: 'LocationsDocAccessFields_longitude_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Phone = {
+  __typename?: 'LocationsDocAccessFields_phone';
+  create?: Maybe<LocationsDocAccessFields_Phone_Create>;
+  read?: Maybe<LocationsDocAccessFields_Phone_Read>;
+  update?: Maybe<LocationsDocAccessFields_Phone_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Phone_Delete>;
+};
+
+export type LocationsDocAccessFields_Phone_Create = {
+  __typename?: 'LocationsDocAccessFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Phone_Read = {
+  __typename?: 'LocationsDocAccessFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Phone_Update = {
+  __typename?: 'LocationsDocAccessFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Phone_Delete = {
+  __typename?: 'LocationsDocAccessFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Instagram = {
+  __typename?: 'LocationsDocAccessFields_instagram';
+  create?: Maybe<LocationsDocAccessFields_Instagram_Create>;
+  read?: Maybe<LocationsDocAccessFields_Instagram_Read>;
+  update?: Maybe<LocationsDocAccessFields_Instagram_Update>;
+  delete?: Maybe<LocationsDocAccessFields_Instagram_Delete>;
+};
+
+export type LocationsDocAccessFields_Instagram_Create = {
+  __typename?: 'LocationsDocAccessFields_instagram_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Instagram_Read = {
+  __typename?: 'LocationsDocAccessFields_instagram_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Instagram_Update = {
+  __typename?: 'LocationsDocAccessFields_instagram_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_Instagram_Delete = {
+  __typename?: 'LocationsDocAccessFields_instagram_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_SortOrder = {
+  __typename?: 'LocationsDocAccessFields_sortOrder';
+  create?: Maybe<LocationsDocAccessFields_SortOrder_Create>;
+  read?: Maybe<LocationsDocAccessFields_SortOrder_Read>;
+  update?: Maybe<LocationsDocAccessFields_SortOrder_Update>;
+  delete?: Maybe<LocationsDocAccessFields_SortOrder_Delete>;
+};
+
+export type LocationsDocAccessFields_SortOrder_Create = {
+  __typename?: 'LocationsDocAccessFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_SortOrder_Read = {
+  __typename?: 'LocationsDocAccessFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_SortOrder_Update = {
+  __typename?: 'LocationsDocAccessFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_SortOrder_Delete = {
+  __typename?: 'LocationsDocAccessFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_IsActive = {
+  __typename?: 'LocationsDocAccessFields_isActive';
+  create?: Maybe<LocationsDocAccessFields_IsActive_Create>;
+  read?: Maybe<LocationsDocAccessFields_IsActive_Read>;
+  update?: Maybe<LocationsDocAccessFields_IsActive_Update>;
+  delete?: Maybe<LocationsDocAccessFields_IsActive_Delete>;
+};
+
+export type LocationsDocAccessFields_IsActive_Create = {
+  __typename?: 'LocationsDocAccessFields_isActive_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_IsActive_Read = {
+  __typename?: 'LocationsDocAccessFields_isActive_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_IsActive_Update = {
+  __typename?: 'LocationsDocAccessFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_IsActive_Delete = {
+  __typename?: 'LocationsDocAccessFields_isActive_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_UpdatedAt = {
+  __typename?: 'LocationsDocAccessFields_updatedAt';
+  create?: Maybe<LocationsDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<LocationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<LocationsDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<LocationsDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type LocationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'LocationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'LocationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'LocationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'LocationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_CreatedAt = {
+  __typename?: 'LocationsDocAccessFields_createdAt';
+  create?: Maybe<LocationsDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<LocationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<LocationsDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<LocationsDocAccessFields_CreatedAt_Delete>;
+};
+
+export type LocationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'LocationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'LocationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'LocationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'LocationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsCreateDocAccess = {
+  __typename?: 'LocationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type LocationsReadDocAccess = {
+  __typename?: 'LocationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type LocationsUpdateDocAccess = {
+  __typename?: 'LocationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type LocationsDeleteDocAccess = {
+  __typename?: 'LocationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -6306,10 +6988,11 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Category = 'category',
   Articles = 'articles',
   Orders = 'orders',
-  LegalPages = 'legal_pages'
+  LegalPages = 'legal_pages',
+  Locations = 'locations'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -6362,7 +7045,8 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Category = 'category',
   Articles = 'articles',
   Orders = 'orders',
-  LegalPages = 'legal_pages'
+  LegalPages = 'legal_pages',
+  Locations = 'locations'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -8531,6 +9215,7 @@ export type Access = {
   articles?: Maybe<ArticlesAccess>;
   orders?: Maybe<OrdersAccess>;
   legal_pages?: Maybe<Legal_PagesAccess>;
+  locations?: Maybe<LocationsAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
@@ -12182,6 +12867,420 @@ export type LegalPagesDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type LocationsAccess = {
+  __typename?: 'locationsAccess';
+  fields?: Maybe<LocationsFields>;
+  create?: Maybe<LocationsCreateAccess>;
+  read?: Maybe<LocationsReadAccess>;
+  update?: Maybe<LocationsUpdateAccess>;
+  delete?: Maybe<LocationsDeleteAccess>;
+};
+
+export type LocationsFields = {
+  __typename?: 'LocationsFields';
+  name?: Maybe<LocationsFields_Name>;
+  country?: Maybe<LocationsFields_Country>;
+  city?: Maybe<LocationsFields_City>;
+  address?: Maybe<LocationsFields_Address>;
+  image?: Maybe<LocationsFields_Image>;
+  latitude?: Maybe<LocationsFields_Latitude>;
+  longitude?: Maybe<LocationsFields_Longitude>;
+  phone?: Maybe<LocationsFields_Phone>;
+  instagram?: Maybe<LocationsFields_Instagram>;
+  sortOrder?: Maybe<LocationsFields_SortOrder>;
+  isActive?: Maybe<LocationsFields_IsActive>;
+  updatedAt?: Maybe<LocationsFields_UpdatedAt>;
+  createdAt?: Maybe<LocationsFields_CreatedAt>;
+};
+
+export type LocationsFields_Name = {
+  __typename?: 'LocationsFields_name';
+  create?: Maybe<LocationsFields_Name_Create>;
+  read?: Maybe<LocationsFields_Name_Read>;
+  update?: Maybe<LocationsFields_Name_Update>;
+  delete?: Maybe<LocationsFields_Name_Delete>;
+};
+
+export type LocationsFields_Name_Create = {
+  __typename?: 'LocationsFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Name_Read = {
+  __typename?: 'LocationsFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Name_Update = {
+  __typename?: 'LocationsFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Name_Delete = {
+  __typename?: 'LocationsFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Country = {
+  __typename?: 'LocationsFields_country';
+  create?: Maybe<LocationsFields_Country_Create>;
+  read?: Maybe<LocationsFields_Country_Read>;
+  update?: Maybe<LocationsFields_Country_Update>;
+  delete?: Maybe<LocationsFields_Country_Delete>;
+};
+
+export type LocationsFields_Country_Create = {
+  __typename?: 'LocationsFields_country_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Country_Read = {
+  __typename?: 'LocationsFields_country_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Country_Update = {
+  __typename?: 'LocationsFields_country_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Country_Delete = {
+  __typename?: 'LocationsFields_country_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_City = {
+  __typename?: 'LocationsFields_city';
+  create?: Maybe<LocationsFields_City_Create>;
+  read?: Maybe<LocationsFields_City_Read>;
+  update?: Maybe<LocationsFields_City_Update>;
+  delete?: Maybe<LocationsFields_City_Delete>;
+};
+
+export type LocationsFields_City_Create = {
+  __typename?: 'LocationsFields_city_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_City_Read = {
+  __typename?: 'LocationsFields_city_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_City_Update = {
+  __typename?: 'LocationsFields_city_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_City_Delete = {
+  __typename?: 'LocationsFields_city_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Address = {
+  __typename?: 'LocationsFields_address';
+  create?: Maybe<LocationsFields_Address_Create>;
+  read?: Maybe<LocationsFields_Address_Read>;
+  update?: Maybe<LocationsFields_Address_Update>;
+  delete?: Maybe<LocationsFields_Address_Delete>;
+};
+
+export type LocationsFields_Address_Create = {
+  __typename?: 'LocationsFields_address_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Address_Read = {
+  __typename?: 'LocationsFields_address_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Address_Update = {
+  __typename?: 'LocationsFields_address_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Address_Delete = {
+  __typename?: 'LocationsFields_address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Image = {
+  __typename?: 'LocationsFields_image';
+  create?: Maybe<LocationsFields_Image_Create>;
+  read?: Maybe<LocationsFields_Image_Read>;
+  update?: Maybe<LocationsFields_Image_Update>;
+  delete?: Maybe<LocationsFields_Image_Delete>;
+};
+
+export type LocationsFields_Image_Create = {
+  __typename?: 'LocationsFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Image_Read = {
+  __typename?: 'LocationsFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Image_Update = {
+  __typename?: 'LocationsFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Image_Delete = {
+  __typename?: 'LocationsFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Latitude = {
+  __typename?: 'LocationsFields_latitude';
+  create?: Maybe<LocationsFields_Latitude_Create>;
+  read?: Maybe<LocationsFields_Latitude_Read>;
+  update?: Maybe<LocationsFields_Latitude_Update>;
+  delete?: Maybe<LocationsFields_Latitude_Delete>;
+};
+
+export type LocationsFields_Latitude_Create = {
+  __typename?: 'LocationsFields_latitude_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Latitude_Read = {
+  __typename?: 'LocationsFields_latitude_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Latitude_Update = {
+  __typename?: 'LocationsFields_latitude_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Latitude_Delete = {
+  __typename?: 'LocationsFields_latitude_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Longitude = {
+  __typename?: 'LocationsFields_longitude';
+  create?: Maybe<LocationsFields_Longitude_Create>;
+  read?: Maybe<LocationsFields_Longitude_Read>;
+  update?: Maybe<LocationsFields_Longitude_Update>;
+  delete?: Maybe<LocationsFields_Longitude_Delete>;
+};
+
+export type LocationsFields_Longitude_Create = {
+  __typename?: 'LocationsFields_longitude_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Longitude_Read = {
+  __typename?: 'LocationsFields_longitude_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Longitude_Update = {
+  __typename?: 'LocationsFields_longitude_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Longitude_Delete = {
+  __typename?: 'LocationsFields_longitude_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Phone = {
+  __typename?: 'LocationsFields_phone';
+  create?: Maybe<LocationsFields_Phone_Create>;
+  read?: Maybe<LocationsFields_Phone_Read>;
+  update?: Maybe<LocationsFields_Phone_Update>;
+  delete?: Maybe<LocationsFields_Phone_Delete>;
+};
+
+export type LocationsFields_Phone_Create = {
+  __typename?: 'LocationsFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Phone_Read = {
+  __typename?: 'LocationsFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Phone_Update = {
+  __typename?: 'LocationsFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Phone_Delete = {
+  __typename?: 'LocationsFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Instagram = {
+  __typename?: 'LocationsFields_instagram';
+  create?: Maybe<LocationsFields_Instagram_Create>;
+  read?: Maybe<LocationsFields_Instagram_Read>;
+  update?: Maybe<LocationsFields_Instagram_Update>;
+  delete?: Maybe<LocationsFields_Instagram_Delete>;
+};
+
+export type LocationsFields_Instagram_Create = {
+  __typename?: 'LocationsFields_instagram_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Instagram_Read = {
+  __typename?: 'LocationsFields_instagram_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Instagram_Update = {
+  __typename?: 'LocationsFields_instagram_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_Instagram_Delete = {
+  __typename?: 'LocationsFields_instagram_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_SortOrder = {
+  __typename?: 'LocationsFields_sortOrder';
+  create?: Maybe<LocationsFields_SortOrder_Create>;
+  read?: Maybe<LocationsFields_SortOrder_Read>;
+  update?: Maybe<LocationsFields_SortOrder_Update>;
+  delete?: Maybe<LocationsFields_SortOrder_Delete>;
+};
+
+export type LocationsFields_SortOrder_Create = {
+  __typename?: 'LocationsFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_SortOrder_Read = {
+  __typename?: 'LocationsFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_SortOrder_Update = {
+  __typename?: 'LocationsFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_SortOrder_Delete = {
+  __typename?: 'LocationsFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_IsActive = {
+  __typename?: 'LocationsFields_isActive';
+  create?: Maybe<LocationsFields_IsActive_Create>;
+  read?: Maybe<LocationsFields_IsActive_Read>;
+  update?: Maybe<LocationsFields_IsActive_Update>;
+  delete?: Maybe<LocationsFields_IsActive_Delete>;
+};
+
+export type LocationsFields_IsActive_Create = {
+  __typename?: 'LocationsFields_isActive_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_IsActive_Read = {
+  __typename?: 'LocationsFields_isActive_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_IsActive_Update = {
+  __typename?: 'LocationsFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_IsActive_Delete = {
+  __typename?: 'LocationsFields_isActive_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_UpdatedAt = {
+  __typename?: 'LocationsFields_updatedAt';
+  create?: Maybe<LocationsFields_UpdatedAt_Create>;
+  read?: Maybe<LocationsFields_UpdatedAt_Read>;
+  update?: Maybe<LocationsFields_UpdatedAt_Update>;
+  delete?: Maybe<LocationsFields_UpdatedAt_Delete>;
+};
+
+export type LocationsFields_UpdatedAt_Create = {
+  __typename?: 'LocationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_UpdatedAt_Read = {
+  __typename?: 'LocationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_UpdatedAt_Update = {
+  __typename?: 'LocationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_UpdatedAt_Delete = {
+  __typename?: 'LocationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_CreatedAt = {
+  __typename?: 'LocationsFields_createdAt';
+  create?: Maybe<LocationsFields_CreatedAt_Create>;
+  read?: Maybe<LocationsFields_CreatedAt_Read>;
+  update?: Maybe<LocationsFields_CreatedAt_Update>;
+  delete?: Maybe<LocationsFields_CreatedAt_Delete>;
+};
+
+export type LocationsFields_CreatedAt_Create = {
+  __typename?: 'LocationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_CreatedAt_Read = {
+  __typename?: 'LocationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_CreatedAt_Update = {
+  __typename?: 'LocationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsFields_CreatedAt_Delete = {
+  __typename?: 'LocationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LocationsCreateAccess = {
+  __typename?: 'LocationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type LocationsReadAccess = {
+  __typename?: 'LocationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type LocationsUpdateAccess = {
+  __typename?: 'LocationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type LocationsDeleteAccess = {
+  __typename?: 'LocationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -14156,6 +15255,10 @@ export type Mutation = {
   updateLegalPage?: Maybe<LegalPage>;
   deleteLegalPage?: Maybe<LegalPage>;
   duplicateLegalPage?: Maybe<LegalPage>;
+  createLocation?: Maybe<Location>;
+  updateLocation?: Maybe<Location>;
+  deleteLocation?: Maybe<Location>;
+  duplicateLocation?: Maybe<Location>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -14411,6 +15514,33 @@ export type MutationDeleteLegalPageArgs = {
 export type MutationDuplicateLegalPageArgs = {
   id: Scalars['Int']['input'];
   data: MutationLegalPageInput;
+};
+
+
+export type MutationCreateLocationArgs = {
+  data: MutationLocationInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateLocationArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationLocationUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteLocationArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateLocationArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationLocationInput;
 };
 
 
@@ -14969,6 +16099,38 @@ export type MutationLegalPageUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationLocationInput = {
+  name: Scalars['String']['input'];
+  country: Scalars['String']['input'];
+  city: Scalars['String']['input'];
+  address: Scalars['String']['input'];
+  image?: InputMaybe<Scalars['Int']['input']>;
+  latitude: Scalars['Float']['input'];
+  longitude: Scalars['Float']['input'];
+  phone?: InputMaybe<Scalars['String']['input']>;
+  instagram?: InputMaybe<Scalars['String']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationLocationUpdateInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['Int']['input']>;
+  latitude?: InputMaybe<Scalars['Float']['input']>;
+  longitude?: InputMaybe<Scalars['Float']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  instagram?: InputMaybe<Scalars['String']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -15000,7 +16162,8 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Category = 'category',
   Articles = 'articles',
   Orders = 'orders',
-  LegalPages = 'legal_pages'
+  LegalPages = 'legal_pages',
+  Locations = 'locations'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -15033,7 +16196,8 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Category = 'category',
   Articles = 'articles',
   Orders = 'orders',
-  LegalPages = 'legal_pages'
+  LegalPages = 'legal_pages',
+  Locations = 'locations'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {

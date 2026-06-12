@@ -3,6 +3,7 @@ import * as migration_20260603_000000_users_dealer_discount from './20260603_000
 import * as migration_20260603_010000_orders_collection from './20260603_010000_orders_collection'
 import * as migration_20260605_010000_legal_pages from './20260605_010000_legal_pages'
 import * as migration_20260612_010000_home_global from './20260612_010000_home_global'
+import * as migration_20260612_020000_locations from './20260612_020000_locations'
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260612_010000_home_global.up,
     down: migration_20260612_010000_home_global.down,
     name: '20260612_010000_home_global',
+  },
+  {
+    up: migration_20260612_020000_locations.up,
+    down: migration_20260612_020000_locations.down,
+    name: '20260612_020000_locations',
   },
 ]

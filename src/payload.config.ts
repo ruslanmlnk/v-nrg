@@ -13,6 +13,7 @@ import { Category } from './collections/Category'
 import { Articles } from './collections/Articles'
 import { Orders } from './collections/Orders'
 import { LegalPages } from './collections/LegalPages'
+import { Locations } from './collections/Locations'
 import { Home } from './globals/Home'
 
 const filename = fileURLToPath(import.meta.url)
@@ -25,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Reviews, Products, Category, Articles, Orders, LegalPages],
+  collections: [Users, Media, Reviews, Products, Category, Articles, Orders, LegalPages, Locations],
   editor: lexicalEditor(),
   graphQL: {
     schemaOutputFile: path.resolve(
