@@ -1,5 +1,5 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import { getPayload, type Where } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import type { User } from '@/payload-types'
@@ -132,27 +132,40 @@ async function getServerPricedItems(
     }
   }
 
-  const productIds = [...requestedQuantities.keys()]
+  const productIdentifiers = [...requestedQuantities.keys()]
 
-  if (productIds.length === 0) {
+  if (productIdentifiers.length === 0) {
     return []
+  }
+
+  const numericProductIds = productIdentifiers
+    .filter((identifier) => /^\d+$/.test(identifier))
+    .map(Number)
+  const productSlugs = productIdentifiers.filter((identifier) => !/^\d+$/.test(identifier))
+  const productQueries: Where[] = []
+
+  if (numericProductIds.length > 0) {
+    productQueries.push({ id: { in: numericProductIds } })
+  }
+
+  if (productSlugs.length > 0) {
+    productQueries.push({ slug: { in: productSlugs } })
   }
 
   const { docs } = await payload.find({
     collection: 'products',
     depth: 0,
-    limit: productIds.length,
+    limit: productIdentifiers.length,
     where: {
-      id: {
-        in: productIds,
-      },
+      or: productQueries,
     },
   })
   const discountMultiplier = (100 - discountPercent) / 100
 
   return docs.flatMap((product) => {
-    const productId = String(product.id)
-    const quantity = requestedQuantities.get(productId)
+    const productId = product.slug || String(product.id)
+    const quantity =
+      requestedQuantities.get(String(product.id)) ?? requestedQuantities.get(product.slug)
     const basePrice = normalizeMoney(product.price)
 
     if (!quantity || !basePrice) {
