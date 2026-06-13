@@ -2,6 +2,8 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { sendApplicationNotification } from '@/lib/applicationNotifications'
+
 type ApplicationBody = {
   email?: unknown
   message?: unknown
@@ -32,6 +34,10 @@ export async function POST(request: NextRequest) {
     collection: 'applications',
     data: { email, message, name, phone, source, status: 'new' },
     depth: 0,
+  })
+
+  await sendApplicationNotification({ email, message, name, phone, source }).catch((error) => {
+    console.error('Failed to send application notification email', error)
   })
 
   return NextResponse.json({ id: application.id }, { status: 201 })

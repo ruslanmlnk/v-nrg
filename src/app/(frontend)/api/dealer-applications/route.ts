@@ -2,6 +2,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { sendDealerApplicationNotification } from '@/lib/applicationNotifications'
 import type { User } from '@/payload-types'
 
 type DealerApplicationBody = {
@@ -46,6 +47,14 @@ export async function POST(request: NextRequest) {
     data,
     depth: 0,
   })
+
+  await sendDealerApplicationNotification({
+    ...data,
+    accountEmail: user.email,
+  }).catch((error) => {
+    console.error('Failed to send dealer application notification email', error)
+  })
+
   return NextResponse.json({ id: application.id }, { status: 201 })
 }
 
