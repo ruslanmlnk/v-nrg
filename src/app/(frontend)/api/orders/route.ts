@@ -55,25 +55,37 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Order items are invalid' }, { status: 400 })
   }
 
-  const order = await payload.create({
-    collection: 'orders',
-    data: {
-      comment: normalizeText(body.comment),
-      customer: user?.collection === 'users' ? user.id : undefined,
-      customerEmail,
-      delivery: normalizeJson(body.delivery),
-      firstName,
-      items,
-      lastName,
-      orderNumber,
-      orderStatus: 'new',
-      paymentMethod,
-      paymentStatus: getInitialPaymentStatus(paymentMethod),
-      phone,
-      total,
-    },
-    depth: 0,
-  })
+  const order = await payload
+    .create({
+      collection: 'orders',
+      data: {
+        comment: normalizeText(body.comment),
+        customer: user?.collection === 'users' ? user.id : undefined,
+        customerEmail,
+        delivery: normalizeJson(body.delivery),
+        firstName,
+        items,
+        lastName,
+        orderNumber,
+        orderStatus: 'new',
+        paymentMethod,
+        paymentStatus: getInitialPaymentStatus(paymentMethod),
+        phone,
+        total,
+      },
+      depth: 0,
+    })
+    .catch((error: unknown) => {
+      console.error('Failed to create checkout order', error)
+      return null
+    })
+
+  if (!order) {
+    return NextResponse.json(
+      { error: 'Не вдалося створити замовлення. Оновіть сторінку та спробуйте ще раз.' },
+      { status: 500 },
+    )
+  }
 
   return NextResponse.json({
     id: order.id,

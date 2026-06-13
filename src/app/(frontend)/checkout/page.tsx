@@ -31,6 +31,7 @@ type MonobankCreateResponse = {
 }
 
 type CreatedOrderResponse = {
+  error?: string
   id: number | string
   orderNumber: string
   paymentStatus?: string
@@ -462,7 +463,7 @@ async function createCheckoutOrder(payload: Record<string, unknown>) {
   const data = (await response.json().catch(() => null)) as CreatedOrderResponse | null
 
   if (!response.ok || !data?.orderNumber) {
-    throw new Error('Order create failed')
+    throw new Error(data?.error || 'Не вдалося створити замовлення')
   }
 
   return data
@@ -666,5 +667,8 @@ function formatDeliveryAddress(address: {
 }
 
 function createCheckoutOrderId() {
-  return `${Math.floor(10000 + Math.random() * 90000)}`
+  const timestamp = Date.now().toString(36).toUpperCase()
+  const randomPart = crypto.randomUUID().slice(0, 8).toUpperCase()
+
+  return `VN-${timestamp}-${randomPart}`
 }
