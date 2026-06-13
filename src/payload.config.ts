@@ -16,6 +16,8 @@ import { LegalPages } from './collections/LegalPages'
 import { Locations } from './collections/Locations'
 import { TrainingCategories } from './collections/TrainingCategories'
 import { TrainingVideos } from './collections/TrainingVideos'
+import { Applications } from './collections/Applications'
+import { DealerApplications } from './collections/DealerApplications'
 import { Home } from './globals/Home'
 import { Training } from './globals/Training'
 import { Contacts } from './globals/Contacts'
@@ -42,6 +44,8 @@ export default buildConfig({
     Locations,
     TrainingCategories,
     TrainingVideos,
+    Applications,
+    DealerApplications,
   ],
   editor: lexicalEditor(),
   graphQL: {

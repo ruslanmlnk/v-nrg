@@ -515,10 +515,29 @@ function CommerceOverlays() {
   const [dealerFormState, setDealerFormState] = useState<DealerFormState>(() => ({
     ...initialDealerFormState,
   }))
+  const [dealerSubmitError, setDealerSubmitError] = useState('')
+  const [isDealerSubmitting, setIsDealerSubmitting] = useState(false)
 
-  const handleDealerSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleDealerSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setDealerSubmitError('')
+    setIsDealerSubmitting(true)
+    const response = await fetch('/api/dealer-applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dealerFormState),
+    }).catch(() => null)
+    setIsDealerSubmitting(false)
+    if (!response?.ok) {
+      setDealerSubmitError(
+        response?.status === 401
+          ? 'Увійдіть в акаунт, щоб подати заявку.'
+          : 'Не вдалося надіслати заявку. Спробуйте ще раз.',
+      )
+      return
+    }
     closeDealerModal()
+    setDealerFormState({ ...initialDealerFormState })
     router.push('/dealer/application-sent')
   }
 
@@ -692,11 +711,13 @@ function CommerceOverlays() {
               </DealerField>
 
               <button
+                disabled={isDealerSubmitting}
                 type="submit"
-                className="flex h-[52px] items-center justify-center rounded-full bg-[#4FACF5] text-[18px] font-bold leading-[145%] text-white"
+                className="flex h-[52px] items-center justify-center rounded-full bg-[#4FACF5] text-[18px] font-bold leading-[145%] text-white disabled:opacity-60"
               >
-                Надіслати
+                {isDealerSubmitting ? 'Надсилання...' : 'Надіслати'}
               </button>
+              {dealerSubmitError ? <p className="text-[#D64545]">{dealerSubmitError}</p> : null}
             </form>
           </motion.div>
         </Overlay>

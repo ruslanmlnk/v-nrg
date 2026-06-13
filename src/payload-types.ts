@@ -78,6 +78,8 @@ export interface Config {
     locations: Location;
     'training-categories': TrainingCategory;
     'training-videos': TrainingVideo;
+    applications: Application;
+    'dealer-applications': DealerApplication;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +98,8 @@ export interface Config {
     locations: LocationsSelect<false> | LocationsSelect<true>;
     'training-categories': TrainingCategoriesSelect<false> | TrainingCategoriesSelect<true>;
     'training-videos': TrainingVideosSelect<false> | TrainingVideosSelect<true>;
+    applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
+    'dealer-applications': DealerApplicationsSelect<false> | DealerApplicationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -489,6 +493,39 @@ export interface TrainingVideo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications".
+ */
+export interface Application {
+  id: number;
+  source: 'contacts' | 'hero-popup';
+  name: string;
+  email?: string | null;
+  phone?: string | null;
+  message?: string | null;
+  status: 'new' | 'processing' | 'completed' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dealer-applications".
+ */
+export interface DealerApplication {
+  id: number;
+  account: number | User;
+  companyName: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  city: string;
+  message?: string | null;
+  status: 'new' | 'processing' | 'approved' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -554,6 +591,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'training-videos';
         value: number | TrainingVideo;
+      } | null)
+    | ({
+        relationTo: 'applications';
+        value: number | Application;
+      } | null)
+    | ({
+        relationTo: 'dealer-applications';
+        value: number | DealerApplication;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -848,6 +893,37 @@ export interface TrainingVideosSelect<T extends boolean = true> {
   poster?: T;
   video?: T;
   sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications_select".
+ */
+export interface ApplicationsSelect<T extends boolean = true> {
+  source?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dealer-applications_select".
+ */
+export interface DealerApplicationsSelect<T extends boolean = true> {
+  account?: T;
+  companyName?: T;
+  firstName?: T;
+  lastName?: T;
+  phone?: T;
+  email?: T;
+  city?: T;
+  message?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

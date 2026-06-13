@@ -73,6 +73,14 @@ export type Query = {
   TrainingVideos?: Maybe<TrainingVideos>;
   countTrainingVideos?: Maybe<CountTrainingVideos>;
   docAccessTrainingVideo?: Maybe<Training_VideosDocAccess>;
+  Application?: Maybe<Application>;
+  Applications?: Maybe<Applications>;
+  countApplications?: Maybe<CountApplications>;
+  docAccessApplication?: Maybe<ApplicationsDocAccess>;
+  DealerApplication?: Maybe<DealerApplication>;
+  DealerApplications?: Maybe<DealerApplications>;
+  countDealerApplications?: Maybe<CountDealerApplications>;
+  docAccessDealerApplication?: Maybe<Dealer_ApplicationsDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -443,6 +451,70 @@ export type QueryCountTrainingVideosArgs = {
 
 
 export type QueryDocAccessTrainingVideoArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryApplicationArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryApplicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Application_Where>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountApplicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Application_Where>;
+};
+
+
+export type QueryDocAccessApplicationArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDealerApplicationArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryDealerApplicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<DealerApplication_Where>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountDealerApplicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<DealerApplication_Where>;
+};
+
+
+export type QueryDocAccessDealerApplicationArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -7568,6 +7640,1035 @@ export type TrainingVideosDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Application = {
+  __typename?: 'Application';
+  id: Scalars['Int']['output'];
+  source: Application_Source;
+  name: Scalars['String']['output'];
+  email?: Maybe<Scalars['EmailAddress']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  status: Application_Status;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export enum Application_Source {
+  Contacts = 'contacts',
+  HeroPopup = 'hero_popup'
+}
+
+export enum Application_Status {
+  New = 'new',
+  Processing = 'processing',
+  Completed = 'completed',
+  Rejected = 'rejected'
+}
+
+export type Applications = {
+  __typename?: 'Applications';
+  docs: Array<Application>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type Application_Where = {
+  source?: InputMaybe<Application_Source_Operator>;
+  name?: InputMaybe<Application_Name_Operator>;
+  email?: InputMaybe<Application_Email_Operator>;
+  phone?: InputMaybe<Application_Phone_Operator>;
+  message?: InputMaybe<Application_Message_Operator>;
+  status?: InputMaybe<Application_Status_Operator>;
+  updatedAt?: InputMaybe<Application_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Application_CreatedAt_Operator>;
+  id?: InputMaybe<Application_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Application_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Application_Where_Or>>>;
+};
+
+export type Application_Source_Operator = {
+  equals?: InputMaybe<Application_Source_Input>;
+  not_equals?: InputMaybe<Application_Source_Input>;
+  in?: InputMaybe<Array<InputMaybe<Application_Source_Input>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Application_Source_Input>>>;
+  all?: InputMaybe<Array<InputMaybe<Application_Source_Input>>>;
+};
+
+export enum Application_Source_Input {
+  Contacts = 'contacts',
+  HeroPopup = 'hero_popup'
+}
+
+export type Application_Name_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Application_Email_Operator = {
+  equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  like?: InputMaybe<Scalars['EmailAddress']['input']>;
+  contains?: InputMaybe<Scalars['EmailAddress']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Application_Phone_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Application_Message_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Application_Status_Operator = {
+  equals?: InputMaybe<Application_Status_Input>;
+  not_equals?: InputMaybe<Application_Status_Input>;
+  in?: InputMaybe<Array<InputMaybe<Application_Status_Input>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Application_Status_Input>>>;
+  all?: InputMaybe<Array<InputMaybe<Application_Status_Input>>>;
+};
+
+export enum Application_Status_Input {
+  New = 'new',
+  Processing = 'processing',
+  Completed = 'completed',
+  Rejected = 'rejected'
+}
+
+export type Application_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Application_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Application_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Application_Where_And = {
+  source?: InputMaybe<Application_Source_Operator>;
+  name?: InputMaybe<Application_Name_Operator>;
+  email?: InputMaybe<Application_Email_Operator>;
+  phone?: InputMaybe<Application_Phone_Operator>;
+  message?: InputMaybe<Application_Message_Operator>;
+  status?: InputMaybe<Application_Status_Operator>;
+  updatedAt?: InputMaybe<Application_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Application_CreatedAt_Operator>;
+  id?: InputMaybe<Application_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Application_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Application_Where_Or>>>;
+};
+
+export type Application_Where_Or = {
+  source?: InputMaybe<Application_Source_Operator>;
+  name?: InputMaybe<Application_Name_Operator>;
+  email?: InputMaybe<Application_Email_Operator>;
+  phone?: InputMaybe<Application_Phone_Operator>;
+  message?: InputMaybe<Application_Message_Operator>;
+  status?: InputMaybe<Application_Status_Operator>;
+  updatedAt?: InputMaybe<Application_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Application_CreatedAt_Operator>;
+  id?: InputMaybe<Application_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Application_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Application_Where_Or>>>;
+};
+
+export type CountApplications = {
+  __typename?: 'countApplications';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ApplicationsDocAccess = {
+  __typename?: 'applicationsDocAccess';
+  fields?: Maybe<ApplicationsDocAccessFields>;
+  create?: Maybe<ApplicationsCreateDocAccess>;
+  read?: Maybe<ApplicationsReadDocAccess>;
+  update?: Maybe<ApplicationsUpdateDocAccess>;
+  delete?: Maybe<ApplicationsDeleteDocAccess>;
+};
+
+export type ApplicationsDocAccessFields = {
+  __typename?: 'ApplicationsDocAccessFields';
+  source?: Maybe<ApplicationsDocAccessFields_Source>;
+  name?: Maybe<ApplicationsDocAccessFields_Name>;
+  email?: Maybe<ApplicationsDocAccessFields_Email>;
+  phone?: Maybe<ApplicationsDocAccessFields_Phone>;
+  message?: Maybe<ApplicationsDocAccessFields_Message>;
+  status?: Maybe<ApplicationsDocAccessFields_Status>;
+  updatedAt?: Maybe<ApplicationsDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<ApplicationsDocAccessFields_CreatedAt>;
+};
+
+export type ApplicationsDocAccessFields_Source = {
+  __typename?: 'ApplicationsDocAccessFields_source';
+  create?: Maybe<ApplicationsDocAccessFields_Source_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_Source_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_Source_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_Source_Delete>;
+};
+
+export type ApplicationsDocAccessFields_Source_Create = {
+  __typename?: 'ApplicationsDocAccessFields_source_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Source_Read = {
+  __typename?: 'ApplicationsDocAccessFields_source_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Source_Update = {
+  __typename?: 'ApplicationsDocAccessFields_source_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Source_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_source_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Name = {
+  __typename?: 'ApplicationsDocAccessFields_name';
+  create?: Maybe<ApplicationsDocAccessFields_Name_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_Name_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_Name_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_Name_Delete>;
+};
+
+export type ApplicationsDocAccessFields_Name_Create = {
+  __typename?: 'ApplicationsDocAccessFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Name_Read = {
+  __typename?: 'ApplicationsDocAccessFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Name_Update = {
+  __typename?: 'ApplicationsDocAccessFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Name_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Email = {
+  __typename?: 'ApplicationsDocAccessFields_email';
+  create?: Maybe<ApplicationsDocAccessFields_Email_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_Email_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_Email_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_Email_Delete>;
+};
+
+export type ApplicationsDocAccessFields_Email_Create = {
+  __typename?: 'ApplicationsDocAccessFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Email_Read = {
+  __typename?: 'ApplicationsDocAccessFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Email_Update = {
+  __typename?: 'ApplicationsDocAccessFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Email_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Phone = {
+  __typename?: 'ApplicationsDocAccessFields_phone';
+  create?: Maybe<ApplicationsDocAccessFields_Phone_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_Phone_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_Phone_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_Phone_Delete>;
+};
+
+export type ApplicationsDocAccessFields_Phone_Create = {
+  __typename?: 'ApplicationsDocAccessFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Phone_Read = {
+  __typename?: 'ApplicationsDocAccessFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Phone_Update = {
+  __typename?: 'ApplicationsDocAccessFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Phone_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Message = {
+  __typename?: 'ApplicationsDocAccessFields_message';
+  create?: Maybe<ApplicationsDocAccessFields_Message_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_Message_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_Message_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_Message_Delete>;
+};
+
+export type ApplicationsDocAccessFields_Message_Create = {
+  __typename?: 'ApplicationsDocAccessFields_message_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Message_Read = {
+  __typename?: 'ApplicationsDocAccessFields_message_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Message_Update = {
+  __typename?: 'ApplicationsDocAccessFields_message_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Message_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_message_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Status = {
+  __typename?: 'ApplicationsDocAccessFields_status';
+  create?: Maybe<ApplicationsDocAccessFields_Status_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_Status_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_Status_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_Status_Delete>;
+};
+
+export type ApplicationsDocAccessFields_Status_Create = {
+  __typename?: 'ApplicationsDocAccessFields_status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Status_Read = {
+  __typename?: 'ApplicationsDocAccessFields_status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Status_Update = {
+  __typename?: 'ApplicationsDocAccessFields_status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_Status_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_UpdatedAt = {
+  __typename?: 'ApplicationsDocAccessFields_updatedAt';
+  create?: Maybe<ApplicationsDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type ApplicationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'ApplicationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'ApplicationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'ApplicationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_CreatedAt = {
+  __typename?: 'ApplicationsDocAccessFields_createdAt';
+  create?: Maybe<ApplicationsDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<ApplicationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<ApplicationsDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<ApplicationsDocAccessFields_CreatedAt_Delete>;
+};
+
+export type ApplicationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'ApplicationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'ApplicationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'ApplicationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'ApplicationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsCreateDocAccess = {
+  __typename?: 'ApplicationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ApplicationsReadDocAccess = {
+  __typename?: 'ApplicationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ApplicationsUpdateDocAccess = {
+  __typename?: 'ApplicationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ApplicationsDeleteDocAccess = {
+  __typename?: 'ApplicationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplication = {
+  __typename?: 'DealerApplication';
+  id: Scalars['Int']['output'];
+  account?: Maybe<User>;
+  companyName: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  phone: Scalars['String']['output'];
+  email: Scalars['EmailAddress']['output'];
+  city: Scalars['String']['output'];
+  message?: Maybe<Scalars['String']['output']>;
+  status: DealerApplication_Status;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export enum DealerApplication_Status {
+  New = 'new',
+  Processing = 'processing',
+  Approved = 'approved',
+  Rejected = 'rejected'
+}
+
+export type DealerApplications = {
+  __typename?: 'DealerApplications';
+  docs: Array<DealerApplication>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type DealerApplication_Where = {
+  account?: InputMaybe<DealerApplication_Account_Operator>;
+  companyName?: InputMaybe<DealerApplication_CompanyName_Operator>;
+  firstName?: InputMaybe<DealerApplication_FirstName_Operator>;
+  lastName?: InputMaybe<DealerApplication_LastName_Operator>;
+  phone?: InputMaybe<DealerApplication_Phone_Operator>;
+  email?: InputMaybe<DealerApplication_Email_Operator>;
+  city?: InputMaybe<DealerApplication_City_Operator>;
+  message?: InputMaybe<DealerApplication_Message_Operator>;
+  status?: InputMaybe<DealerApplication_Status_Operator>;
+  updatedAt?: InputMaybe<DealerApplication_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<DealerApplication_CreatedAt_Operator>;
+  id?: InputMaybe<DealerApplication_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<DealerApplication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<DealerApplication_Where_Or>>>;
+};
+
+export type DealerApplication_Account_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type DealerApplication_CompanyName_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DealerApplication_FirstName_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DealerApplication_LastName_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DealerApplication_Phone_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DealerApplication_Email_Operator = {
+  equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  like?: InputMaybe<Scalars['EmailAddress']['input']>;
+  contains?: InputMaybe<Scalars['EmailAddress']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+};
+
+export type DealerApplication_City_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DealerApplication_Message_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type DealerApplication_Status_Operator = {
+  equals?: InputMaybe<DealerApplication_Status_Input>;
+  not_equals?: InputMaybe<DealerApplication_Status_Input>;
+  in?: InputMaybe<Array<InputMaybe<DealerApplication_Status_Input>>>;
+  not_in?: InputMaybe<Array<InputMaybe<DealerApplication_Status_Input>>>;
+  all?: InputMaybe<Array<InputMaybe<DealerApplication_Status_Input>>>;
+};
+
+export enum DealerApplication_Status_Input {
+  New = 'new',
+  Processing = 'processing',
+  Approved = 'approved',
+  Rejected = 'rejected'
+}
+
+export type DealerApplication_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type DealerApplication_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type DealerApplication_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type DealerApplication_Where_And = {
+  account?: InputMaybe<DealerApplication_Account_Operator>;
+  companyName?: InputMaybe<DealerApplication_CompanyName_Operator>;
+  firstName?: InputMaybe<DealerApplication_FirstName_Operator>;
+  lastName?: InputMaybe<DealerApplication_LastName_Operator>;
+  phone?: InputMaybe<DealerApplication_Phone_Operator>;
+  email?: InputMaybe<DealerApplication_Email_Operator>;
+  city?: InputMaybe<DealerApplication_City_Operator>;
+  message?: InputMaybe<DealerApplication_Message_Operator>;
+  status?: InputMaybe<DealerApplication_Status_Operator>;
+  updatedAt?: InputMaybe<DealerApplication_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<DealerApplication_CreatedAt_Operator>;
+  id?: InputMaybe<DealerApplication_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<DealerApplication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<DealerApplication_Where_Or>>>;
+};
+
+export type DealerApplication_Where_Or = {
+  account?: InputMaybe<DealerApplication_Account_Operator>;
+  companyName?: InputMaybe<DealerApplication_CompanyName_Operator>;
+  firstName?: InputMaybe<DealerApplication_FirstName_Operator>;
+  lastName?: InputMaybe<DealerApplication_LastName_Operator>;
+  phone?: InputMaybe<DealerApplication_Phone_Operator>;
+  email?: InputMaybe<DealerApplication_Email_Operator>;
+  city?: InputMaybe<DealerApplication_City_Operator>;
+  message?: InputMaybe<DealerApplication_Message_Operator>;
+  status?: InputMaybe<DealerApplication_Status_Operator>;
+  updatedAt?: InputMaybe<DealerApplication_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<DealerApplication_CreatedAt_Operator>;
+  id?: InputMaybe<DealerApplication_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<DealerApplication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<DealerApplication_Where_Or>>>;
+};
+
+export type CountDealerApplications = {
+  __typename?: 'countDealerApplications';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Dealer_ApplicationsDocAccess = {
+  __typename?: 'dealer_applicationsDocAccess';
+  fields?: Maybe<DealerApplicationsDocAccessFields>;
+  create?: Maybe<DealerApplicationsCreateDocAccess>;
+  read?: Maybe<DealerApplicationsReadDocAccess>;
+  update?: Maybe<DealerApplicationsUpdateDocAccess>;
+  delete?: Maybe<DealerApplicationsDeleteDocAccess>;
+};
+
+export type DealerApplicationsDocAccessFields = {
+  __typename?: 'DealerApplicationsDocAccessFields';
+  account?: Maybe<DealerApplicationsDocAccessFields_Account>;
+  companyName?: Maybe<DealerApplicationsDocAccessFields_CompanyName>;
+  firstName?: Maybe<DealerApplicationsDocAccessFields_FirstName>;
+  lastName?: Maybe<DealerApplicationsDocAccessFields_LastName>;
+  phone?: Maybe<DealerApplicationsDocAccessFields_Phone>;
+  email?: Maybe<DealerApplicationsDocAccessFields_Email>;
+  city?: Maybe<DealerApplicationsDocAccessFields_City>;
+  message?: Maybe<DealerApplicationsDocAccessFields_Message>;
+  status?: Maybe<DealerApplicationsDocAccessFields_Status>;
+  updatedAt?: Maybe<DealerApplicationsDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<DealerApplicationsDocAccessFields_CreatedAt>;
+};
+
+export type DealerApplicationsDocAccessFields_Account = {
+  __typename?: 'DealerApplicationsDocAccessFields_account';
+  create?: Maybe<DealerApplicationsDocAccessFields_Account_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_Account_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_Account_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_Account_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_Account_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_account_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Account_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_account_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Account_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_account_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Account_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_account_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CompanyName = {
+  __typename?: 'DealerApplicationsDocAccessFields_companyName';
+  create?: Maybe<DealerApplicationsDocAccessFields_CompanyName_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_CompanyName_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_CompanyName_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_CompanyName_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_CompanyName_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_companyName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CompanyName_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_companyName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CompanyName_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_companyName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CompanyName_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_companyName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_FirstName = {
+  __typename?: 'DealerApplicationsDocAccessFields_firstName';
+  create?: Maybe<DealerApplicationsDocAccessFields_FirstName_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_FirstName_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_FirstName_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_FirstName_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_FirstName_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_firstName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_FirstName_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_firstName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_FirstName_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_firstName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_FirstName_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_firstName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_LastName = {
+  __typename?: 'DealerApplicationsDocAccessFields_lastName';
+  create?: Maybe<DealerApplicationsDocAccessFields_LastName_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_LastName_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_LastName_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_LastName_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_LastName_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_lastName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_LastName_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_lastName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_LastName_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_lastName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_LastName_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_lastName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Phone = {
+  __typename?: 'DealerApplicationsDocAccessFields_phone';
+  create?: Maybe<DealerApplicationsDocAccessFields_Phone_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_Phone_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_Phone_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_Phone_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_Phone_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Phone_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Phone_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Phone_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Email = {
+  __typename?: 'DealerApplicationsDocAccessFields_email';
+  create?: Maybe<DealerApplicationsDocAccessFields_Email_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_Email_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_Email_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_Email_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_Email_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Email_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Email_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Email_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_City = {
+  __typename?: 'DealerApplicationsDocAccessFields_city';
+  create?: Maybe<DealerApplicationsDocAccessFields_City_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_City_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_City_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_City_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_City_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_city_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_City_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_city_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_City_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_city_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_City_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_city_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Message = {
+  __typename?: 'DealerApplicationsDocAccessFields_message';
+  create?: Maybe<DealerApplicationsDocAccessFields_Message_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_Message_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_Message_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_Message_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_Message_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_message_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Message_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_message_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Message_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_message_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Message_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_message_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Status = {
+  __typename?: 'DealerApplicationsDocAccessFields_status';
+  create?: Maybe<DealerApplicationsDocAccessFields_Status_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_Status_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_Status_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_Status_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_Status_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Status_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Status_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_Status_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_UpdatedAt = {
+  __typename?: 'DealerApplicationsDocAccessFields_updatedAt';
+  create?: Maybe<DealerApplicationsDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CreatedAt = {
+  __typename?: 'DealerApplicationsDocAccessFields_createdAt';
+  create?: Maybe<DealerApplicationsDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<DealerApplicationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<DealerApplicationsDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<DealerApplicationsDocAccessFields_CreatedAt_Delete>;
+};
+
+export type DealerApplicationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'DealerApplicationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'DealerApplicationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'DealerApplicationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'DealerApplicationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsCreateDocAccess = {
+  __typename?: 'DealerApplicationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplicationsReadDocAccess = {
+  __typename?: 'DealerApplicationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplicationsUpdateDocAccess = {
+  __typename?: 'DealerApplicationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplicationsDeleteDocAccess = {
+  __typename?: 'DealerApplicationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -7770,10 +8871,12 @@ export enum PayloadLockedDocument_Document_RelationTo {
   LegalPages = 'legal_pages',
   Locations = 'locations',
   TrainingCategories = 'training_categories',
-  TrainingVideos = 'training_videos'
+  TrainingVideos = 'training_videos',
+  Applications = 'applications',
+  DealerApplications = 'dealer_applications'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -7829,7 +8932,9 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   LegalPages = 'legal_pages',
   Locations = 'locations',
   TrainingCategories = 'training_categories',
-  TrainingVideos = 'training_videos'
+  TrainingVideos = 'training_videos',
+  Applications = 'applications',
+  DealerApplications = 'dealer_applications'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -11228,6 +12333,8 @@ export type Access = {
   locations?: Maybe<LocationsAccess>;
   training_categories?: Maybe<Training_CategoriesAccess>;
   training_videos?: Maybe<Training_VideosAccess>;
+  applications?: Maybe<ApplicationsAccess>;
+  dealer_applications?: Maybe<Dealer_ApplicationsAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
@@ -15717,6 +16824,631 @@ export type TrainingVideosDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type ApplicationsAccess = {
+  __typename?: 'applicationsAccess';
+  fields?: Maybe<ApplicationsFields>;
+  create?: Maybe<ApplicationsCreateAccess>;
+  read?: Maybe<ApplicationsReadAccess>;
+  update?: Maybe<ApplicationsUpdateAccess>;
+  delete?: Maybe<ApplicationsDeleteAccess>;
+};
+
+export type ApplicationsFields = {
+  __typename?: 'ApplicationsFields';
+  source?: Maybe<ApplicationsFields_Source>;
+  name?: Maybe<ApplicationsFields_Name>;
+  email?: Maybe<ApplicationsFields_Email>;
+  phone?: Maybe<ApplicationsFields_Phone>;
+  message?: Maybe<ApplicationsFields_Message>;
+  status?: Maybe<ApplicationsFields_Status>;
+  updatedAt?: Maybe<ApplicationsFields_UpdatedAt>;
+  createdAt?: Maybe<ApplicationsFields_CreatedAt>;
+};
+
+export type ApplicationsFields_Source = {
+  __typename?: 'ApplicationsFields_source';
+  create?: Maybe<ApplicationsFields_Source_Create>;
+  read?: Maybe<ApplicationsFields_Source_Read>;
+  update?: Maybe<ApplicationsFields_Source_Update>;
+  delete?: Maybe<ApplicationsFields_Source_Delete>;
+};
+
+export type ApplicationsFields_Source_Create = {
+  __typename?: 'ApplicationsFields_source_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Source_Read = {
+  __typename?: 'ApplicationsFields_source_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Source_Update = {
+  __typename?: 'ApplicationsFields_source_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Source_Delete = {
+  __typename?: 'ApplicationsFields_source_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Name = {
+  __typename?: 'ApplicationsFields_name';
+  create?: Maybe<ApplicationsFields_Name_Create>;
+  read?: Maybe<ApplicationsFields_Name_Read>;
+  update?: Maybe<ApplicationsFields_Name_Update>;
+  delete?: Maybe<ApplicationsFields_Name_Delete>;
+};
+
+export type ApplicationsFields_Name_Create = {
+  __typename?: 'ApplicationsFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Name_Read = {
+  __typename?: 'ApplicationsFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Name_Update = {
+  __typename?: 'ApplicationsFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Name_Delete = {
+  __typename?: 'ApplicationsFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Email = {
+  __typename?: 'ApplicationsFields_email';
+  create?: Maybe<ApplicationsFields_Email_Create>;
+  read?: Maybe<ApplicationsFields_Email_Read>;
+  update?: Maybe<ApplicationsFields_Email_Update>;
+  delete?: Maybe<ApplicationsFields_Email_Delete>;
+};
+
+export type ApplicationsFields_Email_Create = {
+  __typename?: 'ApplicationsFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Email_Read = {
+  __typename?: 'ApplicationsFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Email_Update = {
+  __typename?: 'ApplicationsFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Email_Delete = {
+  __typename?: 'ApplicationsFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Phone = {
+  __typename?: 'ApplicationsFields_phone';
+  create?: Maybe<ApplicationsFields_Phone_Create>;
+  read?: Maybe<ApplicationsFields_Phone_Read>;
+  update?: Maybe<ApplicationsFields_Phone_Update>;
+  delete?: Maybe<ApplicationsFields_Phone_Delete>;
+};
+
+export type ApplicationsFields_Phone_Create = {
+  __typename?: 'ApplicationsFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Phone_Read = {
+  __typename?: 'ApplicationsFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Phone_Update = {
+  __typename?: 'ApplicationsFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Phone_Delete = {
+  __typename?: 'ApplicationsFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Message = {
+  __typename?: 'ApplicationsFields_message';
+  create?: Maybe<ApplicationsFields_Message_Create>;
+  read?: Maybe<ApplicationsFields_Message_Read>;
+  update?: Maybe<ApplicationsFields_Message_Update>;
+  delete?: Maybe<ApplicationsFields_Message_Delete>;
+};
+
+export type ApplicationsFields_Message_Create = {
+  __typename?: 'ApplicationsFields_message_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Message_Read = {
+  __typename?: 'ApplicationsFields_message_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Message_Update = {
+  __typename?: 'ApplicationsFields_message_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Message_Delete = {
+  __typename?: 'ApplicationsFields_message_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Status = {
+  __typename?: 'ApplicationsFields_status';
+  create?: Maybe<ApplicationsFields_Status_Create>;
+  read?: Maybe<ApplicationsFields_Status_Read>;
+  update?: Maybe<ApplicationsFields_Status_Update>;
+  delete?: Maybe<ApplicationsFields_Status_Delete>;
+};
+
+export type ApplicationsFields_Status_Create = {
+  __typename?: 'ApplicationsFields_status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Status_Read = {
+  __typename?: 'ApplicationsFields_status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Status_Update = {
+  __typename?: 'ApplicationsFields_status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_Status_Delete = {
+  __typename?: 'ApplicationsFields_status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_UpdatedAt = {
+  __typename?: 'ApplicationsFields_updatedAt';
+  create?: Maybe<ApplicationsFields_UpdatedAt_Create>;
+  read?: Maybe<ApplicationsFields_UpdatedAt_Read>;
+  update?: Maybe<ApplicationsFields_UpdatedAt_Update>;
+  delete?: Maybe<ApplicationsFields_UpdatedAt_Delete>;
+};
+
+export type ApplicationsFields_UpdatedAt_Create = {
+  __typename?: 'ApplicationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_UpdatedAt_Read = {
+  __typename?: 'ApplicationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_UpdatedAt_Update = {
+  __typename?: 'ApplicationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_UpdatedAt_Delete = {
+  __typename?: 'ApplicationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_CreatedAt = {
+  __typename?: 'ApplicationsFields_createdAt';
+  create?: Maybe<ApplicationsFields_CreatedAt_Create>;
+  read?: Maybe<ApplicationsFields_CreatedAt_Read>;
+  update?: Maybe<ApplicationsFields_CreatedAt_Update>;
+  delete?: Maybe<ApplicationsFields_CreatedAt_Delete>;
+};
+
+export type ApplicationsFields_CreatedAt_Create = {
+  __typename?: 'ApplicationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_CreatedAt_Read = {
+  __typename?: 'ApplicationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_CreatedAt_Update = {
+  __typename?: 'ApplicationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsFields_CreatedAt_Delete = {
+  __typename?: 'ApplicationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ApplicationsCreateAccess = {
+  __typename?: 'ApplicationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ApplicationsReadAccess = {
+  __typename?: 'ApplicationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ApplicationsUpdateAccess = {
+  __typename?: 'ApplicationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ApplicationsDeleteAccess = {
+  __typename?: 'ApplicationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Dealer_ApplicationsAccess = {
+  __typename?: 'dealer_applicationsAccess';
+  fields?: Maybe<DealerApplicationsFields>;
+  create?: Maybe<DealerApplicationsCreateAccess>;
+  read?: Maybe<DealerApplicationsReadAccess>;
+  update?: Maybe<DealerApplicationsUpdateAccess>;
+  delete?: Maybe<DealerApplicationsDeleteAccess>;
+};
+
+export type DealerApplicationsFields = {
+  __typename?: 'DealerApplicationsFields';
+  account?: Maybe<DealerApplicationsFields_Account>;
+  companyName?: Maybe<DealerApplicationsFields_CompanyName>;
+  firstName?: Maybe<DealerApplicationsFields_FirstName>;
+  lastName?: Maybe<DealerApplicationsFields_LastName>;
+  phone?: Maybe<DealerApplicationsFields_Phone>;
+  email?: Maybe<DealerApplicationsFields_Email>;
+  city?: Maybe<DealerApplicationsFields_City>;
+  message?: Maybe<DealerApplicationsFields_Message>;
+  status?: Maybe<DealerApplicationsFields_Status>;
+  updatedAt?: Maybe<DealerApplicationsFields_UpdatedAt>;
+  createdAt?: Maybe<DealerApplicationsFields_CreatedAt>;
+};
+
+export type DealerApplicationsFields_Account = {
+  __typename?: 'DealerApplicationsFields_account';
+  create?: Maybe<DealerApplicationsFields_Account_Create>;
+  read?: Maybe<DealerApplicationsFields_Account_Read>;
+  update?: Maybe<DealerApplicationsFields_Account_Update>;
+  delete?: Maybe<DealerApplicationsFields_Account_Delete>;
+};
+
+export type DealerApplicationsFields_Account_Create = {
+  __typename?: 'DealerApplicationsFields_account_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Account_Read = {
+  __typename?: 'DealerApplicationsFields_account_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Account_Update = {
+  __typename?: 'DealerApplicationsFields_account_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Account_Delete = {
+  __typename?: 'DealerApplicationsFields_account_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CompanyName = {
+  __typename?: 'DealerApplicationsFields_companyName';
+  create?: Maybe<DealerApplicationsFields_CompanyName_Create>;
+  read?: Maybe<DealerApplicationsFields_CompanyName_Read>;
+  update?: Maybe<DealerApplicationsFields_CompanyName_Update>;
+  delete?: Maybe<DealerApplicationsFields_CompanyName_Delete>;
+};
+
+export type DealerApplicationsFields_CompanyName_Create = {
+  __typename?: 'DealerApplicationsFields_companyName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CompanyName_Read = {
+  __typename?: 'DealerApplicationsFields_companyName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CompanyName_Update = {
+  __typename?: 'DealerApplicationsFields_companyName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CompanyName_Delete = {
+  __typename?: 'DealerApplicationsFields_companyName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_FirstName = {
+  __typename?: 'DealerApplicationsFields_firstName';
+  create?: Maybe<DealerApplicationsFields_FirstName_Create>;
+  read?: Maybe<DealerApplicationsFields_FirstName_Read>;
+  update?: Maybe<DealerApplicationsFields_FirstName_Update>;
+  delete?: Maybe<DealerApplicationsFields_FirstName_Delete>;
+};
+
+export type DealerApplicationsFields_FirstName_Create = {
+  __typename?: 'DealerApplicationsFields_firstName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_FirstName_Read = {
+  __typename?: 'DealerApplicationsFields_firstName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_FirstName_Update = {
+  __typename?: 'DealerApplicationsFields_firstName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_FirstName_Delete = {
+  __typename?: 'DealerApplicationsFields_firstName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_LastName = {
+  __typename?: 'DealerApplicationsFields_lastName';
+  create?: Maybe<DealerApplicationsFields_LastName_Create>;
+  read?: Maybe<DealerApplicationsFields_LastName_Read>;
+  update?: Maybe<DealerApplicationsFields_LastName_Update>;
+  delete?: Maybe<DealerApplicationsFields_LastName_Delete>;
+};
+
+export type DealerApplicationsFields_LastName_Create = {
+  __typename?: 'DealerApplicationsFields_lastName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_LastName_Read = {
+  __typename?: 'DealerApplicationsFields_lastName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_LastName_Update = {
+  __typename?: 'DealerApplicationsFields_lastName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_LastName_Delete = {
+  __typename?: 'DealerApplicationsFields_lastName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Phone = {
+  __typename?: 'DealerApplicationsFields_phone';
+  create?: Maybe<DealerApplicationsFields_Phone_Create>;
+  read?: Maybe<DealerApplicationsFields_Phone_Read>;
+  update?: Maybe<DealerApplicationsFields_Phone_Update>;
+  delete?: Maybe<DealerApplicationsFields_Phone_Delete>;
+};
+
+export type DealerApplicationsFields_Phone_Create = {
+  __typename?: 'DealerApplicationsFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Phone_Read = {
+  __typename?: 'DealerApplicationsFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Phone_Update = {
+  __typename?: 'DealerApplicationsFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Phone_Delete = {
+  __typename?: 'DealerApplicationsFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Email = {
+  __typename?: 'DealerApplicationsFields_email';
+  create?: Maybe<DealerApplicationsFields_Email_Create>;
+  read?: Maybe<DealerApplicationsFields_Email_Read>;
+  update?: Maybe<DealerApplicationsFields_Email_Update>;
+  delete?: Maybe<DealerApplicationsFields_Email_Delete>;
+};
+
+export type DealerApplicationsFields_Email_Create = {
+  __typename?: 'DealerApplicationsFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Email_Read = {
+  __typename?: 'DealerApplicationsFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Email_Update = {
+  __typename?: 'DealerApplicationsFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Email_Delete = {
+  __typename?: 'DealerApplicationsFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_City = {
+  __typename?: 'DealerApplicationsFields_city';
+  create?: Maybe<DealerApplicationsFields_City_Create>;
+  read?: Maybe<DealerApplicationsFields_City_Read>;
+  update?: Maybe<DealerApplicationsFields_City_Update>;
+  delete?: Maybe<DealerApplicationsFields_City_Delete>;
+};
+
+export type DealerApplicationsFields_City_Create = {
+  __typename?: 'DealerApplicationsFields_city_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_City_Read = {
+  __typename?: 'DealerApplicationsFields_city_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_City_Update = {
+  __typename?: 'DealerApplicationsFields_city_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_City_Delete = {
+  __typename?: 'DealerApplicationsFields_city_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Message = {
+  __typename?: 'DealerApplicationsFields_message';
+  create?: Maybe<DealerApplicationsFields_Message_Create>;
+  read?: Maybe<DealerApplicationsFields_Message_Read>;
+  update?: Maybe<DealerApplicationsFields_Message_Update>;
+  delete?: Maybe<DealerApplicationsFields_Message_Delete>;
+};
+
+export type DealerApplicationsFields_Message_Create = {
+  __typename?: 'DealerApplicationsFields_message_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Message_Read = {
+  __typename?: 'DealerApplicationsFields_message_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Message_Update = {
+  __typename?: 'DealerApplicationsFields_message_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Message_Delete = {
+  __typename?: 'DealerApplicationsFields_message_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Status = {
+  __typename?: 'DealerApplicationsFields_status';
+  create?: Maybe<DealerApplicationsFields_Status_Create>;
+  read?: Maybe<DealerApplicationsFields_Status_Read>;
+  update?: Maybe<DealerApplicationsFields_Status_Update>;
+  delete?: Maybe<DealerApplicationsFields_Status_Delete>;
+};
+
+export type DealerApplicationsFields_Status_Create = {
+  __typename?: 'DealerApplicationsFields_status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Status_Read = {
+  __typename?: 'DealerApplicationsFields_status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Status_Update = {
+  __typename?: 'DealerApplicationsFields_status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_Status_Delete = {
+  __typename?: 'DealerApplicationsFields_status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_UpdatedAt = {
+  __typename?: 'DealerApplicationsFields_updatedAt';
+  create?: Maybe<DealerApplicationsFields_UpdatedAt_Create>;
+  read?: Maybe<DealerApplicationsFields_UpdatedAt_Read>;
+  update?: Maybe<DealerApplicationsFields_UpdatedAt_Update>;
+  delete?: Maybe<DealerApplicationsFields_UpdatedAt_Delete>;
+};
+
+export type DealerApplicationsFields_UpdatedAt_Create = {
+  __typename?: 'DealerApplicationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_UpdatedAt_Read = {
+  __typename?: 'DealerApplicationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_UpdatedAt_Update = {
+  __typename?: 'DealerApplicationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_UpdatedAt_Delete = {
+  __typename?: 'DealerApplicationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CreatedAt = {
+  __typename?: 'DealerApplicationsFields_createdAt';
+  create?: Maybe<DealerApplicationsFields_CreatedAt_Create>;
+  read?: Maybe<DealerApplicationsFields_CreatedAt_Read>;
+  update?: Maybe<DealerApplicationsFields_CreatedAt_Update>;
+  delete?: Maybe<DealerApplicationsFields_CreatedAt_Delete>;
+};
+
+export type DealerApplicationsFields_CreatedAt_Create = {
+  __typename?: 'DealerApplicationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CreatedAt_Read = {
+  __typename?: 'DealerApplicationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CreatedAt_Update = {
+  __typename?: 'DealerApplicationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsFields_CreatedAt_Delete = {
+  __typename?: 'DealerApplicationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerApplicationsCreateAccess = {
+  __typename?: 'DealerApplicationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplicationsReadAccess = {
+  __typename?: 'DealerApplicationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplicationsUpdateAccess = {
+  __typename?: 'DealerApplicationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerApplicationsDeleteAccess = {
+  __typename?: 'DealerApplicationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -18857,6 +20589,14 @@ export type Mutation = {
   updateTrainingVideo?: Maybe<TrainingVideo>;
   deleteTrainingVideo?: Maybe<TrainingVideo>;
   duplicateTrainingVideo?: Maybe<TrainingVideo>;
+  createApplication?: Maybe<Application>;
+  updateApplication?: Maybe<Application>;
+  deleteApplication?: Maybe<Application>;
+  duplicateApplication?: Maybe<Application>;
+  createDealerApplication?: Maybe<DealerApplication>;
+  updateDealerApplication?: Maybe<DealerApplication>;
+  deleteDealerApplication?: Maybe<DealerApplication>;
+  duplicateDealerApplication?: Maybe<DealerApplication>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -19195,6 +20935,60 @@ export type MutationDeleteTrainingVideoArgs = {
 export type MutationDuplicateTrainingVideoArgs = {
   id: Scalars['Int']['input'];
   data: MutationTrainingVideoInput;
+};
+
+
+export type MutationCreateApplicationArgs = {
+  data: MutationApplicationInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateApplicationArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationApplicationUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteApplicationArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateApplicationArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationApplicationInput;
+};
+
+
+export type MutationCreateDealerApplicationArgs = {
+  data: MutationDealerApplicationInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateDealerApplicationArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationDealerApplicationUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteDealerApplicationArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateDealerApplicationArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationDealerApplicationInput;
 };
 
 
@@ -19833,6 +21627,94 @@ export type MutationTrainingVideoUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationApplicationInput = {
+  source: Application_Source_MutationInput;
+  name: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  status: Application_Status_MutationInput;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum Application_Source_MutationInput {
+  Contacts = 'contacts',
+  HeroPopup = 'hero_popup'
+}
+
+export enum Application_Status_MutationInput {
+  New = 'new',
+  Processing = 'processing',
+  Completed = 'completed',
+  Rejected = 'rejected'
+}
+
+export type MutationApplicationUpdateInput = {
+  source?: InputMaybe<ApplicationUpdate_Source_MutationInput>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<ApplicationUpdate_Status_MutationInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum ApplicationUpdate_Source_MutationInput {
+  Contacts = 'contacts',
+  HeroPopup = 'hero_popup'
+}
+
+export enum ApplicationUpdate_Status_MutationInput {
+  New = 'new',
+  Processing = 'processing',
+  Completed = 'completed',
+  Rejected = 'rejected'
+}
+
+export type MutationDealerApplicationInput = {
+  account?: InputMaybe<Scalars['Int']['input']>;
+  companyName: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  city: Scalars['String']['input'];
+  message?: InputMaybe<Scalars['String']['input']>;
+  status: DealerApplication_Status_MutationInput;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum DealerApplication_Status_MutationInput {
+  New = 'new',
+  Processing = 'processing',
+  Approved = 'approved',
+  Rejected = 'rejected'
+}
+
+export type MutationDealerApplicationUpdateInput = {
+  account?: InputMaybe<Scalars['Int']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<DealerApplicationUpdate_Status_MutationInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum DealerApplicationUpdate_Status_MutationInput {
+  New = 'new',
+  Processing = 'processing',
+  Approved = 'approved',
+  Rejected = 'rejected'
+}
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -19867,7 +21749,9 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   LegalPages = 'legal_pages',
   Locations = 'locations',
   TrainingCategories = 'training_categories',
-  TrainingVideos = 'training_videos'
+  TrainingVideos = 'training_videos',
+  Applications = 'applications',
+  DealerApplications = 'dealer_applications'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -19903,7 +21787,9 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   LegalPages = 'legal_pages',
   Locations = 'locations',
   TrainingCategories = 'training_categories',
-  TrainingVideos = 'training_videos'
+  TrainingVideos = 'training_videos',
+  Applications = 'applications',
+  DealerApplications = 'dealer_applications'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {

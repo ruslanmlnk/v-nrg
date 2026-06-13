@@ -187,7 +187,9 @@ export default function AccountPage() {
                         active={false}
                         icon={<PriceListIcon />}
                         label="Прайс-лист"
-                        onClick={() => undefined}
+                        onClick={() => {
+                          window.location.href = '/api/dealer-price-list'
+                        }}
                       />
                     ) : (
                       <SidebarButton

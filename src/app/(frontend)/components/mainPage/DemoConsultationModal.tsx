@@ -13,6 +13,8 @@ const inputClassName =
 
 export default function DemoConsultationModal({ isOpen, onClose }: DemoConsultationModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const handleClose = useCallback(() => {
     setIsSubmitted(false)
     onClose()
@@ -35,8 +37,27 @@ export default function DemoConsultationModal({ isOpen, onClose }: DemoConsultat
     }
   }, [handleClose, isOpen])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setError('')
+    setIsSubmitting(true)
+    const formData = new FormData(event.currentTarget)
+    const response = await fetch('/api/applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: formData.get('comment'),
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        source: 'hero-popup',
+        website: formData.get('website'),
+      }),
+    }).catch(() => null)
+    setIsSubmitting(false)
+    if (!response?.ok) {
+      setError('Не вдалося надіслати заявку. Спробуйте ще раз.')
+      return
+    }
     setIsSubmitted(true)
   }
 
@@ -149,11 +170,14 @@ export default function DemoConsultationModal({ isOpen, onClose }: DemoConsultat
             </label>
 
             <button
+              disabled={isSubmitting}
               className="w-full rounded-[40px] bg-[#4FACF5] px-6 py-3 text-[18px] font-medium leading-[145%] text-white transition-colors hover:bg-[#409CE0]"
               type="submit"
             >
-              Записатися на консультацію
+              {isSubmitting ? 'Надсилання...' : 'Записатися на консультацію'}
             </button>
+            <input className="hidden" name="website" tabIndex={-1} autoComplete="off" />
+            {error ? <p className="text-center text-[#D64545]">{error}</p> : null}
 
             <p className="mx-auto max-w-[330px] text-center text-[16px] font-medium leading-[165%] text-[#22354A]">
               Натискаючи кнопку, ви погоджуєтесь з{' '}

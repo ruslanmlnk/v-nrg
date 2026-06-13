@@ -45,6 +45,14 @@ type Query {
   TrainingVideos(draft: Boolean, where: TrainingVideo_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingVideos
   countTrainingVideos(draft: Boolean, trash: Boolean, where: TrainingVideo_where): countTrainingVideos
   docAccessTrainingVideo(id: Int!): training_videosDocAccess
+  Application(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Application
+  Applications(draft: Boolean, where: Application_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Applications
+  countApplications(draft: Boolean, trash: Boolean, where: Application_where): countApplications
+  docAccessApplication(id: Int!): applicationsDocAccess
+  DealerApplication(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): DealerApplication
+  DealerApplications(draft: Boolean, where: DealerApplication_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): DealerApplications
+  countDealerApplications(draft: Boolean, trash: Boolean, where: DealerApplication_where): countDealerApplications
+  docAccessDealerApplication(id: Int!): dealer_applicationsDocAccess
   PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
@@ -6262,6 +6270,922 @@ type TrainingVideosDeleteDocAccess {
   where: JSONObject
 }
 
+type Application {
+  id: Int!
+  source: Application_source!
+  name: String!
+  email: EmailAddress
+  phone: String
+  message: String
+  status: Application_status!
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum Application_source {
+  contacts
+  hero_popup
+}
+
+enum Application_status {
+  new
+  processing
+  completed
+  rejected
+}
+
+type Applications {
+  docs: [Application!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input Application_where {
+  source: Application_source_operator
+  name: Application_name_operator
+  email: Application_email_operator
+  phone: Application_phone_operator
+  message: Application_message_operator
+  status: Application_status_operator
+  updatedAt: Application_updatedAt_operator
+  createdAt: Application_createdAt_operator
+  id: Application_id_operator
+  AND: [Application_where_and]
+  OR: [Application_where_or]
+}
+
+input Application_source_operator {
+  equals: Application_source_Input
+  not_equals: Application_source_Input
+  in: [Application_source_Input]
+  not_in: [Application_source_Input]
+  all: [Application_source_Input]
+}
+
+enum Application_source_Input {
+  contacts
+  hero_popup
+}
+
+input Application_name_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Application_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+  exists: Boolean
+}
+
+input Application_phone_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_message_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input Application_status_operator {
+  equals: Application_status_Input
+  not_equals: Application_status_Input
+  in: [Application_status_Input]
+  not_in: [Application_status_Input]
+  all: [Application_status_Input]
+}
+
+enum Application_status_Input {
+  new
+  processing
+  completed
+  rejected
+}
+
+input Application_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Application_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Application_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input Application_where_and {
+  source: Application_source_operator
+  name: Application_name_operator
+  email: Application_email_operator
+  phone: Application_phone_operator
+  message: Application_message_operator
+  status: Application_status_operator
+  updatedAt: Application_updatedAt_operator
+  createdAt: Application_createdAt_operator
+  id: Application_id_operator
+  AND: [Application_where_and]
+  OR: [Application_where_or]
+}
+
+input Application_where_or {
+  source: Application_source_operator
+  name: Application_name_operator
+  email: Application_email_operator
+  phone: Application_phone_operator
+  message: Application_message_operator
+  status: Application_status_operator
+  updatedAt: Application_updatedAt_operator
+  createdAt: Application_createdAt_operator
+  id: Application_id_operator
+  AND: [Application_where_and]
+  OR: [Application_where_or]
+}
+
+type countApplications {
+  totalDocs: Int
+}
+
+type applicationsDocAccess {
+  fields: ApplicationsDocAccessFields
+  create: ApplicationsCreateDocAccess
+  read: ApplicationsReadDocAccess
+  update: ApplicationsUpdateDocAccess
+  delete: ApplicationsDeleteDocAccess
+}
+
+type ApplicationsDocAccessFields {
+  source: ApplicationsDocAccessFields_source
+  name: ApplicationsDocAccessFields_name
+  email: ApplicationsDocAccessFields_email
+  phone: ApplicationsDocAccessFields_phone
+  message: ApplicationsDocAccessFields_message
+  status: ApplicationsDocAccessFields_status
+  updatedAt: ApplicationsDocAccessFields_updatedAt
+  createdAt: ApplicationsDocAccessFields_createdAt
+}
+
+type ApplicationsDocAccessFields_source {
+  create: ApplicationsDocAccessFields_source_Create
+  read: ApplicationsDocAccessFields_source_Read
+  update: ApplicationsDocAccessFields_source_Update
+  delete: ApplicationsDocAccessFields_source_Delete
+}
+
+type ApplicationsDocAccessFields_source_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_source_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_source_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_source_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_name {
+  create: ApplicationsDocAccessFields_name_Create
+  read: ApplicationsDocAccessFields_name_Read
+  update: ApplicationsDocAccessFields_name_Update
+  delete: ApplicationsDocAccessFields_name_Delete
+}
+
+type ApplicationsDocAccessFields_name_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_name_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_name_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_name_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_email {
+  create: ApplicationsDocAccessFields_email_Create
+  read: ApplicationsDocAccessFields_email_Read
+  update: ApplicationsDocAccessFields_email_Update
+  delete: ApplicationsDocAccessFields_email_Delete
+}
+
+type ApplicationsDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_phone {
+  create: ApplicationsDocAccessFields_phone_Create
+  read: ApplicationsDocAccessFields_phone_Read
+  update: ApplicationsDocAccessFields_phone_Update
+  delete: ApplicationsDocAccessFields_phone_Delete
+}
+
+type ApplicationsDocAccessFields_phone_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_phone_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_phone_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_phone_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_message {
+  create: ApplicationsDocAccessFields_message_Create
+  read: ApplicationsDocAccessFields_message_Read
+  update: ApplicationsDocAccessFields_message_Update
+  delete: ApplicationsDocAccessFields_message_Delete
+}
+
+type ApplicationsDocAccessFields_message_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_message_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_message_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_message_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_status {
+  create: ApplicationsDocAccessFields_status_Create
+  read: ApplicationsDocAccessFields_status_Read
+  update: ApplicationsDocAccessFields_status_Update
+  delete: ApplicationsDocAccessFields_status_Delete
+}
+
+type ApplicationsDocAccessFields_status_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_status_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_status_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_status_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_updatedAt {
+  create: ApplicationsDocAccessFields_updatedAt_Create
+  read: ApplicationsDocAccessFields_updatedAt_Read
+  update: ApplicationsDocAccessFields_updatedAt_Update
+  delete: ApplicationsDocAccessFields_updatedAt_Delete
+}
+
+type ApplicationsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_createdAt {
+  create: ApplicationsDocAccessFields_createdAt_Create
+  read: ApplicationsDocAccessFields_createdAt_Read
+  update: ApplicationsDocAccessFields_createdAt_Update
+  delete: ApplicationsDocAccessFields_createdAt_Delete
+}
+
+type ApplicationsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ApplicationsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ApplicationsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ApplicationsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ApplicationsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplication {
+  id: Int!
+  account: User
+  companyName: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  email: EmailAddress!
+  city: String!
+  message: String
+  status: DealerApplication_status!
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum DealerApplication_status {
+  new
+  processing
+  approved
+  rejected
+}
+
+type DealerApplications {
+  docs: [DealerApplication!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input DealerApplication_where {
+  account: DealerApplication_account_operator
+  companyName: DealerApplication_companyName_operator
+  firstName: DealerApplication_firstName_operator
+  lastName: DealerApplication_lastName_operator
+  phone: DealerApplication_phone_operator
+  email: DealerApplication_email_operator
+  city: DealerApplication_city_operator
+  message: DealerApplication_message_operator
+  status: DealerApplication_status_operator
+  updatedAt: DealerApplication_updatedAt_operator
+  createdAt: DealerApplication_createdAt_operator
+  id: DealerApplication_id_operator
+  AND: [DealerApplication_where_and]
+  OR: [DealerApplication_where_or]
+}
+
+input DealerApplication_account_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input DealerApplication_companyName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input DealerApplication_firstName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input DealerApplication_lastName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input DealerApplication_phone_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input DealerApplication_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+}
+
+input DealerApplication_city_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input DealerApplication_message_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input DealerApplication_status_operator {
+  equals: DealerApplication_status_Input
+  not_equals: DealerApplication_status_Input
+  in: [DealerApplication_status_Input]
+  not_in: [DealerApplication_status_Input]
+  all: [DealerApplication_status_Input]
+}
+
+enum DealerApplication_status_Input {
+  new
+  processing
+  approved
+  rejected
+}
+
+input DealerApplication_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input DealerApplication_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input DealerApplication_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input DealerApplication_where_and {
+  account: DealerApplication_account_operator
+  companyName: DealerApplication_companyName_operator
+  firstName: DealerApplication_firstName_operator
+  lastName: DealerApplication_lastName_operator
+  phone: DealerApplication_phone_operator
+  email: DealerApplication_email_operator
+  city: DealerApplication_city_operator
+  message: DealerApplication_message_operator
+  status: DealerApplication_status_operator
+  updatedAt: DealerApplication_updatedAt_operator
+  createdAt: DealerApplication_createdAt_operator
+  id: DealerApplication_id_operator
+  AND: [DealerApplication_where_and]
+  OR: [DealerApplication_where_or]
+}
+
+input DealerApplication_where_or {
+  account: DealerApplication_account_operator
+  companyName: DealerApplication_companyName_operator
+  firstName: DealerApplication_firstName_operator
+  lastName: DealerApplication_lastName_operator
+  phone: DealerApplication_phone_operator
+  email: DealerApplication_email_operator
+  city: DealerApplication_city_operator
+  message: DealerApplication_message_operator
+  status: DealerApplication_status_operator
+  updatedAt: DealerApplication_updatedAt_operator
+  createdAt: DealerApplication_createdAt_operator
+  id: DealerApplication_id_operator
+  AND: [DealerApplication_where_and]
+  OR: [DealerApplication_where_or]
+}
+
+type countDealerApplications {
+  totalDocs: Int
+}
+
+type dealer_applicationsDocAccess {
+  fields: DealerApplicationsDocAccessFields
+  create: DealerApplicationsCreateDocAccess
+  read: DealerApplicationsReadDocAccess
+  update: DealerApplicationsUpdateDocAccess
+  delete: DealerApplicationsDeleteDocAccess
+}
+
+type DealerApplicationsDocAccessFields {
+  account: DealerApplicationsDocAccessFields_account
+  companyName: DealerApplicationsDocAccessFields_companyName
+  firstName: DealerApplicationsDocAccessFields_firstName
+  lastName: DealerApplicationsDocAccessFields_lastName
+  phone: DealerApplicationsDocAccessFields_phone
+  email: DealerApplicationsDocAccessFields_email
+  city: DealerApplicationsDocAccessFields_city
+  message: DealerApplicationsDocAccessFields_message
+  status: DealerApplicationsDocAccessFields_status
+  updatedAt: DealerApplicationsDocAccessFields_updatedAt
+  createdAt: DealerApplicationsDocAccessFields_createdAt
+}
+
+type DealerApplicationsDocAccessFields_account {
+  create: DealerApplicationsDocAccessFields_account_Create
+  read: DealerApplicationsDocAccessFields_account_Read
+  update: DealerApplicationsDocAccessFields_account_Update
+  delete: DealerApplicationsDocAccessFields_account_Delete
+}
+
+type DealerApplicationsDocAccessFields_account_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_account_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_account_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_account_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_companyName {
+  create: DealerApplicationsDocAccessFields_companyName_Create
+  read: DealerApplicationsDocAccessFields_companyName_Read
+  update: DealerApplicationsDocAccessFields_companyName_Update
+  delete: DealerApplicationsDocAccessFields_companyName_Delete
+}
+
+type DealerApplicationsDocAccessFields_companyName_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_companyName_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_companyName_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_companyName_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_firstName {
+  create: DealerApplicationsDocAccessFields_firstName_Create
+  read: DealerApplicationsDocAccessFields_firstName_Read
+  update: DealerApplicationsDocAccessFields_firstName_Update
+  delete: DealerApplicationsDocAccessFields_firstName_Delete
+}
+
+type DealerApplicationsDocAccessFields_firstName_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_firstName_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_firstName_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_firstName_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_lastName {
+  create: DealerApplicationsDocAccessFields_lastName_Create
+  read: DealerApplicationsDocAccessFields_lastName_Read
+  update: DealerApplicationsDocAccessFields_lastName_Update
+  delete: DealerApplicationsDocAccessFields_lastName_Delete
+}
+
+type DealerApplicationsDocAccessFields_lastName_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_lastName_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_lastName_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_lastName_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_phone {
+  create: DealerApplicationsDocAccessFields_phone_Create
+  read: DealerApplicationsDocAccessFields_phone_Read
+  update: DealerApplicationsDocAccessFields_phone_Update
+  delete: DealerApplicationsDocAccessFields_phone_Delete
+}
+
+type DealerApplicationsDocAccessFields_phone_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_phone_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_phone_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_phone_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_email {
+  create: DealerApplicationsDocAccessFields_email_Create
+  read: DealerApplicationsDocAccessFields_email_Read
+  update: DealerApplicationsDocAccessFields_email_Update
+  delete: DealerApplicationsDocAccessFields_email_Delete
+}
+
+type DealerApplicationsDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_city {
+  create: DealerApplicationsDocAccessFields_city_Create
+  read: DealerApplicationsDocAccessFields_city_Read
+  update: DealerApplicationsDocAccessFields_city_Update
+  delete: DealerApplicationsDocAccessFields_city_Delete
+}
+
+type DealerApplicationsDocAccessFields_city_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_city_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_city_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_city_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_message {
+  create: DealerApplicationsDocAccessFields_message_Create
+  read: DealerApplicationsDocAccessFields_message_Read
+  update: DealerApplicationsDocAccessFields_message_Update
+  delete: DealerApplicationsDocAccessFields_message_Delete
+}
+
+type DealerApplicationsDocAccessFields_message_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_message_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_message_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_message_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_status {
+  create: DealerApplicationsDocAccessFields_status_Create
+  read: DealerApplicationsDocAccessFields_status_Read
+  update: DealerApplicationsDocAccessFields_status_Update
+  delete: DealerApplicationsDocAccessFields_status_Delete
+}
+
+type DealerApplicationsDocAccessFields_status_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_status_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_status_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_status_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_updatedAt {
+  create: DealerApplicationsDocAccessFields_updatedAt_Create
+  read: DealerApplicationsDocAccessFields_updatedAt_Read
+  update: DealerApplicationsDocAccessFields_updatedAt_Update
+  delete: DealerApplicationsDocAccessFields_updatedAt_Delete
+}
+
+type DealerApplicationsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_createdAt {
+  create: DealerApplicationsDocAccessFields_createdAt_Create
+  read: DealerApplicationsDocAccessFields_createdAt_Read
+  update: DealerApplicationsDocAccessFields_createdAt_Update
+  delete: DealerApplicationsDocAccessFields_createdAt_Delete
+}
+
+type DealerApplicationsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplicationsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplicationsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplicationsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -6444,9 +7368,11 @@ enum PayloadLockedDocument_Document_RelationTo {
   locations
   training_categories
   training_videos
+  applications
+  dealer_applications
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -6501,6 +7427,8 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   locations
   training_categories
   training_videos
+  applications
+  dealer_applications
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -9353,6 +10281,8 @@ type Access {
   locations: locationsAccess
   training_categories: training_categoriesAccess
   training_videos: training_videosAccess
+  applications: applicationsAccess
+  dealer_applications: dealer_applicationsAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -13072,6 +14002,524 @@ type TrainingVideosDeleteAccess {
   where: JSONObject
 }
 
+type applicationsAccess {
+  fields: ApplicationsFields
+  create: ApplicationsCreateAccess
+  read: ApplicationsReadAccess
+  update: ApplicationsUpdateAccess
+  delete: ApplicationsDeleteAccess
+}
+
+type ApplicationsFields {
+  source: ApplicationsFields_source
+  name: ApplicationsFields_name
+  email: ApplicationsFields_email
+  phone: ApplicationsFields_phone
+  message: ApplicationsFields_message
+  status: ApplicationsFields_status
+  updatedAt: ApplicationsFields_updatedAt
+  createdAt: ApplicationsFields_createdAt
+}
+
+type ApplicationsFields_source {
+  create: ApplicationsFields_source_Create
+  read: ApplicationsFields_source_Read
+  update: ApplicationsFields_source_Update
+  delete: ApplicationsFields_source_Delete
+}
+
+type ApplicationsFields_source_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_source_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_source_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_source_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_name {
+  create: ApplicationsFields_name_Create
+  read: ApplicationsFields_name_Read
+  update: ApplicationsFields_name_Update
+  delete: ApplicationsFields_name_Delete
+}
+
+type ApplicationsFields_name_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_name_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_name_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_name_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_email {
+  create: ApplicationsFields_email_Create
+  read: ApplicationsFields_email_Read
+  update: ApplicationsFields_email_Update
+  delete: ApplicationsFields_email_Delete
+}
+
+type ApplicationsFields_email_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_email_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_email_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_email_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_phone {
+  create: ApplicationsFields_phone_Create
+  read: ApplicationsFields_phone_Read
+  update: ApplicationsFields_phone_Update
+  delete: ApplicationsFields_phone_Delete
+}
+
+type ApplicationsFields_phone_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_phone_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_phone_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_phone_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_message {
+  create: ApplicationsFields_message_Create
+  read: ApplicationsFields_message_Read
+  update: ApplicationsFields_message_Update
+  delete: ApplicationsFields_message_Delete
+}
+
+type ApplicationsFields_message_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_message_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_message_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_message_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_status {
+  create: ApplicationsFields_status_Create
+  read: ApplicationsFields_status_Read
+  update: ApplicationsFields_status_Update
+  delete: ApplicationsFields_status_Delete
+}
+
+type ApplicationsFields_status_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_status_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_status_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_status_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_updatedAt {
+  create: ApplicationsFields_updatedAt_Create
+  read: ApplicationsFields_updatedAt_Read
+  update: ApplicationsFields_updatedAt_Update
+  delete: ApplicationsFields_updatedAt_Delete
+}
+
+type ApplicationsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsFields_createdAt {
+  create: ApplicationsFields_createdAt_Create
+  read: ApplicationsFields_createdAt_Read
+  update: ApplicationsFields_createdAt_Update
+  delete: ApplicationsFields_createdAt_Delete
+}
+
+type ApplicationsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ApplicationsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ApplicationsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ApplicationsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ApplicationsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ApplicationsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ApplicationsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ApplicationsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type dealer_applicationsAccess {
+  fields: DealerApplicationsFields
+  create: DealerApplicationsCreateAccess
+  read: DealerApplicationsReadAccess
+  update: DealerApplicationsUpdateAccess
+  delete: DealerApplicationsDeleteAccess
+}
+
+type DealerApplicationsFields {
+  account: DealerApplicationsFields_account
+  companyName: DealerApplicationsFields_companyName
+  firstName: DealerApplicationsFields_firstName
+  lastName: DealerApplicationsFields_lastName
+  phone: DealerApplicationsFields_phone
+  email: DealerApplicationsFields_email
+  city: DealerApplicationsFields_city
+  message: DealerApplicationsFields_message
+  status: DealerApplicationsFields_status
+  updatedAt: DealerApplicationsFields_updatedAt
+  createdAt: DealerApplicationsFields_createdAt
+}
+
+type DealerApplicationsFields_account {
+  create: DealerApplicationsFields_account_Create
+  read: DealerApplicationsFields_account_Read
+  update: DealerApplicationsFields_account_Update
+  delete: DealerApplicationsFields_account_Delete
+}
+
+type DealerApplicationsFields_account_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_account_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_account_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_account_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_companyName {
+  create: DealerApplicationsFields_companyName_Create
+  read: DealerApplicationsFields_companyName_Read
+  update: DealerApplicationsFields_companyName_Update
+  delete: DealerApplicationsFields_companyName_Delete
+}
+
+type DealerApplicationsFields_companyName_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_companyName_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_companyName_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_companyName_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_firstName {
+  create: DealerApplicationsFields_firstName_Create
+  read: DealerApplicationsFields_firstName_Read
+  update: DealerApplicationsFields_firstName_Update
+  delete: DealerApplicationsFields_firstName_Delete
+}
+
+type DealerApplicationsFields_firstName_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_firstName_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_firstName_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_firstName_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_lastName {
+  create: DealerApplicationsFields_lastName_Create
+  read: DealerApplicationsFields_lastName_Read
+  update: DealerApplicationsFields_lastName_Update
+  delete: DealerApplicationsFields_lastName_Delete
+}
+
+type DealerApplicationsFields_lastName_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_lastName_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_lastName_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_lastName_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_phone {
+  create: DealerApplicationsFields_phone_Create
+  read: DealerApplicationsFields_phone_Read
+  update: DealerApplicationsFields_phone_Update
+  delete: DealerApplicationsFields_phone_Delete
+}
+
+type DealerApplicationsFields_phone_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_phone_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_phone_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_phone_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_email {
+  create: DealerApplicationsFields_email_Create
+  read: DealerApplicationsFields_email_Read
+  update: DealerApplicationsFields_email_Update
+  delete: DealerApplicationsFields_email_Delete
+}
+
+type DealerApplicationsFields_email_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_email_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_email_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_email_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_city {
+  create: DealerApplicationsFields_city_Create
+  read: DealerApplicationsFields_city_Read
+  update: DealerApplicationsFields_city_Update
+  delete: DealerApplicationsFields_city_Delete
+}
+
+type DealerApplicationsFields_city_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_city_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_city_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_city_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_message {
+  create: DealerApplicationsFields_message_Create
+  read: DealerApplicationsFields_message_Read
+  update: DealerApplicationsFields_message_Update
+  delete: DealerApplicationsFields_message_Delete
+}
+
+type DealerApplicationsFields_message_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_message_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_message_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_message_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_status {
+  create: DealerApplicationsFields_status_Create
+  read: DealerApplicationsFields_status_Read
+  update: DealerApplicationsFields_status_Update
+  delete: DealerApplicationsFields_status_Delete
+}
+
+type DealerApplicationsFields_status_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_status_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_status_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_status_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_updatedAt {
+  create: DealerApplicationsFields_updatedAt_Create
+  read: DealerApplicationsFields_updatedAt_Read
+  update: DealerApplicationsFields_updatedAt_Update
+  delete: DealerApplicationsFields_updatedAt_Delete
+}
+
+type DealerApplicationsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_createdAt {
+  create: DealerApplicationsFields_createdAt_Create
+  read: DealerApplicationsFields_createdAt_Read
+  update: DealerApplicationsFields_createdAt_Update
+  delete: DealerApplicationsFields_createdAt_Delete
+}
+
+type DealerApplicationsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type DealerApplicationsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type DealerApplicationsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplicationsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplicationsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerApplicationsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -15677,6 +17125,14 @@ type Mutation {
   updateTrainingVideo(id: Int!, autosave: Boolean, data: mutationTrainingVideoUpdateInput!, draft: Boolean, trash: Boolean): TrainingVideo
   deleteTrainingVideo(id: Int!, trash: Boolean): TrainingVideo
   duplicateTrainingVideo(id: Int!, data: mutationTrainingVideoInput!): TrainingVideo
+  createApplication(data: mutationApplicationInput!, draft: Boolean): Application
+  updateApplication(id: Int!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean, trash: Boolean): Application
+  deleteApplication(id: Int!, trash: Boolean): Application
+  duplicateApplication(id: Int!, data: mutationApplicationInput!): Application
+  createDealerApplication(data: mutationDealerApplicationInput!, draft: Boolean): DealerApplication
+  updateDealerApplication(id: Int!, autosave: Boolean, data: mutationDealerApplicationUpdateInput!, draft: Boolean, trash: Boolean): DealerApplication
+  deleteDealerApplication(id: Int!, trash: Boolean): DealerApplication
+  duplicateDealerApplication(id: Int!, data: mutationDealerApplicationInput!): DealerApplication
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -16227,6 +17683,94 @@ input mutationTrainingVideoUpdateInput {
   createdAt: String
 }
 
+input mutationApplicationInput {
+  source: Application_source_MutationInput!
+  name: String!
+  email: String
+  phone: String
+  message: String
+  status: Application_status_MutationInput!
+  updatedAt: String
+  createdAt: String
+}
+
+enum Application_source_MutationInput {
+  contacts
+  hero_popup
+}
+
+enum Application_status_MutationInput {
+  new
+  processing
+  completed
+  rejected
+}
+
+input mutationApplicationUpdateInput {
+  source: ApplicationUpdate_source_MutationInput
+  name: String
+  email: String
+  phone: String
+  message: String
+  status: ApplicationUpdate_status_MutationInput
+  updatedAt: String
+  createdAt: String
+}
+
+enum ApplicationUpdate_source_MutationInput {
+  contacts
+  hero_popup
+}
+
+enum ApplicationUpdate_status_MutationInput {
+  new
+  processing
+  completed
+  rejected
+}
+
+input mutationDealerApplicationInput {
+  account: Int
+  companyName: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  email: String!
+  city: String!
+  message: String
+  status: DealerApplication_status_MutationInput!
+  updatedAt: String
+  createdAt: String
+}
+
+enum DealerApplication_status_MutationInput {
+  new
+  processing
+  approved
+  rejected
+}
+
+input mutationDealerApplicationUpdateInput {
+  account: Int
+  companyName: String
+  firstName: String
+  lastName: String
+  phone: String
+  email: String
+  city: String
+  message: String
+  status: DealerApplicationUpdate_status_MutationInput
+  updatedAt: String
+  createdAt: String
+}
+
+enum DealerApplicationUpdate_status_MutationInput {
+  new
+  processing
+  approved
+  rejected
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -16262,6 +17806,8 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   locations
   training_categories
   training_videos
+  applications
+  dealer_applications
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -16298,6 +17844,8 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   locations
   training_categories
   training_videos
+  applications
+  dealer_applications
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

@@ -5,11 +5,13 @@ import { motion } from 'motion/react'
 
 export function ContactsFormSection({
   children,
+  isSubmitting = false,
   onSubmit,
   title,
 }: {
   children: ReactNode
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  isSubmitting?: boolean
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void | Promise<void>
   title: string
 }) {
   return (
@@ -24,11 +26,12 @@ export function ContactsFormSection({
         <h2 className="text-[24px] font-medium leading-[145%]">{title}</h2>
         {children}
         <button
+          disabled={isSubmitting}
           type="submit"
-          className="flex h-[54px] w-full items-center justify-center rounded-full bg-white px-6 text-[#22354A] md:h-auto md:w-auto md:self-start md:py-3"
+          className="flex h-[54px] w-full items-center justify-center rounded-full bg-white px-6 text-[#22354A] disabled:opacity-60 md:h-auto md:w-auto md:self-start md:py-3"
         >
           <span className="text-[16px] font-bold leading-[145%] md:text-[18px] md:font-medium md:leading-[165%]">
-            Надіслати
+            {isSubmitting ? 'Надсилання...' : 'Надіслати'}
           </span>
         </button>
       </form>

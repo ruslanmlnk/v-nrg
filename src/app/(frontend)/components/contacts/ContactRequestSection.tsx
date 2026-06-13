@@ -11,7 +11,6 @@ import type { ContactSocialNetwork } from './ContactsInfoSection'
 type ContactRequestSectionProps = {
   className?: string
   description?: string
-  email?: string
   socialNetworks?: ContactSocialNetwork[]
   title?: string
 }
@@ -19,25 +18,34 @@ type ContactRequestSectionProps = {
 export function ContactRequestSection({
   className = '',
   description = 'Щоб отримати консультацію, залиште заявку онлайн або зв’яжіться з нами.',
-  email = '0870758@gmail.com',
   socialNetworks = [],
   title = 'Написати нам',
 }: ContactRequestSectionProps) {
+  const [error, setError] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formState, setFormState] = useState({
     email: '',
     message: '',
     name: '',
   })
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
-    const subject = encodeURIComponent(`Запит з форми контактів від ${formState.name}`)
-    const body = encodeURIComponent(
-      `Ім'я: ${formState.name}\nEmail: ${formState.email}\n\nПовідомлення:\n${formState.message}`,
-    )
-
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`
+    setError('')
+    setIsSubmitting(true)
+    const response = await fetch('/api/applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...formState, source: 'contacts' }),
+    }).catch(() => null)
+    setIsSubmitting(false)
+    if (!response?.ok) {
+      setError('Не вдалося надіслати заявку. Спробуйте ще раз.')
+      return
+    }
+    setIsSubmitted(true)
+    setFormState({ email: '', message: '', name: '' })
   }
 
   return (
@@ -46,7 +54,9 @@ export function ContactRequestSection({
     >
       <ContactsInfoSection description={description} socialNetworks={socialNetworks} title={title} />
 
-      <ContactsFormSection onSubmit={handleSubmit} title={title}>
+      <ContactsFormSection isSubmitting={isSubmitting} onSubmit={handleSubmit} title={title}>
+        {isSubmitted ? <p className="text-white">Дякуємо! Заявку успішно надіслано.</p> : null}
+        {error ? <p className="text-[#FFB4B4]">{error}</p> : null}
         <div className="grid gap-4 md:grid-cols-2">
           <ContactField label="Ім'я" required>
             <input
@@ -79,6 +89,7 @@ export function ContactRequestSection({
             className={`${contactFieldClasses} min-h-[116px] resize-none py-4`}
           />
         </ContactField>
+        <input className="hidden" name="website" tabIndex={-1} autoComplete="off" />
       </ContactsFormSection>
     </section>
   )

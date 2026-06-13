@@ -6,6 +6,7 @@ import * as migration_20260612_010000_home_global from './20260612_010000_home_g
 import * as migration_20260612_020000_locations from './20260612_020000_locations'
 import * as migration_20260613_010000_training from './20260613_010000_training'
 import * as migration_20260613_020000_contacts from './20260613_020000_contacts'
+import * as migration_20260613_030000_applications from './20260613_030000_applications'
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20260613_020000_contacts.up,
     down: migration_20260613_020000_contacts.down,
     name: '20260613_020000_contacts',
+  },
+  {
+    up: migration_20260613_030000_applications.up,
+    down: migration_20260613_030000_applications.down,
+    name: '20260613_030000_applications',
   },
 ]

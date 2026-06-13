@@ -27,7 +27,6 @@ export default async function ContactsPage() {
         />
         <ContactRequestSection
           description={contacts.form.description}
-          email={contacts.email}
           socialNetworks={socialNetworks}
           title={contacts.form.title}
         />
