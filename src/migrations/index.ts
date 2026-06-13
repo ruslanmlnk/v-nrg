@@ -5,6 +5,7 @@ import * as migration_20260605_010000_legal_pages from './20260605_010000_legal_
 import * as migration_20260612_010000_home_global from './20260612_010000_home_global'
 import * as migration_20260612_020000_locations from './20260612_020000_locations'
 import * as migration_20260613_010000_training from './20260613_010000_training'
+import * as migration_20260613_020000_contacts from './20260613_020000_contacts'
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20260613_010000_training.up,
     down: migration_20260613_010000_training.down,
     name: '20260613_010000_training',
+  },
+  {
+    up: migration_20260613_020000_contacts.up,
+    down: migration_20260613_020000_contacts.down,
+    name: '20260613_020000_contacts',
   },
 ]

@@ -6,9 +6,11 @@ import { motion } from 'motion/react'
 export function ContactsFormSection({
   children,
   onSubmit,
+  title,
 }: {
   children: ReactNode
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  title: string
 }) {
   return (
     <motion.div
@@ -19,7 +21,7 @@ export function ContactsFormSection({
       className="rounded-[24px] bg-[#22354A] p-8 text-white shadow-[0_20px_60px_rgba(34,53,74,0.08)]"
     >
       <form className="flex flex-col gap-6" onSubmit={onSubmit}>
-        <h2 className="text-[24px] font-medium leading-[145%]">Написати нам</h2>
+        <h2 className="text-[24px] font-medium leading-[145%]">{title}</h2>
         {children}
         <button
           type="submit"

@@ -61,6 +61,8 @@ type Query {
   docAccessHome: homeDocAccess
   Training(draft: Boolean, select: Boolean): Training
   docAccessTraining: trainingDocAccess
+  Contact(draft: Boolean, select: Boolean): Contact
+  docAccessContact: contactsDocAccess
   Access: Access
 }
 
@@ -8927,6 +8929,417 @@ type TrainingUpdateDocAccess {
   where: JSONObject
 }
 
+type Contact {
+  title: String!
+  description: String!
+  phone: String!
+  email: EmailAddress!
+  address: String!
+  form: Contact_Form
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Contact_Form {
+  title: String
+  description: String
+  socialNetworks: [Contact_Form_SocialNetworks!]
+}
+
+type Contact_Form_SocialNetworks {
+  label: String
+  icon: Media
+  url: String
+  id: String
+}
+
+type contactsDocAccess {
+  fields: ContactsDocAccessFields
+  read: ContactsReadDocAccess
+  update: ContactsUpdateDocAccess
+}
+
+type ContactsDocAccessFields {
+  title: ContactsDocAccessFields_title
+  description: ContactsDocAccessFields_description
+  phone: ContactsDocAccessFields_phone
+  email: ContactsDocAccessFields_email
+  address: ContactsDocAccessFields_address
+  form: ContactsDocAccessFields_form
+  updatedAt: ContactsDocAccessFields_updatedAt
+  createdAt: ContactsDocAccessFields_createdAt
+}
+
+type ContactsDocAccessFields_title {
+  create: ContactsDocAccessFields_title_Create
+  read: ContactsDocAccessFields_title_Read
+  update: ContactsDocAccessFields_title_Update
+  delete: ContactsDocAccessFields_title_Delete
+}
+
+type ContactsDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_description {
+  create: ContactsDocAccessFields_description_Create
+  read: ContactsDocAccessFields_description_Read
+  update: ContactsDocAccessFields_description_Update
+  delete: ContactsDocAccessFields_description_Delete
+}
+
+type ContactsDocAccessFields_description_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_description_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_description_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_phone {
+  create: ContactsDocAccessFields_phone_Create
+  read: ContactsDocAccessFields_phone_Read
+  update: ContactsDocAccessFields_phone_Update
+  delete: ContactsDocAccessFields_phone_Delete
+}
+
+type ContactsDocAccessFields_phone_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_phone_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_phone_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_phone_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_email {
+  create: ContactsDocAccessFields_email_Create
+  read: ContactsDocAccessFields_email_Read
+  update: ContactsDocAccessFields_email_Update
+  delete: ContactsDocAccessFields_email_Delete
+}
+
+type ContactsDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_address {
+  create: ContactsDocAccessFields_address_Create
+  read: ContactsDocAccessFields_address_Read
+  update: ContactsDocAccessFields_address_Update
+  delete: ContactsDocAccessFields_address_Delete
+}
+
+type ContactsDocAccessFields_address_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_address_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_address_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_address_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form {
+  create: ContactsDocAccessFields_form_Create
+  read: ContactsDocAccessFields_form_Read
+  update: ContactsDocAccessFields_form_Update
+  delete: ContactsDocAccessFields_form_Delete
+  fields: ContactsDocAccessFields_form_Fields
+}
+
+type ContactsDocAccessFields_form_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_Fields {
+  title: ContactsDocAccessFields_form_title
+  description: ContactsDocAccessFields_form_description
+  socialNetworks: ContactsDocAccessFields_form_socialNetworks
+}
+
+type ContactsDocAccessFields_form_title {
+  create: ContactsDocAccessFields_form_title_Create
+  read: ContactsDocAccessFields_form_title_Read
+  update: ContactsDocAccessFields_form_title_Update
+  delete: ContactsDocAccessFields_form_title_Delete
+}
+
+type ContactsDocAccessFields_form_title_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_title_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_title_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_title_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_description {
+  create: ContactsDocAccessFields_form_description_Create
+  read: ContactsDocAccessFields_form_description_Read
+  update: ContactsDocAccessFields_form_description_Update
+  delete: ContactsDocAccessFields_form_description_Delete
+}
+
+type ContactsDocAccessFields_form_description_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_description_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_description_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_description_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks {
+  create: ContactsDocAccessFields_form_socialNetworks_Create
+  read: ContactsDocAccessFields_form_socialNetworks_Read
+  update: ContactsDocAccessFields_form_socialNetworks_Update
+  delete: ContactsDocAccessFields_form_socialNetworks_Delete
+  fields: ContactsDocAccessFields_form_socialNetworks_Fields
+}
+
+type ContactsDocAccessFields_form_socialNetworks_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_Fields {
+  label: ContactsDocAccessFields_form_socialNetworks_label
+  icon: ContactsDocAccessFields_form_socialNetworks_icon
+  url: ContactsDocAccessFields_form_socialNetworks_url
+  id: ContactsDocAccessFields_form_socialNetworks_id
+}
+
+type ContactsDocAccessFields_form_socialNetworks_label {
+  create: ContactsDocAccessFields_form_socialNetworks_label_Create
+  read: ContactsDocAccessFields_form_socialNetworks_label_Read
+  update: ContactsDocAccessFields_form_socialNetworks_label_Update
+  delete: ContactsDocAccessFields_form_socialNetworks_label_Delete
+}
+
+type ContactsDocAccessFields_form_socialNetworks_label_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_label_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_label_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_label_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_icon {
+  create: ContactsDocAccessFields_form_socialNetworks_icon_Create
+  read: ContactsDocAccessFields_form_socialNetworks_icon_Read
+  update: ContactsDocAccessFields_form_socialNetworks_icon_Update
+  delete: ContactsDocAccessFields_form_socialNetworks_icon_Delete
+}
+
+type ContactsDocAccessFields_form_socialNetworks_icon_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_icon_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_icon_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_icon_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_url {
+  create: ContactsDocAccessFields_form_socialNetworks_url_Create
+  read: ContactsDocAccessFields_form_socialNetworks_url_Read
+  update: ContactsDocAccessFields_form_socialNetworks_url_Update
+  delete: ContactsDocAccessFields_form_socialNetworks_url_Delete
+}
+
+type ContactsDocAccessFields_form_socialNetworks_url_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_url_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_url_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_url_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_id {
+  create: ContactsDocAccessFields_form_socialNetworks_id_Create
+  read: ContactsDocAccessFields_form_socialNetworks_id_Read
+  update: ContactsDocAccessFields_form_socialNetworks_id_Update
+  delete: ContactsDocAccessFields_form_socialNetworks_id_Delete
+}
+
+type ContactsDocAccessFields_form_socialNetworks_id_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_id_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_id_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_form_socialNetworks_id_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_updatedAt {
+  create: ContactsDocAccessFields_updatedAt_Create
+  read: ContactsDocAccessFields_updatedAt_Read
+  update: ContactsDocAccessFields_updatedAt_Update
+  delete: ContactsDocAccessFields_updatedAt_Delete
+}
+
+type ContactsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_createdAt {
+  create: ContactsDocAccessFields_createdAt_Create
+  read: ContactsDocAccessFields_createdAt_Read
+  update: ContactsDocAccessFields_createdAt_Update
+  delete: ContactsDocAccessFields_createdAt_Delete
+}
+
+type ContactsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ContactsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ContactsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -8945,6 +9358,7 @@ type Access {
   payload_preferences: payload_preferencesAccess
   home: homeAccess
   training: trainingAccess
+  contacts: contactsAccess
 }
 
 type usersAccess {
@@ -14825,6 +15239,393 @@ type TrainingUpdateAccess {
   where: JSONObject
 }
 
+type contactsAccess {
+  fields: ContactsFields
+  read: ContactsReadAccess
+  update: ContactsUpdateAccess
+}
+
+type ContactsFields {
+  title: ContactsFields_title
+  description: ContactsFields_description
+  phone: ContactsFields_phone
+  email: ContactsFields_email
+  address: ContactsFields_address
+  form: ContactsFields_form
+  updatedAt: ContactsFields_updatedAt
+  createdAt: ContactsFields_createdAt
+}
+
+type ContactsFields_title {
+  create: ContactsFields_title_Create
+  read: ContactsFields_title_Read
+  update: ContactsFields_title_Update
+  delete: ContactsFields_title_Delete
+}
+
+type ContactsFields_title_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_title_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_title_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_title_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_description {
+  create: ContactsFields_description_Create
+  read: ContactsFields_description_Read
+  update: ContactsFields_description_Update
+  delete: ContactsFields_description_Delete
+}
+
+type ContactsFields_description_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_description_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_description_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_description_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_phone {
+  create: ContactsFields_phone_Create
+  read: ContactsFields_phone_Read
+  update: ContactsFields_phone_Update
+  delete: ContactsFields_phone_Delete
+}
+
+type ContactsFields_phone_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_phone_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_phone_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_phone_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_email {
+  create: ContactsFields_email_Create
+  read: ContactsFields_email_Read
+  update: ContactsFields_email_Update
+  delete: ContactsFields_email_Delete
+}
+
+type ContactsFields_email_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_email_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_email_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_email_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_address {
+  create: ContactsFields_address_Create
+  read: ContactsFields_address_Read
+  update: ContactsFields_address_Update
+  delete: ContactsFields_address_Delete
+}
+
+type ContactsFields_address_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_address_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_address_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_address_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form {
+  create: ContactsFields_form_Create
+  read: ContactsFields_form_Read
+  update: ContactsFields_form_Update
+  delete: ContactsFields_form_Delete
+  fields: ContactsFields_form_Fields
+}
+
+type ContactsFields_form_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_Fields {
+  title: ContactsFields_form_title
+  description: ContactsFields_form_description
+  socialNetworks: ContactsFields_form_socialNetworks
+}
+
+type ContactsFields_form_title {
+  create: ContactsFields_form_title_Create
+  read: ContactsFields_form_title_Read
+  update: ContactsFields_form_title_Update
+  delete: ContactsFields_form_title_Delete
+}
+
+type ContactsFields_form_title_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_title_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_title_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_title_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_description {
+  create: ContactsFields_form_description_Create
+  read: ContactsFields_form_description_Read
+  update: ContactsFields_form_description_Update
+  delete: ContactsFields_form_description_Delete
+}
+
+type ContactsFields_form_description_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_description_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_description_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_description_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks {
+  create: ContactsFields_form_socialNetworks_Create
+  read: ContactsFields_form_socialNetworks_Read
+  update: ContactsFields_form_socialNetworks_Update
+  delete: ContactsFields_form_socialNetworks_Delete
+  fields: ContactsFields_form_socialNetworks_Fields
+}
+
+type ContactsFields_form_socialNetworks_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_Fields {
+  label: ContactsFields_form_socialNetworks_label
+  icon: ContactsFields_form_socialNetworks_icon
+  url: ContactsFields_form_socialNetworks_url
+  id: ContactsFields_form_socialNetworks_id
+}
+
+type ContactsFields_form_socialNetworks_label {
+  create: ContactsFields_form_socialNetworks_label_Create
+  read: ContactsFields_form_socialNetworks_label_Read
+  update: ContactsFields_form_socialNetworks_label_Update
+  delete: ContactsFields_form_socialNetworks_label_Delete
+}
+
+type ContactsFields_form_socialNetworks_label_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_label_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_label_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_label_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_icon {
+  create: ContactsFields_form_socialNetworks_icon_Create
+  read: ContactsFields_form_socialNetworks_icon_Read
+  update: ContactsFields_form_socialNetworks_icon_Update
+  delete: ContactsFields_form_socialNetworks_icon_Delete
+}
+
+type ContactsFields_form_socialNetworks_icon_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_icon_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_icon_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_icon_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_url {
+  create: ContactsFields_form_socialNetworks_url_Create
+  read: ContactsFields_form_socialNetworks_url_Read
+  update: ContactsFields_form_socialNetworks_url_Update
+  delete: ContactsFields_form_socialNetworks_url_Delete
+}
+
+type ContactsFields_form_socialNetworks_url_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_url_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_url_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_url_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_id {
+  create: ContactsFields_form_socialNetworks_id_Create
+  read: ContactsFields_form_socialNetworks_id_Read
+  update: ContactsFields_form_socialNetworks_id_Update
+  delete: ContactsFields_form_socialNetworks_id_Delete
+}
+
+type ContactsFields_form_socialNetworks_id_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_id_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_id_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_form_socialNetworks_id_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_updatedAt {
+  create: ContactsFields_updatedAt_Create
+  read: ContactsFields_updatedAt_Read
+  update: ContactsFields_updatedAt_Update
+  delete: ContactsFields_updatedAt_Delete
+}
+
+type ContactsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_createdAt {
+  create: ContactsFields_createdAt_Create
+  read: ContactsFields_createdAt_Read
+  update: ContactsFields_createdAt_Update
+  delete: ContactsFields_createdAt_Delete
+}
+
+type ContactsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ContactsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ContactsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean): User
   updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, trash: Boolean): User
@@ -14890,6 +15691,7 @@ type Mutation {
   duplicatePayloadPreference(id: Int!, data: mutationPayloadPreferenceInput!): PayloadPreference
   updateHome(data: mutationHomeInput!, draft: Boolean): Home
   updateTraining(data: mutationTrainingInput!, draft: Boolean): Training
+  updateContact(data: mutationContactInput!, draft: Boolean): Contact
 }
 
 input mutationUserInput {
@@ -15665,5 +16467,29 @@ input mutationTraining_FaqInput {
 input mutationTraining_Faq_ItemsInput {
   question: String!
   answer: String!
+  id: String
+}
+
+input mutationContactInput {
+  title: String!
+  description: String!
+  phone: String!
+  email: String!
+  address: String!
+  form: mutationContact_FormInput!
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationContact_FormInput {
+  title: String!
+  description: String!
+  socialNetworks: [mutationContact_Form_SocialNetworksInput]
+}
+
+input mutationContact_Form_SocialNetworksInput {
+  label: String!
+  icon: Int
+  url: String!
   id: String
 }

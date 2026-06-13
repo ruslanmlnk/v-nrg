@@ -7,26 +7,36 @@ import mailIconAsset from '@public/icon/generated/contacts-contacts-page-mail.sv
 import phoneIconAsset from '@public/icon/generated/contacts-contacts-page-phone.svg'
 import pinIconAsset from '@public/icon/generated/contacts-contacts-page-pin.svg'
 
-export function ContactsPillsSection() {
+export function ContactsPillsSection({
+  address,
+  email,
+  phone,
+}: {
+  address: string
+  email: string
+  phone: string
+}) {
+  const phoneHref = `tel:${phone.replace(/[^\d+]/g, '')}`
+
   return (
     <section className="-mt-20 px-8">
       <div className="grid gap-px overflow-hidden rounded-[20px] bg-[#74C2FA] shadow-[0_20px_60px_rgba(34,53,74,0.08)] md:grid-cols-3">
         <ContactPill
-          title="+38 (097) 546-88-20"
+          title={phone}
           subtitle="Телефон"
-          href="tel:+380975468820"
+          href={phoneHref}
           icon={<IconAsset src={phoneIconAsset} width={24} height={24} />}
         />
         <ContactPill
-          title="0870758@gmail.com"
+          title={email}
           subtitle="Email"
-          href="mailto:0870758@gmail.com"
+          href={`mailto:${email}`}
           icon={<IconAsset src={mailIconAsset} width={24} height={24} />}
         />
         <ContactPill
-          title="м. Бровари, вул. Підприємницька, 22"
+          title={address}
           subtitle="Адреса"
-          href="https://maps.google.com/?q=Бровари%20Підприємницька%2022"
+          href={`https://maps.google.com/?q=${encodeURIComponent(address)}`}
           icon={<IconAsset src={pinIconAsset} width={24} height={24} />}
         />
       </div>

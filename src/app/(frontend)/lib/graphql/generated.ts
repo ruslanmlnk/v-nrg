@@ -89,6 +89,8 @@ export type Query = {
   docAccessHome?: Maybe<HomeDocAccess>;
   Training?: Maybe<Training>;
   docAccessTraining?: Maybe<TrainingDocAccess>;
+  Contact?: Maybe<Contact>;
+  docAccessContact?: Maybe<ContactsDocAccess>;
   Access?: Maybe<Access>;
 };
 
@@ -548,6 +550,12 @@ export type QueryHomeArgs = {
 
 
 export type QueryTrainingArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryContactArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -10711,6 +10719,501 @@ export type TrainingUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Contact = {
+  __typename?: 'Contact';
+  title: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  phone: Scalars['String']['output'];
+  email: Scalars['EmailAddress']['output'];
+  address: Scalars['String']['output'];
+  form?: Maybe<Contact_Form>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Contact_Form = {
+  __typename?: 'Contact_Form';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  socialNetworks?: Maybe<Array<Contact_Form_SocialNetworks>>;
+};
+
+export type Contact_Form_SocialNetworks = {
+  __typename?: 'Contact_Form_SocialNetworks';
+  label?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Media>;
+  url?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type ContactsDocAccess = {
+  __typename?: 'contactsDocAccess';
+  fields?: Maybe<ContactsDocAccessFields>;
+  read?: Maybe<ContactsReadDocAccess>;
+  update?: Maybe<ContactsUpdateDocAccess>;
+};
+
+export type ContactsDocAccessFields = {
+  __typename?: 'ContactsDocAccessFields';
+  title?: Maybe<ContactsDocAccessFields_Title>;
+  description?: Maybe<ContactsDocAccessFields_Description>;
+  phone?: Maybe<ContactsDocAccessFields_Phone>;
+  email?: Maybe<ContactsDocAccessFields_Email>;
+  address?: Maybe<ContactsDocAccessFields_Address>;
+  form?: Maybe<ContactsDocAccessFields_Form>;
+  updatedAt?: Maybe<ContactsDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<ContactsDocAccessFields_CreatedAt>;
+};
+
+export type ContactsDocAccessFields_Title = {
+  __typename?: 'ContactsDocAccessFields_title';
+  create?: Maybe<ContactsDocAccessFields_Title_Create>;
+  read?: Maybe<ContactsDocAccessFields_Title_Read>;
+  update?: Maybe<ContactsDocAccessFields_Title_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Title_Delete>;
+};
+
+export type ContactsDocAccessFields_Title_Create = {
+  __typename?: 'ContactsDocAccessFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Title_Read = {
+  __typename?: 'ContactsDocAccessFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Title_Update = {
+  __typename?: 'ContactsDocAccessFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Title_Delete = {
+  __typename?: 'ContactsDocAccessFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Description = {
+  __typename?: 'ContactsDocAccessFields_description';
+  create?: Maybe<ContactsDocAccessFields_Description_Create>;
+  read?: Maybe<ContactsDocAccessFields_Description_Read>;
+  update?: Maybe<ContactsDocAccessFields_Description_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Description_Delete>;
+};
+
+export type ContactsDocAccessFields_Description_Create = {
+  __typename?: 'ContactsDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Description_Read = {
+  __typename?: 'ContactsDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Description_Update = {
+  __typename?: 'ContactsDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Description_Delete = {
+  __typename?: 'ContactsDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Phone = {
+  __typename?: 'ContactsDocAccessFields_phone';
+  create?: Maybe<ContactsDocAccessFields_Phone_Create>;
+  read?: Maybe<ContactsDocAccessFields_Phone_Read>;
+  update?: Maybe<ContactsDocAccessFields_Phone_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Phone_Delete>;
+};
+
+export type ContactsDocAccessFields_Phone_Create = {
+  __typename?: 'ContactsDocAccessFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Phone_Read = {
+  __typename?: 'ContactsDocAccessFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Phone_Update = {
+  __typename?: 'ContactsDocAccessFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Phone_Delete = {
+  __typename?: 'ContactsDocAccessFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Email = {
+  __typename?: 'ContactsDocAccessFields_email';
+  create?: Maybe<ContactsDocAccessFields_Email_Create>;
+  read?: Maybe<ContactsDocAccessFields_Email_Read>;
+  update?: Maybe<ContactsDocAccessFields_Email_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Email_Delete>;
+};
+
+export type ContactsDocAccessFields_Email_Create = {
+  __typename?: 'ContactsDocAccessFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Email_Read = {
+  __typename?: 'ContactsDocAccessFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Email_Update = {
+  __typename?: 'ContactsDocAccessFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Email_Delete = {
+  __typename?: 'ContactsDocAccessFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Address = {
+  __typename?: 'ContactsDocAccessFields_address';
+  create?: Maybe<ContactsDocAccessFields_Address_Create>;
+  read?: Maybe<ContactsDocAccessFields_Address_Read>;
+  update?: Maybe<ContactsDocAccessFields_Address_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Address_Delete>;
+};
+
+export type ContactsDocAccessFields_Address_Create = {
+  __typename?: 'ContactsDocAccessFields_address_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Address_Read = {
+  __typename?: 'ContactsDocAccessFields_address_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Address_Update = {
+  __typename?: 'ContactsDocAccessFields_address_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Address_Delete = {
+  __typename?: 'ContactsDocAccessFields_address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form = {
+  __typename?: 'ContactsDocAccessFields_form';
+  create?: Maybe<ContactsDocAccessFields_Form_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_Delete>;
+  fields?: Maybe<ContactsDocAccessFields_Form_Fields>;
+};
+
+export type ContactsDocAccessFields_Form_Create = {
+  __typename?: 'ContactsDocAccessFields_form_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Read = {
+  __typename?: 'ContactsDocAccessFields_form_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Update = {
+  __typename?: 'ContactsDocAccessFields_form_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Fields = {
+  __typename?: 'ContactsDocAccessFields_form_Fields';
+  title?: Maybe<ContactsDocAccessFields_Form_Title>;
+  description?: Maybe<ContactsDocAccessFields_Form_Description>;
+  socialNetworks?: Maybe<ContactsDocAccessFields_Form_SocialNetworks>;
+};
+
+export type ContactsDocAccessFields_Form_Title = {
+  __typename?: 'ContactsDocAccessFields_form_title';
+  create?: Maybe<ContactsDocAccessFields_Form_Title_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_Title_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_Title_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_Title_Delete>;
+};
+
+export type ContactsDocAccessFields_Form_Title_Create = {
+  __typename?: 'ContactsDocAccessFields_form_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Title_Read = {
+  __typename?: 'ContactsDocAccessFields_form_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Title_Update = {
+  __typename?: 'ContactsDocAccessFields_form_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Title_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Description = {
+  __typename?: 'ContactsDocAccessFields_form_description';
+  create?: Maybe<ContactsDocAccessFields_Form_Description_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_Description_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_Description_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_Description_Delete>;
+};
+
+export type ContactsDocAccessFields_Form_Description_Create = {
+  __typename?: 'ContactsDocAccessFields_form_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Description_Read = {
+  __typename?: 'ContactsDocAccessFields_form_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Description_Update = {
+  __typename?: 'ContactsDocAccessFields_form_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_Description_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks';
+  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Delete>;
+  fields?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Fields>;
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Create = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Read = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Update = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Fields = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_Fields';
+  label?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label>;
+  icon?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon>;
+  url?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url>;
+  id?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id>;
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Label = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label';
+  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Delete>;
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Label_Create = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Label_Read = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Label_Update = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Label_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Icon = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon';
+  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Delete>;
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Create = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Read = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Update = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Url = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url';
+  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Delete>;
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Url_Create = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Url_Read = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Url_Update = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Url_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Id = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id';
+  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Create>;
+  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Read>;
+  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Delete>;
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Id_Create = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Id_Read = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Id_Update = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Form_SocialNetworks_Id_Delete = {
+  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_UpdatedAt = {
+  __typename?: 'ContactsDocAccessFields_updatedAt';
+  create?: Maybe<ContactsDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<ContactsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<ContactsDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<ContactsDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type ContactsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'ContactsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'ContactsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'ContactsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'ContactsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_CreatedAt = {
+  __typename?: 'ContactsDocAccessFields_createdAt';
+  create?: Maybe<ContactsDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<ContactsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<ContactsDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<ContactsDocAccessFields_CreatedAt_Delete>;
+};
+
+export type ContactsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'ContactsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'ContactsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'ContactsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'ContactsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsReadDocAccess = {
+  __typename?: 'ContactsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ContactsUpdateDocAccess = {
+  __typename?: 'ContactsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Access = {
   __typename?: 'Access';
   canAccessAdmin: Scalars['Boolean']['output'];
@@ -10730,6 +11233,7 @@ export type Access = {
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
   home?: Maybe<HomeAccess>;
   training?: Maybe<TrainingAccess>;
+  contacts?: Maybe<ContactsAccess>;
 };
 
 export type UsersAccess = {
@@ -17833,6 +18337,474 @@ export type TrainingUpdateAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type ContactsAccess = {
+  __typename?: 'contactsAccess';
+  fields?: Maybe<ContactsFields>;
+  read?: Maybe<ContactsReadAccess>;
+  update?: Maybe<ContactsUpdateAccess>;
+};
+
+export type ContactsFields = {
+  __typename?: 'ContactsFields';
+  title?: Maybe<ContactsFields_Title>;
+  description?: Maybe<ContactsFields_Description>;
+  phone?: Maybe<ContactsFields_Phone>;
+  email?: Maybe<ContactsFields_Email>;
+  address?: Maybe<ContactsFields_Address>;
+  form?: Maybe<ContactsFields_Form>;
+  updatedAt?: Maybe<ContactsFields_UpdatedAt>;
+  createdAt?: Maybe<ContactsFields_CreatedAt>;
+};
+
+export type ContactsFields_Title = {
+  __typename?: 'ContactsFields_title';
+  create?: Maybe<ContactsFields_Title_Create>;
+  read?: Maybe<ContactsFields_Title_Read>;
+  update?: Maybe<ContactsFields_Title_Update>;
+  delete?: Maybe<ContactsFields_Title_Delete>;
+};
+
+export type ContactsFields_Title_Create = {
+  __typename?: 'ContactsFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Title_Read = {
+  __typename?: 'ContactsFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Title_Update = {
+  __typename?: 'ContactsFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Title_Delete = {
+  __typename?: 'ContactsFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Description = {
+  __typename?: 'ContactsFields_description';
+  create?: Maybe<ContactsFields_Description_Create>;
+  read?: Maybe<ContactsFields_Description_Read>;
+  update?: Maybe<ContactsFields_Description_Update>;
+  delete?: Maybe<ContactsFields_Description_Delete>;
+};
+
+export type ContactsFields_Description_Create = {
+  __typename?: 'ContactsFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Description_Read = {
+  __typename?: 'ContactsFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Description_Update = {
+  __typename?: 'ContactsFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Description_Delete = {
+  __typename?: 'ContactsFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Phone = {
+  __typename?: 'ContactsFields_phone';
+  create?: Maybe<ContactsFields_Phone_Create>;
+  read?: Maybe<ContactsFields_Phone_Read>;
+  update?: Maybe<ContactsFields_Phone_Update>;
+  delete?: Maybe<ContactsFields_Phone_Delete>;
+};
+
+export type ContactsFields_Phone_Create = {
+  __typename?: 'ContactsFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Phone_Read = {
+  __typename?: 'ContactsFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Phone_Update = {
+  __typename?: 'ContactsFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Phone_Delete = {
+  __typename?: 'ContactsFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Email = {
+  __typename?: 'ContactsFields_email';
+  create?: Maybe<ContactsFields_Email_Create>;
+  read?: Maybe<ContactsFields_Email_Read>;
+  update?: Maybe<ContactsFields_Email_Update>;
+  delete?: Maybe<ContactsFields_Email_Delete>;
+};
+
+export type ContactsFields_Email_Create = {
+  __typename?: 'ContactsFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Email_Read = {
+  __typename?: 'ContactsFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Email_Update = {
+  __typename?: 'ContactsFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Email_Delete = {
+  __typename?: 'ContactsFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Address = {
+  __typename?: 'ContactsFields_address';
+  create?: Maybe<ContactsFields_Address_Create>;
+  read?: Maybe<ContactsFields_Address_Read>;
+  update?: Maybe<ContactsFields_Address_Update>;
+  delete?: Maybe<ContactsFields_Address_Delete>;
+};
+
+export type ContactsFields_Address_Create = {
+  __typename?: 'ContactsFields_address_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Address_Read = {
+  __typename?: 'ContactsFields_address_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Address_Update = {
+  __typename?: 'ContactsFields_address_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Address_Delete = {
+  __typename?: 'ContactsFields_address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form = {
+  __typename?: 'ContactsFields_form';
+  create?: Maybe<ContactsFields_Form_Create>;
+  read?: Maybe<ContactsFields_Form_Read>;
+  update?: Maybe<ContactsFields_Form_Update>;
+  delete?: Maybe<ContactsFields_Form_Delete>;
+  fields?: Maybe<ContactsFields_Form_Fields>;
+};
+
+export type ContactsFields_Form_Create = {
+  __typename?: 'ContactsFields_form_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Read = {
+  __typename?: 'ContactsFields_form_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Update = {
+  __typename?: 'ContactsFields_form_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Delete = {
+  __typename?: 'ContactsFields_form_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Fields = {
+  __typename?: 'ContactsFields_form_Fields';
+  title?: Maybe<ContactsFields_Form_Title>;
+  description?: Maybe<ContactsFields_Form_Description>;
+  socialNetworks?: Maybe<ContactsFields_Form_SocialNetworks>;
+};
+
+export type ContactsFields_Form_Title = {
+  __typename?: 'ContactsFields_form_title';
+  create?: Maybe<ContactsFields_Form_Title_Create>;
+  read?: Maybe<ContactsFields_Form_Title_Read>;
+  update?: Maybe<ContactsFields_Form_Title_Update>;
+  delete?: Maybe<ContactsFields_Form_Title_Delete>;
+};
+
+export type ContactsFields_Form_Title_Create = {
+  __typename?: 'ContactsFields_form_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Title_Read = {
+  __typename?: 'ContactsFields_form_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Title_Update = {
+  __typename?: 'ContactsFields_form_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Title_Delete = {
+  __typename?: 'ContactsFields_form_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Description = {
+  __typename?: 'ContactsFields_form_description';
+  create?: Maybe<ContactsFields_Form_Description_Create>;
+  read?: Maybe<ContactsFields_Form_Description_Read>;
+  update?: Maybe<ContactsFields_Form_Description_Update>;
+  delete?: Maybe<ContactsFields_Form_Description_Delete>;
+};
+
+export type ContactsFields_Form_Description_Create = {
+  __typename?: 'ContactsFields_form_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Description_Read = {
+  __typename?: 'ContactsFields_form_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Description_Update = {
+  __typename?: 'ContactsFields_form_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_Description_Delete = {
+  __typename?: 'ContactsFields_form_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks = {
+  __typename?: 'ContactsFields_form_socialNetworks';
+  create?: Maybe<ContactsFields_Form_SocialNetworks_Create>;
+  read?: Maybe<ContactsFields_Form_SocialNetworks_Read>;
+  update?: Maybe<ContactsFields_Form_SocialNetworks_Update>;
+  delete?: Maybe<ContactsFields_Form_SocialNetworks_Delete>;
+  fields?: Maybe<ContactsFields_Form_SocialNetworks_Fields>;
+};
+
+export type ContactsFields_Form_SocialNetworks_Create = {
+  __typename?: 'ContactsFields_form_socialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Read = {
+  __typename?: 'ContactsFields_form_socialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Update = {
+  __typename?: 'ContactsFields_form_socialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Delete = {
+  __typename?: 'ContactsFields_form_socialNetworks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Fields = {
+  __typename?: 'ContactsFields_form_socialNetworks_Fields';
+  label?: Maybe<ContactsFields_Form_SocialNetworks_Label>;
+  icon?: Maybe<ContactsFields_Form_SocialNetworks_Icon>;
+  url?: Maybe<ContactsFields_Form_SocialNetworks_Url>;
+  id?: Maybe<ContactsFields_Form_SocialNetworks_Id>;
+};
+
+export type ContactsFields_Form_SocialNetworks_Label = {
+  __typename?: 'ContactsFields_form_socialNetworks_label';
+  create?: Maybe<ContactsFields_Form_SocialNetworks_Label_Create>;
+  read?: Maybe<ContactsFields_Form_SocialNetworks_Label_Read>;
+  update?: Maybe<ContactsFields_Form_SocialNetworks_Label_Update>;
+  delete?: Maybe<ContactsFields_Form_SocialNetworks_Label_Delete>;
+};
+
+export type ContactsFields_Form_SocialNetworks_Label_Create = {
+  __typename?: 'ContactsFields_form_socialNetworks_label_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Label_Read = {
+  __typename?: 'ContactsFields_form_socialNetworks_label_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Label_Update = {
+  __typename?: 'ContactsFields_form_socialNetworks_label_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Label_Delete = {
+  __typename?: 'ContactsFields_form_socialNetworks_label_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Icon = {
+  __typename?: 'ContactsFields_form_socialNetworks_icon';
+  create?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Create>;
+  read?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Read>;
+  update?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Update>;
+  delete?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Delete>;
+};
+
+export type ContactsFields_Form_SocialNetworks_Icon_Create = {
+  __typename?: 'ContactsFields_form_socialNetworks_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Icon_Read = {
+  __typename?: 'ContactsFields_form_socialNetworks_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Icon_Update = {
+  __typename?: 'ContactsFields_form_socialNetworks_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Icon_Delete = {
+  __typename?: 'ContactsFields_form_socialNetworks_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Url = {
+  __typename?: 'ContactsFields_form_socialNetworks_url';
+  create?: Maybe<ContactsFields_Form_SocialNetworks_Url_Create>;
+  read?: Maybe<ContactsFields_Form_SocialNetworks_Url_Read>;
+  update?: Maybe<ContactsFields_Form_SocialNetworks_Url_Update>;
+  delete?: Maybe<ContactsFields_Form_SocialNetworks_Url_Delete>;
+};
+
+export type ContactsFields_Form_SocialNetworks_Url_Create = {
+  __typename?: 'ContactsFields_form_socialNetworks_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Url_Read = {
+  __typename?: 'ContactsFields_form_socialNetworks_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Url_Update = {
+  __typename?: 'ContactsFields_form_socialNetworks_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Url_Delete = {
+  __typename?: 'ContactsFields_form_socialNetworks_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Id = {
+  __typename?: 'ContactsFields_form_socialNetworks_id';
+  create?: Maybe<ContactsFields_Form_SocialNetworks_Id_Create>;
+  read?: Maybe<ContactsFields_Form_SocialNetworks_Id_Read>;
+  update?: Maybe<ContactsFields_Form_SocialNetworks_Id_Update>;
+  delete?: Maybe<ContactsFields_Form_SocialNetworks_Id_Delete>;
+};
+
+export type ContactsFields_Form_SocialNetworks_Id_Create = {
+  __typename?: 'ContactsFields_form_socialNetworks_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Id_Read = {
+  __typename?: 'ContactsFields_form_socialNetworks_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Id_Update = {
+  __typename?: 'ContactsFields_form_socialNetworks_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Form_SocialNetworks_Id_Delete = {
+  __typename?: 'ContactsFields_form_socialNetworks_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_UpdatedAt = {
+  __typename?: 'ContactsFields_updatedAt';
+  create?: Maybe<ContactsFields_UpdatedAt_Create>;
+  read?: Maybe<ContactsFields_UpdatedAt_Read>;
+  update?: Maybe<ContactsFields_UpdatedAt_Update>;
+  delete?: Maybe<ContactsFields_UpdatedAt_Delete>;
+};
+
+export type ContactsFields_UpdatedAt_Create = {
+  __typename?: 'ContactsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_UpdatedAt_Read = {
+  __typename?: 'ContactsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_UpdatedAt_Update = {
+  __typename?: 'ContactsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_UpdatedAt_Delete = {
+  __typename?: 'ContactsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_CreatedAt = {
+  __typename?: 'ContactsFields_createdAt';
+  create?: Maybe<ContactsFields_CreatedAt_Create>;
+  read?: Maybe<ContactsFields_CreatedAt_Read>;
+  update?: Maybe<ContactsFields_CreatedAt_Update>;
+  delete?: Maybe<ContactsFields_CreatedAt_Delete>;
+};
+
+export type ContactsFields_CreatedAt_Create = {
+  __typename?: 'ContactsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_CreatedAt_Read = {
+  __typename?: 'ContactsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_CreatedAt_Update = {
+  __typename?: 'ContactsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_CreatedAt_Delete = {
+  __typename?: 'ContactsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsReadAccess = {
+  __typename?: 'ContactsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ContactsUpdateAccess = {
+  __typename?: 'ContactsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
@@ -17899,6 +18871,7 @@ export type Mutation = {
   duplicatePayloadPreference?: Maybe<PayloadPreference>;
   updateHome?: Maybe<Home>;
   updateTraining?: Maybe<Training>;
+  updateContact?: Maybe<Contact>;
 };
 
 
@@ -18314,6 +19287,12 @@ export type MutationUpdateHomeArgs = {
 
 export type MutationUpdateTrainingArgs = {
   data: MutationTrainingInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateContactArgs = {
+  data: MutationContactInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -19094,6 +20073,30 @@ export type MutationTraining_FaqInput = {
 export type MutationTraining_Faq_ItemsInput = {
   question: Scalars['String']['input'];
   answer: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationContactInput = {
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  address: Scalars['String']['input'];
+  form: MutationContact_FormInput;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationContact_FormInput = {
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  socialNetworks?: InputMaybe<Array<InputMaybe<MutationContact_Form_SocialNetworksInput>>>;
+};
+
+export type MutationContact_Form_SocialNetworksInput = {
+  label: Scalars['String']['input'];
+  icon?: InputMaybe<Scalars['Int']['input']>;
+  url: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
 };
 

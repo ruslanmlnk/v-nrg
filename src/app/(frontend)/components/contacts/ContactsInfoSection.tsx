@@ -1,15 +1,25 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { motion } from 'motion/react'
-import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
-import facebookIconAsset from '@public/icon/generated/contacts-contacts-page-facebook.svg'
-import instagramIconAsset from '@public/icon/generated/contacts-contacts-page-instagram.svg'
-import telegramIconAsset from '@public/icon/generated/contacts-contacts-page-telegram.svg'
-import whatsappIconAsset from '@public/icon/generated/contacts-contacts-page-whatsapp.svg'
 
-export function ContactsInfoSection() {
+import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+
+export type ContactSocialNetwork = {
+  icon: string
+  label: string
+  url: string
+}
+
+export function ContactsInfoSection({
+  description,
+  socialNetworks,
+  title,
+}: {
+  description: string
+  socialNetworks: ContactSocialNetwork[]
+  title: string
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -20,11 +30,10 @@ export function ContactsInfoSection() {
     >
       <div className="flex flex-col gap-4 border-b border-[#D5E0E8] pb-6 md:gap-6">
         <h2 className="text-[26px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">
-          Зв&apos;яжіться з нами
+          {title}
         </h2>
         <p className="text-[16px] font-medium leading-[165%] text-[#22354A] md:text-[18px]">
-          Щоб отримати консультацію, дізнатися більше про обладнання або домовитися про
-          демонстрацію, залиште заявку онлайн або зв&apos;яжіться з нами у робочий час
+          {description}
         </p>
       </div>
 
@@ -33,40 +42,18 @@ export function ContactsInfoSection() {
           Ми в соцмережах:
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <SocialCircle href="https://t.me/" label="Telegram">
-            <IconAsset src={telegramIconAsset} width={20} height={20} />
-          </SocialCircle>
-          <SocialCircle href="https://wa.me/380975468820" label="WhatsApp">
-            <IconAsset src={whatsappIconAsset} width={20} height={20} />
-          </SocialCircle>
-          <SocialCircle href="https://instagram.com/" label="Instagram">
-            <IconAsset src={instagramIconAsset} width={20} height={20} />
-          </SocialCircle>
-          <SocialCircle href="https://facebook.com/" label="Facebook">
-            <IconAsset src={facebookIconAsset} width={20} height={20} />
-          </SocialCircle>
+          {socialNetworks.map((social) => (
+            <Link
+              aria-label={social.label}
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#4FACF5] text-white"
+              href={social.url}
+              key={`${social.label}-${social.url}`}
+            >
+              <IconAsset src={social.icon} width={20} height={20} />
+            </Link>
+          ))}
         </div>
       </div>
     </motion.div>
-  )
-}
-
-function SocialCircle({
-  children,
-  href,
-  label,
-}: {
-  children: ReactNode
-  href: string
-  label: string
-}) {
-  return (
-    <Link
-      href={href}
-      aria-label={label}
-      className="flex h-11 w-11 items-center justify-center rounded-full bg-[#4FACF5] text-white"
-    >
-      {children}
-    </Link>
   )
 }

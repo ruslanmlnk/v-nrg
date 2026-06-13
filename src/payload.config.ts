@@ -18,6 +18,7 @@ import { TrainingCategories } from './collections/TrainingCategories'
 import { TrainingVideos } from './collections/TrainingVideos'
 import { Home } from './globals/Home'
 import { Training } from './globals/Training'
+import { Contacts } from './globals/Contacts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,7 +54,7 @@ export default buildConfig({
       'schema.graphql',
     ),
   },
-  globals: [Home, Training],
+  globals: [Home, Training, Contacts],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

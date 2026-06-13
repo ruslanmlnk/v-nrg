@@ -108,10 +108,12 @@ export interface Config {
   globals: {
     home: Home;
     training: Training;
+    contacts: Contact;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     training: TrainingSelect<false> | TrainingSelect<true>;
+    contacts: ContactsSelect<false> | ContactsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1007,6 +1009,34 @@ export interface Training {
   createdAt?: string | null;
 }
 /**
+ * Контент сторінки контактів.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contacts".
+ */
+export interface Contact {
+  id: number;
+  title: string;
+  description: string;
+  phone: string;
+  email: string;
+  address: string;
+  form: {
+    title: string;
+    description: string;
+    socialNetworks?:
+      | {
+          label: string;
+          icon: number | Media;
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
@@ -1134,6 +1164,34 @@ export interface TrainingSelect<T extends boolean = true> {
           | {
               question?: T;
               answer?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contacts_select".
+ */
+export interface ContactsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  phone?: T;
+  email?: T;
+  address?: T;
+  form?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        socialNetworks?:
+          | T
+          | {
+              label?: T;
+              icon?: T;
+              url?: T;
               id?: T;
             };
       };

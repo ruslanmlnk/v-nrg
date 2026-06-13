@@ -6,12 +6,23 @@ import { ContactField } from './ContactField'
 import { contactFieldClasses } from './contactFieldClasses'
 import { ContactsFormSection } from './ContactsFormSection'
 import { ContactsInfoSection } from './ContactsInfoSection'
+import type { ContactSocialNetwork } from './ContactsInfoSection'
 
 type ContactRequestSectionProps = {
   className?: string
+  description?: string
+  email?: string
+  socialNetworks?: ContactSocialNetwork[]
+  title?: string
 }
 
-export function ContactRequestSection({ className = '' }: ContactRequestSectionProps) {
+export function ContactRequestSection({
+  className = '',
+  description = 'Щоб отримати консультацію, залиште заявку онлайн або зв’яжіться з нами.',
+  email = '0870758@gmail.com',
+  socialNetworks = [],
+  title = 'Написати нам',
+}: ContactRequestSectionProps) {
   const [formState, setFormState] = useState({
     email: '',
     message: '',
@@ -26,16 +37,16 @@ export function ContactRequestSection({ className = '' }: ContactRequestSectionP
       `Ім'я: ${formState.name}\nEmail: ${formState.email}\n\nПовідомлення:\n${formState.message}`,
     )
 
-    window.location.href = `mailto:0870758@gmail.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`
   }
 
   return (
     <section
       className={`grid items-start gap-6 md:gap-10 lg:grid-cols-[minmax(0,1fr)_610px] lg:items-center lg:gap-12 ${className}`.trim()}
     >
-      <ContactsInfoSection />
+      <ContactsInfoSection description={description} socialNetworks={socialNetworks} title={title} />
 
-      <ContactsFormSection onSubmit={handleSubmit}>
+      <ContactsFormSection onSubmit={handleSubmit} title={title}>
         <div className="grid gap-4 md:grid-cols-2">
           <ContactField label="Ім'я" required>
             <input
