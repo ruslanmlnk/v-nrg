@@ -9,7 +9,9 @@ export default function ReviewPage() {
   return (
     <div className="pt-12">
       <ReviewShowcaseSection />
-      <AboutMapSectionBlock />
+      <div className="pt-12 md:pt-[100px]">
+        <AboutMapSectionBlock />
+      </div>
     </div>
   )
 }

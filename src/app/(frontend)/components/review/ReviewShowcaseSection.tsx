@@ -65,13 +65,10 @@ function MobileReviewsSlider() {
   const scrollToReview = (index: number) => {
     const slider = sliderRef.current
     if (!slider) return
-    const target = slider.children[index] as HTMLElement | undefined
-    const firstSlide = slider.children[0] as HTMLElement | undefined
-    if (!target || !firstSlide) return
 
     slider.scrollTo({
       behavior: 'smooth',
-      left: target.offsetLeft - firstSlide.offsetLeft,
+      left: slider.clientWidth * index,
     })
   }
 
@@ -79,7 +76,7 @@ function MobileReviewsSlider() {
     <div className="w-full overflow-hidden md:hidden">
       <div
         ref={sliderRef}
-        className="flex w-full touch-pan-y snap-x snap-mandatory items-stretch overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex w-full touch-auto snap-x snap-mandatory items-stretch overflow-x-auto overscroll-x-contain scroll-smooth [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
         onScroll={(event) => {
           const slider = event.currentTarget
           const nextIndex = Math.min(
@@ -91,7 +88,10 @@ function MobileReviewsSlider() {
         }}
       >
         {reviews.map((review) => (
-          <div className="flex w-full max-w-full shrink-0 snap-start" key={review.id}>
+          <div
+            className="flex w-full max-w-full shrink-0 basis-full snap-start snap-always"
+            key={review.id}
+          >
             <ReviewCard {...review} />
           </div>
         ))}
