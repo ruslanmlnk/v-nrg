@@ -12,8 +12,7 @@ const desktopReviewPages = chunkItems(reviews, 4)
 
 export function ReviewShowcaseSection() {
   const [activeDesktopPage, setActiveDesktopPage] = useState(0)
-  const activeDesktopReviews =
-    desktopReviewPages[activeDesktopPage] ?? desktopReviewPages[0] ?? []
+  const activeDesktopReviews = desktopReviewPages[activeDesktopPage] ?? desktopReviewPages[0] ?? []
 
   return (
     <section className="rounded-t-[48px] bg-[#22354A] px-6 pb-[120px] pt-16 text-white md:pt-[100px]">
@@ -77,21 +76,22 @@ function MobileReviewsSlider() {
   }
 
   return (
-    <div className="w-full md:hidden">
+    <div className="w-full overflow-hidden md:hidden">
       <div
         ref={sliderRef}
-        className="-mx-6 flex w-[calc(100%+48px)] touch-pan-y snap-x snap-mandatory overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex w-full touch-pan-y snap-x snap-mandatory items-stretch overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         onScroll={(event) => {
           const slider = event.currentTarget
-          const slideWidth = (slider.children[0] as HTMLElement | undefined)?.offsetWidth
-          if (!slideWidth) return
-          const nextIndex = Math.min(reviews.length - 1, Math.round(slider.scrollLeft / slideWidth))
+          const nextIndex = Math.min(
+            reviews.length - 1,
+            Math.round(slider.scrollLeft / slider.clientWidth),
+          )
 
           if (nextIndex !== activeReview) setActiveReview(nextIndex)
         }}
       >
         {reviews.map((review) => (
-          <div className="w-full shrink-0 snap-center px-0.5" key={review.id}>
+          <div className="flex w-full max-w-full shrink-0 snap-start" key={review.id}>
             <ReviewCard {...review} />
           </div>
         ))}
@@ -99,7 +99,7 @@ function MobileReviewsSlider() {
 
       <ReviewNavigation
         activePage={activeReview}
-        className="mt-8"
+        className="mt-12"
         onNext={() => scrollToReview((activeReview + 1) % reviews.length)}
         onPrev={() => scrollToReview((activeReview - 1 + reviews.length) % reviews.length)}
         onSelect={scrollToReview}

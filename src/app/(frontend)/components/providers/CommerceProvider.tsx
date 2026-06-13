@@ -86,6 +86,7 @@ type CommerceContextValue = {
   cartItems: CartItem[]
   cartItemsDetailed: DetailedCartItem[]
   cartTotal: number
+  checkoutOrder: (items: CartItem[]) => void
   closeCart: () => void
   closeDealerModal: () => void
   closeLogoutModal: () => void
@@ -313,6 +314,23 @@ export function CommerceProvider({
     }))
   }
 
+  const checkoutOrder: CommerceContextValue['checkoutOrder'] = (items) => {
+    const nextCartItems = items.filter(
+      (item) => productsMap[item.productId] && Number.isFinite(item.quantity) && item.quantity > 0,
+    )
+
+    if (nextCartItems.length === 0) {
+      return
+    }
+
+    setStore((currentStore) => ({
+      ...currentStore,
+      cartItems: nextCartItems,
+    }))
+    setIsCartOpen(false)
+    router.push('/checkout')
+  }
+
   const toggleCompare: CommerceContextValue['toggleCompare'] = (productId) => {
     if (!productsMap[productId]) {
       return
@@ -446,6 +464,7 @@ export function CommerceProvider({
     cartItems: store.cartItems,
     cartItemsDetailed,
     cartTotal,
+    checkoutOrder,
     closeCart: () => setIsCartOpen(false),
     closeDealerModal: () => setIsDealerModalOpen(false),
     closeLogoutModal: () => setIsLogoutModalOpen(false),

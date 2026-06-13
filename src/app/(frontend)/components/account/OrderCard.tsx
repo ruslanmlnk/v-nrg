@@ -1,7 +1,6 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import Link from 'next/link'
 import { useCommerce } from '../providers/CommerceProvider'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import calendarIconAsset from '@public/icon/generated/account-account-page-calendar.svg'
@@ -34,14 +33,14 @@ const orderStatusIconMap: Record<OrderStatusIconKey, ReactNode> = {
 }
 
 export function OrderCard({ order }: { order: AccountOrder }) {
-  const { getProductById } = useCommerce()
+  const { checkoutOrder, getProductById } = useCommerce()
   const statusKey = order.status ?? 'processing'
   const status = orderStatusMeta[statusKey]
   const statusIcon = orderStatusIconMap[status.iconKey]
 
   return (
     <article className="rounded-[20px] border border-[#D5E0E8] bg-white p-6">
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col gap-3">
             <div className="text-[20px] font-medium leading-[145%] text-[#22354A]">
@@ -106,25 +105,24 @@ export function OrderCard({ order }: { order: AccountOrder }) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-[#D5E0E8] pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center justify-between gap-6">
-            <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-              {orderLabels.total}
-            </span>
-            <span className="text-[24px] font-bold leading-[145%] text-[#22354A]">
-              {formatPrice(order.total)}
-            </span>
+        <div className="flex items-center justify-between gap-6 border-t border-[#D5E0E8] pt-4">
+          <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+            {orderLabels.total}
           </div>
-
-          {statusKey === 'awaiting-payment' ? (
-            <Link
-              href="/checkout"
-              className="inline-flex h-[50px] items-center justify-center rounded-full bg-[#22354A] px-6 text-[18px] font-medium leading-[145%] text-white transition-opacity hover:opacity-90"
-            >
-              {orderLabels.pay}
-            </Link>
-          ) : null}
+          <div className="text-[24px] font-bold leading-[145%] text-[#22354A]">
+            {formatPrice(order.total)}
+          </div>
         </div>
+
+        {statusKey === 'awaiting-payment' ? (
+          <button
+            type="button"
+            onClick={() => checkoutOrder(order.items)}
+            className="flex min-h-[50px] w-full items-center justify-center rounded-[40px] bg-[#4FACF5] px-6 text-[18px] font-medium leading-[145%] text-white transition-opacity hover:opacity-90"
+          >
+            {orderLabels.pay}
+          </button>
+        ) : null}
       </div>
     </article>
   )

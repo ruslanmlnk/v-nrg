@@ -18,7 +18,7 @@ export function ReviewCard({
   quote: string
 }) {
   return (
-    <article className="rounded-[20px] bg-white p-8 text-[#22354A] shadow-[0_24px_64px_rgba(0,0,0,0.08)]">
+    <article className="h-full w-full rounded-[20px] bg-white p-8 text-[#22354A] shadow-[0_24px_64px_rgba(0,0,0,0.08)]">
       <div className="grid gap-8 md:grid-cols-[194px_minmax(0,1fr)]">
         <Image
           src={image}

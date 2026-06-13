@@ -236,7 +236,7 @@ export default function AccountPage() {
                       title={accountEmptyStates.orders.title}
                     />
                   ) : (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-6">
                       {visibleOrders.map((order) => (
                         <OrderCard key={order.id} order={order} />
                       ))}

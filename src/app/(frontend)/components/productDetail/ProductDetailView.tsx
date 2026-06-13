@@ -82,7 +82,7 @@ export default function ProductDetailView({ product }: { product: ProductData })
 
   return (
     <div className="bg-[#F5F8F9] pt-5">
-      <ProductPageSection className="gap-12">
+      <ProductPageSection className="gap-12" sectionClassName="lg:pb-[100px]">
         <ProductHeroSection
           categoryLabel={displayProduct.categoryLabel}
           categorySlug={displayProduct.category}
