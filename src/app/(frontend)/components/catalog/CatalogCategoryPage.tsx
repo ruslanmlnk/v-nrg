@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react'
 
+import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import chevronDownIconAsset from '@public/icon/generated/catalog-chevron-down.svg'
 import { type ProductId } from '../../data/products'
 import { useCommerce } from '../providers/CommerceProvider'
 import {
@@ -34,6 +36,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   const [sortOption, setSortOption] = useState<SortOption>('popular')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [currentPage, setCurrentPage] = useState(0)
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
 
   const catalogItems = useMemo<CatalogItem[]>(
     () =>
@@ -147,6 +150,14 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
     setCurrentPage((page) => Math.min(page, totalPages - 1))
   }, [totalPages])
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileFiltersOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileFiltersOpen])
+
   const handleShare = async (title: string, href: string, productId: string) => {
     const shareUrl = typeof window === 'undefined' ? href : `${window.location.origin}${href}`
 
@@ -179,28 +190,36 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
         <CatalogHero title={activeCategory?.title ?? 'Каталог'} />
 
+        <MobileCatalogControls
+          onOpenFilters={() => setIsMobileFiltersOpen(true)}
+          onSortChange={setSortOption}
+          sortOption={sortOption}
+        />
+
         <section className="grid items-start gap-5 lg:grid-cols-[400px_minmax(0,1fr)]">
-          <CatalogSidebar
-            categoryOptions={categoryOptions}
-            catalogItems={catalogItems}
-            maniplesOptions={maniplesOptions}
-            modelOptions={modelOptions}
-            onSearchChange={setSearchQuery}
-            onSelectCategory={setSelectedCategory}
-            onToggleManiples={(maniples) =>
-              setSelectedManiples((current) => toggleSelection(current, maniples))
-            }
-            onToggleModel={(id) => setSelectedModels((current) => toggleSelection(current, id))}
-            onTogglePowerBand={(band) =>
-              setSelectedPowerBands((current) => toggleSelection(current, band))
-            }
-            resetFilters={resetFilters}
-            searchQuery={searchQuery}
-            selectedCategory={selectedCategory}
-            selectedManiples={selectedManiples}
-            selectedModels={selectedModels}
-            selectedPowerBands={selectedPowerBands}
-          />
+          <div className="hidden lg:block">
+            <CatalogSidebar
+              categoryOptions={categoryOptions}
+              catalogItems={catalogItems}
+              maniplesOptions={maniplesOptions}
+              modelOptions={modelOptions}
+              onSearchChange={setSearchQuery}
+              onSelectCategory={setSelectedCategory}
+              onToggleManiples={(maniples) =>
+                setSelectedManiples((current) => toggleSelection(current, maniples))
+              }
+              onToggleModel={(id) => setSelectedModels((current) => toggleSelection(current, id))}
+              onTogglePowerBand={(band) =>
+                setSelectedPowerBands((current) => toggleSelection(current, band))
+              }
+              resetFilters={resetFilters}
+              searchQuery={searchQuery}
+              selectedCategory={selectedCategory}
+              selectedManiples={selectedManiples}
+              selectedModels={selectedModels}
+              selectedPowerBands={selectedPowerBands}
+            />
+          </div>
 
           <div className="flex flex-col gap-5">
             <CatalogToolbar
@@ -248,6 +267,98 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
         </section>
 
         <CatalogInfoSection category={activeCategory} />
+      </div>
+
+      {isMobileFiltersOpen ? (
+        <div
+          className="fixed inset-0 z-[100] bg-[#22354A]/55 backdrop-blur-[2px] lg:hidden"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setIsMobileFiltersOpen(false)
+          }}
+          role="presentation"
+        >
+          <div className="ml-auto h-full w-[min(100%,360px)] overflow-y-auto bg-[#F5F8F9] p-6">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[28px] font-medium leading-[145%] text-[#22354A]">Фільтри</h2>
+              <button
+                type="button"
+                aria-label="Закрити фільтри"
+                onClick={() => setIsMobileFiltersOpen(false)}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[28px] leading-none text-[#22354A]"
+              >
+                ×
+              </button>
+            </div>
+
+            <CatalogSidebar
+              categoryOptions={categoryOptions}
+              catalogItems={catalogItems}
+              maniplesOptions={maniplesOptions}
+              modelOptions={modelOptions}
+              onSearchChange={setSearchQuery}
+              onSelectCategory={setSelectedCategory}
+              onToggleManiples={(maniples) =>
+                setSelectedManiples((current) => toggleSelection(current, maniples))
+              }
+              onToggleModel={(id) => setSelectedModels((current) => toggleSelection(current, id))}
+              onTogglePowerBand={(band) =>
+                setSelectedPowerBands((current) => toggleSelection(current, band))
+              }
+              resetFilters={resetFilters}
+              searchQuery={searchQuery}
+              selectedCategory={selectedCategory}
+              selectedManiples={selectedManiples}
+              selectedModels={selectedModels}
+              selectedPowerBands={selectedPowerBands}
+              showTitle={false}
+            />
+
+            <button
+              type="button"
+              onClick={() => setIsMobileFiltersOpen(false)}
+              className="mt-5 flex h-[55px] w-full items-center justify-center rounded-[20px] bg-[#4FACF5] px-6 text-[16px] font-medium leading-[145%] text-white"
+            >
+              Показати товари
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function MobileCatalogControls({
+  onOpenFilters,
+  onSortChange,
+  sortOption,
+}: {
+  onOpenFilters: () => void
+  onSortChange: (value: SortOption) => void
+  sortOption: SortOption
+}) {
+  return (
+    <div className="flex h-[55px] items-stretch gap-2 lg:hidden">
+      <button
+        type="button"
+        onClick={onOpenFilters}
+        className="flex shrink-0 items-center justify-center rounded-[20px] bg-[#4FACF5] px-6 text-[16px] font-medium leading-[145%] text-white"
+      >
+        Фільтри
+      </button>
+
+      <div className="relative min-w-0 flex-1">
+        <select
+          value={sortOption}
+          onChange={(event) => onSortChange(event.target.value as SortOption)}
+          className="h-full w-full appearance-none rounded-[20px] border-0 bg-white px-6 pr-11 text-[16px] font-medium leading-[145%] text-[#22354A] outline-none"
+        >
+          <option value="popular">За популярністю</option>
+          <option value="price-asc">Спочатку дешевші</option>
+          <option value="price-desc">Спочатку дорожчі</option>
+        </select>
+        <span className="pointer-events-none absolute right-6 top-1/2 -translate-y-1/2 text-[#22354A]">
+          <IconAsset src={chevronDownIconAsset} width={12} height={12} />
+        </span>
       </div>
     </div>
   )

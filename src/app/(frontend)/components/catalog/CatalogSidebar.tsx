@@ -34,6 +34,7 @@ export function CatalogSidebar({
   selectedManiples,
   selectedModels,
   selectedPowerBands,
+  showTitle = true,
 }: {
   categoryOptions: CatalogCategoryOption[]
   catalogItems: CatalogItem[]
@@ -50,10 +51,13 @@ export function CatalogSidebar({
   selectedManiples: number[]
   selectedModels: ProductId[]
   selectedPowerBands: PowerBand[]
+  showTitle?: boolean
 }) {
   return (
     <aside className="flex flex-col gap-5">
-      <h2 className="text-[42px] font-medium leading-[145%] text-[#22354A]">Фільтр</h2>
+      {showTitle ? (
+        <h2 className="text-[42px] font-medium leading-[145%] text-[#22354A]">Фільтр</h2>
+      ) : null}
 
       <label className="flex h-20 items-center gap-4 rounded-[40px] bg-white px-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
         <IconAsset src={searchIconAsset} width={18} height={18} />

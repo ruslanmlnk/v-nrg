@@ -21,7 +21,7 @@ export function CatalogToolbar({
   viewMode: ViewMode
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-[20px] bg-white px-6 py-4 shadow-[0_20px_60px_rgba(34,53,74,0.04)] sm:flex-row sm:items-center sm:justify-between">
+    <div className="hidden flex-col gap-4 rounded-[20px] bg-white px-6 py-4 shadow-[0_20px_60px_rgba(34,53,74,0.04)] sm:flex-row sm:items-center sm:justify-between lg:flex">
       <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
         Знайдено: <span className="font-bold text-[#4FACF5]">{productCount}</span> товарів
       </div>
