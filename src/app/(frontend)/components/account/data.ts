@@ -1,6 +1,6 @@
 export const ORDERS_PER_PAGE = 5
 
-export type AccountSection = 'orders' | 'profile' | 'addresses'
+export type AccountSection = 'orders' | 'profile' | 'addresses' | 'price-list'
 
 export type AccountSectionIconKey = 'addresses' | 'orders' | 'profile'
 

@@ -7,8 +7,8 @@ import { useState, type FormEvent } from 'react'
 import { registerUser } from '../../lib/authClient'
 import { authInputClasses } from '../auth/styles'
 import { useCommerce } from '../providers/CommerceProvider'
+import ArrowPillButton from '../ui/ArrowPillButton'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
-import arrowIconAsset from '@public/icon/generated/register-components-register-form-arrow.svg'
 import eyeCrossedIconAsset from '@public/icon/generated/common-eye-crossed.svg'
 import eyeIconAsset from '@public/icon/generated/common-eye.svg'
 
@@ -213,19 +213,14 @@ export default function RegisterForm() {
           </span>
         </label>
 
-        <button
+        <ArrowPillButton
           type="submit"
           disabled={isSubmitting}
-          className="relative mt-2 flex h-[50px] items-center justify-center rounded-full bg-[#22354A] pl-6 pr-[70px] text-white transition-transform duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+          isDark
+          className="mr-[50px] mt-2 justify-center disabled:cursor-not-allowed disabled:opacity-70 md:mr-[54px]"
         >
-          <span className="text-[16px] font-medium leading-[145%]">
-            {isSubmitting ? 'Створюємо акаунт...' : 'Зареєструватися'}
-          </span>
-
-          <span className="absolute right-[3px] top-1/2 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-[#4FACF5]">
-            <IconAsset src={arrowIconAsset} width={18} height={18} />
-          </span>
-        </button>
+          {isSubmitting ? 'Створюємо акаунт...' : 'Зареєструватися'}
+        </ArrowPillButton>
 
         {error ? (
           <p className="text-[14px] font-medium leading-[165%] text-[#D94F4F]">{error}</p>

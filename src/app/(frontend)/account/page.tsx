@@ -5,10 +5,10 @@ import { motion } from 'motion/react'
 import { type FormEvent, type ReactNode, useMemo, useState } from 'react'
 
 import { useCommerce, type DeliveryAddress } from '../components/providers/CommerceProvider'
+import ArrowPillButton from '../components/ui/ArrowPillButton'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import addressIconAsset from '@public/icon/generated/account-account-page-address.svg'
 import dealerIconAsset from '@public/icon/generated/account-account-page-dealer.svg'
-import headerArrowIconAsset from '@public/icon/generated/account-account-page-header-arrow.svg'
 import historyIconAsset from '@public/icon/generated/account-account-page-history.svg'
 import ordersIconAsset from '@public/icon/generated/account-account-page-orders.svg'
 import profileIconAsset from '@public/icon/generated/account-account-page-profile.svg'
@@ -132,7 +132,7 @@ export default function AccountPage() {
   return (
     <div className="pt-5">
       <div className="mx-auto flex max-w-[1288px] flex-col gap-5 px-6 pb-[100px]">
-        <section className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
+        <section className="py-7 md:py-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-col gap-4">
               <h1 className="text-[24px] font-bold leading-[125%] text-[#22354A]">
@@ -143,16 +143,13 @@ export default function AccountPage() {
               </p>
             </div>
 
-            <button
-              type="button"
+            <ArrowPillButton
               onClick={openLogoutModal}
-              className="flex h-[56px] items-center self-start rounded-full bg-[#22354A] pl-6 pr-[3px] text-[18px] font-medium leading-[145%] text-white transition-opacity hover:opacity-90"
+              isDark
+              className="mr-[50px] self-start md:mr-[54px]"
             >
-              <span>{accountHeader.logoutLabel}</span>
-              <span className="ml-5 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#4FACF5]">
-                <IconAsset src={headerArrowIconAsset} width={26} height={26} />
-              </span>
-            </button>
+              {accountHeader.logoutLabel}
+            </ArrowPillButton>
           </div>
         </section>
 
@@ -174,7 +171,7 @@ export default function AccountPage() {
                       {customerName}
                     </div>
                     <div className="text-[16px] font-medium leading-[165%] text-[#6F8498]">
-                      {customerEmail}
+                      {isDealer ? 'B2B Дилер' : customerEmail}
                     </div>
                   </div>
                 </div>
@@ -184,12 +181,10 @@ export default function AccountPage() {
                     isDealer && item.id === 'addresses' ? (
                       <SidebarButton
                         key="price-list"
-                        active={false}
+                        active={activeSection === 'price-list'}
                         icon={<PriceListIcon />}
                         label="Прайс-лист"
-                        onClick={() => {
-                          window.location.href = '/api/dealer-price-list'
-                        }}
+                        onClick={() => setActiveSection('price-list')}
                       />
                     ) : (
                       <SidebarButton
@@ -205,18 +200,20 @@ export default function AccountPage() {
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={openDealerModal}
-              className="flex h-[74px] items-center gap-4 rounded-[20px] bg-white px-6 text-left shadow-[0_20px_60px_rgba(34,53,74,0.04)] transition-colors hover:bg-[#F8FBFD]"
-            >
-              <span className="text-[#22354A]">
-                <IconAsset src={dealerIconAsset} width={24} height={24} />
-              </span>
-              <span className="text-[18px] font-bold leading-[165%] text-[#22354A]">
-                {dealerCta.label}
-              </span>
-            </button>
+            {!isDealer ? (
+              <button
+                type="button"
+                onClick={openDealerModal}
+                className="flex h-[74px] items-center gap-4 rounded-[20px] bg-white px-6 text-left shadow-[0_20px_60px_rgba(34,53,74,0.04)] transition-colors hover:bg-[#F8FBFD]"
+              >
+                <span className="text-[#22354A]">
+                  <IconAsset src={dealerIconAsset} width={24} height={24} />
+                </span>
+                <span className="text-[18px] font-bold leading-[165%] text-[#22354A]">
+                  {dealerCta.label}
+                </span>
+              </button>
+            ) : null}
           </motion.aside>
 
           <motion.div
@@ -313,10 +310,69 @@ export default function AccountPage() {
                 />
               </SectionCard>
             ) : null}
+
+            {isDealer && activeSection === 'price-list' ? <DealerPriceListPanel /> : null}
           </motion.div>
         </section>
       </div>
     </div>
+  )
+}
+
+function DealerPriceListPanel() {
+  const updatedAt = new Intl.DateTimeFormat('uk-UA', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(new Date())
+
+  return (
+    <section className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3">
+              <span className="text-[#4FACF5]">
+                <PriceListIcon />
+              </span>
+              <h2 className="text-[20px] font-bold leading-[125%] text-[#22354A]">Прайс-лист</h2>
+            </div>
+            <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
+              Оновлено: {updatedAt}
+            </p>
+          </div>
+
+          <Link
+            href="/api/dealer-price-list"
+            className="flex min-h-[54px] items-center justify-center gap-3 rounded-[40px] bg-[#4FACF5] px-6 text-[18px] font-bold leading-[165%] text-white transition-opacity hover:opacity-90"
+          >
+            <DownloadIcon />
+            Завантажити Excel
+          </Link>
+        </div>
+
+        <div className="flex min-h-[124px] items-center justify-center rounded-[20px] bg-[#F5F8F9] p-8">
+          <p className="max-w-[470px] text-center text-[18px] font-medium leading-[165%] text-[#22354A]">
+            Ви можете завантажити актуальний прайс-лист у форматі Excel з усіма товарами та
+            дилерськими цінами
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function DownloadIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20">
+      <path
+        d="M17.5 12.5v3.333a1.667 1.667 0 0 1-1.667 1.667H4.167A1.667 1.667 0 0 1 2.5 15.833V12.5M5.833 8.333 10 12.5l4.167-4.167M10 12.5v-10"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.667"
+      />
+    </svg>
   )
 }
 
