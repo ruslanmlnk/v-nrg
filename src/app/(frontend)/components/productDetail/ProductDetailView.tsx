@@ -50,7 +50,6 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const isCompared = isInCompare(displayProduct.id)
   const reviewPages = chunkItems(partnerReviews, 2)
   const visibleReviews = reviewPages[activeReviewPage] ?? reviewPages[0] ?? []
-  const demoHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Демонстрація ${displayProduct.title}`)}`
   const paymentHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Оплата частинами ${displayProduct.title}`)}`
   const deliveryHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Умови доставки та оплати ${displayProduct.title}`)}`
 
@@ -92,7 +91,6 @@ export default function ProductDetailView({ product }: { product: ProductData })
         <ProductOverviewSection
           activeGalleryIndex={activeGalleryIndex}
           activeGalleryItem={activeGalleryItem}
-          demoHref={demoHref}
           deliveryHref={deliveryHref}
           isCompared={isCompared}
           isShareActive={isShareActive}
@@ -116,7 +114,7 @@ export default function ProductDetailView({ product }: { product: ProductData })
         />
       </ProductPageSection>
 
-      <ProductComparisonSection demoHref={demoHref} />
+      <ProductComparisonSection />
       <ProductCertificatesSection />
       <ProductReviewsSection
         activePage={activeReviewPage}

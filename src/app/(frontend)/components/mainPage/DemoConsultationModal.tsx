@@ -4,14 +4,21 @@ import { FormEvent, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 
 type DemoConsultationModalProps = {
+  actionLabel?: string
   isOpen: boolean
   onClose: () => void
+  title?: string
 }
 
 const inputClassName =
   'w-full rounded-[16px] bg-[#F5F8F9] px-6 py-4 text-[18px] font-medium leading-[165%] text-[#22354A] outline-none placeholder:text-[#B7CAD1] focus:ring-2 focus:ring-[#4FACF5]'
 
-export default function DemoConsultationModal({ isOpen, onClose }: DemoConsultationModalProps) {
+export default function DemoConsultationModal({
+  actionLabel = 'Записатися на консультацію',
+  isOpen,
+  onClose,
+  title = 'Запис на консультацію',
+}: DemoConsultationModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -82,7 +89,7 @@ export default function DemoConsultationModal({ isOpen, onClose }: DemoConsultat
             id="demo-consultation-title"
             className="text-[20px] font-medium leading-[145%] text-[#22354A] sm:text-[22px]"
           >
-            Запис на консультацію
+            {title}
           </h2>
           <button
             aria-label="Закрити форму"
@@ -174,7 +181,7 @@ export default function DemoConsultationModal({ isOpen, onClose }: DemoConsultat
               className="w-full rounded-[40px] bg-[#4FACF5] px-6 py-3 text-[18px] font-medium leading-[145%] text-white transition-colors hover:bg-[#409CE0]"
               type="submit"
             >
-              {isSubmitting ? 'Надсилання...' : 'Записатися на консультацію'}
+              {isSubmitting ? 'Надсилання...' : actionLabel}
             </button>
             <input className="hidden" name="website" tabIndex={-1} autoComplete="off" />
             {error ? <p className="text-center text-[#D64545]">{error}</p> : null}

@@ -18,7 +18,6 @@ import { type ProductData } from '../../data/products'
 export function ProductOverviewSection({
   activeGalleryIndex,
   activeGalleryItem,
-  demoHref,
   deliveryHref,
   isCompared,
   isShareActive,
@@ -35,7 +34,6 @@ export function ProductOverviewSection({
 }: {
   activeGalleryIndex: number
   activeGalleryItem?: { alt: string; main: string; video: boolean }
-  demoHref: string
   deliveryHref: string
   isCompared: boolean
   isShareActive: boolean
@@ -51,6 +49,7 @@ export function ProductOverviewSection({
   quantity: number
 }) {
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false)
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
 
   return (
     <>
@@ -215,12 +214,13 @@ export function ProductOverviewSection({
                 >
                   Консультація
                 </button>
-                <Link
-                  href={demoHref}
+                <button
+                  type="button"
+                  onClick={() => setIsDemoModalOpen(true)}
                   className="flex min-h-[50px] items-center justify-center rounded-[40px] border border-[#D5E0E8] bg-white px-6 text-[18px] font-medium leading-[145%] text-[#22354A]"
                 >
                   Демонстрація
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -230,6 +230,12 @@ export function ProductOverviewSection({
       <DemoConsultationModal
         isOpen={isConsultationModalOpen}
         onClose={() => setIsConsultationModalOpen(false)}
+      />
+      <DemoConsultationModal
+        actionLabel="Записатися на демонстрацію"
+        isOpen={isDemoModalOpen}
+        onClose={() => setIsDemoModalOpen(false)}
+        title="Запис на демонстрацію"
       />
     </>
   )
