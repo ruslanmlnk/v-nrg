@@ -17,9 +17,12 @@ import profileIcon from '@public/icon/header/profile.svg'
 import { navLinks } from '../data/header'
 import ActionIcon from '../ui/ActionIcon'
 import { useCommerce } from './providers/CommerceProvider'
+import { useSitePreferences } from './providers/SitePreferencesProvider'
+import { translate, translateNavLink } from '../lib/siteTranslations'
 
 export default function NavBar() {
   const { cartCount, categories, compareCount, isLoggedIn, openCart } = useCommerce()
+  const { currencies, currency, locale, setCurrency, setLocale } = useSitePreferences()
   const pathname = usePathname()
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -66,7 +69,7 @@ export default function NavBar() {
                   className="flex items-center gap-2 whitespace-nowrap"
                   onFocus={() => setOpenDropdown(dropdownLinks?.length ? link.label : null)}
                 >
-                  <span>{link.label}</span>
+                  <span>{translateNavLink(locale, link.href, link.label)}</span>
                   {link.hasArrow ? (
                     <Image
                       src={arrowDarkIcon}
@@ -106,12 +109,12 @@ export default function NavBar() {
 
         <div className="hidden flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[16px] font-medium uppercase leading-[165%] lg:order-3 lg:flex lg:justify-self-end">
           <div className="flex items-center gap-6">
-            <ActionIcon href={isLoggedIn ? '/account' : '/login'} label="Профіль" icon={profileIcon} />
-            <ActionIcon href="/compare" label="Порівняння" badge={compareCount} icon={compareIcon} />
-            <ActionIcon onClick={openCart} label="Кошик" badge={cartCount} icon={cartIcon} />
+            <ActionIcon href={isLoggedIn ? '/account' : '/login'} label={translate(locale, 'account')} icon={profileIcon} />
+            <ActionIcon href="/compare" label={translate(locale, 'compare')} badge={compareCount} icon={compareIcon} />
+            <ActionIcon onClick={openCart} label={translate(locale, 'cart')} badge={cartCount} icon={cartIcon} />
           </div>
           <Link href="/contacts" className="whitespace-nowrap">
-            Контакти
+            {translate(locale, 'contacts')}
           </Link>
         </div>
 
@@ -151,7 +154,7 @@ export default function NavBar() {
               aria-expanded={mobileCatalogOpen}
               onClick={() => setMobileCatalogOpen((isOpen) => !isOpen)}
             >
-              <span className="uppercase">{navLinks[0]?.label ?? 'Каталог'}</span>
+              <span className="uppercase">{translate(locale, 'catalog')}</span>
               <Image
                 src={arrowDarkIcon}
                 alt=""
@@ -181,11 +184,11 @@ export default function NavBar() {
           <div className="flex flex-col gap-6">
             {navLinks.slice(1).map((link) => (
               <Link key={link.href} href={link.href} className="text-[#22354A]" onClick={closeMobileMenu}>
-                {link.label}
+                {translateNavLink(locale, link.href, link.label)}
               </Link>
             ))}
             <Link href="/contacts" className="text-[#22354A]" onClick={closeMobileMenu}>
-              Контакти
+              {translate(locale, 'contacts')}
             </Link>
           </div>
         </div>
@@ -194,14 +197,14 @@ export default function NavBar() {
           <MobileMenuLink
             href={isLoggedIn ? '/account' : '/login'}
             icon={profileIcon}
-            label="Особистий кабінет"
+            label={translate(locale, 'account')}
             onClick={closeMobileMenu}
           />
           <MobileMenuLink
             badge={compareCount}
             href="/compare"
             icon={compareIcon}
-            label="Списки порівнянь"
+            label={translate(locale, 'compare')}
             onClick={closeMobileMenu}
           />
           <button type="button" className="flex items-center gap-2 text-left text-[#22354A]" onClick={openMobileCart}>
@@ -209,17 +212,31 @@ export default function NavBar() {
               <Image src={cartIcon} alt="" aria-hidden="true" className="h-[18px] w-[18px]" />
               <MobileBadge count={cartCount} />
             </span>
-            <span>Кошик</span>
+            <span>{translate(locale, 'cart')}</span>
           </button>
 
           <div className="flex items-center gap-8">
-            <MobileMenuControl icon={langIcon} label="UA" />
-            <MobileMenuControl icon={cardHeaderIcon} label="₴ UAH" />
+            <MobileMenuControl
+              icon={langIcon}
+              label={locale.toUpperCase()}
+              options={[
+                { label: 'UA', onSelect: () => setLocale('uk') },
+                { label: 'EN', onSelect: () => setLocale('en') },
+              ]}
+            />
+            <MobileMenuControl
+              icon={cardHeaderIcon}
+              label={`${currency.symbol} ${currency.code}`}
+              options={currencies.map((item) => ({
+                label: `${item.symbol} ${item.code}`,
+                onSelect: () => setCurrency(item.code),
+              }))}
+            />
           </div>
         </div>
 
         <Link href="/dealer" className="font-bold uppercase text-[#4FACF5]" onClick={closeMobileMenu}>
-          Стати дилером
+          {translate(locale, 'dealer')}
         </Link>
       </div>
     </nav>
@@ -250,13 +267,52 @@ function MobileMenuLink({
   )
 }
 
-function MobileMenuControl({ icon, label }: { icon: typeof langIcon; label: string }) {
+function MobileMenuControl({
+  icon,
+  label,
+  options,
+}: {
+  icon: typeof langIcon
+  label: string
+  options: Array<{ label: string; onSelect: () => void }>
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <button type="button" className="flex items-center gap-[6px] text-[#22354A]">
-      <Image src={icon} alt="" aria-hidden="true" className="h-5 w-5" />
-      <span>{label}</span>
-      <Image src={arrowDarkIcon} alt="" aria-hidden="true" className="h-[10px] w-[9.14px]" />
-    </button>
+    <div className="relative">
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        className="flex items-center gap-[6px] text-[#22354A]"
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <Image src={icon} alt="" aria-hidden="true" className="h-5 w-5" />
+        <span>{label}</span>
+        <Image
+          src={arrowDarkIcon}
+          alt=""
+          aria-hidden="true"
+          className={`h-[10px] w-[9.14px] transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {isOpen ? (
+        <div className="absolute bottom-full left-0 z-50 mb-2 flex min-w-[112px] flex-col gap-3 rounded-[16px] bg-white p-4 normal-case shadow-[0_4px_20px_rgba(0,0,0,0.12)]">
+          {options.map((option) => (
+            <button
+              key={option.label}
+              type="button"
+              className="whitespace-nowrap text-left text-[#22354A]"
+              onClick={() => {
+                option.onSelect()
+                setIsOpen(false)
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
   )
 }
 

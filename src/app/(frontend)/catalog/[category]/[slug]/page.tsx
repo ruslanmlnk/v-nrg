@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { getProductBySlug } from '../../../components/productDetail/getProductBySlug'
 import ProductDetailView from '../../../components/productDetail/ProductDetailView'
+import { getSiteLocale } from '../../../lib/getSiteLocale'
 
 type ProductDetailsProps = {
   params: Promise<{
@@ -13,7 +14,7 @@ type ProductDetailsProps = {
 
 export async function generateMetadata({ params }: ProductDetailsProps): Promise<Metadata> {
   const { slug } = await params
-  const product = await getProductBySlug(slug)
+  const product = await getProductBySlug(slug, await getSiteLocale())
 
   return {
     title: product ? `${product.title} | V-NRG` : 'Товар не знайдено | V-NRG',
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: ProductDetailsProps): Promise
 
 export default async function ProductDetails({ params }: ProductDetailsProps) {
   const { slug } = await params
-  const product = await getProductBySlug(slug)
+  const product = await getProductBySlug(slug, await getSiteLocale())
 
   if (!product) {
     notFound()

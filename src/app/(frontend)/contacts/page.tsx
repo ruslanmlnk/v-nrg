@@ -7,10 +7,12 @@ import {
   ContactsHeroSection,
   ContactsPillsSection,
 } from '../components/contacts/ContactsSections'
+import { getSiteLocale } from '../lib/getSiteLocale'
 
 export default async function ContactsPage() {
   const payload = await getPayload({ config: configPromise })
-  const contacts = await payload.findGlobal({ slug: 'contacts', depth: 2 })
+  const locale = await getSiteLocale()
+  const contacts = await payload.findGlobal({ slug: 'contacts', depth: 2, locale })
   const socialNetworks = (contacts.form.socialNetworks ?? []).flatMap((social) => {
     const icon = getMedia(social.icon)
     return icon?.url ? [{ icon: icon.url, label: social.label, url: social.url }] : []

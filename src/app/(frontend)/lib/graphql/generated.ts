@@ -81,6 +81,10 @@ export type Query = {
   DealerApplications?: Maybe<DealerApplications>;
   countDealerApplications?: Maybe<CountDealerApplications>;
   docAccessDealerApplication?: Maybe<Dealer_ApplicationsDocAccess>;
+  Currency?: Maybe<Currency>;
+  Currencies?: Maybe<Currencies>;
+  countCurrencies?: Maybe<CountCurrencies>;
+  docAccessCurrency?: Maybe<CurrenciesDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -106,6 +110,8 @@ export type Query = {
 export type QueryUserArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -114,6 +120,8 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<User_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -127,6 +135,7 @@ export type QueryCountUsersArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<User_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -138,6 +147,8 @@ export type QueryDocAccessUserArgs = {
 export type QueryMediaArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -146,6 +157,8 @@ export type QueryMediaArgs = {
 export type QueryAllMediaArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Media_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -159,6 +172,7 @@ export type QueryCountallMediaArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Media_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -170,6 +184,8 @@ export type QueryDocAccessMediaArgs = {
 export type QueryReviewArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -178,6 +194,8 @@ export type QueryReviewArgs = {
 export type QueryReviewsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Review_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -191,6 +209,7 @@ export type QueryCountReviewsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Review_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -202,6 +221,8 @@ export type QueryDocAccessReviewArgs = {
 export type QueryProductArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -210,6 +231,8 @@ export type QueryProductArgs = {
 export type QueryProductsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Product_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -223,6 +246,7 @@ export type QueryCountProductsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Product_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -234,6 +258,8 @@ export type QueryDocAccessProductArgs = {
 export type QueryCategoryArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -242,6 +268,8 @@ export type QueryCategoryArgs = {
 export type QueryCategoriesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Category_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -255,6 +283,7 @@ export type QueryCountCategoriesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Category_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -266,6 +295,8 @@ export type QueryDocAccessCategoryArgs = {
 export type QueryArticleArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -274,6 +305,8 @@ export type QueryArticleArgs = {
 export type QueryArticlesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Article_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -287,6 +320,7 @@ export type QueryCountArticlesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Article_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -298,6 +332,8 @@ export type QueryDocAccessArticleArgs = {
 export type QueryOrderArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -306,6 +342,8 @@ export type QueryOrderArgs = {
 export type QueryOrdersArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Order_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -319,6 +357,7 @@ export type QueryCountOrdersArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Order_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -330,6 +369,8 @@ export type QueryDocAccessOrderArgs = {
 export type QueryLegalPageArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -338,6 +379,8 @@ export type QueryLegalPageArgs = {
 export type QueryLegalPagesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<LegalPage_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -351,6 +394,7 @@ export type QueryCountLegalPagesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<LegalPage_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -362,6 +406,8 @@ export type QueryDocAccessLegalPageArgs = {
 export type QueryLocationArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -370,6 +416,8 @@ export type QueryLocationArgs = {
 export type QueryLocationsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Location_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -383,6 +431,7 @@ export type QueryCountLocationsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Location_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -394,6 +443,8 @@ export type QueryDocAccessLocationArgs = {
 export type QueryTrainingCategoryArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -402,6 +453,8 @@ export type QueryTrainingCategoryArgs = {
 export type QueryTrainingCategoriesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<TrainingCategory_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -415,6 +468,7 @@ export type QueryCountTrainingCategoriesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<TrainingCategory_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -426,6 +480,8 @@ export type QueryDocAccessTrainingCategoryArgs = {
 export type QueryTrainingVideoArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -434,6 +490,8 @@ export type QueryTrainingVideoArgs = {
 export type QueryTrainingVideosArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<TrainingVideo_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -447,6 +505,7 @@ export type QueryCountTrainingVideosArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<TrainingVideo_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -458,6 +517,8 @@ export type QueryDocAccessTrainingVideoArgs = {
 export type QueryApplicationArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -466,6 +527,8 @@ export type QueryApplicationArgs = {
 export type QueryApplicationsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Application_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -479,6 +542,7 @@ export type QueryCountApplicationsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Application_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -490,6 +554,8 @@ export type QueryDocAccessApplicationArgs = {
 export type QueryDealerApplicationArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -498,6 +564,8 @@ export type QueryDealerApplicationArgs = {
 export type QueryDealerApplicationsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<DealerApplication_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -511,6 +579,7 @@ export type QueryCountDealerApplicationsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<DealerApplication_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -519,9 +588,48 @@ export type QueryDocAccessDealerApplicationArgs = {
 };
 
 
+export type QueryCurrencyArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCurrenciesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Currency_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountCurrenciesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Currency_Where>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryDocAccessCurrencyArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type QueryPayloadKvArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -530,6 +638,8 @@ export type QueryPayloadKvArgs = {
 export type QueryPayloadKvsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<PayloadKv_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -543,6 +653,7 @@ export type QueryCountPayloadKvsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<PayloadKv_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -554,6 +665,8 @@ export type QueryDocAccessPayloadKvArgs = {
 export type QueryPayloadLockedDocumentArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -562,6 +675,8 @@ export type QueryPayloadLockedDocumentArgs = {
 export type QueryPayloadLockedDocumentsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<PayloadLockedDocument_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -575,6 +690,7 @@ export type QueryCountPayloadLockedDocumentsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<PayloadLockedDocument_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -586,6 +702,8 @@ export type QueryDocAccessPayloadLockedDocumentArgs = {
 export type QueryPayloadPreferenceArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -594,6 +712,8 @@ export type QueryPayloadPreferenceArgs = {
 export type QueryPayloadPreferencesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<PayloadPreference_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
@@ -607,6 +727,7 @@ export type QueryCountPayloadPreferencesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<PayloadPreference_Where>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -617,18 +738,24 @@ export type QueryDocAccessPayloadPreferenceArgs = {
 
 export type QueryHomeArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
 export type QueryTrainingArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
 export type QueryContactArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
   select?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -664,6 +791,17 @@ export type User_Sessions = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   expiresAt?: Maybe<Scalars['DateTime']['output']>;
 };
+
+export enum FallbackLocaleInputType {
+  Uk = 'uk',
+  En = 'en',
+  None = 'none'
+}
+
+export enum LocaleInputType {
+  Uk = 'uk',
+  En = 'en'
+}
 
 export type Users = {
   __typename?: 'Users';
@@ -1894,6 +2032,12 @@ export type Review = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type ReviewAvatarArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Reviews = {
   __typename?: 'Reviews';
   docs: Array<Review>;
@@ -2222,6 +2366,36 @@ export type Product = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type ProductCategoryArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type ProductGalleryArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type ProductReviewsArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type ProductMoreProductsArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type ProductRecommendedTogetherArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Category = {
   __typename?: 'Category';
   id: Scalars['Int']['output'];
@@ -2232,6 +2406,12 @@ export type Category = {
   slug: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type CategoryImageArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type Product_ListFeatures = {
@@ -2297,6 +2477,12 @@ export type Product_Video = {
   description?: Maybe<Scalars['String']['output']>;
 };
 
+
+export type Product_VideoItemsArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Product_Faq = {
   __typename?: 'Product_Faq';
   question?: Maybe<Scalars['String']['output']>;
@@ -2309,6 +2495,18 @@ export type Product_Beforeafter = {
   before?: Maybe<Media>;
   after?: Maybe<Media>;
   id?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type Product_BeforeafterBeforeArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type Product_BeforeafterAfterArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type Products = {
@@ -4640,6 +4838,18 @@ export type Article = {
 };
 
 
+export type ArticleCardPosterArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type ArticleHeroImageArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
 export type ArticleContentArgs = {
   depth?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -5117,6 +5327,12 @@ export type Order = {
   monobank?: Maybe<Scalars['JSON']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type OrderCustomerArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export enum Order_OrderStatus {
@@ -6321,6 +6537,12 @@ export type Location = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type LocationImageArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Locations = {
   __typename?: 'Locations';
   docs: Array<Location>;
@@ -7226,6 +7448,24 @@ export type TrainingVideo = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type TrainingVideoCategoryArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type TrainingVideoPosterArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type TrainingVideoVideoArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type TrainingVideos = {
   __typename?: 'TrainingVideos';
   docs: Array<TrainingVideo>;
@@ -8112,6 +8352,12 @@ export type DealerApplication = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type DealerApplicationAccountArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export enum DealerApplication_Status {
   New = 'new',
   Processing = 'processing',
@@ -8669,6 +8915,437 @@ export type DealerApplicationsDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Currency = {
+  __typename?: 'Currency';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  code: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+  rate: Scalars['Float']['output'];
+  active?: Maybe<Scalars['Boolean']['output']>;
+  sortOrder?: Maybe<Scalars['Float']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Currencies = {
+  __typename?: 'Currencies';
+  docs: Array<Currency>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type Currency_Where = {
+  name?: InputMaybe<Currency_Name_Operator>;
+  code?: InputMaybe<Currency_Code_Operator>;
+  symbol?: InputMaybe<Currency_Symbol_Operator>;
+  rate?: InputMaybe<Currency_Rate_Operator>;
+  active?: InputMaybe<Currency_Active_Operator>;
+  sortOrder?: InputMaybe<Currency_SortOrder_Operator>;
+  updatedAt?: InputMaybe<Currency_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Currency_CreatedAt_Operator>;
+  id?: InputMaybe<Currency_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Currency_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Currency_Where_Or>>>;
+};
+
+export type Currency_Name_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Currency_Code_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Currency_Symbol_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Currency_Rate_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Currency_Active_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Currency_SortOrder_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Currency_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Currency_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Currency_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Currency_Where_And = {
+  name?: InputMaybe<Currency_Name_Operator>;
+  code?: InputMaybe<Currency_Code_Operator>;
+  symbol?: InputMaybe<Currency_Symbol_Operator>;
+  rate?: InputMaybe<Currency_Rate_Operator>;
+  active?: InputMaybe<Currency_Active_Operator>;
+  sortOrder?: InputMaybe<Currency_SortOrder_Operator>;
+  updatedAt?: InputMaybe<Currency_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Currency_CreatedAt_Operator>;
+  id?: InputMaybe<Currency_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Currency_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Currency_Where_Or>>>;
+};
+
+export type Currency_Where_Or = {
+  name?: InputMaybe<Currency_Name_Operator>;
+  code?: InputMaybe<Currency_Code_Operator>;
+  symbol?: InputMaybe<Currency_Symbol_Operator>;
+  rate?: InputMaybe<Currency_Rate_Operator>;
+  active?: InputMaybe<Currency_Active_Operator>;
+  sortOrder?: InputMaybe<Currency_SortOrder_Operator>;
+  updatedAt?: InputMaybe<Currency_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<Currency_CreatedAt_Operator>;
+  id?: InputMaybe<Currency_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<Currency_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Currency_Where_Or>>>;
+};
+
+export type CountCurrencies = {
+  __typename?: 'countCurrencies';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CurrenciesDocAccess = {
+  __typename?: 'currenciesDocAccess';
+  fields?: Maybe<CurrenciesDocAccessFields>;
+  create?: Maybe<CurrenciesCreateDocAccess>;
+  read?: Maybe<CurrenciesReadDocAccess>;
+  update?: Maybe<CurrenciesUpdateDocAccess>;
+  delete?: Maybe<CurrenciesDeleteDocAccess>;
+};
+
+export type CurrenciesDocAccessFields = {
+  __typename?: 'CurrenciesDocAccessFields';
+  name?: Maybe<CurrenciesDocAccessFields_Name>;
+  code?: Maybe<CurrenciesDocAccessFields_Code>;
+  symbol?: Maybe<CurrenciesDocAccessFields_Symbol>;
+  rate?: Maybe<CurrenciesDocAccessFields_Rate>;
+  active?: Maybe<CurrenciesDocAccessFields_Active>;
+  sortOrder?: Maybe<CurrenciesDocAccessFields_SortOrder>;
+  updatedAt?: Maybe<CurrenciesDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<CurrenciesDocAccessFields_CreatedAt>;
+};
+
+export type CurrenciesDocAccessFields_Name = {
+  __typename?: 'CurrenciesDocAccessFields_name';
+  create?: Maybe<CurrenciesDocAccessFields_Name_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_Name_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_Name_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_Name_Delete>;
+};
+
+export type CurrenciesDocAccessFields_Name_Create = {
+  __typename?: 'CurrenciesDocAccessFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Name_Read = {
+  __typename?: 'CurrenciesDocAccessFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Name_Update = {
+  __typename?: 'CurrenciesDocAccessFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Name_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Code = {
+  __typename?: 'CurrenciesDocAccessFields_code';
+  create?: Maybe<CurrenciesDocAccessFields_Code_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_Code_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_Code_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_Code_Delete>;
+};
+
+export type CurrenciesDocAccessFields_Code_Create = {
+  __typename?: 'CurrenciesDocAccessFields_code_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Code_Read = {
+  __typename?: 'CurrenciesDocAccessFields_code_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Code_Update = {
+  __typename?: 'CurrenciesDocAccessFields_code_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Code_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_code_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Symbol = {
+  __typename?: 'CurrenciesDocAccessFields_symbol';
+  create?: Maybe<CurrenciesDocAccessFields_Symbol_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_Symbol_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_Symbol_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_Symbol_Delete>;
+};
+
+export type CurrenciesDocAccessFields_Symbol_Create = {
+  __typename?: 'CurrenciesDocAccessFields_symbol_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Symbol_Read = {
+  __typename?: 'CurrenciesDocAccessFields_symbol_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Symbol_Update = {
+  __typename?: 'CurrenciesDocAccessFields_symbol_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Symbol_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_symbol_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Rate = {
+  __typename?: 'CurrenciesDocAccessFields_rate';
+  create?: Maybe<CurrenciesDocAccessFields_Rate_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_Rate_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_Rate_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_Rate_Delete>;
+};
+
+export type CurrenciesDocAccessFields_Rate_Create = {
+  __typename?: 'CurrenciesDocAccessFields_rate_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Rate_Read = {
+  __typename?: 'CurrenciesDocAccessFields_rate_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Rate_Update = {
+  __typename?: 'CurrenciesDocAccessFields_rate_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Rate_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_rate_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Active = {
+  __typename?: 'CurrenciesDocAccessFields_active';
+  create?: Maybe<CurrenciesDocAccessFields_Active_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_Active_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_Active_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_Active_Delete>;
+};
+
+export type CurrenciesDocAccessFields_Active_Create = {
+  __typename?: 'CurrenciesDocAccessFields_active_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Active_Read = {
+  __typename?: 'CurrenciesDocAccessFields_active_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Active_Update = {
+  __typename?: 'CurrenciesDocAccessFields_active_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_Active_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_active_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_SortOrder = {
+  __typename?: 'CurrenciesDocAccessFields_sortOrder';
+  create?: Maybe<CurrenciesDocAccessFields_SortOrder_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_SortOrder_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_SortOrder_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_SortOrder_Delete>;
+};
+
+export type CurrenciesDocAccessFields_SortOrder_Create = {
+  __typename?: 'CurrenciesDocAccessFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_SortOrder_Read = {
+  __typename?: 'CurrenciesDocAccessFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_SortOrder_Update = {
+  __typename?: 'CurrenciesDocAccessFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_SortOrder_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_UpdatedAt = {
+  __typename?: 'CurrenciesDocAccessFields_updatedAt';
+  create?: Maybe<CurrenciesDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type CurrenciesDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'CurrenciesDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'CurrenciesDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'CurrenciesDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_CreatedAt = {
+  __typename?: 'CurrenciesDocAccessFields_createdAt';
+  create?: Maybe<CurrenciesDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<CurrenciesDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<CurrenciesDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<CurrenciesDocAccessFields_CreatedAt_Delete>;
+};
+
+export type CurrenciesDocAccessFields_CreatedAt_Create = {
+  __typename?: 'CurrenciesDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_CreatedAt_Read = {
+  __typename?: 'CurrenciesDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_CreatedAt_Update = {
+  __typename?: 'CurrenciesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'CurrenciesDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesCreateDocAccess = {
+  __typename?: 'CurrenciesCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CurrenciesReadDocAccess = {
+  __typename?: 'CurrenciesReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CurrenciesUpdateDocAccess = {
+  __typename?: 'CurrenciesUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CurrenciesDeleteDocAccess = {
+  __typename?: 'CurrenciesDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -8854,6 +9531,18 @@ export type PayloadLockedDocument = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type PayloadLockedDocumentDocumentArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type PayloadLockedDocumentUserArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type PayloadLockedDocument_Document_Relationship = {
   __typename?: 'PayloadLockedDocument_Document_Relationship';
   relationTo?: Maybe<PayloadLockedDocument_Document_RelationTo>;
@@ -8873,10 +9562,11 @@ export enum PayloadLockedDocument_Document_RelationTo {
   TrainingCategories = 'training_categories',
   TrainingVideos = 'training_videos',
   Applications = 'applications',
-  DealerApplications = 'dealer_applications'
+  DealerApplications = 'dealer_applications',
+  Currencies = 'currencies'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -8934,7 +9624,8 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   TrainingCategories = 'training_categories',
   TrainingVideos = 'training_videos',
   Applications = 'applications',
-  DealerApplications = 'dealer_applications'
+  DealerApplications = 'dealer_applications',
+  Currencies = 'currencies'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -9206,6 +9897,12 @@ export type PayloadPreference = {
   value?: Maybe<Scalars['JSON']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type PayloadPreferenceUserArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type PayloadPreference_User_Relationship = {
@@ -9538,6 +10235,12 @@ export type Home_Hero = {
   image?: Maybe<Media>;
 };
 
+
+export type Home_HeroImageArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Home_HowItWork = {
   __typename?: 'Home_HowItWork';
   title?: Maybe<Scalars['String']['output']>;
@@ -9553,11 +10256,29 @@ export type Home_HowItWork_Cards = {
   id?: Maybe<Scalars['String']['output']>;
 };
 
+
+export type Home_HowItWork_CardsIconArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Home_BeforeAfter = {
   __typename?: 'Home_BeforeAfter';
   before?: Maybe<Media>;
   after?: Maybe<Media>;
   id?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type Home_BeforeAfterBeforeArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type Home_BeforeAfterAfterArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type Home_ModelComparison = {
@@ -9567,11 +10288,23 @@ export type Home_ModelComparison = {
   products?: Maybe<Array<Product>>;
 };
 
+
+export type Home_ModelComparisonProductsArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Home_CertificatesSection = {
   __typename?: 'Home_CertificatesSection';
   title?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
   certificates?: Maybe<Array<Media>>;
+};
+
+
+export type Home_CertificatesSectionCertificatesArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type Home_TrainingSection = {
@@ -9588,6 +10321,18 @@ export type Home_TrainingSection_Video = {
   file?: Maybe<Media>;
 };
 
+
+export type Home_TrainingSection_VideoPosterArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type Home_TrainingSection_VideoFileArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Home_TrainingSection_Cards = {
   __typename?: 'Home_TrainingSection_Cards';
   icon?: Maybe<Media>;
@@ -9596,11 +10341,23 @@ export type Home_TrainingSection_Cards = {
   id?: Maybe<Scalars['String']['output']>;
 };
 
+
+export type Home_TrainingSection_CardsIconArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Home_ReviewsSection = {
   __typename?: 'Home_ReviewsSection';
   title?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
   reviews?: Maybe<Array<Review>>;
+};
+
+
+export type Home_ReviewsSectionReviewsArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type Home_FaqSection = {
@@ -11118,6 +11875,12 @@ export type Training_Formats_Cards = {
   id?: Maybe<Scalars['String']['output']>;
 };
 
+
+export type Training_Formats_CardsIconArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type Training_VideoInstructions = {
   __typename?: 'Training_VideoInstructions';
   title?: Maybe<Scalars['String']['output']>;
@@ -11851,6 +12614,12 @@ export type Contact_Form_SocialNetworks = {
   id?: Maybe<Scalars['String']['output']>;
 };
 
+
+export type Contact_Form_SocialNetworksIconArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
 export type ContactsDocAccess = {
   __typename?: 'contactsDocAccess';
   fields?: Maybe<ContactsDocAccessFields>;
@@ -12335,6 +13104,7 @@ export type Access = {
   training_videos?: Maybe<Training_VideosAccess>;
   applications?: Maybe<ApplicationsAccess>;
   dealer_applications?: Maybe<Dealer_ApplicationsAccess>;
+  currencies?: Maybe<CurrenciesAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
@@ -17449,6 +18219,275 @@ export type DealerApplicationsDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type CurrenciesAccess = {
+  __typename?: 'currenciesAccess';
+  fields?: Maybe<CurrenciesFields>;
+  create?: Maybe<CurrenciesCreateAccess>;
+  read?: Maybe<CurrenciesReadAccess>;
+  update?: Maybe<CurrenciesUpdateAccess>;
+  delete?: Maybe<CurrenciesDeleteAccess>;
+};
+
+export type CurrenciesFields = {
+  __typename?: 'CurrenciesFields';
+  name?: Maybe<CurrenciesFields_Name>;
+  code?: Maybe<CurrenciesFields_Code>;
+  symbol?: Maybe<CurrenciesFields_Symbol>;
+  rate?: Maybe<CurrenciesFields_Rate>;
+  active?: Maybe<CurrenciesFields_Active>;
+  sortOrder?: Maybe<CurrenciesFields_SortOrder>;
+  updatedAt?: Maybe<CurrenciesFields_UpdatedAt>;
+  createdAt?: Maybe<CurrenciesFields_CreatedAt>;
+};
+
+export type CurrenciesFields_Name = {
+  __typename?: 'CurrenciesFields_name';
+  create?: Maybe<CurrenciesFields_Name_Create>;
+  read?: Maybe<CurrenciesFields_Name_Read>;
+  update?: Maybe<CurrenciesFields_Name_Update>;
+  delete?: Maybe<CurrenciesFields_Name_Delete>;
+};
+
+export type CurrenciesFields_Name_Create = {
+  __typename?: 'CurrenciesFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Name_Read = {
+  __typename?: 'CurrenciesFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Name_Update = {
+  __typename?: 'CurrenciesFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Name_Delete = {
+  __typename?: 'CurrenciesFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Code = {
+  __typename?: 'CurrenciesFields_code';
+  create?: Maybe<CurrenciesFields_Code_Create>;
+  read?: Maybe<CurrenciesFields_Code_Read>;
+  update?: Maybe<CurrenciesFields_Code_Update>;
+  delete?: Maybe<CurrenciesFields_Code_Delete>;
+};
+
+export type CurrenciesFields_Code_Create = {
+  __typename?: 'CurrenciesFields_code_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Code_Read = {
+  __typename?: 'CurrenciesFields_code_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Code_Update = {
+  __typename?: 'CurrenciesFields_code_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Code_Delete = {
+  __typename?: 'CurrenciesFields_code_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Symbol = {
+  __typename?: 'CurrenciesFields_symbol';
+  create?: Maybe<CurrenciesFields_Symbol_Create>;
+  read?: Maybe<CurrenciesFields_Symbol_Read>;
+  update?: Maybe<CurrenciesFields_Symbol_Update>;
+  delete?: Maybe<CurrenciesFields_Symbol_Delete>;
+};
+
+export type CurrenciesFields_Symbol_Create = {
+  __typename?: 'CurrenciesFields_symbol_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Symbol_Read = {
+  __typename?: 'CurrenciesFields_symbol_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Symbol_Update = {
+  __typename?: 'CurrenciesFields_symbol_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Symbol_Delete = {
+  __typename?: 'CurrenciesFields_symbol_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Rate = {
+  __typename?: 'CurrenciesFields_rate';
+  create?: Maybe<CurrenciesFields_Rate_Create>;
+  read?: Maybe<CurrenciesFields_Rate_Read>;
+  update?: Maybe<CurrenciesFields_Rate_Update>;
+  delete?: Maybe<CurrenciesFields_Rate_Delete>;
+};
+
+export type CurrenciesFields_Rate_Create = {
+  __typename?: 'CurrenciesFields_rate_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Rate_Read = {
+  __typename?: 'CurrenciesFields_rate_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Rate_Update = {
+  __typename?: 'CurrenciesFields_rate_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Rate_Delete = {
+  __typename?: 'CurrenciesFields_rate_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Active = {
+  __typename?: 'CurrenciesFields_active';
+  create?: Maybe<CurrenciesFields_Active_Create>;
+  read?: Maybe<CurrenciesFields_Active_Read>;
+  update?: Maybe<CurrenciesFields_Active_Update>;
+  delete?: Maybe<CurrenciesFields_Active_Delete>;
+};
+
+export type CurrenciesFields_Active_Create = {
+  __typename?: 'CurrenciesFields_active_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Active_Read = {
+  __typename?: 'CurrenciesFields_active_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Active_Update = {
+  __typename?: 'CurrenciesFields_active_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_Active_Delete = {
+  __typename?: 'CurrenciesFields_active_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_SortOrder = {
+  __typename?: 'CurrenciesFields_sortOrder';
+  create?: Maybe<CurrenciesFields_SortOrder_Create>;
+  read?: Maybe<CurrenciesFields_SortOrder_Read>;
+  update?: Maybe<CurrenciesFields_SortOrder_Update>;
+  delete?: Maybe<CurrenciesFields_SortOrder_Delete>;
+};
+
+export type CurrenciesFields_SortOrder_Create = {
+  __typename?: 'CurrenciesFields_sortOrder_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_SortOrder_Read = {
+  __typename?: 'CurrenciesFields_sortOrder_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_SortOrder_Update = {
+  __typename?: 'CurrenciesFields_sortOrder_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_SortOrder_Delete = {
+  __typename?: 'CurrenciesFields_sortOrder_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_UpdatedAt = {
+  __typename?: 'CurrenciesFields_updatedAt';
+  create?: Maybe<CurrenciesFields_UpdatedAt_Create>;
+  read?: Maybe<CurrenciesFields_UpdatedAt_Read>;
+  update?: Maybe<CurrenciesFields_UpdatedAt_Update>;
+  delete?: Maybe<CurrenciesFields_UpdatedAt_Delete>;
+};
+
+export type CurrenciesFields_UpdatedAt_Create = {
+  __typename?: 'CurrenciesFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_UpdatedAt_Read = {
+  __typename?: 'CurrenciesFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_UpdatedAt_Update = {
+  __typename?: 'CurrenciesFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_UpdatedAt_Delete = {
+  __typename?: 'CurrenciesFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_CreatedAt = {
+  __typename?: 'CurrenciesFields_createdAt';
+  create?: Maybe<CurrenciesFields_CreatedAt_Create>;
+  read?: Maybe<CurrenciesFields_CreatedAt_Read>;
+  update?: Maybe<CurrenciesFields_CreatedAt_Update>;
+  delete?: Maybe<CurrenciesFields_CreatedAt_Delete>;
+};
+
+export type CurrenciesFields_CreatedAt_Create = {
+  __typename?: 'CurrenciesFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_CreatedAt_Read = {
+  __typename?: 'CurrenciesFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_CreatedAt_Update = {
+  __typename?: 'CurrenciesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesFields_CreatedAt_Delete = {
+  __typename?: 'CurrenciesFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CurrenciesCreateAccess = {
+  __typename?: 'CurrenciesCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CurrenciesReadAccess = {
+  __typename?: 'CurrenciesReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CurrenciesUpdateAccess = {
+  __typename?: 'CurrenciesUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CurrenciesDeleteAccess = {
+  __typename?: 'CurrenciesDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -20597,6 +21636,10 @@ export type Mutation = {
   updateDealerApplication?: Maybe<DealerApplication>;
   deleteDealerApplication?: Maybe<DealerApplication>;
   duplicateDealerApplication?: Maybe<DealerApplication>;
+  createCurrency?: Maybe<Currency>;
+  updateCurrency?: Maybe<Currency>;
+  deleteCurrency?: Maybe<Currency>;
+  duplicateCurrency?: Maybe<Currency>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -20618,6 +21661,7 @@ export type Mutation = {
 export type MutationCreateUserArgs = {
   data: MutationUserInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20626,6 +21670,7 @@ export type MutationUpdateUserArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationUserUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20671,6 +21716,7 @@ export type MutationVerifyEmailUserArgs = {
 export type MutationCreateMediaArgs = {
   data: MutationMediaInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20679,6 +21725,7 @@ export type MutationUpdateMediaArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationMediaUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20698,6 +21745,7 @@ export type MutationDuplicateMediaArgs = {
 export type MutationCreateReviewArgs = {
   data: MutationReviewInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20706,6 +21754,7 @@ export type MutationUpdateReviewArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationReviewUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20725,6 +21774,7 @@ export type MutationDuplicateReviewArgs = {
 export type MutationCreateProductArgs = {
   data: MutationProductInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20733,6 +21783,7 @@ export type MutationUpdateProductArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationProductUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20752,6 +21803,7 @@ export type MutationDuplicateProductArgs = {
 export type MutationCreateCategoryArgs = {
   data: MutationCategoryInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20760,6 +21812,7 @@ export type MutationUpdateCategoryArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationCategoryUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20779,6 +21832,7 @@ export type MutationDuplicateCategoryArgs = {
 export type MutationCreateArticleArgs = {
   data: MutationArticleInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20787,6 +21841,7 @@ export type MutationUpdateArticleArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationArticleUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20806,6 +21861,7 @@ export type MutationDuplicateArticleArgs = {
 export type MutationCreateOrderArgs = {
   data: MutationOrderInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20814,6 +21870,7 @@ export type MutationUpdateOrderArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationOrderUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20833,6 +21890,7 @@ export type MutationDuplicateOrderArgs = {
 export type MutationCreateLegalPageArgs = {
   data: MutationLegalPageInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20841,6 +21899,7 @@ export type MutationUpdateLegalPageArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationLegalPageUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20860,6 +21919,7 @@ export type MutationDuplicateLegalPageArgs = {
 export type MutationCreateLocationArgs = {
   data: MutationLocationInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20868,6 +21928,7 @@ export type MutationUpdateLocationArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationLocationUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20887,6 +21948,7 @@ export type MutationDuplicateLocationArgs = {
 export type MutationCreateTrainingCategoryArgs = {
   data: MutationTrainingCategoryInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20895,6 +21957,7 @@ export type MutationUpdateTrainingCategoryArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationTrainingCategoryUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20914,6 +21977,7 @@ export type MutationDuplicateTrainingCategoryArgs = {
 export type MutationCreateTrainingVideoArgs = {
   data: MutationTrainingVideoInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20922,6 +21986,7 @@ export type MutationUpdateTrainingVideoArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationTrainingVideoUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20941,6 +22006,7 @@ export type MutationDuplicateTrainingVideoArgs = {
 export type MutationCreateApplicationArgs = {
   data: MutationApplicationInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20949,6 +22015,7 @@ export type MutationUpdateApplicationArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationApplicationUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20968,6 +22035,7 @@ export type MutationDuplicateApplicationArgs = {
 export type MutationCreateDealerApplicationArgs = {
   data: MutationDealerApplicationInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -20976,6 +22044,7 @@ export type MutationUpdateDealerApplicationArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationDealerApplicationUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -20992,9 +22061,39 @@ export type MutationDuplicateDealerApplicationArgs = {
 };
 
 
+export type MutationCreateCurrencyArgs = {
+  data: MutationCurrencyInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateCurrencyArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationCurrencyUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteCurrencyArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateCurrencyArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationCurrencyInput;
+};
+
+
 export type MutationCreatePayloadKvArgs = {
   data: MutationPayloadKvInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -21003,6 +22102,7 @@ export type MutationUpdatePayloadKvArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationPayloadKvUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -21022,6 +22122,7 @@ export type MutationDuplicatePayloadKvArgs = {
 export type MutationCreatePayloadLockedDocumentArgs = {
   data: MutationPayloadLockedDocumentInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -21030,6 +22131,7 @@ export type MutationUpdatePayloadLockedDocumentArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationPayloadLockedDocumentUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -21049,6 +22151,7 @@ export type MutationDuplicatePayloadLockedDocumentArgs = {
 export type MutationCreatePayloadPreferenceArgs = {
   data: MutationPayloadPreferenceInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
@@ -21057,6 +22160,7 @@ export type MutationUpdatePayloadPreferenceArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationPayloadPreferenceUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -21076,18 +22180,21 @@ export type MutationDuplicatePayloadPreferenceArgs = {
 export type MutationUpdateHomeArgs = {
   data: MutationHomeInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
 export type MutationUpdateTrainingArgs = {
   data: MutationTrainingInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 
 export type MutationUpdateContactArgs = {
   data: MutationContactInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
 };
 
 export type MutationUserInput = {
@@ -21715,6 +22822,28 @@ export enum DealerApplicationUpdate_Status_MutationInput {
   Rejected = 'rejected'
 }
 
+export type MutationCurrencyInput = {
+  name: Scalars['String']['input'];
+  code: Scalars['String']['input'];
+  symbol: Scalars['String']['input'];
+  rate: Scalars['Float']['input'];
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationCurrencyUpdateInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  symbol?: InputMaybe<Scalars['String']['input']>;
+  rate?: InputMaybe<Scalars['Float']['input']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  sortOrder?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -21751,7 +22880,8 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   TrainingCategories = 'training_categories',
   TrainingVideos = 'training_videos',
   Applications = 'applications',
-  DealerApplications = 'dealer_applications'
+  DealerApplications = 'dealer_applications',
+  Currencies = 'currencies'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -21789,7 +22919,8 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   TrainingCategories = 'training_categories',
   TrainingVideos = 'training_videos',
   Applications = 'applications',
-  DealerApplications = 'dealer_applications'
+  DealerApplications = 'dealer_applications',
+  Currencies = 'currencies'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
@@ -21986,13 +23117,16 @@ export type MutationContact_Form_SocialNetworksInput = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type GetLayoutDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetLayoutDataQueryVariables = Exact<{
+  locale?: InputMaybe<LocaleInputType>;
+}>;
 
 
 export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
+  locale?: InputMaybe<LocaleInputType>;
 }>;
 
 
@@ -22061,7 +23195,7 @@ export const ProductFrontendFieldsFragmentDoc = gql`
 }
     `;
 export const GetLayoutDataDocument = gql`
-    query GetLayoutData {
+    query GetLayoutData($locale: LocaleInputType) {
   meUser {
     user {
       id
@@ -22073,12 +23207,17 @@ export const GetLayoutDataDocument = gql`
       dealerDiscountPercent
     }
   }
-  Products(limit: 100, sort: "createdAt", where: {price: {greater_than: 0}}) {
+  Products(
+    locale: $locale
+    limit: 100
+    sort: "createdAt"
+    where: {price: {greater_than: 0}}
+  ) {
     docs {
       ...ProductFrontendFields
     }
   }
-  Categories(limit: 100, sort: "createdAt") {
+  Categories(locale: $locale, limit: 100, sort: "createdAt") {
     docs {
       id
       title
@@ -22092,8 +23231,8 @@ export const GetLayoutDataDocument = gql`
 }
     ${ProductFrontendFieldsFragmentDoc}`;
 export const GetProductBySlugDocument = gql`
-    query GetProductBySlug($slug: String!) {
-  Products(limit: 1, where: {slug: {equals: $slug}}) {
+    query GetProductBySlug($slug: String!, $locale: LocaleInputType) {
+  Products(locale: $locale, limit: 1, where: {slug: {equals: $slug}}) {
     docs {
       ...ProductFrontendFields
     }

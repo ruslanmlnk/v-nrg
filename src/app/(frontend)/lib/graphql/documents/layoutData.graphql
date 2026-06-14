@@ -1,4 +1,4 @@
-query GetLayoutData {
+query GetLayoutData($locale: LocaleInputType) {
   meUser {
     user {
       id
@@ -10,12 +10,12 @@ query GetLayoutData {
       dealerDiscountPercent
     }
   }
-  Products(limit: 100, sort: "createdAt", where: { price: { greater_than: 0 } }) {
+  Products(locale: $locale, limit: 100, sort: "createdAt", where: { price: { greater_than: 0 } }) {
     docs {
       ...ProductFrontendFields
     }
   }
-  Categories(limit: 100, sort: "createdAt") {
+  Categories(locale: $locale, limit: 100, sort: "createdAt") {
     docs {
       id
       title

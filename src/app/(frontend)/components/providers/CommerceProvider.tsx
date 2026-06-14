@@ -13,7 +13,6 @@ import closeIconAsset from '@public/icon/generated/commerce-close.svg'
 import miniChevronDownIconAsset from '@public/icon/generated/commerce-mini-chevron-down.svg'
 import miniChevronUpIconAsset from '@public/icon/generated/commerce-mini-chevron-up.svg'
 import {
-  formatPrice,
   productsToMap,
   type ProductCategoryData,
   type ProductData,
@@ -23,6 +22,7 @@ import { dealerFieldClasses, initialDealerFormState, type DealerFormState } from
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
 import ArrowPillButton from '../ui/ArrowPillButton'
 import type { FrontendUser } from '../../../../lib/frontendUser'
+import { useSitePreferences } from './SitePreferencesProvider'
 
 type CartItem = {
   productId: ProductId
@@ -516,6 +516,7 @@ export function useCommerce() {
 }
 
 function CommerceOverlays() {
+  const { formatPrice } = useSitePreferences()
   const router = useRouter()
   const {
     cartItemsDetailed,
@@ -822,6 +823,8 @@ function CartDrawerItem({
   onIncrease: () => void
   onRemove: () => void
 }) {
+  const { formatPrice } = useSitePreferences()
+
   return (
     <div className="border-b border-[#D5E0E8] pb-4 last:border-b-0 last:pb-0">
       <div className="flex items-center gap-6">

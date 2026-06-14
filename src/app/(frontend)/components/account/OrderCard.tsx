@@ -9,8 +9,8 @@ import statusDeliveredIconAsset from '@public/icon/generated/account-account-pag
 import statusPendingIconAsset from '@public/icon/generated/account-account-page-status-pending.svg'
 import statusShippedIconAsset from '@public/icon/generated/account-account-page-status-shipped.svg'
 import truckBadgeIconAsset from '@public/icon/generated/account-account-page-truck-badge.svg'
-import { formatPrice } from '../../data/products'
 import { accountFallbacks, orderLabels, orderStatusMeta, type OrderStatusIconKey } from './data'
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
 
 export type AccountOrder = {
   createdAt?: string
@@ -34,6 +34,7 @@ const orderStatusIconMap: Record<OrderStatusIconKey, ReactNode> = {
 
 export function OrderCard({ order }: { order: AccountOrder }) {
   const { checkoutOrder, getProductById } = useCommerce()
+  const { formatPrice } = useSitePreferences()
   const statusKey = order.status ?? 'processing'
   const status = orderStatusMeta[statusKey]
   const statusIcon = orderStatusIconMap[status.iconKey]

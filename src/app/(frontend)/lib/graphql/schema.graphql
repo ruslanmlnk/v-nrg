@@ -1,75 +1,79 @@
 type Query {
-  User(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): User
-  Users(draft: Boolean, where: User_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Users
-  countUsers(draft: Boolean, trash: Boolean, where: User_where): countUsers
+  User(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): User
+  Users(draft: Boolean, where: User_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Users
+  countUsers(draft: Boolean, trash: Boolean, where: User_where, locale: LocaleInputType): countUsers
   docAccessUser(id: Int!): usersDocAccess
   meUser: usersMe
   initializedUser: Boolean
-  Media(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Media
-  allMedia(draft: Boolean, where: Media_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): allMedia
-  countallMedia(draft: Boolean, trash: Boolean, where: Media_where): countallMedia
+  Media(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Media
+  allMedia(draft: Boolean, where: Media_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): allMedia
+  countallMedia(draft: Boolean, trash: Boolean, where: Media_where, locale: LocaleInputType): countallMedia
   docAccessMedia(id: Int!): mediaDocAccess
-  Review(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Review
-  Reviews(draft: Boolean, where: Review_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Reviews
-  countReviews(draft: Boolean, trash: Boolean, where: Review_where): countReviews
+  Review(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Review
+  Reviews(draft: Boolean, where: Review_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Reviews
+  countReviews(draft: Boolean, trash: Boolean, where: Review_where, locale: LocaleInputType): countReviews
   docAccessReview(id: Int!): reviewsDocAccess
-  Product(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Product
-  Products(draft: Boolean, where: Product_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Products
-  countProducts(draft: Boolean, trash: Boolean, where: Product_where): countProducts
+  Product(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Product
+  Products(draft: Boolean, where: Product_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Products
+  countProducts(draft: Boolean, trash: Boolean, where: Product_where, locale: LocaleInputType): countProducts
   docAccessProduct(id: Int!): productsDocAccess
-  Category(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Category
-  Categories(draft: Boolean, where: Category_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Categories
-  countCategories(draft: Boolean, trash: Boolean, where: Category_where): countCategories
+  Category(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Category
+  Categories(draft: Boolean, where: Category_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Categories
+  countCategories(draft: Boolean, trash: Boolean, where: Category_where, locale: LocaleInputType): countCategories
   docAccessCategory(id: Int!): categoryDocAccess
-  Article(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Article
-  Articles(draft: Boolean, where: Article_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Articles
-  countArticles(draft: Boolean, trash: Boolean, where: Article_where): countArticles
+  Article(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Article
+  Articles(draft: Boolean, where: Article_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Articles
+  countArticles(draft: Boolean, trash: Boolean, where: Article_where, locale: LocaleInputType): countArticles
   docAccessArticle(id: Int!): articlesDocAccess
-  Order(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Order
-  Orders(draft: Boolean, where: Order_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Orders
-  countOrders(draft: Boolean, trash: Boolean, where: Order_where): countOrders
+  Order(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Order
+  Orders(draft: Boolean, where: Order_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Orders
+  countOrders(draft: Boolean, trash: Boolean, where: Order_where, locale: LocaleInputType): countOrders
   docAccessOrder(id: Int!): ordersDocAccess
-  LegalPage(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): LegalPage
-  LegalPages(draft: Boolean, where: LegalPage_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): LegalPages
-  countLegalPages(draft: Boolean, trash: Boolean, where: LegalPage_where): countLegalPages
+  LegalPage(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): LegalPage
+  LegalPages(draft: Boolean, where: LegalPage_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): LegalPages
+  countLegalPages(draft: Boolean, trash: Boolean, where: LegalPage_where, locale: LocaleInputType): countLegalPages
   docAccessLegalPage(id: Int!): legal_pagesDocAccess
-  Location(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Location
-  Locations(draft: Boolean, where: Location_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Locations
-  countLocations(draft: Boolean, trash: Boolean, where: Location_where): countLocations
+  Location(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Location
+  Locations(draft: Boolean, where: Location_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Locations
+  countLocations(draft: Boolean, trash: Boolean, where: Location_where, locale: LocaleInputType): countLocations
   docAccessLocation(id: Int!): locationsDocAccess
-  TrainingCategory(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): TrainingCategory
-  TrainingCategories(draft: Boolean, where: TrainingCategory_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingCategories
-  countTrainingCategories(draft: Boolean, trash: Boolean, where: TrainingCategory_where): countTrainingCategories
+  TrainingCategory(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): TrainingCategory
+  TrainingCategories(draft: Boolean, where: TrainingCategory_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingCategories
+  countTrainingCategories(draft: Boolean, trash: Boolean, where: TrainingCategory_where, locale: LocaleInputType): countTrainingCategories
   docAccessTrainingCategory(id: Int!): training_categoriesDocAccess
-  TrainingVideo(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): TrainingVideo
-  TrainingVideos(draft: Boolean, where: TrainingVideo_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingVideos
-  countTrainingVideos(draft: Boolean, trash: Boolean, where: TrainingVideo_where): countTrainingVideos
+  TrainingVideo(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): TrainingVideo
+  TrainingVideos(draft: Boolean, where: TrainingVideo_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): TrainingVideos
+  countTrainingVideos(draft: Boolean, trash: Boolean, where: TrainingVideo_where, locale: LocaleInputType): countTrainingVideos
   docAccessTrainingVideo(id: Int!): training_videosDocAccess
-  Application(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): Application
-  Applications(draft: Boolean, where: Application_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Applications
-  countApplications(draft: Boolean, trash: Boolean, where: Application_where): countApplications
+  Application(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Application
+  Applications(draft: Boolean, where: Application_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Applications
+  countApplications(draft: Boolean, trash: Boolean, where: Application_where, locale: LocaleInputType): countApplications
   docAccessApplication(id: Int!): applicationsDocAccess
-  DealerApplication(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): DealerApplication
-  DealerApplications(draft: Boolean, where: DealerApplication_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): DealerApplications
-  countDealerApplications(draft: Boolean, trash: Boolean, where: DealerApplication_where): countDealerApplications
+  DealerApplication(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): DealerApplication
+  DealerApplications(draft: Boolean, where: DealerApplication_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): DealerApplications
+  countDealerApplications(draft: Boolean, trash: Boolean, where: DealerApplication_where, locale: LocaleInputType): countDealerApplications
   docAccessDealerApplication(id: Int!): dealer_applicationsDocAccess
-  PayloadKv(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadKv
-  PayloadKvs(draft: Boolean, where: PayloadKv_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
-  countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where): countPayloadKvs
+  Currency(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): Currency
+  Currencies(draft: Boolean, where: Currency_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Currencies
+  countCurrencies(draft: Boolean, trash: Boolean, where: Currency_where, locale: LocaleInputType): countCurrencies
+  docAccessCurrency(id: Int!): currenciesDocAccess
+  PayloadKv(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): PayloadKv
+  PayloadKvs(draft: Boolean, where: PayloadKv_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
+  countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where, locale: LocaleInputType): countPayloadKvs
   docAccessPayloadKv(id: Int!): payload_kvDocAccess
-  PayloadLockedDocument(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadLockedDocument
-  PayloadLockedDocuments(draft: Boolean, where: PayloadLockedDocument_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadLockedDocuments
-  countPayloadLockedDocuments(draft: Boolean, trash: Boolean, where: PayloadLockedDocument_where): countPayloadLockedDocuments
+  PayloadLockedDocument(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): PayloadLockedDocument
+  PayloadLockedDocuments(draft: Boolean, where: PayloadLockedDocument_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadLockedDocuments
+  countPayloadLockedDocuments(draft: Boolean, trash: Boolean, where: PayloadLockedDocument_where, locale: LocaleInputType): countPayloadLockedDocuments
   docAccessPayloadLockedDocument(id: Int!): payload_locked_documentsDocAccess
-  PayloadPreference(id: Int!, draft: Boolean, select: Boolean, trash: Boolean): PayloadPreference
-  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadPreferences
-  countPayloadPreferences(draft: Boolean, trash: Boolean, where: PayloadPreference_where): countPayloadPreferences
+  PayloadPreference(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): PayloadPreference
+  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadPreferences
+  countPayloadPreferences(draft: Boolean, trash: Boolean, where: PayloadPreference_where, locale: LocaleInputType): countPayloadPreferences
   docAccessPayloadPreference(id: Int!): payload_preferencesDocAccess
-  Home(draft: Boolean, select: Boolean): Home
+  Home(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): Home
   docAccessHome: homeDocAccess
-  Training(draft: Boolean, select: Boolean): Training
+  Training(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): Training
   docAccessTraining: trainingDocAccess
-  Contact(draft: Boolean, select: Boolean): Contact
+  Contact(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): Contact
   docAccessContact: contactsDocAccess
   Access: Access
 }
@@ -113,6 +117,17 @@ type User_Sessions {
   id: String
   createdAt: DateTime
   expiresAt: DateTime
+}
+
+enum FallbackLocaleInputType {
+  uk
+  en
+  none
+}
+
+enum LocaleInputType {
+  uk
+  en
 }
 
 type Users {
@@ -1201,7 +1216,7 @@ type MediaDeleteDocAccess {
 
 type Review {
   id: Int!
-  avatar: Media
+  avatar(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   text: String
   name: String
   updatedAt: DateTime
@@ -1484,13 +1499,13 @@ type Product {
   rating: Float
   generateSlug: Boolean
   slug: String!
-  category: [Category!]
+  category(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Category!]
   maniples: Float
   powerWatts: Float
   oldprice: Float
   details: String
   shortDescription: String
-  gallery: [Media!]
+  gallery(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
   listFeatures: [Product_ListFeatures!]
   compareFeatures: [Product_CompareFeatures!]
   description: Product_Description
@@ -1498,9 +1513,9 @@ type Product {
   equipment: Product_Equipment
   advantages: Product_Advantages
   video: Product_Video
-  reviews: [Review!]
-  moreProducts: [Product!]
-  recommendedTogether: [Product!]
+  reviews(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Review!]
+  moreProducts(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Product!]
+  recommendedTogether(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Product!]
   faq: [Product_Faq!]
   beforeafter: [Product_Beforeafter!]
   updatedAt: DateTime
@@ -1509,7 +1524,7 @@ type Product {
 
 type Category {
   id: Int!
-  image: Media
+  image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
   description: String
   generateSlug: Boolean
@@ -1562,7 +1577,7 @@ type Product_Advantages_Items {
 }
 
 type Product_Video {
-  items: [Media!]
+  items(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
   description: String
 }
 
@@ -1573,8 +1588,8 @@ type Product_Faq {
 }
 
 type Product_Beforeafter {
-  before: Media
-  after: Media
+  before(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  after(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   id: String
 }
 
@@ -3610,8 +3625,8 @@ type Article {
   publishedAt: DateTime!
   generateSlug: Boolean
   slug: String!
-  cardPoster: Media
-  heroImage: Media
+  cardPoster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  heroImage(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   content(depth: Int): JSON!
   updatedAt: DateTime
   createdAt: DateTime
@@ -4021,7 +4036,7 @@ type ArticlesDeleteDocAccess {
 type Order {
   id: Int!
   orderNumber: String!
-  customer: User
+  customer(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   firstName: String!
   lastName: String!
   phone: String!
@@ -5091,7 +5106,7 @@ type Location {
   country: String!
   city: String!
   address: String!
-  image: Media
+  image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   latitude: Float!
   longitude: Float!
   phone: String
@@ -5896,9 +5911,9 @@ type TrainingVideo {
   id: Int!
   title: String!
   description: String!
-  category: TrainingCategory
-  poster: Media
-  video: Media
+  category(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): TrainingCategory
+  poster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  video(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   sortOrder: Float
   updatedAt: DateTime
   createdAt: DateTime
@@ -6679,7 +6694,7 @@ type ApplicationsDeleteDocAccess {
 
 type DealerApplication {
   id: Int!
-  account: User
+  account(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   companyName: String!
   firstName: String!
   lastName: String!
@@ -7186,6 +7201,388 @@ type DealerApplicationsDeleteDocAccess {
   where: JSONObject
 }
 
+type Currency {
+  id: Int!
+  name: String!
+  code: String!
+  symbol: String!
+  rate: Float!
+  active: Boolean
+  sortOrder: Float
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Currencies {
+  docs: [Currency!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input Currency_where {
+  name: Currency_name_operator
+  code: Currency_code_operator
+  symbol: Currency_symbol_operator
+  rate: Currency_rate_operator
+  active: Currency_active_operator
+  sortOrder: Currency_sortOrder_operator
+  updatedAt: Currency_updatedAt_operator
+  createdAt: Currency_createdAt_operator
+  id: Currency_id_operator
+  AND: [Currency_where_and]
+  OR: [Currency_where_or]
+}
+
+input Currency_name_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Currency_code_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Currency_symbol_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Currency_rate_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Currency_active_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input Currency_sortOrder_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Currency_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Currency_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Currency_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input Currency_where_and {
+  name: Currency_name_operator
+  code: Currency_code_operator
+  symbol: Currency_symbol_operator
+  rate: Currency_rate_operator
+  active: Currency_active_operator
+  sortOrder: Currency_sortOrder_operator
+  updatedAt: Currency_updatedAt_operator
+  createdAt: Currency_createdAt_operator
+  id: Currency_id_operator
+  AND: [Currency_where_and]
+  OR: [Currency_where_or]
+}
+
+input Currency_where_or {
+  name: Currency_name_operator
+  code: Currency_code_operator
+  symbol: Currency_symbol_operator
+  rate: Currency_rate_operator
+  active: Currency_active_operator
+  sortOrder: Currency_sortOrder_operator
+  updatedAt: Currency_updatedAt_operator
+  createdAt: Currency_createdAt_operator
+  id: Currency_id_operator
+  AND: [Currency_where_and]
+  OR: [Currency_where_or]
+}
+
+type countCurrencies {
+  totalDocs: Int
+}
+
+type currenciesDocAccess {
+  fields: CurrenciesDocAccessFields
+  create: CurrenciesCreateDocAccess
+  read: CurrenciesReadDocAccess
+  update: CurrenciesUpdateDocAccess
+  delete: CurrenciesDeleteDocAccess
+}
+
+type CurrenciesDocAccessFields {
+  name: CurrenciesDocAccessFields_name
+  code: CurrenciesDocAccessFields_code
+  symbol: CurrenciesDocAccessFields_symbol
+  rate: CurrenciesDocAccessFields_rate
+  active: CurrenciesDocAccessFields_active
+  sortOrder: CurrenciesDocAccessFields_sortOrder
+  updatedAt: CurrenciesDocAccessFields_updatedAt
+  createdAt: CurrenciesDocAccessFields_createdAt
+}
+
+type CurrenciesDocAccessFields_name {
+  create: CurrenciesDocAccessFields_name_Create
+  read: CurrenciesDocAccessFields_name_Read
+  update: CurrenciesDocAccessFields_name_Update
+  delete: CurrenciesDocAccessFields_name_Delete
+}
+
+type CurrenciesDocAccessFields_name_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_name_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_name_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_name_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_code {
+  create: CurrenciesDocAccessFields_code_Create
+  read: CurrenciesDocAccessFields_code_Read
+  update: CurrenciesDocAccessFields_code_Update
+  delete: CurrenciesDocAccessFields_code_Delete
+}
+
+type CurrenciesDocAccessFields_code_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_code_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_code_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_code_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_symbol {
+  create: CurrenciesDocAccessFields_symbol_Create
+  read: CurrenciesDocAccessFields_symbol_Read
+  update: CurrenciesDocAccessFields_symbol_Update
+  delete: CurrenciesDocAccessFields_symbol_Delete
+}
+
+type CurrenciesDocAccessFields_symbol_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_symbol_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_symbol_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_symbol_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_rate {
+  create: CurrenciesDocAccessFields_rate_Create
+  read: CurrenciesDocAccessFields_rate_Read
+  update: CurrenciesDocAccessFields_rate_Update
+  delete: CurrenciesDocAccessFields_rate_Delete
+}
+
+type CurrenciesDocAccessFields_rate_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_rate_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_rate_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_rate_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_active {
+  create: CurrenciesDocAccessFields_active_Create
+  read: CurrenciesDocAccessFields_active_Read
+  update: CurrenciesDocAccessFields_active_Update
+  delete: CurrenciesDocAccessFields_active_Delete
+}
+
+type CurrenciesDocAccessFields_active_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_active_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_active_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_active_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_sortOrder {
+  create: CurrenciesDocAccessFields_sortOrder_Create
+  read: CurrenciesDocAccessFields_sortOrder_Read
+  update: CurrenciesDocAccessFields_sortOrder_Update
+  delete: CurrenciesDocAccessFields_sortOrder_Delete
+}
+
+type CurrenciesDocAccessFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_updatedAt {
+  create: CurrenciesDocAccessFields_updatedAt_Create
+  read: CurrenciesDocAccessFields_updatedAt_Read
+  update: CurrenciesDocAccessFields_updatedAt_Update
+  delete: CurrenciesDocAccessFields_updatedAt_Delete
+}
+
+type CurrenciesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_createdAt {
+  create: CurrenciesDocAccessFields_createdAt_Create
+  read: CurrenciesDocAccessFields_createdAt_Read
+  update: CurrenciesDocAccessFields_createdAt_Update
+  delete: CurrenciesDocAccessFields_createdAt_Delete
+}
+
+type CurrenciesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CurrenciesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CurrenciesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CurrenciesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CurrenciesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -7344,9 +7741,9 @@ type PayloadKvDeleteDocAccess {
 
 type PayloadLockedDocument {
   id: Int!
-  document: PayloadLockedDocument_Document_Relationship
+  document(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): PayloadLockedDocument_Document_Relationship
   globalSlug: String
-  user: PayloadLockedDocument_User_Relationship
+  user(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): PayloadLockedDocument_User_Relationship
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -7370,9 +7767,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   training_videos
   applications
   dealer_applications
+  currencies
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -7429,6 +7827,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   training_videos
   applications
   dealer_applications
+  currencies
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -7662,7 +8061,7 @@ type PayloadLockedDocumentsDeleteDocAccess {
 
 type PayloadPreference {
   id: Int!
-  user: PayloadPreference_User_Relationship
+  user(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): PayloadPreference_User_Relationship
   key: String
   value: JSON
   updatedAt: DateTime
@@ -7960,7 +8359,7 @@ type Home {
 type Home_Hero {
   title: String
   description: String
-  image: Media
+  image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
 }
 
 type Home_HowItWork {
@@ -7970,28 +8369,28 @@ type Home_HowItWork {
 }
 
 type Home_HowItWork_Cards {
-  icon: Media
+  icon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
   description: String
   id: String
 }
 
 type Home_BeforeAfter {
-  before: Media
-  after: Media
+  before(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  after(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   id: String
 }
 
 type Home_ModelComparison {
   title: String
   subtitle: String
-  products: [Product!]
+  products(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Product!]
 }
 
 type Home_CertificatesSection {
   title: String
   subtitle: String
-  certificates: [Media!]
+  certificates(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
 }
 
 type Home_TrainingSection {
@@ -8002,12 +8401,12 @@ type Home_TrainingSection {
 }
 
 type Home_TrainingSection_Video {
-  poster: Media
-  file: Media
+  poster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  file(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
 }
 
 type Home_TrainingSection_Cards {
-  icon: Media
+  icon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
   description: String
   id: String
@@ -8016,7 +8415,7 @@ type Home_TrainingSection_Cards {
 type Home_ReviewsSection {
   title: String
   subtitle: String
-  reviews: [Review!]
+  reviews(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Review!]
 }
 
 type Home_FaqSection {
@@ -9267,7 +9666,7 @@ type Training_Formats {
 }
 
 type Training_Formats_Cards {
-  icon: Media
+  icon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
   description: String
   id: String
@@ -9876,7 +10275,7 @@ type Contact_Form {
 
 type Contact_Form_SocialNetworks {
   label: String
-  icon: Media
+  icon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   url: String
   id: String
 }
@@ -10283,6 +10682,7 @@ type Access {
   training_videos: training_videosAccess
   applications: applicationsAccess
   dealer_applications: dealer_applicationsAccess
+  currencies: currenciesAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -14520,6 +14920,229 @@ type DealerApplicationsDeleteAccess {
   where: JSONObject
 }
 
+type currenciesAccess {
+  fields: CurrenciesFields
+  create: CurrenciesCreateAccess
+  read: CurrenciesReadAccess
+  update: CurrenciesUpdateAccess
+  delete: CurrenciesDeleteAccess
+}
+
+type CurrenciesFields {
+  name: CurrenciesFields_name
+  code: CurrenciesFields_code
+  symbol: CurrenciesFields_symbol
+  rate: CurrenciesFields_rate
+  active: CurrenciesFields_active
+  sortOrder: CurrenciesFields_sortOrder
+  updatedAt: CurrenciesFields_updatedAt
+  createdAt: CurrenciesFields_createdAt
+}
+
+type CurrenciesFields_name {
+  create: CurrenciesFields_name_Create
+  read: CurrenciesFields_name_Read
+  update: CurrenciesFields_name_Update
+  delete: CurrenciesFields_name_Delete
+}
+
+type CurrenciesFields_name_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_name_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_name_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_name_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_code {
+  create: CurrenciesFields_code_Create
+  read: CurrenciesFields_code_Read
+  update: CurrenciesFields_code_Update
+  delete: CurrenciesFields_code_Delete
+}
+
+type CurrenciesFields_code_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_code_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_code_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_code_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_symbol {
+  create: CurrenciesFields_symbol_Create
+  read: CurrenciesFields_symbol_Read
+  update: CurrenciesFields_symbol_Update
+  delete: CurrenciesFields_symbol_Delete
+}
+
+type CurrenciesFields_symbol_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_symbol_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_symbol_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_symbol_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_rate {
+  create: CurrenciesFields_rate_Create
+  read: CurrenciesFields_rate_Read
+  update: CurrenciesFields_rate_Update
+  delete: CurrenciesFields_rate_Delete
+}
+
+type CurrenciesFields_rate_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_rate_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_rate_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_rate_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_active {
+  create: CurrenciesFields_active_Create
+  read: CurrenciesFields_active_Read
+  update: CurrenciesFields_active_Update
+  delete: CurrenciesFields_active_Delete
+}
+
+type CurrenciesFields_active_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_active_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_active_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_active_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_sortOrder {
+  create: CurrenciesFields_sortOrder_Create
+  read: CurrenciesFields_sortOrder_Read
+  update: CurrenciesFields_sortOrder_Update
+  delete: CurrenciesFields_sortOrder_Delete
+}
+
+type CurrenciesFields_sortOrder_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_sortOrder_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_sortOrder_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_sortOrder_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_updatedAt {
+  create: CurrenciesFields_updatedAt_Create
+  read: CurrenciesFields_updatedAt_Read
+  update: CurrenciesFields_updatedAt_Update
+  delete: CurrenciesFields_updatedAt_Delete
+}
+
+type CurrenciesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesFields_createdAt {
+  create: CurrenciesFields_createdAt_Create
+  read: CurrenciesFields_createdAt_Read
+  update: CurrenciesFields_createdAt_Update
+  delete: CurrenciesFields_createdAt_Delete
+}
+
+type CurrenciesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CurrenciesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CurrenciesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CurrenciesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CurrenciesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CurrenciesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CurrenciesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CurrenciesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -17075,8 +17698,8 @@ type ContactsUpdateAccess {
 }
 
 type Mutation {
-  createUser(data: mutationUserInput!, draft: Boolean): User
-  updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, trash: Boolean): User
+  createUser(data: mutationUserInput!, draft: Boolean, locale: LocaleInputType): User
+  updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): User
   deleteUser(id: Int!, trash: Boolean): User
   refreshTokenUser: usersRefreshedUser
   logoutUser(allSessions: Boolean): String
@@ -17085,69 +17708,73 @@ type Mutation {
   forgotPasswordUser(email: String!): Boolean!
   resetPasswordUser(password: String, token: String): usersResetPassword
   verifyEmailUser(token: String): Boolean
-  createMedia(data: mutationMediaInput!, draft: Boolean): Media
-  updateMedia(id: Int!, autosave: Boolean, data: mutationMediaUpdateInput!, draft: Boolean, trash: Boolean): Media
+  createMedia(data: mutationMediaInput!, draft: Boolean, locale: LocaleInputType): Media
+  updateMedia(id: Int!, autosave: Boolean, data: mutationMediaUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Media
   deleteMedia(id: Int!, trash: Boolean): Media
   duplicateMedia(id: Int!, data: mutationMediaInput!): Media
-  createReview(data: mutationReviewInput!, draft: Boolean): Review
-  updateReview(id: Int!, autosave: Boolean, data: mutationReviewUpdateInput!, draft: Boolean, trash: Boolean): Review
+  createReview(data: mutationReviewInput!, draft: Boolean, locale: LocaleInputType): Review
+  updateReview(id: Int!, autosave: Boolean, data: mutationReviewUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Review
   deleteReview(id: Int!, trash: Boolean): Review
   duplicateReview(id: Int!, data: mutationReviewInput!): Review
-  createProduct(data: mutationProductInput!, draft: Boolean): Product
-  updateProduct(id: Int!, autosave: Boolean, data: mutationProductUpdateInput!, draft: Boolean, trash: Boolean): Product
+  createProduct(data: mutationProductInput!, draft: Boolean, locale: LocaleInputType): Product
+  updateProduct(id: Int!, autosave: Boolean, data: mutationProductUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Product
   deleteProduct(id: Int!, trash: Boolean): Product
   duplicateProduct(id: Int!, data: mutationProductInput!): Product
-  createCategory(data: mutationCategoryInput!, draft: Boolean): Category
-  updateCategory(id: Int!, autosave: Boolean, data: mutationCategoryUpdateInput!, draft: Boolean, trash: Boolean): Category
+  createCategory(data: mutationCategoryInput!, draft: Boolean, locale: LocaleInputType): Category
+  updateCategory(id: Int!, autosave: Boolean, data: mutationCategoryUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Category
   deleteCategory(id: Int!, trash: Boolean): Category
   duplicateCategory(id: Int!, data: mutationCategoryInput!): Category
-  createArticle(data: mutationArticleInput!, draft: Boolean): Article
-  updateArticle(id: Int!, autosave: Boolean, data: mutationArticleUpdateInput!, draft: Boolean, trash: Boolean): Article
+  createArticle(data: mutationArticleInput!, draft: Boolean, locale: LocaleInputType): Article
+  updateArticle(id: Int!, autosave: Boolean, data: mutationArticleUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Article
   deleteArticle(id: Int!, trash: Boolean): Article
   duplicateArticle(id: Int!, data: mutationArticleInput!): Article
-  createOrder(data: mutationOrderInput!, draft: Boolean): Order
-  updateOrder(id: Int!, autosave: Boolean, data: mutationOrderUpdateInput!, draft: Boolean, trash: Boolean): Order
+  createOrder(data: mutationOrderInput!, draft: Boolean, locale: LocaleInputType): Order
+  updateOrder(id: Int!, autosave: Boolean, data: mutationOrderUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Order
   deleteOrder(id: Int!, trash: Boolean): Order
   duplicateOrder(id: Int!, data: mutationOrderInput!): Order
-  createLegalPage(data: mutationLegalPageInput!, draft: Boolean): LegalPage
-  updateLegalPage(id: Int!, autosave: Boolean, data: mutationLegalPageUpdateInput!, draft: Boolean, trash: Boolean): LegalPage
+  createLegalPage(data: mutationLegalPageInput!, draft: Boolean, locale: LocaleInputType): LegalPage
+  updateLegalPage(id: Int!, autosave: Boolean, data: mutationLegalPageUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): LegalPage
   deleteLegalPage(id: Int!, trash: Boolean): LegalPage
   duplicateLegalPage(id: Int!, data: mutationLegalPageInput!): LegalPage
-  createLocation(data: mutationLocationInput!, draft: Boolean): Location
-  updateLocation(id: Int!, autosave: Boolean, data: mutationLocationUpdateInput!, draft: Boolean, trash: Boolean): Location
+  createLocation(data: mutationLocationInput!, draft: Boolean, locale: LocaleInputType): Location
+  updateLocation(id: Int!, autosave: Boolean, data: mutationLocationUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Location
   deleteLocation(id: Int!, trash: Boolean): Location
   duplicateLocation(id: Int!, data: mutationLocationInput!): Location
-  createTrainingCategory(data: mutationTrainingCategoryInput!, draft: Boolean): TrainingCategory
-  updateTrainingCategory(id: Int!, autosave: Boolean, data: mutationTrainingCategoryUpdateInput!, draft: Boolean, trash: Boolean): TrainingCategory
+  createTrainingCategory(data: mutationTrainingCategoryInput!, draft: Boolean, locale: LocaleInputType): TrainingCategory
+  updateTrainingCategory(id: Int!, autosave: Boolean, data: mutationTrainingCategoryUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): TrainingCategory
   deleteTrainingCategory(id: Int!, trash: Boolean): TrainingCategory
   duplicateTrainingCategory(id: Int!, data: mutationTrainingCategoryInput!): TrainingCategory
-  createTrainingVideo(data: mutationTrainingVideoInput!, draft: Boolean): TrainingVideo
-  updateTrainingVideo(id: Int!, autosave: Boolean, data: mutationTrainingVideoUpdateInput!, draft: Boolean, trash: Boolean): TrainingVideo
+  createTrainingVideo(data: mutationTrainingVideoInput!, draft: Boolean, locale: LocaleInputType): TrainingVideo
+  updateTrainingVideo(id: Int!, autosave: Boolean, data: mutationTrainingVideoUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): TrainingVideo
   deleteTrainingVideo(id: Int!, trash: Boolean): TrainingVideo
   duplicateTrainingVideo(id: Int!, data: mutationTrainingVideoInput!): TrainingVideo
-  createApplication(data: mutationApplicationInput!, draft: Boolean): Application
-  updateApplication(id: Int!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean, trash: Boolean): Application
+  createApplication(data: mutationApplicationInput!, draft: Boolean, locale: LocaleInputType): Application
+  updateApplication(id: Int!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Application
   deleteApplication(id: Int!, trash: Boolean): Application
   duplicateApplication(id: Int!, data: mutationApplicationInput!): Application
-  createDealerApplication(data: mutationDealerApplicationInput!, draft: Boolean): DealerApplication
-  updateDealerApplication(id: Int!, autosave: Boolean, data: mutationDealerApplicationUpdateInput!, draft: Boolean, trash: Boolean): DealerApplication
+  createDealerApplication(data: mutationDealerApplicationInput!, draft: Boolean, locale: LocaleInputType): DealerApplication
+  updateDealerApplication(id: Int!, autosave: Boolean, data: mutationDealerApplicationUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): DealerApplication
   deleteDealerApplication(id: Int!, trash: Boolean): DealerApplication
   duplicateDealerApplication(id: Int!, data: mutationDealerApplicationInput!): DealerApplication
-  createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean): PayloadKv
-  updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, trash: Boolean): PayloadKv
+  createCurrency(data: mutationCurrencyInput!, draft: Boolean, locale: LocaleInputType): Currency
+  updateCurrency(id: Int!, autosave: Boolean, data: mutationCurrencyUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Currency
+  deleteCurrency(id: Int!, trash: Boolean): Currency
+  duplicateCurrency(id: Int!, data: mutationCurrencyInput!): Currency
+  createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean, locale: LocaleInputType): PayloadKv
+  updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
   duplicatePayloadKv(id: Int!, data: mutationPayloadKvInput!): PayloadKv
-  createPayloadLockedDocument(data: mutationPayloadLockedDocumentInput!, draft: Boolean): PayloadLockedDocument
-  updatePayloadLockedDocument(id: Int!, autosave: Boolean, data: mutationPayloadLockedDocumentUpdateInput!, draft: Boolean, trash: Boolean): PayloadLockedDocument
+  createPayloadLockedDocument(data: mutationPayloadLockedDocumentInput!, draft: Boolean, locale: LocaleInputType): PayloadLockedDocument
+  updatePayloadLockedDocument(id: Int!, autosave: Boolean, data: mutationPayloadLockedDocumentUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): PayloadLockedDocument
   deletePayloadLockedDocument(id: Int!, trash: Boolean): PayloadLockedDocument
   duplicatePayloadLockedDocument(id: Int!, data: mutationPayloadLockedDocumentInput!): PayloadLockedDocument
-  createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean): PayloadPreference
-  updatePayloadPreference(id: Int!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean, trash: Boolean): PayloadPreference
+  createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean, locale: LocaleInputType): PayloadPreference
+  updatePayloadPreference(id: Int!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): PayloadPreference
   deletePayloadPreference(id: Int!, trash: Boolean): PayloadPreference
   duplicatePayloadPreference(id: Int!, data: mutationPayloadPreferenceInput!): PayloadPreference
-  updateHome(data: mutationHomeInput!, draft: Boolean): Home
-  updateTraining(data: mutationTrainingInput!, draft: Boolean): Training
-  updateContact(data: mutationContactInput!, draft: Boolean): Contact
+  updateHome(data: mutationHomeInput!, draft: Boolean, locale: LocaleInputType): Home
+  updateTraining(data: mutationTrainingInput!, draft: Boolean, locale: LocaleInputType): Training
+  updateContact(data: mutationContactInput!, draft: Boolean, locale: LocaleInputType): Contact
 }
 
 input mutationUserInput {
@@ -17771,6 +18398,28 @@ enum DealerApplicationUpdate_status_MutationInput {
   rejected
 }
 
+input mutationCurrencyInput {
+  name: String!
+  code: String!
+  symbol: String!
+  rate: Float!
+  active: Boolean
+  sortOrder: Float
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationCurrencyUpdateInput {
+  name: String
+  code: String
+  symbol: String
+  rate: Float
+  active: Boolean
+  sortOrder: Float
+  updatedAt: String
+  createdAt: String
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -17808,6 +18457,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   training_videos
   applications
   dealer_applications
+  currencies
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -17846,6 +18496,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   training_videos
   applications
   dealer_applications
+  currencies
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

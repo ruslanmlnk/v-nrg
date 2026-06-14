@@ -1,5 +1,5 @@
-query GetProductBySlug($slug: String!) {
-  Products(limit: 1, where: { slug: { equals: $slug } }) {
+query GetProductBySlug($slug: String!, $locale: LocaleInputType) {
+  Products(locale: $locale, limit: 1, where: { slug: { equals: $slug } }) {
     docs {
       ...ProductFrontendFields
     }

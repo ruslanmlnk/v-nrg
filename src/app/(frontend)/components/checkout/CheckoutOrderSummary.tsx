@@ -2,8 +2,9 @@
 
 import Image from 'next/image'
 import { motion } from 'motion/react'
-import { formatPrice, type ProductImage } from '../../data/products'
+import type { ProductImage } from '../../data/products'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
 
 export function CheckoutOrderSummary({
   cartItemsDetailed,
@@ -25,6 +26,7 @@ export function CheckoutOrderSummary({
   isCartEmpty: boolean
   isSubmitting?: boolean
 }) {
+  const { formatPrice } = useSitePreferences()
   return (
     <motion.aside
       initial={{ opacity: 0, y: 24 }}

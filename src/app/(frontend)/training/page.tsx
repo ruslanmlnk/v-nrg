@@ -8,6 +8,7 @@ import {
   TrainingHeroSection,
   TrainingLessonsSection,
 } from '../components/training/TrainingSections'
+import { getSiteLocale } from '../lib/getSiteLocale'
 
 export const metadata = {
   title: 'Навчання | V-NRG',
@@ -15,13 +16,15 @@ export const metadata = {
 
 export default async function TrainingPage() {
   const payload = await getPayload({ config: configPromise })
+  const locale = await getSiteLocale()
   const [training, videos] = await Promise.all([
-    payload.findGlobal({ slug: 'training', depth: 2 }),
+    payload.findGlobal({ slug: 'training', depth: 2, locale }),
     payload.find({
       collection: 'training-videos',
       depth: 2,
       limit: 100,
       sort: 'sortOrder',
+      locale,
     }),
   ])
 

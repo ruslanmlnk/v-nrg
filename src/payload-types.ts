@@ -80,6 +80,7 @@ export interface Config {
     'training-videos': TrainingVideo;
     applications: Application;
     'dealer-applications': DealerApplication;
+    currencies: Currency;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -100,6 +101,7 @@ export interface Config {
     'training-videos': TrainingVideosSelect<false> | TrainingVideosSelect<true>;
     applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
     'dealer-applications': DealerApplicationsSelect<false> | DealerApplicationsSelect<true>;
+    currencies: CurrenciesSelect<false> | CurrenciesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -108,7 +110,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('uk' | 'en') | ('uk' | 'en')[];
   globals: {
     home: Home;
     training: Training;
@@ -119,7 +121,7 @@ export interface Config {
     training: TrainingSelect<false> | TrainingSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
   };
-  locale: null;
+  locale: 'uk' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -526,6 +528,21 @@ export interface DealerApplication {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "currencies".
+ */
+export interface Currency {
+  id: number;
+  name: string;
+  code: string;
+  symbol: string;
+  rate: number;
+  active?: boolean | null;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -599,6 +616,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'dealer-applications';
         value: number | DealerApplication;
+      } | null)
+    | ({
+        relationTo: 'currencies';
+        value: number | Currency;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -924,6 +945,20 @@ export interface DealerApplicationsSelect<T extends boolean = true> {
   city?: T;
   message?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "currencies_select".
+ */
+export interface CurrenciesSelect<T extends boolean = true> {
+  name?: T;
+  code?: T;
+  symbol?: T;
+  rate?: T;
+  active?: T;
+  sortOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -17,19 +17,23 @@ import HomeVideoTeaserSection from './components/mainPage/HomeVideoTeaserSection
 import HowItWorks from './components/mainPage/HowItWorks'
 import ModelComparisonSection from './components/mainPage/ModelComparisonSection'
 import { ProductComparisonSection } from './components/productDetail/ProductComparisonSection'
+import { getSiteLocale } from './lib/getSiteLocale'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
+  const locale = await getSiteLocale()
   const [home, articles] = await Promise.all([
     payload.findGlobal({
       slug: 'home',
       depth: 2,
+      locale,
     }),
     payload.find({
       collection: 'articles',
       depth: 1,
       limit: 3,
       sort: '-publishedAt',
+      locale,
     }),
   ])
   const blogCards = articles.docs.map(mapArticleToBlogCard).filter(isDefined)

@@ -1,4 +1,6 @@
-import { formatPrice } from '../../data/products'
+'use client'
+
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
 
 export function ProductPrice({
   className = '',
@@ -13,6 +15,7 @@ export function ProductPrice({
   price: number
   regularPrice?: number
 }) {
+  const { formatPrice } = useSitePreferences()
   const showOldPrice = isDiscountedPrice(oldPrice, price)
   const showRegularPrice = isDiscountedPrice(regularPrice, price) && regularPrice !== oldPrice
 
