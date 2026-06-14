@@ -69,7 +69,7 @@ export default function SiteFooter() {
 
             <div className="flex flex-col items-start gap-8">
               <div className="flex flex-col items-start gap-4">
-                <FooterHeading>Зв&apos;яжіться з нами</FooterHeading>
+                <FooterHeading>Зв’яжіться з нами</FooterHeading>
 
                 <div className="flex flex-col items-start gap-4 text-[16px] font-medium leading-[165%] text-white">
                   <div className="flex items-center gap-4">

@@ -16,10 +16,11 @@ import {
 import { BlogCard, type BlogCardData } from '../../components/blog/BlogCard'
 import { RichTextRenderer } from '../../components/blog/RichTextRenderer'
 import IconAsset from '../../components/ui/IconAsset'
+import { getSiteLocale } from '../../lib/getSiteLocale'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const article = await getArticleBySlug(slug)
+  const article = await getArticleBySlug(slug, undefined, await getSiteLocale())
 
   return {
     title: article ? `${article.title} | V-NRG` : 'Стаття | V-NRG',
@@ -29,7 +30,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const payload = await getPayload({ config: configPromise })
-  const article = await getArticleBySlug(slug, payload)
+  const locale = await getSiteLocale()
+  const article = await getArticleBySlug(slug, payload, locale)
 
   if (!article) {
     notFound()
@@ -39,6 +41,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const tocItems = collectHeadings(article.content)
   const related = await payload.find({
     collection: 'articles',
+    locale,
     depth: 1,
     limit: 3,
     sort: '-publishedAt',
@@ -48,14 +51,14 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
       },
     },
   })
-  const relatedCards = related.docs.map(mapArticleToBlogCard).filter(isDefined)
+  const relatedCards = related.docs.map((relatedArticle) => mapArticleToBlogCard(relatedArticle, locale)).filter(isDefined)
 
   return (
     <div className="pt-5">
       <article className="mx-auto flex max-w-[1288px] flex-col px-6 pb-[100px]">
         <header className="flex flex-col items-center gap-4 py-12 text-center">
           <div className="text-[18px] font-bold leading-[145%] text-[#4FACF5]">
-            {formatArticleDate(article.publishedAt)}
+            {formatArticleDate(article.publishedAt, locale)}
           </div>
           <h1 className="max-w-[940px] text-[36px] font-medium leading-[125%] text-[#22354A] md:text-[56px]">
             {article.title}
@@ -129,10 +132,12 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
 async function getArticleBySlug(
   slug: string,
   providedPayload?: Awaited<ReturnType<typeof getPayload>>,
+  locale: 'uk' | 'en' = 'uk',
 ) {
   const payload = providedPayload ?? (await getPayload({ config: configPromise }))
   const result = await payload.find({
     collection: 'articles',
+    locale,
     depth: 1,
     limit: 1,
     where: {
@@ -145,7 +150,7 @@ async function getArticleBySlug(
   return result.docs[0] ?? null
 }
 
-function mapArticleToBlogCard(article: Article): BlogCardData | null {
+function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardData | null {
   const cardPoster = asMedia(article.cardPoster)
   const image = cardPoster?.url
 
@@ -154,7 +159,7 @@ function mapArticleToBlogCard(article: Article): BlogCardData | null {
   }
 
   return {
-    date: formatArticleDate(article.publishedAt),
+    date: formatArticleDate(article.publishedAt, locale),
     href: `/blog/${article.slug}`,
     id: String(article.id),
     image,
@@ -166,8 +171,8 @@ function asMedia(value: Article['cardPoster'] | Article['heroImage']): Media | n
   return typeof value === 'object' && value ? value : null
 }
 
-function formatArticleDate(value: string) {
-  return new Intl.DateTimeFormat('uk-UA', {
+function formatArticleDate(value: string, locale: 'uk' | 'en') {
+  return new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'uk-UA', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

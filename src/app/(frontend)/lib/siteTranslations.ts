@@ -16,7 +16,7 @@ const translations = {
     training: 'Навчання',
   },
   en: {
-    about: 'About the brand',
+    about: 'About',
     account: 'My account',
     blog: 'Blog',
     cart: 'Cart',

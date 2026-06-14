@@ -1494,7 +1494,7 @@ type ReviewsDeleteDocAccess {
 
 type Product {
   id: Int!
-  title: String!
+  title: String
   price: Float!
   rating: Float
   generateSlug: Boolean
@@ -3621,13 +3621,13 @@ type CategoryDeleteDocAccess {
 
 type Article {
   id: Int!
-  title: String!
+  title: String
   publishedAt: DateTime!
   generateSlug: Boolean
   slug: String!
   cardPoster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   heroImage(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
-  content(depth: Int): JSON!
+  content(depth: Int): JSON
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -4761,7 +4761,7 @@ type OrdersDeleteDocAccess {
 
 type LegalPage {
   id: Int!
-  title: String!
+  title: String
   generateSlug: Boolean
   slug: String!
   content(depth: Int): JSON
@@ -5102,10 +5102,10 @@ type LegalPagesDeleteDocAccess {
 
 type Location {
   id: Int!
-  name: String!
+  name: String
   country: String!
   city: String!
-  address: String!
+  address: String
   image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   latitude: Float!
   longitude: Float!
@@ -5674,7 +5674,7 @@ type LocationsDeleteDocAccess {
 
 type TrainingCategory {
   id: Int!
-  title: String!
+  title: String
   sortOrder: Float
   updatedAt: DateTime
   createdAt: DateTime
@@ -5909,8 +5909,8 @@ type TrainingCategoriesDeleteDocAccess {
 
 type TrainingVideo {
   id: Int!
-  title: String!
-  description: String!
+  title: String
+  description: String
   category(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): TrainingCategory
   poster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   video(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
@@ -6288,7 +6288,7 @@ type TrainingVideosDeleteDocAccess {
 type Application {
   id: Int!
   source: Application_source!
-  name: String!
+  name: String
   email: EmailAddress
   phone: String
   message: String
@@ -7203,7 +7203,7 @@ type DealerApplicationsDeleteDocAccess {
 
 type Currency {
   id: Int!
-  name: String!
+  name: String
   code: String!
   symbol: String!
   rate: Float!
@@ -9650,8 +9650,8 @@ type HomeUpdateDocAccess {
 }
 
 type Training {
-  title: String!
-  description: String!
+  title: String
+  description: String
   formats: Training_Formats
   videoInstructions: Training_VideoInstructions
   faq: Training_Faq
@@ -10257,11 +10257,11 @@ type TrainingUpdateDocAccess {
 }
 
 type Contact {
-  title: String!
-  description: String!
+  title: String
+  description: String
   phone: String!
   email: EmailAddress!
-  address: String!
+  address: String
   form: Contact_Form
   updatedAt: DateTime
   createdAt: DateTime
@@ -17917,7 +17917,7 @@ input mutationReviewUpdateInput {
 }
 
 input mutationProductInput {
-  title: String!
+  title: String
   price: Float!
   rating: Float
   generateSlug: Boolean
@@ -17946,13 +17946,13 @@ input mutationProductInput {
 }
 
 input mutationProduct_ListFeaturesInput {
-  feature: String!
+  feature: String
   id: String
 }
 
 input mutationProduct_CompareFeaturesInput {
-  label: String!
-  value: String!
+  label: String
+  value: String
   id: String
 }
 
@@ -17965,8 +17965,8 @@ input mutationProduct_CharacteristicsInput {
 }
 
 input mutationProduct_Characteristics_ItemsInput {
-  label: String!
-  value: String!
+  label: String
+  value: String
   id: String
 }
 
@@ -17975,7 +17975,7 @@ input mutationProduct_EquipmentInput {
 }
 
 input mutationProduct_Equipment_ItemsInput {
-  item: String!
+  item: String
   id: String
 }
 
@@ -17984,7 +17984,7 @@ input mutationProduct_AdvantagesInput {
 }
 
 input mutationProduct_Advantages_ItemsInput {
-  item: String!
+  item: String
   id: String
 }
 
@@ -18035,13 +18035,13 @@ input mutationProductUpdateInput {
 }
 
 input mutationProductUpdate_ListFeaturesInput {
-  feature: String!
+  feature: String
   id: String
 }
 
 input mutationProductUpdate_CompareFeaturesInput {
-  label: String!
-  value: String!
+  label: String
+  value: String
   id: String
 }
 
@@ -18054,8 +18054,8 @@ input mutationProductUpdate_CharacteristicsInput {
 }
 
 input mutationProductUpdate_Characteristics_ItemsInput {
-  label: String!
-  value: String!
+  label: String
+  value: String
   id: String
 }
 
@@ -18064,7 +18064,7 @@ input mutationProductUpdate_EquipmentInput {
 }
 
 input mutationProductUpdate_Equipment_ItemsInput {
-  item: String!
+  item: String
   id: String
 }
 
@@ -18073,7 +18073,7 @@ input mutationProductUpdate_AdvantagesInput {
 }
 
 input mutationProductUpdate_Advantages_ItemsInput {
-  item: String!
+  item: String
   id: String
 }
 
@@ -18115,13 +18115,13 @@ input mutationCategoryUpdateInput {
 }
 
 input mutationArticleInput {
-  title: String!
+  title: String
   publishedAt: String!
   generateSlug: Boolean
   slug: String!
   cardPoster: Int
   heroImage: Int
-  content: JSON!
+  content: JSON
   updatedAt: String
   createdAt: String
 }
@@ -18223,7 +18223,7 @@ enum OrderUpdate_paymentMethod_MutationInput {
 }
 
 input mutationLegalPageInput {
-  title: String!
+  title: String
   generateSlug: Boolean
   slug: String!
   content: JSON
@@ -18243,10 +18243,10 @@ input mutationLegalPageUpdateInput {
 }
 
 input mutationLocationInput {
-  name: String!
+  name: String
   country: String!
   city: String!
-  address: String!
+  address: String
   image: Int
   latitude: Float!
   longitude: Float!
@@ -18275,7 +18275,7 @@ input mutationLocationUpdateInput {
 }
 
 input mutationTrainingCategoryInput {
-  title: String!
+  title: String
   sortOrder: Float
   updatedAt: String
   createdAt: String
@@ -18289,8 +18289,8 @@ input mutationTrainingCategoryUpdateInput {
 }
 
 input mutationTrainingVideoInput {
-  title: String!
-  description: String!
+  title: String
+  description: String
   category: Int
   poster: Int
   video: Int
@@ -18312,7 +18312,7 @@ input mutationTrainingVideoUpdateInput {
 
 input mutationApplicationInput {
   source: Application_source_MutationInput!
-  name: String!
+  name: String
   email: String
   phone: String
   message: String
@@ -18399,7 +18399,7 @@ enum DealerApplicationUpdate_status_MutationInput {
 }
 
 input mutationCurrencyInput {
-  name: String!
+  name: String
   code: String!
   symbol: String!
   rate: Float!
@@ -18556,21 +18556,21 @@ input mutationHomeInput {
 }
 
 input mutationHome_HeroInput {
-  title: String!
-  description: String!
+  title: String
+  description: String
   image: Int
 }
 
 input mutationHome_HowItWorkInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   cards: [mutationHome_HowItWork_CardsInput]
 }
 
 input mutationHome_HowItWork_CardsInput {
   icon: Int
-  title: String!
-  description: String!
+  title: String
+  description: String
   id: String
 }
 
@@ -18581,20 +18581,20 @@ input mutationHome_BeforeAfterInput {
 }
 
 input mutationHome_ModelComparisonInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   products: [Int]
 }
 
 input mutationHome_CertificatesSectionInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   certificates: [Int]
 }
 
 input mutationHome_TrainingSectionInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   video: mutationHome_TrainingSection_VideoInput!
   cards: [mutationHome_TrainingSection_CardsInput]
 }
@@ -18606,32 +18606,32 @@ input mutationHome_TrainingSection_VideoInput {
 
 input mutationHome_TrainingSection_CardsInput {
   icon: Int
-  title: String!
-  description: String!
+  title: String
+  description: String
   id: String
 }
 
 input mutationHome_ReviewsSectionInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   reviews: [Int]
 }
 
 input mutationHome_FaqSectionInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   items: [mutationHome_FaqSection_ItemsInput]
 }
 
 input mutationHome_FaqSection_ItemsInput {
-  question: String!
-  answer: String!
+  question: String
+  answer: String
   id: String
 }
 
 input mutationTrainingInput {
-  title: String!
-  description: String!
+  title: String
+  description: String
   formats: mutationTraining_FormatsInput!
   videoInstructions: mutationTraining_VideoInstructionsInput!
   faq: mutationTraining_FaqInput!
@@ -18640,54 +18640,54 @@ input mutationTrainingInput {
 }
 
 input mutationTraining_FormatsInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   cards: [mutationTraining_Formats_CardsInput]
 }
 
 input mutationTraining_Formats_CardsInput {
   icon: Int
-  title: String!
-  description: String!
+  title: String
+  description: String
   id: String
 }
 
 input mutationTraining_VideoInstructionsInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
 }
 
 input mutationTraining_FaqInput {
-  title: String!
-  subtitle: String!
+  title: String
+  subtitle: String
   items: [mutationTraining_Faq_ItemsInput]
 }
 
 input mutationTraining_Faq_ItemsInput {
-  question: String!
-  answer: String!
+  question: String
+  answer: String
   id: String
 }
 
 input mutationContactInput {
-  title: String!
-  description: String!
+  title: String
+  description: String
   phone: String!
   email: String!
-  address: String!
+  address: String
   form: mutationContact_FormInput!
   updatedAt: String
   createdAt: String
 }
 
 input mutationContact_FormInput {
-  title: String!
-  description: String!
+  title: String
+  description: String
   socialNetworks: [mutationContact_Form_SocialNetworksInput]
 }
 
 input mutationContact_Form_SocialNetworksInput {
-  label: String!
+  label: String
   icon: Int
   url: String!
   id: String

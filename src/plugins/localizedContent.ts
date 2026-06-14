@@ -6,6 +6,8 @@ const localizableFieldNames = new Set([
   'content',
   'description',
   'details',
+  'feature',
+  'item',
   'label',
   'name',
   'question',
@@ -13,6 +15,7 @@ const localizableFieldNames = new Set([
   'subtitle',
   'text',
   'title',
+  'value',
 ])
 
 function localizeFields(fields: Field[]): Field[] {
@@ -37,6 +40,16 @@ function localizeFields(fields: Field[]): Field[] {
         blocks: nextField.blocks.map((block) => ({
           ...block,
           fields: localizeFields(block.fields),
+        })),
+      } as Field
+    }
+
+    if ('tabs' in nextField && Array.isArray(nextField.tabs)) {
+      nextField = {
+        ...nextField,
+        tabs: nextField.tabs.map((tab) => ({
+          ...tab,
+          fields: localizeFields(tab.fields),
         })),
       } as Field
     }

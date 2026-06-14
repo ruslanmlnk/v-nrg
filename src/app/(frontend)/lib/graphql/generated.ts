@@ -2338,7 +2338,7 @@ export type ReviewsDeleteDocAccess = {
 export type Product = {
   __typename?: 'Product';
   id: Scalars['Int']['output'];
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   price: Scalars['Float']['output'];
   rating?: Maybe<Scalars['Float']['output']>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
@@ -4826,13 +4826,13 @@ export type CategoryDeleteDocAccess = {
 export type Article = {
   __typename?: 'Article';
   id: Scalars['Int']['output'];
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   publishedAt: Scalars['DateTime']['output'];
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
   cardPoster?: Maybe<Media>;
   heroImage?: Maybe<Media>;
-  content: Scalars['JSON']['output'];
+  content?: Maybe<Scalars['JSON']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -6132,7 +6132,7 @@ export type OrdersDeleteDocAccess = {
 export type LegalPage = {
   __typename?: 'LegalPage';
   id: Scalars['Int']['output'];
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
   content?: Maybe<Scalars['JSON']['output']>;
@@ -6522,10 +6522,10 @@ export type LegalPagesDeleteDocAccess = {
 export type Location = {
   __typename?: 'Location';
   id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   country: Scalars['String']['output'];
   city: Scalars['String']['output'];
-  address: Scalars['String']['output'];
+  address?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Media>;
   latitude: Scalars['Float']['output'];
   longitude: Scalars['Float']['output'];
@@ -7174,7 +7174,7 @@ export type LocationsDeleteDocAccess = {
 export type TrainingCategory = {
   __typename?: 'TrainingCategory';
   id: Scalars['Int']['output'];
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   sortOrder?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -7438,8 +7438,8 @@ export type TrainingCategoriesDeleteDocAccess = {
 export type TrainingVideo = {
   __typename?: 'TrainingVideo';
   id: Scalars['Int']['output'];
-  title: Scalars['String']['output'];
-  description: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   category?: Maybe<TrainingCategory>;
   poster?: Maybe<Media>;
   video?: Maybe<Media>;
@@ -7884,7 +7884,7 @@ export type Application = {
   __typename?: 'Application';
   id: Scalars['Int']['output'];
   source: Application_Source;
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['EmailAddress']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   message?: Maybe<Scalars['String']['output']>;
@@ -8918,7 +8918,7 @@ export type DealerApplicationsDeleteDocAccess = {
 export type Currency = {
   __typename?: 'Currency';
   id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   code: Scalars['String']['output'];
   symbol: Scalars['String']['output'];
   rate: Scalars['Float']['output'];
@@ -11851,8 +11851,8 @@ export type HomeUpdateDocAccess = {
 
 export type Training = {
   __typename?: 'Training';
-  title: Scalars['String']['output'];
-  description: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   formats?: Maybe<Training_Formats>;
   videoInstructions?: Maybe<Training_VideoInstructions>;
   faq?: Maybe<Training_Faq>;
@@ -12589,11 +12589,11 @@ export type TrainingUpdateDocAccess = {
 
 export type Contact = {
   __typename?: 'Contact';
-  title: Scalars['String']['output'];
-  description: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
   email: Scalars['EmailAddress']['output'];
-  address: Scalars['String']['output'];
+  address?: Maybe<Scalars['String']['output']>;
   form?: Maybe<Contact_Form>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -22341,7 +22341,7 @@ export type MutationReviewUpdateInput = {
 };
 
 export type MutationProductInput = {
-  title: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
   price: Scalars['Float']['input'];
   rating?: InputMaybe<Scalars['Float']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
@@ -22370,13 +22370,13 @@ export type MutationProductInput = {
 };
 
 export type MutationProduct_ListFeaturesInput = {
-  feature: Scalars['String']['input'];
+  feature?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProduct_CompareFeaturesInput = {
-  label: Scalars['String']['input'];
-  value: Scalars['String']['input'];
+  label?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22389,8 +22389,8 @@ export type MutationProduct_CharacteristicsInput = {
 };
 
 export type MutationProduct_Characteristics_ItemsInput = {
-  label: Scalars['String']['input'];
-  value: Scalars['String']['input'];
+  label?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22399,7 +22399,7 @@ export type MutationProduct_EquipmentInput = {
 };
 
 export type MutationProduct_Equipment_ItemsInput = {
-  item: Scalars['String']['input'];
+  item?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22408,7 +22408,7 @@ export type MutationProduct_AdvantagesInput = {
 };
 
 export type MutationProduct_Advantages_ItemsInput = {
-  item: Scalars['String']['input'];
+  item?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22459,13 +22459,13 @@ export type MutationProductUpdateInput = {
 };
 
 export type MutationProductUpdate_ListFeaturesInput = {
-  feature: Scalars['String']['input'];
+  feature?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductUpdate_CompareFeaturesInput = {
-  label: Scalars['String']['input'];
-  value: Scalars['String']['input'];
+  label?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22478,8 +22478,8 @@ export type MutationProductUpdate_CharacteristicsInput = {
 };
 
 export type MutationProductUpdate_Characteristics_ItemsInput = {
-  label: Scalars['String']['input'];
-  value: Scalars['String']['input'];
+  label?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22488,7 +22488,7 @@ export type MutationProductUpdate_EquipmentInput = {
 };
 
 export type MutationProductUpdate_Equipment_ItemsInput = {
-  item: Scalars['String']['input'];
+  item?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22497,7 +22497,7 @@ export type MutationProductUpdate_AdvantagesInput = {
 };
 
 export type MutationProductUpdate_Advantages_ItemsInput = {
-  item: Scalars['String']['input'];
+  item?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -22539,13 +22539,13 @@ export type MutationCategoryUpdateInput = {
 };
 
 export type MutationArticleInput = {
-  title: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
   publishedAt: Scalars['String']['input'];
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
   cardPoster?: InputMaybe<Scalars['Int']['input']>;
   heroImage?: InputMaybe<Scalars['Int']['input']>;
-  content: Scalars['JSON']['input'];
+  content?: InputMaybe<Scalars['JSON']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -22647,7 +22647,7 @@ export enum OrderUpdate_PaymentMethod_MutationInput {
 }
 
 export type MutationLegalPageInput = {
-  title: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
   content?: InputMaybe<Scalars['JSON']['input']>;
@@ -22667,10 +22667,10 @@ export type MutationLegalPageUpdateInput = {
 };
 
 export type MutationLocationInput = {
-  name: Scalars['String']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
   country: Scalars['String']['input'];
   city: Scalars['String']['input'];
-  address: Scalars['String']['input'];
+  address?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['Int']['input']>;
   latitude: Scalars['Float']['input'];
   longitude: Scalars['Float']['input'];
@@ -22699,7 +22699,7 @@ export type MutationLocationUpdateInput = {
 };
 
 export type MutationTrainingCategoryInput = {
-  title: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
   sortOrder?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
@@ -22713,8 +22713,8 @@ export type MutationTrainingCategoryUpdateInput = {
 };
 
 export type MutationTrainingVideoInput = {
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   category?: InputMaybe<Scalars['Int']['input']>;
   poster?: InputMaybe<Scalars['Int']['input']>;
   video?: InputMaybe<Scalars['Int']['input']>;
@@ -22736,7 +22736,7 @@ export type MutationTrainingVideoUpdateInput = {
 
 export type MutationApplicationInput = {
   source: Application_Source_MutationInput;
-  name: Scalars['String']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   message?: InputMaybe<Scalars['String']['input']>;
@@ -22823,7 +22823,7 @@ export enum DealerApplicationUpdate_Status_MutationInput {
 }
 
 export type MutationCurrencyInput = {
-  name: Scalars['String']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
   code: Scalars['String']['input'];
   symbol: Scalars['String']['input'];
   rate: Scalars['Float']['input'];
@@ -22980,21 +22980,21 @@ export type MutationHomeInput = {
 };
 
 export type MutationHome_HeroInput = {
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MutationHome_HowItWorkInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   cards?: InputMaybe<Array<InputMaybe<MutationHome_HowItWork_CardsInput>>>;
 };
 
 export type MutationHome_HowItWork_CardsInput = {
   icon?: InputMaybe<Scalars['Int']['input']>;
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -23005,20 +23005,20 @@ export type MutationHome_BeforeAfterInput = {
 };
 
 export type MutationHome_ModelComparisonInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   products?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
 export type MutationHome_CertificatesSectionInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   certificates?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
 export type MutationHome_TrainingSectionInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   video: MutationHome_TrainingSection_VideoInput;
   cards?: InputMaybe<Array<InputMaybe<MutationHome_TrainingSection_CardsInput>>>;
 };
@@ -23030,32 +23030,32 @@ export type MutationHome_TrainingSection_VideoInput = {
 
 export type MutationHome_TrainingSection_CardsInput = {
   icon?: InputMaybe<Scalars['Int']['input']>;
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationHome_ReviewsSectionInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   reviews?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
 export type MutationHome_FaqSectionInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<MutationHome_FaqSection_ItemsInput>>>;
 };
 
 export type MutationHome_FaqSection_ItemsInput = {
-  question: Scalars['String']['input'];
-  answer: Scalars['String']['input'];
+  question?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationTrainingInput = {
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   formats: MutationTraining_FormatsInput;
   videoInstructions: MutationTraining_VideoInstructionsInput;
   faq: MutationTraining_FaqInput;
@@ -23064,54 +23064,54 @@ export type MutationTrainingInput = {
 };
 
 export type MutationTraining_FormatsInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   cards?: InputMaybe<Array<InputMaybe<MutationTraining_Formats_CardsInput>>>;
 };
 
 export type MutationTraining_Formats_CardsInput = {
   icon?: InputMaybe<Scalars['Int']['input']>;
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationTraining_VideoInstructionsInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationTraining_FaqInput = {
-  title: Scalars['String']['input'];
-  subtitle: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<MutationTraining_Faq_ItemsInput>>>;
 };
 
 export type MutationTraining_Faq_ItemsInput = {
-  question: Scalars['String']['input'];
-  answer: Scalars['String']['input'];
+  question?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationContactInput = {
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
   email: Scalars['String']['input'];
-  address: Scalars['String']['input'];
+  address?: InputMaybe<Scalars['String']['input']>;
   form: MutationContact_FormInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationContact_FormInput = {
-  title: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   socialNetworks?: InputMaybe<Array<InputMaybe<MutationContact_Form_SocialNetworksInput>>>;
 };
 
 export type MutationContact_Form_SocialNetworksInput = {
-  label: Scalars['String']['input'];
+  label?: InputMaybe<Scalars['String']['input']>;
   icon?: InputMaybe<Scalars['Int']['input']>;
   url: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
@@ -23122,7 +23122,7 @@ export type GetLayoutDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -23130,9 +23130,9 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
 
-export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title: string, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
+export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
 
 export const ProductFrontendFieldsFragmentDoc = gql`
     fragment ProductFrontendFields on Product {

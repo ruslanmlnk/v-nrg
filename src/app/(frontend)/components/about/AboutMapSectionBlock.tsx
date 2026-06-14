@@ -4,11 +4,14 @@ import aboutSalon from '@public/assets/about/about-salon-1.webp'
 
 import AboutMapSection, { type Salon } from './AboutMapSection'
 import SectionHeading from '../shared/SectionHeading'
+import { getSiteLocale } from '../../lib/getSiteLocale'
 
 export async function AboutMapSectionBlock() {
   const payload = await getPayload({ config })
+  const locale = await getSiteLocale()
   const result = await payload.find({
     collection: 'locations',
+    locale,
     depth: 1,
     limit: 100,
     sort: 'sortOrder',

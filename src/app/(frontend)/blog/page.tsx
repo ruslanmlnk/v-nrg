@@ -5,6 +5,7 @@ import type { Article, Media } from '@/payload-types'
 
 import { BlogCard, type BlogCardData } from '../components/blog/BlogCard'
 import PageHero from '../components/shared/PageHero'
+import { getSiteLocale } from '../lib/getSiteLocale'
 
 export const metadata = {
   title: 'Блог | V-NRG',
@@ -12,14 +13,16 @@ export const metadata = {
 
 export default async function BlogPage() {
   const payload = await getPayload({ config: configPromise })
+  const locale = await getSiteLocale()
   const articles = await payload.find({
     collection: 'articles',
+    locale,
     depth: 1,
     limit: 9,
     sort: '-publishedAt',
   })
 
-  const blogCards = articles.docs.map(mapArticleToBlogCard).filter(isDefined)
+  const blogCards = articles.docs.map((article) => mapArticleToBlogCard(article, locale)).filter(isDefined)
 
   return (
     <div className="pt-5">
@@ -64,7 +67,7 @@ export default async function BlogPage() {
   )
 }
 
-function mapArticleToBlogCard(article: Article): BlogCardData | null {
+function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardData | null {
   const cardPoster = asMedia(article.cardPoster)
   const image = cardPoster?.url
 
@@ -73,7 +76,7 @@ function mapArticleToBlogCard(article: Article): BlogCardData | null {
   }
 
   return {
-    date: formatArticleDate(article.publishedAt),
+    date: formatArticleDate(article.publishedAt, locale),
     href: `/blog/${article.slug}`,
     id: String(article.id),
     image,
@@ -125,8 +128,8 @@ function asMedia(value: Article['cardPoster']): Media | null {
   return typeof value === 'object' && value ? value : null
 }
 
-function formatArticleDate(value: string) {
-  return new Intl.DateTimeFormat('uk-UA', {
+function formatArticleDate(value: string, locale: 'uk' | 'en') {
+  return new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'uk-UA', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

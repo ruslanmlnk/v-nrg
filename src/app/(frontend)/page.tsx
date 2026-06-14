@@ -36,7 +36,7 @@ export default async function HomePage() {
       locale,
     }),
   ])
-  const blogCards = articles.docs.map(mapArticleToBlogCard).filter(isDefined)
+  const blogCards = articles.docs.map((article) => mapArticleToBlogCard(article, locale)).filter(isDefined)
   const heroImage = getMedia(home.hero.image)
   const beforeAfterCards = (home.beforeAfter ?? []).flatMap((item, index) => {
     const before = getMedia(item.before)
@@ -136,7 +136,7 @@ function splitIntoColumns(items: Array<{ answer: string; question: string }>) {
   return [items.slice(0, midpoint), items.slice(midpoint)].filter((column) => column.length > 0)
 }
 
-function mapArticleToBlogCard(article: Article): BlogCardData | null {
+function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardData | null {
   const cardPoster = getMedia(article.cardPoster)
   const image = cardPoster?.url
 
@@ -145,7 +145,7 @@ function mapArticleToBlogCard(article: Article): BlogCardData | null {
   }
 
   return {
-    date: formatArticleDate(article.publishedAt),
+    date: formatArticleDate(article.publishedAt, locale),
     href: `/blog/${article.slug}`,
     id: String(article.id),
     image,
@@ -157,8 +157,8 @@ function getMedia(value: number | Media | null | undefined): Media | null {
   return typeof value === 'object' && value ? value : null
 }
 
-function formatArticleDate(value: string) {
-  return new Intl.DateTimeFormat('uk-UA', {
+function formatArticleDate(value: string, locale: 'uk' | 'en') {
+  return new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'uk-UA', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

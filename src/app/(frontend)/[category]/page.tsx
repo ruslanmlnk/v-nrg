@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 
 import { CatalogCategoryPage } from '../components/catalog/CatalogCategoryPage'
 import { LegalPageView } from '../components/legal/LegalPageView'
+import { getSiteLocale } from '../lib/getSiteLocale'
 
 const reservedRootSlugs = new Set([
   'about',
@@ -34,8 +35,10 @@ export default async function RootCatalogCategoryPage({
   }
 
   const payload = await getPayload({ config: configPromise })
+  const locale = await getSiteLocale()
   const legalPage = await payload.find({
     collection: 'legal-pages',
+    locale,
     depth: 1,
     limit: 1,
     where: {
@@ -57,6 +60,7 @@ export default async function RootCatalogCategoryPage({
 
   const result = await payload.find({
     collection: 'category',
+    locale,
     depth: 0,
     limit: 1,
     where: {

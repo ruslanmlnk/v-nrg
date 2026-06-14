@@ -7,6 +7,7 @@ import './styles.css'
 import Header from './components/Header'
 import { CommerceProvider } from './components/providers/CommerceProvider'
 import { SitePreferencesProvider, type SiteCurrency } from './components/providers/SitePreferencesProvider'
+import { GlobalEnglishTranslator } from './components/providers/GlobalEnglishTranslator'
 import SiteFooter from './components/SiteFooter'
 import { getLayoutData } from './lib/graphql/queries'
 import { getSiteLocale } from './lib/getSiteLocale'
@@ -29,6 +30,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
   const payload = await getPayload({ config })
   const currencyResult = await payload.find({
     collection: 'currencies',
+    locale: initialLocale,
     pagination: false,
     sort: 'sortOrder',
     where: { active: { equals: true } },
@@ -44,6 +46,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
     <html lang={initialLocale}>
       <body className={googleSans.className}>
         <SitePreferencesProvider initialCurrencies={initialCurrencies} initialLocale={initialLocale}>
+          <GlobalEnglishTranslator />
           <CommerceProvider
             initialCategories={initialCategories}
             initialProducts={initialProducts}
