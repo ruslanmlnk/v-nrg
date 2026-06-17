@@ -67,29 +67,10 @@ export const Contacts: GlobalConfig = {
         },
         {
           name: 'socialNetworks',
-          type: 'array',
+          type: 'relationship',
+          relationTo: 'social-networks',
+          hasMany: true,
           label: 'Соціальні мережі',
-          fields: [
-            {
-              name: 'label',
-              type: 'text',
-              label: 'Назва',
-              required: true,
-            },
-            {
-              name: 'icon',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Іконка',
-              required: true,
-            },
-            {
-              name: 'url',
-              type: 'text',
-              label: 'Посилання',
-              required: true,
-            },
-          ],
         },
       ],
     },

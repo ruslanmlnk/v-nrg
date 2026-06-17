@@ -85,6 +85,10 @@ export type Query = {
   Currencies?: Maybe<Currencies>;
   countCurrencies?: Maybe<CountCurrencies>;
   docAccessCurrency?: Maybe<CurrenciesDocAccess>;
+  SocialNetwork?: Maybe<SocialNetwork>;
+  SocialNetworks?: Maybe<SocialNetworks>;
+  countSocialNetworks?: Maybe<CountSocialNetworks>;
+  docAccessSocialNetwork?: Maybe<Social_NetworksDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -103,6 +107,8 @@ export type Query = {
   docAccessTraining?: Maybe<TrainingDocAccess>;
   Contact?: Maybe<Contact>;
   docAccessContact?: Maybe<ContactsDocAccess>;
+  SiteSetting?: Maybe<SiteSetting>;
+  docAccessSiteSetting?: Maybe<Site_SettingsDocAccess>;
   Access?: Maybe<Access>;
 };
 
@@ -625,6 +631,43 @@ export type QueryDocAccessCurrencyArgs = {
 };
 
 
+export type QuerySocialNetworkArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QuerySocialNetworksArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<SocialNetwork_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountSocialNetworksArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<SocialNetwork_Where>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryDocAccessSocialNetworkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type QueryPayloadKvArgs = {
   id: Scalars['Int']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
@@ -753,6 +796,14 @@ export type QueryTrainingArgs = {
 
 
 export type QueryContactArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QuerySiteSettingArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
   locale?: InputMaybe<LocaleInputType>;
@@ -9346,6 +9397,374 @@ export type CurrenciesDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type SocialNetwork = {
+  __typename?: 'SocialNetwork';
+  id: Scalars['Int']['output'];
+  label?: Maybe<Scalars['String']['output']>;
+  type: SocialNetwork_Type;
+  url: Scalars['String']['output'];
+  icon?: Maybe<Media>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type SocialNetworkIconArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+export enum SocialNetwork_Type {
+  Instagram = 'instagram',
+  Facebook = 'facebook',
+  Telegram = 'telegram',
+  Whatsapp = 'whatsapp',
+  Custom = 'custom'
+}
+
+export type SocialNetworks = {
+  __typename?: 'SocialNetworks';
+  docs: Array<SocialNetwork>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type SocialNetwork_Where = {
+  label?: InputMaybe<SocialNetwork_Label_Operator>;
+  type?: InputMaybe<SocialNetwork_Type_Operator>;
+  url?: InputMaybe<SocialNetwork_Url_Operator>;
+  icon?: InputMaybe<SocialNetwork_Icon_Operator>;
+  updatedAt?: InputMaybe<SocialNetwork_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<SocialNetwork_CreatedAt_Operator>;
+  id?: InputMaybe<SocialNetwork_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<SocialNetwork_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<SocialNetwork_Where_Or>>>;
+};
+
+export type SocialNetwork_Label_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type SocialNetwork_Type_Operator = {
+  equals?: InputMaybe<SocialNetwork_Type_Input>;
+  not_equals?: InputMaybe<SocialNetwork_Type_Input>;
+  in?: InputMaybe<Array<InputMaybe<SocialNetwork_Type_Input>>>;
+  not_in?: InputMaybe<Array<InputMaybe<SocialNetwork_Type_Input>>>;
+  all?: InputMaybe<Array<InputMaybe<SocialNetwork_Type_Input>>>;
+};
+
+export enum SocialNetwork_Type_Input {
+  Instagram = 'instagram',
+  Facebook = 'facebook',
+  Telegram = 'telegram',
+  Whatsapp = 'whatsapp',
+  Custom = 'custom'
+}
+
+export type SocialNetwork_Url_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type SocialNetwork_Icon_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type SocialNetwork_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type SocialNetwork_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type SocialNetwork_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type SocialNetwork_Where_And = {
+  label?: InputMaybe<SocialNetwork_Label_Operator>;
+  type?: InputMaybe<SocialNetwork_Type_Operator>;
+  url?: InputMaybe<SocialNetwork_Url_Operator>;
+  icon?: InputMaybe<SocialNetwork_Icon_Operator>;
+  updatedAt?: InputMaybe<SocialNetwork_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<SocialNetwork_CreatedAt_Operator>;
+  id?: InputMaybe<SocialNetwork_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<SocialNetwork_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<SocialNetwork_Where_Or>>>;
+};
+
+export type SocialNetwork_Where_Or = {
+  label?: InputMaybe<SocialNetwork_Label_Operator>;
+  type?: InputMaybe<SocialNetwork_Type_Operator>;
+  url?: InputMaybe<SocialNetwork_Url_Operator>;
+  icon?: InputMaybe<SocialNetwork_Icon_Operator>;
+  updatedAt?: InputMaybe<SocialNetwork_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<SocialNetwork_CreatedAt_Operator>;
+  id?: InputMaybe<SocialNetwork_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<SocialNetwork_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<SocialNetwork_Where_Or>>>;
+};
+
+export type CountSocialNetworks = {
+  __typename?: 'countSocialNetworks';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Social_NetworksDocAccess = {
+  __typename?: 'social_networksDocAccess';
+  fields?: Maybe<SocialNetworksDocAccessFields>;
+  create?: Maybe<SocialNetworksCreateDocAccess>;
+  read?: Maybe<SocialNetworksReadDocAccess>;
+  update?: Maybe<SocialNetworksUpdateDocAccess>;
+  delete?: Maybe<SocialNetworksDeleteDocAccess>;
+};
+
+export type SocialNetworksDocAccessFields = {
+  __typename?: 'SocialNetworksDocAccessFields';
+  label?: Maybe<SocialNetworksDocAccessFields_Label>;
+  type?: Maybe<SocialNetworksDocAccessFields_Type>;
+  url?: Maybe<SocialNetworksDocAccessFields_Url>;
+  icon?: Maybe<SocialNetworksDocAccessFields_Icon>;
+  updatedAt?: Maybe<SocialNetworksDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<SocialNetworksDocAccessFields_CreatedAt>;
+};
+
+export type SocialNetworksDocAccessFields_Label = {
+  __typename?: 'SocialNetworksDocAccessFields_label';
+  create?: Maybe<SocialNetworksDocAccessFields_Label_Create>;
+  read?: Maybe<SocialNetworksDocAccessFields_Label_Read>;
+  update?: Maybe<SocialNetworksDocAccessFields_Label_Update>;
+  delete?: Maybe<SocialNetworksDocAccessFields_Label_Delete>;
+};
+
+export type SocialNetworksDocAccessFields_Label_Create = {
+  __typename?: 'SocialNetworksDocAccessFields_label_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Label_Read = {
+  __typename?: 'SocialNetworksDocAccessFields_label_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Label_Update = {
+  __typename?: 'SocialNetworksDocAccessFields_label_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Label_Delete = {
+  __typename?: 'SocialNetworksDocAccessFields_label_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Type = {
+  __typename?: 'SocialNetworksDocAccessFields_type';
+  create?: Maybe<SocialNetworksDocAccessFields_Type_Create>;
+  read?: Maybe<SocialNetworksDocAccessFields_Type_Read>;
+  update?: Maybe<SocialNetworksDocAccessFields_Type_Update>;
+  delete?: Maybe<SocialNetworksDocAccessFields_Type_Delete>;
+};
+
+export type SocialNetworksDocAccessFields_Type_Create = {
+  __typename?: 'SocialNetworksDocAccessFields_type_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Type_Read = {
+  __typename?: 'SocialNetworksDocAccessFields_type_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Type_Update = {
+  __typename?: 'SocialNetworksDocAccessFields_type_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Type_Delete = {
+  __typename?: 'SocialNetworksDocAccessFields_type_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Url = {
+  __typename?: 'SocialNetworksDocAccessFields_url';
+  create?: Maybe<SocialNetworksDocAccessFields_Url_Create>;
+  read?: Maybe<SocialNetworksDocAccessFields_Url_Read>;
+  update?: Maybe<SocialNetworksDocAccessFields_Url_Update>;
+  delete?: Maybe<SocialNetworksDocAccessFields_Url_Delete>;
+};
+
+export type SocialNetworksDocAccessFields_Url_Create = {
+  __typename?: 'SocialNetworksDocAccessFields_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Url_Read = {
+  __typename?: 'SocialNetworksDocAccessFields_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Url_Update = {
+  __typename?: 'SocialNetworksDocAccessFields_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Url_Delete = {
+  __typename?: 'SocialNetworksDocAccessFields_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Icon = {
+  __typename?: 'SocialNetworksDocAccessFields_icon';
+  create?: Maybe<SocialNetworksDocAccessFields_Icon_Create>;
+  read?: Maybe<SocialNetworksDocAccessFields_Icon_Read>;
+  update?: Maybe<SocialNetworksDocAccessFields_Icon_Update>;
+  delete?: Maybe<SocialNetworksDocAccessFields_Icon_Delete>;
+};
+
+export type SocialNetworksDocAccessFields_Icon_Create = {
+  __typename?: 'SocialNetworksDocAccessFields_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Icon_Read = {
+  __typename?: 'SocialNetworksDocAccessFields_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Icon_Update = {
+  __typename?: 'SocialNetworksDocAccessFields_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_Icon_Delete = {
+  __typename?: 'SocialNetworksDocAccessFields_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_UpdatedAt = {
+  __typename?: 'SocialNetworksDocAccessFields_updatedAt';
+  create?: Maybe<SocialNetworksDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<SocialNetworksDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<SocialNetworksDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<SocialNetworksDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type SocialNetworksDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'SocialNetworksDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'SocialNetworksDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'SocialNetworksDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'SocialNetworksDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_CreatedAt = {
+  __typename?: 'SocialNetworksDocAccessFields_createdAt';
+  create?: Maybe<SocialNetworksDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<SocialNetworksDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<SocialNetworksDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<SocialNetworksDocAccessFields_CreatedAt_Delete>;
+};
+
+export type SocialNetworksDocAccessFields_CreatedAt_Create = {
+  __typename?: 'SocialNetworksDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_CreatedAt_Read = {
+  __typename?: 'SocialNetworksDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_CreatedAt_Update = {
+  __typename?: 'SocialNetworksDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'SocialNetworksDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksCreateDocAccess = {
+  __typename?: 'SocialNetworksCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SocialNetworksReadDocAccess = {
+  __typename?: 'SocialNetworksReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SocialNetworksUpdateDocAccess = {
+  __typename?: 'SocialNetworksUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SocialNetworksDeleteDocAccess = {
+  __typename?: 'SocialNetworksDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -9563,10 +9982,11 @@ export enum PayloadLockedDocument_Document_RelationTo {
   TrainingVideos = 'training_videos',
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
-  Currencies = 'currencies'
+  Currencies = 'currencies',
+  SocialNetworks = 'social_networks'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency | SocialNetwork;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -9625,7 +10045,8 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   TrainingVideos = 'training_videos',
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
-  Currencies = 'currencies'
+  Currencies = 'currencies',
+  SocialNetworks = 'social_networks'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -12603,19 +13024,11 @@ export type Contact_Form = {
   __typename?: 'Contact_Form';
   title?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  socialNetworks?: Maybe<Array<Contact_Form_SocialNetworks>>;
-};
-
-export type Contact_Form_SocialNetworks = {
-  __typename?: 'Contact_Form_SocialNetworks';
-  label?: Maybe<Scalars['String']['output']>;
-  icon?: Maybe<Media>;
-  url?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
+  socialNetworks?: Maybe<Array<SocialNetwork>>;
 };
 
 
-export type Contact_Form_SocialNetworksIconArgs = {
+export type Contact_FormSocialNetworksArgs = {
   locale?: InputMaybe<LocaleInputType>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
@@ -12877,7 +13290,6 @@ export type ContactsDocAccessFields_Form_SocialNetworks = {
   read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Read>;
   update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Update>;
   delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Delete>;
-  fields?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Fields>;
 };
 
 export type ContactsDocAccessFields_Form_SocialNetworks_Create = {
@@ -12897,126 +13309,6 @@ export type ContactsDocAccessFields_Form_SocialNetworks_Update = {
 
 export type ContactsDocAccessFields_Form_SocialNetworks_Delete = {
   __typename?: 'ContactsDocAccessFields_form_socialNetworks_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Fields = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_Fields';
-  label?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label>;
-  icon?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon>;
-  url?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url>;
-  id?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id>;
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Label = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label';
-  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Create>;
-  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Read>;
-  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Update>;
-  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Label_Delete>;
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Label_Create = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Label_Read = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Label_Update = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Label_Delete = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_label_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Icon = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon';
-  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Create>;
-  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Read>;
-  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Update>;
-  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Icon_Delete>;
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Create = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Read = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Update = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Icon_Delete = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_icon_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Url = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url';
-  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Create>;
-  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Read>;
-  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Update>;
-  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Url_Delete>;
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Url_Create = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Url_Read = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Url_Update = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Url_Delete = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_url_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Id = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id';
-  create?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Create>;
-  read?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Read>;
-  update?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Update>;
-  delete?: Maybe<ContactsDocAccessFields_Form_SocialNetworks_Id_Delete>;
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Id_Create = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Id_Read = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Id_Update = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsDocAccessFields_Form_SocialNetworks_Id_Delete = {
-  __typename?: 'ContactsDocAccessFields_form_socialNetworks_id_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -13088,6 +13380,240 @@ export type ContactsUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type SiteSetting = {
+  __typename?: 'SiteSetting';
+  favicon?: Maybe<Media>;
+  footer?: Maybe<SiteSetting_Footer>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type SiteSettingFaviconArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+export type SiteSetting_Footer = {
+  __typename?: 'SiteSetting_Footer';
+  socialNetworks?: Maybe<Array<SocialNetwork>>;
+  contactSocialNetworks?: Maybe<Array<SocialNetwork>>;
+};
+
+
+export type SiteSetting_FooterSocialNetworksArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type SiteSetting_FooterContactSocialNetworksArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+export type Site_SettingsDocAccess = {
+  __typename?: 'site_settingsDocAccess';
+  fields?: Maybe<SiteSettingsDocAccessFields>;
+  read?: Maybe<SiteSettingsReadDocAccess>;
+  update?: Maybe<SiteSettingsUpdateDocAccess>;
+};
+
+export type SiteSettingsDocAccessFields = {
+  __typename?: 'SiteSettingsDocAccessFields';
+  favicon?: Maybe<SiteSettingsDocAccessFields_Favicon>;
+  footer?: Maybe<SiteSettingsDocAccessFields_Footer>;
+  updatedAt?: Maybe<SiteSettingsDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<SiteSettingsDocAccessFields_CreatedAt>;
+};
+
+export type SiteSettingsDocAccessFields_Favicon = {
+  __typename?: 'SiteSettingsDocAccessFields_favicon';
+  create?: Maybe<SiteSettingsDocAccessFields_Favicon_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Favicon_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Favicon_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Favicon_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_Favicon_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_favicon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Favicon_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_favicon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Favicon_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_favicon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Favicon_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_favicon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer = {
+  __typename?: 'SiteSettingsDocAccessFields_footer';
+  create?: Maybe<SiteSettingsDocAccessFields_Footer_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Footer_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Footer_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Footer_Delete>;
+  fields?: Maybe<SiteSettingsDocAccessFields_Footer_Fields>;
+};
+
+export type SiteSettingsDocAccessFields_Footer_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_Fields = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_Fields';
+  socialNetworks?: Maybe<SiteSettingsDocAccessFields_Footer_SocialNetworks>;
+  contactSocialNetworks?: Maybe<SiteSettingsDocAccessFields_Footer_ContactSocialNetworks>;
+};
+
+export type SiteSettingsDocAccessFields_Footer_SocialNetworks = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_socialNetworks';
+  create?: Maybe<SiteSettingsDocAccessFields_Footer_SocialNetworks_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Footer_SocialNetworks_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Footer_SocialNetworks_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Footer_SocialNetworks_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_Footer_SocialNetworks_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_socialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_SocialNetworks_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_socialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_SocialNetworks_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_socialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_SocialNetworks_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_socialNetworks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_ContactSocialNetworks = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_contactSocialNetworks';
+  create?: Maybe<SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_contactSocialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_contactSocialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_contactSocialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Footer_ContactSocialNetworks_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_footer_contactSocialNetworks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_UpdatedAt = {
+  __typename?: 'SiteSettingsDocAccessFields_updatedAt';
+  create?: Maybe<SiteSettingsDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_CreatedAt = {
+  __typename?: 'SiteSettingsDocAccessFields_createdAt';
+  create?: Maybe<SiteSettingsDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_CreatedAt_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsReadDocAccess = {
+  __typename?: 'SiteSettingsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SiteSettingsUpdateDocAccess = {
+  __typename?: 'SiteSettingsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Access = {
   __typename?: 'Access';
   canAccessAdmin: Scalars['Boolean']['output'];
@@ -13105,12 +13631,14 @@ export type Access = {
   applications?: Maybe<ApplicationsAccess>;
   dealer_applications?: Maybe<Dealer_ApplicationsAccess>;
   currencies?: Maybe<CurrenciesAccess>;
+  social_networks?: Maybe<Social_NetworksAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
   home?: Maybe<HomeAccess>;
   training?: Maybe<TrainingAccess>;
   contacts?: Maybe<ContactsAccess>;
+  site_settings?: Maybe<Site_SettingsAccess>;
 };
 
 export type UsersAccess = {
@@ -18488,6 +19016,217 @@ export type CurrenciesDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Social_NetworksAccess = {
+  __typename?: 'social_networksAccess';
+  fields?: Maybe<SocialNetworksFields>;
+  create?: Maybe<SocialNetworksCreateAccess>;
+  read?: Maybe<SocialNetworksReadAccess>;
+  update?: Maybe<SocialNetworksUpdateAccess>;
+  delete?: Maybe<SocialNetworksDeleteAccess>;
+};
+
+export type SocialNetworksFields = {
+  __typename?: 'SocialNetworksFields';
+  label?: Maybe<SocialNetworksFields_Label>;
+  type?: Maybe<SocialNetworksFields_Type>;
+  url?: Maybe<SocialNetworksFields_Url>;
+  icon?: Maybe<SocialNetworksFields_Icon>;
+  updatedAt?: Maybe<SocialNetworksFields_UpdatedAt>;
+  createdAt?: Maybe<SocialNetworksFields_CreatedAt>;
+};
+
+export type SocialNetworksFields_Label = {
+  __typename?: 'SocialNetworksFields_label';
+  create?: Maybe<SocialNetworksFields_Label_Create>;
+  read?: Maybe<SocialNetworksFields_Label_Read>;
+  update?: Maybe<SocialNetworksFields_Label_Update>;
+  delete?: Maybe<SocialNetworksFields_Label_Delete>;
+};
+
+export type SocialNetworksFields_Label_Create = {
+  __typename?: 'SocialNetworksFields_label_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Label_Read = {
+  __typename?: 'SocialNetworksFields_label_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Label_Update = {
+  __typename?: 'SocialNetworksFields_label_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Label_Delete = {
+  __typename?: 'SocialNetworksFields_label_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Type = {
+  __typename?: 'SocialNetworksFields_type';
+  create?: Maybe<SocialNetworksFields_Type_Create>;
+  read?: Maybe<SocialNetworksFields_Type_Read>;
+  update?: Maybe<SocialNetworksFields_Type_Update>;
+  delete?: Maybe<SocialNetworksFields_Type_Delete>;
+};
+
+export type SocialNetworksFields_Type_Create = {
+  __typename?: 'SocialNetworksFields_type_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Type_Read = {
+  __typename?: 'SocialNetworksFields_type_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Type_Update = {
+  __typename?: 'SocialNetworksFields_type_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Type_Delete = {
+  __typename?: 'SocialNetworksFields_type_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Url = {
+  __typename?: 'SocialNetworksFields_url';
+  create?: Maybe<SocialNetworksFields_Url_Create>;
+  read?: Maybe<SocialNetworksFields_Url_Read>;
+  update?: Maybe<SocialNetworksFields_Url_Update>;
+  delete?: Maybe<SocialNetworksFields_Url_Delete>;
+};
+
+export type SocialNetworksFields_Url_Create = {
+  __typename?: 'SocialNetworksFields_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Url_Read = {
+  __typename?: 'SocialNetworksFields_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Url_Update = {
+  __typename?: 'SocialNetworksFields_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Url_Delete = {
+  __typename?: 'SocialNetworksFields_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Icon = {
+  __typename?: 'SocialNetworksFields_icon';
+  create?: Maybe<SocialNetworksFields_Icon_Create>;
+  read?: Maybe<SocialNetworksFields_Icon_Read>;
+  update?: Maybe<SocialNetworksFields_Icon_Update>;
+  delete?: Maybe<SocialNetworksFields_Icon_Delete>;
+};
+
+export type SocialNetworksFields_Icon_Create = {
+  __typename?: 'SocialNetworksFields_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Icon_Read = {
+  __typename?: 'SocialNetworksFields_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Icon_Update = {
+  __typename?: 'SocialNetworksFields_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_Icon_Delete = {
+  __typename?: 'SocialNetworksFields_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_UpdatedAt = {
+  __typename?: 'SocialNetworksFields_updatedAt';
+  create?: Maybe<SocialNetworksFields_UpdatedAt_Create>;
+  read?: Maybe<SocialNetworksFields_UpdatedAt_Read>;
+  update?: Maybe<SocialNetworksFields_UpdatedAt_Update>;
+  delete?: Maybe<SocialNetworksFields_UpdatedAt_Delete>;
+};
+
+export type SocialNetworksFields_UpdatedAt_Create = {
+  __typename?: 'SocialNetworksFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_UpdatedAt_Read = {
+  __typename?: 'SocialNetworksFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_UpdatedAt_Update = {
+  __typename?: 'SocialNetworksFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_UpdatedAt_Delete = {
+  __typename?: 'SocialNetworksFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_CreatedAt = {
+  __typename?: 'SocialNetworksFields_createdAt';
+  create?: Maybe<SocialNetworksFields_CreatedAt_Create>;
+  read?: Maybe<SocialNetworksFields_CreatedAt_Read>;
+  update?: Maybe<SocialNetworksFields_CreatedAt_Update>;
+  delete?: Maybe<SocialNetworksFields_CreatedAt_Delete>;
+};
+
+export type SocialNetworksFields_CreatedAt_Create = {
+  __typename?: 'SocialNetworksFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_CreatedAt_Read = {
+  __typename?: 'SocialNetworksFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_CreatedAt_Update = {
+  __typename?: 'SocialNetworksFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksFields_CreatedAt_Delete = {
+  __typename?: 'SocialNetworksFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SocialNetworksCreateAccess = {
+  __typename?: 'SocialNetworksCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SocialNetworksReadAccess = {
+  __typename?: 'SocialNetworksReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SocialNetworksUpdateAccess = {
+  __typename?: 'SocialNetworksUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SocialNetworksDeleteAccess = {
+  __typename?: 'SocialNetworksDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -21365,7 +22104,6 @@ export type ContactsFields_Form_SocialNetworks = {
   read?: Maybe<ContactsFields_Form_SocialNetworks_Read>;
   update?: Maybe<ContactsFields_Form_SocialNetworks_Update>;
   delete?: Maybe<ContactsFields_Form_SocialNetworks_Delete>;
-  fields?: Maybe<ContactsFields_Form_SocialNetworks_Fields>;
 };
 
 export type ContactsFields_Form_SocialNetworks_Create = {
@@ -21385,126 +22123,6 @@ export type ContactsFields_Form_SocialNetworks_Update = {
 
 export type ContactsFields_Form_SocialNetworks_Delete = {
   __typename?: 'ContactsFields_form_socialNetworks_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Fields = {
-  __typename?: 'ContactsFields_form_socialNetworks_Fields';
-  label?: Maybe<ContactsFields_Form_SocialNetworks_Label>;
-  icon?: Maybe<ContactsFields_Form_SocialNetworks_Icon>;
-  url?: Maybe<ContactsFields_Form_SocialNetworks_Url>;
-  id?: Maybe<ContactsFields_Form_SocialNetworks_Id>;
-};
-
-export type ContactsFields_Form_SocialNetworks_Label = {
-  __typename?: 'ContactsFields_form_socialNetworks_label';
-  create?: Maybe<ContactsFields_Form_SocialNetworks_Label_Create>;
-  read?: Maybe<ContactsFields_Form_SocialNetworks_Label_Read>;
-  update?: Maybe<ContactsFields_Form_SocialNetworks_Label_Update>;
-  delete?: Maybe<ContactsFields_Form_SocialNetworks_Label_Delete>;
-};
-
-export type ContactsFields_Form_SocialNetworks_Label_Create = {
-  __typename?: 'ContactsFields_form_socialNetworks_label_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Label_Read = {
-  __typename?: 'ContactsFields_form_socialNetworks_label_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Label_Update = {
-  __typename?: 'ContactsFields_form_socialNetworks_label_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Label_Delete = {
-  __typename?: 'ContactsFields_form_socialNetworks_label_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Icon = {
-  __typename?: 'ContactsFields_form_socialNetworks_icon';
-  create?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Create>;
-  read?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Read>;
-  update?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Update>;
-  delete?: Maybe<ContactsFields_Form_SocialNetworks_Icon_Delete>;
-};
-
-export type ContactsFields_Form_SocialNetworks_Icon_Create = {
-  __typename?: 'ContactsFields_form_socialNetworks_icon_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Icon_Read = {
-  __typename?: 'ContactsFields_form_socialNetworks_icon_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Icon_Update = {
-  __typename?: 'ContactsFields_form_socialNetworks_icon_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Icon_Delete = {
-  __typename?: 'ContactsFields_form_socialNetworks_icon_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Url = {
-  __typename?: 'ContactsFields_form_socialNetworks_url';
-  create?: Maybe<ContactsFields_Form_SocialNetworks_Url_Create>;
-  read?: Maybe<ContactsFields_Form_SocialNetworks_Url_Read>;
-  update?: Maybe<ContactsFields_Form_SocialNetworks_Url_Update>;
-  delete?: Maybe<ContactsFields_Form_SocialNetworks_Url_Delete>;
-};
-
-export type ContactsFields_Form_SocialNetworks_Url_Create = {
-  __typename?: 'ContactsFields_form_socialNetworks_url_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Url_Read = {
-  __typename?: 'ContactsFields_form_socialNetworks_url_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Url_Update = {
-  __typename?: 'ContactsFields_form_socialNetworks_url_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Url_Delete = {
-  __typename?: 'ContactsFields_form_socialNetworks_url_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Id = {
-  __typename?: 'ContactsFields_form_socialNetworks_id';
-  create?: Maybe<ContactsFields_Form_SocialNetworks_Id_Create>;
-  read?: Maybe<ContactsFields_Form_SocialNetworks_Id_Read>;
-  update?: Maybe<ContactsFields_Form_SocialNetworks_Id_Update>;
-  delete?: Maybe<ContactsFields_Form_SocialNetworks_Id_Delete>;
-};
-
-export type ContactsFields_Form_SocialNetworks_Id_Create = {
-  __typename?: 'ContactsFields_form_socialNetworks_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Id_Read = {
-  __typename?: 'ContactsFields_form_socialNetworks_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Id_Update = {
-  __typename?: 'ContactsFields_form_socialNetworks_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ContactsFields_Form_SocialNetworks_Id_Delete = {
-  __typename?: 'ContactsFields_form_socialNetworks_id_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -21576,6 +22194,208 @@ export type ContactsUpdateAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Site_SettingsAccess = {
+  __typename?: 'site_settingsAccess';
+  fields?: Maybe<SiteSettingsFields>;
+  read?: Maybe<SiteSettingsReadAccess>;
+  update?: Maybe<SiteSettingsUpdateAccess>;
+};
+
+export type SiteSettingsFields = {
+  __typename?: 'SiteSettingsFields';
+  favicon?: Maybe<SiteSettingsFields_Favicon>;
+  footer?: Maybe<SiteSettingsFields_Footer>;
+  updatedAt?: Maybe<SiteSettingsFields_UpdatedAt>;
+  createdAt?: Maybe<SiteSettingsFields_CreatedAt>;
+};
+
+export type SiteSettingsFields_Favicon = {
+  __typename?: 'SiteSettingsFields_favicon';
+  create?: Maybe<SiteSettingsFields_Favicon_Create>;
+  read?: Maybe<SiteSettingsFields_Favicon_Read>;
+  update?: Maybe<SiteSettingsFields_Favicon_Update>;
+  delete?: Maybe<SiteSettingsFields_Favicon_Delete>;
+};
+
+export type SiteSettingsFields_Favicon_Create = {
+  __typename?: 'SiteSettingsFields_favicon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Favicon_Read = {
+  __typename?: 'SiteSettingsFields_favicon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Favicon_Update = {
+  __typename?: 'SiteSettingsFields_favicon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Favicon_Delete = {
+  __typename?: 'SiteSettingsFields_favicon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer = {
+  __typename?: 'SiteSettingsFields_footer';
+  create?: Maybe<SiteSettingsFields_Footer_Create>;
+  read?: Maybe<SiteSettingsFields_Footer_Read>;
+  update?: Maybe<SiteSettingsFields_Footer_Update>;
+  delete?: Maybe<SiteSettingsFields_Footer_Delete>;
+  fields?: Maybe<SiteSettingsFields_Footer_Fields>;
+};
+
+export type SiteSettingsFields_Footer_Create = {
+  __typename?: 'SiteSettingsFields_footer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_Read = {
+  __typename?: 'SiteSettingsFields_footer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_Update = {
+  __typename?: 'SiteSettingsFields_footer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_Delete = {
+  __typename?: 'SiteSettingsFields_footer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_Fields = {
+  __typename?: 'SiteSettingsFields_footer_Fields';
+  socialNetworks?: Maybe<SiteSettingsFields_Footer_SocialNetworks>;
+  contactSocialNetworks?: Maybe<SiteSettingsFields_Footer_ContactSocialNetworks>;
+};
+
+export type SiteSettingsFields_Footer_SocialNetworks = {
+  __typename?: 'SiteSettingsFields_footer_socialNetworks';
+  create?: Maybe<SiteSettingsFields_Footer_SocialNetworks_Create>;
+  read?: Maybe<SiteSettingsFields_Footer_SocialNetworks_Read>;
+  update?: Maybe<SiteSettingsFields_Footer_SocialNetworks_Update>;
+  delete?: Maybe<SiteSettingsFields_Footer_SocialNetworks_Delete>;
+};
+
+export type SiteSettingsFields_Footer_SocialNetworks_Create = {
+  __typename?: 'SiteSettingsFields_footer_socialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_SocialNetworks_Read = {
+  __typename?: 'SiteSettingsFields_footer_socialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_SocialNetworks_Update = {
+  __typename?: 'SiteSettingsFields_footer_socialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_SocialNetworks_Delete = {
+  __typename?: 'SiteSettingsFields_footer_socialNetworks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_ContactSocialNetworks = {
+  __typename?: 'SiteSettingsFields_footer_contactSocialNetworks';
+  create?: Maybe<SiteSettingsFields_Footer_ContactSocialNetworks_Create>;
+  read?: Maybe<SiteSettingsFields_Footer_ContactSocialNetworks_Read>;
+  update?: Maybe<SiteSettingsFields_Footer_ContactSocialNetworks_Update>;
+  delete?: Maybe<SiteSettingsFields_Footer_ContactSocialNetworks_Delete>;
+};
+
+export type SiteSettingsFields_Footer_ContactSocialNetworks_Create = {
+  __typename?: 'SiteSettingsFields_footer_contactSocialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_ContactSocialNetworks_Read = {
+  __typename?: 'SiteSettingsFields_footer_contactSocialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_ContactSocialNetworks_Update = {
+  __typename?: 'SiteSettingsFields_footer_contactSocialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Footer_ContactSocialNetworks_Delete = {
+  __typename?: 'SiteSettingsFields_footer_contactSocialNetworks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_UpdatedAt = {
+  __typename?: 'SiteSettingsFields_updatedAt';
+  create?: Maybe<SiteSettingsFields_UpdatedAt_Create>;
+  read?: Maybe<SiteSettingsFields_UpdatedAt_Read>;
+  update?: Maybe<SiteSettingsFields_UpdatedAt_Update>;
+  delete?: Maybe<SiteSettingsFields_UpdatedAt_Delete>;
+};
+
+export type SiteSettingsFields_UpdatedAt_Create = {
+  __typename?: 'SiteSettingsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_UpdatedAt_Read = {
+  __typename?: 'SiteSettingsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_UpdatedAt_Update = {
+  __typename?: 'SiteSettingsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_UpdatedAt_Delete = {
+  __typename?: 'SiteSettingsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_CreatedAt = {
+  __typename?: 'SiteSettingsFields_createdAt';
+  create?: Maybe<SiteSettingsFields_CreatedAt_Create>;
+  read?: Maybe<SiteSettingsFields_CreatedAt_Read>;
+  update?: Maybe<SiteSettingsFields_CreatedAt_Update>;
+  delete?: Maybe<SiteSettingsFields_CreatedAt_Delete>;
+};
+
+export type SiteSettingsFields_CreatedAt_Create = {
+  __typename?: 'SiteSettingsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_CreatedAt_Read = {
+  __typename?: 'SiteSettingsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_CreatedAt_Update = {
+  __typename?: 'SiteSettingsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_CreatedAt_Delete = {
+  __typename?: 'SiteSettingsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsReadAccess = {
+  __typename?: 'SiteSettingsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SiteSettingsUpdateAccess = {
+  __typename?: 'SiteSettingsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
@@ -21640,6 +22460,10 @@ export type Mutation = {
   updateCurrency?: Maybe<Currency>;
   deleteCurrency?: Maybe<Currency>;
   duplicateCurrency?: Maybe<Currency>;
+  createSocialNetwork?: Maybe<SocialNetwork>;
+  updateSocialNetwork?: Maybe<SocialNetwork>;
+  deleteSocialNetwork?: Maybe<SocialNetwork>;
+  duplicateSocialNetwork?: Maybe<SocialNetwork>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -21655,6 +22479,7 @@ export type Mutation = {
   updateHome?: Maybe<Home>;
   updateTraining?: Maybe<Training>;
   updateContact?: Maybe<Contact>;
+  updateSiteSetting?: Maybe<SiteSetting>;
 };
 
 
@@ -22090,6 +22915,35 @@ export type MutationDuplicateCurrencyArgs = {
 };
 
 
+export type MutationCreateSocialNetworkArgs = {
+  data: MutationSocialNetworkInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateSocialNetworkArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationSocialNetworkUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteSocialNetworkArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateSocialNetworkArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationSocialNetworkInput;
+};
+
+
 export type MutationCreatePayloadKvArgs = {
   data: MutationPayloadKvInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
@@ -22193,6 +23047,13 @@ export type MutationUpdateTrainingArgs = {
 
 export type MutationUpdateContactArgs = {
   data: MutationContactInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateSiteSettingArgs = {
+  data: MutationSiteSettingInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   locale?: InputMaybe<LocaleInputType>;
 };
@@ -22844,6 +23705,40 @@ export type MutationCurrencyUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationSocialNetworkInput = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  type: SocialNetwork_Type_MutationInput;
+  url: Scalars['String']['input'];
+  icon?: InputMaybe<Scalars['Int']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum SocialNetwork_Type_MutationInput {
+  Instagram = 'instagram',
+  Facebook = 'facebook',
+  Telegram = 'telegram',
+  Whatsapp = 'whatsapp',
+  Custom = 'custom'
+}
+
+export type MutationSocialNetworkUpdateInput = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<SocialNetworkUpdate_Type_MutationInput>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  icon?: InputMaybe<Scalars['Int']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum SocialNetworkUpdate_Type_MutationInput {
+  Instagram = 'instagram',
+  Facebook = 'facebook',
+  Telegram = 'telegram',
+  Whatsapp = 'whatsapp',
+  Custom = 'custom'
+}
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -22881,7 +23776,8 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   TrainingVideos = 'training_videos',
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
-  Currencies = 'currencies'
+  Currencies = 'currencies',
+  SocialNetworks = 'social_networks'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -22920,7 +23816,8 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   TrainingVideos = 'training_videos',
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
-  Currencies = 'currencies'
+  Currencies = 'currencies',
+  SocialNetworks = 'social_networks'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
@@ -23107,14 +24004,19 @@ export type MutationContactInput = {
 export type MutationContact_FormInput = {
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  socialNetworks?: InputMaybe<Array<InputMaybe<MutationContact_Form_SocialNetworksInput>>>;
+  socialNetworks?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
-export type MutationContact_Form_SocialNetworksInput = {
-  label?: InputMaybe<Scalars['String']['input']>;
-  icon?: InputMaybe<Scalars['Int']['input']>;
-  url: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['String']['input']>;
+export type MutationSiteSettingInput = {
+  favicon?: InputMaybe<Scalars['Int']['input']>;
+  footer?: InputMaybe<MutationSiteSetting_FooterInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationSiteSetting_FooterInput = {
+  socialNetworks?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  contactSocialNetworks?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
 export type GetLayoutDataQueryVariables = Exact<{

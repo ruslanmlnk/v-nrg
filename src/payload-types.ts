@@ -81,6 +81,7 @@ export interface Config {
     applications: Application;
     'dealer-applications': DealerApplication;
     currencies: Currency;
+    'social-networks': SocialNetwork;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -102,6 +103,7 @@ export interface Config {
     applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
     'dealer-applications': DealerApplicationsSelect<false> | DealerApplicationsSelect<true>;
     currencies: CurrenciesSelect<false> | CurrenciesSelect<true>;
+    'social-networks': SocialNetworksSelect<false> | SocialNetworksSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -115,11 +117,13 @@ export interface Config {
     home: Home;
     training: Training;
     contacts: Contact;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     training: TrainingSelect<false> | TrainingSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: 'uk' | 'en';
   widgets: {
@@ -543,6 +547,19 @@ export interface Currency {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-networks".
+ */
+export interface SocialNetwork {
+  id: number;
+  label: string;
+  type: 'instagram' | 'facebook' | 'telegram' | 'whatsapp' | 'custom';
+  url: string;
+  icon: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -620,6 +637,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'currencies';
         value: number | Currency;
+      } | null)
+    | ({
+        relationTo: 'social-networks';
+        value: number | SocialNetwork;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -964,6 +985,18 @@ export interface CurrenciesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-networks_select".
+ */
+export interface SocialNetworksSelect<T extends boolean = true> {
+  label?: T;
+  type?: T;
+  url?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -1135,14 +1168,23 @@ export interface Contact {
   form: {
     title: string;
     description: string;
-    socialNetworks?:
-      | {
-          label: string;
-          icon: number | Media;
-          url: string;
-          id?: string | null;
-        }[]
-      | null;
+    socialNetworks?: (number | SocialNetwork)[] | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Глобальні налаштування сайту.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  favicon?: (number | null) | Media;
+  footer?: {
+    socialNetworks?: (number | SocialNetwork)[] | null;
+    contactSocialNetworks?: (number | SocialNetwork)[] | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1297,14 +1339,23 @@ export interface ContactsSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-        socialNetworks?:
-          | T
-          | {
-              label?: T;
-              icon?: T;
-              url?: T;
-              id?: T;
-            };
+        socialNetworks?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  favicon?: T;
+  footer?:
+    | T
+    | {
+        socialNetworks?: T;
+        contactSocialNetworks?: T;
       };
   updatedAt?: T;
   createdAt?: T;

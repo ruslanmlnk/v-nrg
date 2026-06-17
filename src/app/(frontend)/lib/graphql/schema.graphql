@@ -57,6 +57,10 @@ type Query {
   Currencies(draft: Boolean, where: Currency_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): Currencies
   countCurrencies(draft: Boolean, trash: Boolean, where: Currency_where, locale: LocaleInputType): countCurrencies
   docAccessCurrency(id: Int!): currenciesDocAccess
+  SocialNetwork(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): SocialNetwork
+  SocialNetworks(draft: Boolean, where: SocialNetwork_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): SocialNetworks
+  countSocialNetworks(draft: Boolean, trash: Boolean, where: SocialNetwork_where, locale: LocaleInputType): countSocialNetworks
+  docAccessSocialNetwork(id: Int!): social_networksDocAccess
   PayloadKv(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where, locale: LocaleInputType): countPayloadKvs
@@ -75,6 +79,8 @@ type Query {
   docAccessTraining: trainingDocAccess
   Contact(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): Contact
   docAccessContact: contactsDocAccess
+  SiteSetting(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): SiteSetting
+  docAccessSiteSetting: site_settingsDocAccess
   Access: Access
 }
 
@@ -7583,6 +7589,329 @@ type CurrenciesDeleteDocAccess {
   where: JSONObject
 }
 
+type SocialNetwork {
+  id: Int!
+  label: String
+  type: SocialNetwork_type!
+  url: String!
+  icon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum SocialNetwork_type {
+  instagram
+  facebook
+  telegram
+  whatsapp
+  custom
+}
+
+type SocialNetworks {
+  docs: [SocialNetwork!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input SocialNetwork_where {
+  label: SocialNetwork_label_operator
+  type: SocialNetwork_type_operator
+  url: SocialNetwork_url_operator
+  icon: SocialNetwork_icon_operator
+  updatedAt: SocialNetwork_updatedAt_operator
+  createdAt: SocialNetwork_createdAt_operator
+  id: SocialNetwork_id_operator
+  AND: [SocialNetwork_where_and]
+  OR: [SocialNetwork_where_or]
+}
+
+input SocialNetwork_label_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input SocialNetwork_type_operator {
+  equals: SocialNetwork_type_Input
+  not_equals: SocialNetwork_type_Input
+  in: [SocialNetwork_type_Input]
+  not_in: [SocialNetwork_type_Input]
+  all: [SocialNetwork_type_Input]
+}
+
+enum SocialNetwork_type_Input {
+  instagram
+  facebook
+  telegram
+  whatsapp
+  custom
+}
+
+input SocialNetwork_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input SocialNetwork_icon_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input SocialNetwork_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input SocialNetwork_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input SocialNetwork_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input SocialNetwork_where_and {
+  label: SocialNetwork_label_operator
+  type: SocialNetwork_type_operator
+  url: SocialNetwork_url_operator
+  icon: SocialNetwork_icon_operator
+  updatedAt: SocialNetwork_updatedAt_operator
+  createdAt: SocialNetwork_createdAt_operator
+  id: SocialNetwork_id_operator
+  AND: [SocialNetwork_where_and]
+  OR: [SocialNetwork_where_or]
+}
+
+input SocialNetwork_where_or {
+  label: SocialNetwork_label_operator
+  type: SocialNetwork_type_operator
+  url: SocialNetwork_url_operator
+  icon: SocialNetwork_icon_operator
+  updatedAt: SocialNetwork_updatedAt_operator
+  createdAt: SocialNetwork_createdAt_operator
+  id: SocialNetwork_id_operator
+  AND: [SocialNetwork_where_and]
+  OR: [SocialNetwork_where_or]
+}
+
+type countSocialNetworks {
+  totalDocs: Int
+}
+
+type social_networksDocAccess {
+  fields: SocialNetworksDocAccessFields
+  create: SocialNetworksCreateDocAccess
+  read: SocialNetworksReadDocAccess
+  update: SocialNetworksUpdateDocAccess
+  delete: SocialNetworksDeleteDocAccess
+}
+
+type SocialNetworksDocAccessFields {
+  label: SocialNetworksDocAccessFields_label
+  type: SocialNetworksDocAccessFields_type
+  url: SocialNetworksDocAccessFields_url
+  icon: SocialNetworksDocAccessFields_icon
+  updatedAt: SocialNetworksDocAccessFields_updatedAt
+  createdAt: SocialNetworksDocAccessFields_createdAt
+}
+
+type SocialNetworksDocAccessFields_label {
+  create: SocialNetworksDocAccessFields_label_Create
+  read: SocialNetworksDocAccessFields_label_Read
+  update: SocialNetworksDocAccessFields_label_Update
+  delete: SocialNetworksDocAccessFields_label_Delete
+}
+
+type SocialNetworksDocAccessFields_label_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_label_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_label_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_label_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_type {
+  create: SocialNetworksDocAccessFields_type_Create
+  read: SocialNetworksDocAccessFields_type_Read
+  update: SocialNetworksDocAccessFields_type_Update
+  delete: SocialNetworksDocAccessFields_type_Delete
+}
+
+type SocialNetworksDocAccessFields_type_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_type_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_type_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_type_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_url {
+  create: SocialNetworksDocAccessFields_url_Create
+  read: SocialNetworksDocAccessFields_url_Read
+  update: SocialNetworksDocAccessFields_url_Update
+  delete: SocialNetworksDocAccessFields_url_Delete
+}
+
+type SocialNetworksDocAccessFields_url_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_url_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_url_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_url_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_icon {
+  create: SocialNetworksDocAccessFields_icon_Create
+  read: SocialNetworksDocAccessFields_icon_Read
+  update: SocialNetworksDocAccessFields_icon_Update
+  delete: SocialNetworksDocAccessFields_icon_Delete
+}
+
+type SocialNetworksDocAccessFields_icon_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_icon_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_icon_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_icon_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_updatedAt {
+  create: SocialNetworksDocAccessFields_updatedAt_Create
+  read: SocialNetworksDocAccessFields_updatedAt_Read
+  update: SocialNetworksDocAccessFields_updatedAt_Update
+  delete: SocialNetworksDocAccessFields_updatedAt_Delete
+}
+
+type SocialNetworksDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_createdAt {
+  create: SocialNetworksDocAccessFields_createdAt_Create
+  read: SocialNetworksDocAccessFields_createdAt_Read
+  update: SocialNetworksDocAccessFields_createdAt_Update
+  delete: SocialNetworksDocAccessFields_createdAt_Delete
+}
+
+type SocialNetworksDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SocialNetworksReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SocialNetworksUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SocialNetworksDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -7768,9 +8097,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   applications
   dealer_applications
   currencies
+  social_networks
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency | SocialNetwork
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -7828,6 +8158,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   applications
   dealer_applications
   currencies
+  social_networks
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -10270,14 +10601,7 @@ type Contact {
 type Contact_Form {
   title: String
   description: String
-  socialNetworks: [Contact_Form_SocialNetworks!]
-}
-
-type Contact_Form_SocialNetworks {
-  label: String
-  icon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
-  url: String
-  id: String
+  socialNetworks(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [SocialNetwork!]
 }
 
 type contactsDocAccess {
@@ -10493,7 +10817,6 @@ type ContactsDocAccessFields_form_socialNetworks {
   read: ContactsDocAccessFields_form_socialNetworks_Read
   update: ContactsDocAccessFields_form_socialNetworks_Update
   delete: ContactsDocAccessFields_form_socialNetworks_Delete
-  fields: ContactsDocAccessFields_form_socialNetworks_Fields
 }
 
 type ContactsDocAccessFields_form_socialNetworks_Create {
@@ -10509,105 +10832,6 @@ type ContactsDocAccessFields_form_socialNetworks_Update {
 }
 
 type ContactsDocAccessFields_form_socialNetworks_Delete {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_Fields {
-  label: ContactsDocAccessFields_form_socialNetworks_label
-  icon: ContactsDocAccessFields_form_socialNetworks_icon
-  url: ContactsDocAccessFields_form_socialNetworks_url
-  id: ContactsDocAccessFields_form_socialNetworks_id
-}
-
-type ContactsDocAccessFields_form_socialNetworks_label {
-  create: ContactsDocAccessFields_form_socialNetworks_label_Create
-  read: ContactsDocAccessFields_form_socialNetworks_label_Read
-  update: ContactsDocAccessFields_form_socialNetworks_label_Update
-  delete: ContactsDocAccessFields_form_socialNetworks_label_Delete
-}
-
-type ContactsDocAccessFields_form_socialNetworks_label_Create {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_label_Read {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_label_Update {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_label_Delete {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_icon {
-  create: ContactsDocAccessFields_form_socialNetworks_icon_Create
-  read: ContactsDocAccessFields_form_socialNetworks_icon_Read
-  update: ContactsDocAccessFields_form_socialNetworks_icon_Update
-  delete: ContactsDocAccessFields_form_socialNetworks_icon_Delete
-}
-
-type ContactsDocAccessFields_form_socialNetworks_icon_Create {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_icon_Read {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_icon_Update {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_icon_Delete {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_url {
-  create: ContactsDocAccessFields_form_socialNetworks_url_Create
-  read: ContactsDocAccessFields_form_socialNetworks_url_Read
-  update: ContactsDocAccessFields_form_socialNetworks_url_Update
-  delete: ContactsDocAccessFields_form_socialNetworks_url_Delete
-}
-
-type ContactsDocAccessFields_form_socialNetworks_url_Create {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_url_Read {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_url_Update {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_url_Delete {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_id {
-  create: ContactsDocAccessFields_form_socialNetworks_id_Create
-  read: ContactsDocAccessFields_form_socialNetworks_id_Read
-  update: ContactsDocAccessFields_form_socialNetworks_id_Update
-  delete: ContactsDocAccessFields_form_socialNetworks_id_Delete
-}
-
-type ContactsDocAccessFields_form_socialNetworks_id_Create {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_id_Read {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_id_Update {
-  permission: Boolean!
-}
-
-type ContactsDocAccessFields_form_socialNetworks_id_Delete {
   permission: Boolean!
 }
 
@@ -10667,6 +10891,185 @@ type ContactsUpdateDocAccess {
   where: JSONObject
 }
 
+type SiteSetting {
+  favicon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  footer: SiteSetting_Footer
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type SiteSetting_Footer {
+  socialNetworks(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [SocialNetwork!]
+  contactSocialNetworks(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [SocialNetwork!]
+}
+
+type site_settingsDocAccess {
+  fields: SiteSettingsDocAccessFields
+  read: SiteSettingsReadDocAccess
+  update: SiteSettingsUpdateDocAccess
+}
+
+type SiteSettingsDocAccessFields {
+  favicon: SiteSettingsDocAccessFields_favicon
+  footer: SiteSettingsDocAccessFields_footer
+  updatedAt: SiteSettingsDocAccessFields_updatedAt
+  createdAt: SiteSettingsDocAccessFields_createdAt
+}
+
+type SiteSettingsDocAccessFields_favicon {
+  create: SiteSettingsDocAccessFields_favicon_Create
+  read: SiteSettingsDocAccessFields_favicon_Read
+  update: SiteSettingsDocAccessFields_favicon_Update
+  delete: SiteSettingsDocAccessFields_favicon_Delete
+}
+
+type SiteSettingsDocAccessFields_favicon_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_favicon_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_favicon_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_favicon_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer {
+  create: SiteSettingsDocAccessFields_footer_Create
+  read: SiteSettingsDocAccessFields_footer_Read
+  update: SiteSettingsDocAccessFields_footer_Update
+  delete: SiteSettingsDocAccessFields_footer_Delete
+  fields: SiteSettingsDocAccessFields_footer_Fields
+}
+
+type SiteSettingsDocAccessFields_footer_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_Fields {
+  socialNetworks: SiteSettingsDocAccessFields_footer_socialNetworks
+  contactSocialNetworks: SiteSettingsDocAccessFields_footer_contactSocialNetworks
+}
+
+type SiteSettingsDocAccessFields_footer_socialNetworks {
+  create: SiteSettingsDocAccessFields_footer_socialNetworks_Create
+  read: SiteSettingsDocAccessFields_footer_socialNetworks_Read
+  update: SiteSettingsDocAccessFields_footer_socialNetworks_Update
+  delete: SiteSettingsDocAccessFields_footer_socialNetworks_Delete
+}
+
+type SiteSettingsDocAccessFields_footer_socialNetworks_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_socialNetworks_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_socialNetworks_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_socialNetworks_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_contactSocialNetworks {
+  create: SiteSettingsDocAccessFields_footer_contactSocialNetworks_Create
+  read: SiteSettingsDocAccessFields_footer_contactSocialNetworks_Read
+  update: SiteSettingsDocAccessFields_footer_contactSocialNetworks_Update
+  delete: SiteSettingsDocAccessFields_footer_contactSocialNetworks_Delete
+}
+
+type SiteSettingsDocAccessFields_footer_contactSocialNetworks_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_contactSocialNetworks_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_contactSocialNetworks_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_footer_contactSocialNetworks_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_updatedAt {
+  create: SiteSettingsDocAccessFields_updatedAt_Create
+  read: SiteSettingsDocAccessFields_updatedAt_Read
+  update: SiteSettingsDocAccessFields_updatedAt_Update
+  delete: SiteSettingsDocAccessFields_updatedAt_Delete
+}
+
+type SiteSettingsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_createdAt {
+  create: SiteSettingsDocAccessFields_createdAt_Create
+  read: SiteSettingsDocAccessFields_createdAt_Read
+  update: SiteSettingsDocAccessFields_createdAt_Update
+  delete: SiteSettingsDocAccessFields_createdAt_Delete
+}
+
+type SiteSettingsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SiteSettingsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -10683,12 +11086,14 @@ type Access {
   applications: applicationsAccess
   dealer_applications: dealer_applicationsAccess
   currencies: currenciesAccess
+  social_networks: social_networksAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
   home: homeAccess
   training: trainingAccess
   contacts: contactsAccess
+  site_settings: site_settingsAccess
 }
 
 type usersAccess {
@@ -15143,6 +15548,181 @@ type CurrenciesDeleteAccess {
   where: JSONObject
 }
 
+type social_networksAccess {
+  fields: SocialNetworksFields
+  create: SocialNetworksCreateAccess
+  read: SocialNetworksReadAccess
+  update: SocialNetworksUpdateAccess
+  delete: SocialNetworksDeleteAccess
+}
+
+type SocialNetworksFields {
+  label: SocialNetworksFields_label
+  type: SocialNetworksFields_type
+  url: SocialNetworksFields_url
+  icon: SocialNetworksFields_icon
+  updatedAt: SocialNetworksFields_updatedAt
+  createdAt: SocialNetworksFields_createdAt
+}
+
+type SocialNetworksFields_label {
+  create: SocialNetworksFields_label_Create
+  read: SocialNetworksFields_label_Read
+  update: SocialNetworksFields_label_Update
+  delete: SocialNetworksFields_label_Delete
+}
+
+type SocialNetworksFields_label_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_label_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_label_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_label_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_type {
+  create: SocialNetworksFields_type_Create
+  read: SocialNetworksFields_type_Read
+  update: SocialNetworksFields_type_Update
+  delete: SocialNetworksFields_type_Delete
+}
+
+type SocialNetworksFields_type_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_type_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_type_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_type_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_url {
+  create: SocialNetworksFields_url_Create
+  read: SocialNetworksFields_url_Read
+  update: SocialNetworksFields_url_Update
+  delete: SocialNetworksFields_url_Delete
+}
+
+type SocialNetworksFields_url_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_url_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_url_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_url_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_icon {
+  create: SocialNetworksFields_icon_Create
+  read: SocialNetworksFields_icon_Read
+  update: SocialNetworksFields_icon_Update
+  delete: SocialNetworksFields_icon_Delete
+}
+
+type SocialNetworksFields_icon_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_icon_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_icon_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_icon_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_updatedAt {
+  create: SocialNetworksFields_updatedAt_Create
+  read: SocialNetworksFields_updatedAt_Read
+  update: SocialNetworksFields_updatedAt_Update
+  delete: SocialNetworksFields_updatedAt_Delete
+}
+
+type SocialNetworksFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_createdAt {
+  create: SocialNetworksFields_createdAt_Create
+  read: SocialNetworksFields_createdAt_Read
+  update: SocialNetworksFields_createdAt_Update
+  delete: SocialNetworksFields_createdAt_Delete
+}
+
+type SocialNetworksFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type SocialNetworksFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type SocialNetworksCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SocialNetworksReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SocialNetworksUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SocialNetworksDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -17523,7 +18103,6 @@ type ContactsFields_form_socialNetworks {
   read: ContactsFields_form_socialNetworks_Read
   update: ContactsFields_form_socialNetworks_Update
   delete: ContactsFields_form_socialNetworks_Delete
-  fields: ContactsFields_form_socialNetworks_Fields
 }
 
 type ContactsFields_form_socialNetworks_Create {
@@ -17539,105 +18118,6 @@ type ContactsFields_form_socialNetworks_Update {
 }
 
 type ContactsFields_form_socialNetworks_Delete {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_Fields {
-  label: ContactsFields_form_socialNetworks_label
-  icon: ContactsFields_form_socialNetworks_icon
-  url: ContactsFields_form_socialNetworks_url
-  id: ContactsFields_form_socialNetworks_id
-}
-
-type ContactsFields_form_socialNetworks_label {
-  create: ContactsFields_form_socialNetworks_label_Create
-  read: ContactsFields_form_socialNetworks_label_Read
-  update: ContactsFields_form_socialNetworks_label_Update
-  delete: ContactsFields_form_socialNetworks_label_Delete
-}
-
-type ContactsFields_form_socialNetworks_label_Create {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_label_Read {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_label_Update {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_label_Delete {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_icon {
-  create: ContactsFields_form_socialNetworks_icon_Create
-  read: ContactsFields_form_socialNetworks_icon_Read
-  update: ContactsFields_form_socialNetworks_icon_Update
-  delete: ContactsFields_form_socialNetworks_icon_Delete
-}
-
-type ContactsFields_form_socialNetworks_icon_Create {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_icon_Read {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_icon_Update {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_icon_Delete {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_url {
-  create: ContactsFields_form_socialNetworks_url_Create
-  read: ContactsFields_form_socialNetworks_url_Read
-  update: ContactsFields_form_socialNetworks_url_Update
-  delete: ContactsFields_form_socialNetworks_url_Delete
-}
-
-type ContactsFields_form_socialNetworks_url_Create {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_url_Read {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_url_Update {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_url_Delete {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_id {
-  create: ContactsFields_form_socialNetworks_id_Create
-  read: ContactsFields_form_socialNetworks_id_Read
-  update: ContactsFields_form_socialNetworks_id_Update
-  delete: ContactsFields_form_socialNetworks_id_Delete
-}
-
-type ContactsFields_form_socialNetworks_id_Create {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_id_Read {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_id_Update {
-  permission: Boolean!
-}
-
-type ContactsFields_form_socialNetworks_id_Delete {
   permission: Boolean!
 }
 
@@ -17693,6 +18173,173 @@ type ContactsReadAccess {
 }
 
 type ContactsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type site_settingsAccess {
+  fields: SiteSettingsFields
+  read: SiteSettingsReadAccess
+  update: SiteSettingsUpdateAccess
+}
+
+type SiteSettingsFields {
+  favicon: SiteSettingsFields_favicon
+  footer: SiteSettingsFields_footer
+  updatedAt: SiteSettingsFields_updatedAt
+  createdAt: SiteSettingsFields_createdAt
+}
+
+type SiteSettingsFields_favicon {
+  create: SiteSettingsFields_favicon_Create
+  read: SiteSettingsFields_favicon_Read
+  update: SiteSettingsFields_favicon_Update
+  delete: SiteSettingsFields_favicon_Delete
+}
+
+type SiteSettingsFields_favicon_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_favicon_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_favicon_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_favicon_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer {
+  create: SiteSettingsFields_footer_Create
+  read: SiteSettingsFields_footer_Read
+  update: SiteSettingsFields_footer_Update
+  delete: SiteSettingsFields_footer_Delete
+  fields: SiteSettingsFields_footer_Fields
+}
+
+type SiteSettingsFields_footer_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_Fields {
+  socialNetworks: SiteSettingsFields_footer_socialNetworks
+  contactSocialNetworks: SiteSettingsFields_footer_contactSocialNetworks
+}
+
+type SiteSettingsFields_footer_socialNetworks {
+  create: SiteSettingsFields_footer_socialNetworks_Create
+  read: SiteSettingsFields_footer_socialNetworks_Read
+  update: SiteSettingsFields_footer_socialNetworks_Update
+  delete: SiteSettingsFields_footer_socialNetworks_Delete
+}
+
+type SiteSettingsFields_footer_socialNetworks_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_socialNetworks_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_socialNetworks_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_socialNetworks_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_contactSocialNetworks {
+  create: SiteSettingsFields_footer_contactSocialNetworks_Create
+  read: SiteSettingsFields_footer_contactSocialNetworks_Read
+  update: SiteSettingsFields_footer_contactSocialNetworks_Update
+  delete: SiteSettingsFields_footer_contactSocialNetworks_Delete
+}
+
+type SiteSettingsFields_footer_contactSocialNetworks_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_contactSocialNetworks_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_contactSocialNetworks_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_footer_contactSocialNetworks_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_updatedAt {
+  create: SiteSettingsFields_updatedAt_Create
+  read: SiteSettingsFields_updatedAt_Read
+  update: SiteSettingsFields_updatedAt_Update
+  delete: SiteSettingsFields_updatedAt_Delete
+}
+
+type SiteSettingsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_createdAt {
+  create: SiteSettingsFields_createdAt_Create
+  read: SiteSettingsFields_createdAt_Read
+  update: SiteSettingsFields_createdAt_Update
+  delete: SiteSettingsFields_createdAt_Delete
+}
+
+type SiteSettingsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SiteSettingsUpdateAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -17760,6 +18407,10 @@ type Mutation {
   updateCurrency(id: Int!, autosave: Boolean, data: mutationCurrencyUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): Currency
   deleteCurrency(id: Int!, trash: Boolean): Currency
   duplicateCurrency(id: Int!, data: mutationCurrencyInput!): Currency
+  createSocialNetwork(data: mutationSocialNetworkInput!, draft: Boolean, locale: LocaleInputType): SocialNetwork
+  updateSocialNetwork(id: Int!, autosave: Boolean, data: mutationSocialNetworkUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): SocialNetwork
+  deleteSocialNetwork(id: Int!, trash: Boolean): SocialNetwork
+  duplicateSocialNetwork(id: Int!, data: mutationSocialNetworkInput!): SocialNetwork
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean, locale: LocaleInputType): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -17775,6 +18426,7 @@ type Mutation {
   updateHome(data: mutationHomeInput!, draft: Boolean, locale: LocaleInputType): Home
   updateTraining(data: mutationTrainingInput!, draft: Boolean, locale: LocaleInputType): Training
   updateContact(data: mutationContactInput!, draft: Boolean, locale: LocaleInputType): Contact
+  updateSiteSetting(data: mutationSiteSettingInput!, draft: Boolean, locale: LocaleInputType): SiteSetting
 }
 
 input mutationUserInput {
@@ -18420,6 +19072,40 @@ input mutationCurrencyUpdateInput {
   createdAt: String
 }
 
+input mutationSocialNetworkInput {
+  label: String
+  type: SocialNetwork_type_MutationInput!
+  url: String!
+  icon: Int
+  updatedAt: String
+  createdAt: String
+}
+
+enum SocialNetwork_type_MutationInput {
+  instagram
+  facebook
+  telegram
+  whatsapp
+  custom
+}
+
+input mutationSocialNetworkUpdateInput {
+  label: String
+  type: SocialNetworkUpdate_type_MutationInput
+  url: String
+  icon: Int
+  updatedAt: String
+  createdAt: String
+}
+
+enum SocialNetworkUpdate_type_MutationInput {
+  instagram
+  facebook
+  telegram
+  whatsapp
+  custom
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -18458,6 +19144,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   applications
   dealer_applications
   currencies
+  social_networks
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -18497,6 +19184,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   applications
   dealer_applications
   currencies
+  social_networks
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {
@@ -18683,12 +19371,17 @@ input mutationContactInput {
 input mutationContact_FormInput {
   title: String
   description: String
-  socialNetworks: [mutationContact_Form_SocialNetworksInput]
+  socialNetworks: [Int]
 }
 
-input mutationContact_Form_SocialNetworksInput {
-  label: String
-  icon: Int
-  url: String!
-  id: String
+input mutationSiteSettingInput {
+  favicon: Int
+  footer: mutationSiteSetting_FooterInput
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationSiteSetting_FooterInput {
+  socialNetworks: [Int]
+  contactSocialNetworks: [Int]
 }

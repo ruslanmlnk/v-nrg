@@ -21,9 +21,11 @@ import { TrainingVideos } from './collections/TrainingVideos'
 import { Applications } from './collections/Applications'
 import { DealerApplications } from './collections/DealerApplications'
 import { Currencies } from './collections/Currencies'
+import { SocialNetworks } from './collections/SocialNetworks'
 import { Home } from './globals/Home'
 import { Training } from './globals/Training'
 import { Contacts } from './globals/Contacts'
+import { SiteSettings } from './globals/SiteSettings'
 import { localizedContent } from './plugins/localizedContent'
 
 const filename = fileURLToPath(import.meta.url)
@@ -51,6 +53,7 @@ export default buildConfig({
     Applications,
     DealerApplications,
     Currencies,
+    SocialNetworks,
   ],
   i18n: {
     fallbackLanguage: 'uk',
@@ -75,7 +78,7 @@ export default buildConfig({
       'schema.graphql',
     ),
   },
-  globals: [Home, Training, Contacts],
+  globals: [Home, Training, Contacts, SiteSettings],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

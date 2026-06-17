@@ -1,20 +1,32 @@
 import { Google_Sans } from 'next/font/google'
+import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+import type { Media } from '@/payload-types'
 import './styles.css'
 import Header from './components/Header'
 import { CommerceProvider } from './components/providers/CommerceProvider'
-import { SitePreferencesProvider, type SiteCurrency } from './components/providers/SitePreferencesProvider'
+import {
+  SitePreferencesProvider,
+  type SiteCurrency,
+} from './components/providers/SitePreferencesProvider'
 import { GlobalEnglishTranslator } from './components/providers/GlobalEnglishTranslator'
 import SiteFooter from './components/SiteFooter'
 import { getLayoutData } from './lib/graphql/queries'
 import { getSiteLocale } from './lib/getSiteLocale'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+export async function generateMetadata(): Promise<Metadata> {
+  const payload = await getPayload({ config })
+  const siteSettings = await payload.findGlobal({ slug: 'site-settings', depth: 1 })
+  const favicon = getMedia(siteSettings.favicon)
+
+  return {
+    description: 'A blank template using Payload in a Next.js app.',
+    icons: favicon?.url ? [{ rel: 'icon', url: favicon.url }] : undefined,
+    title: 'Payload Blank Template',
+  }
 }
 
 const googleSans = Google_Sans({
@@ -45,7 +57,10 @@ export default async function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang={initialLocale}>
       <body className={googleSans.className}>
-        <SitePreferencesProvider initialCurrencies={initialCurrencies} initialLocale={initialLocale}>
+        <SitePreferencesProvider
+          initialCurrencies={initialCurrencies}
+          initialLocale={initialLocale}
+        >
           <GlobalEnglishTranslator />
           <CommerceProvider
             initialCategories={initialCategories}
@@ -60,4 +75,8 @@ export default async function RootLayout(props: { children: ReactNode }) {
       </body>
     </html>
   )
+}
+
+function getMedia(value: number | Media | null | undefined) {
+  return typeof value === 'object' && value ? value : null
 }

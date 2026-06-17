@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
-import type { Media } from '@/payload-types'
+import type { Media, SocialNetwork } from '@/payload-types'
 import {
   ContactRequestSection,
   ContactsHeroSection,
@@ -13,10 +13,9 @@ export default async function ContactsPage() {
   const payload = await getPayload({ config: configPromise })
   const locale = await getSiteLocale()
   const contacts = await payload.findGlobal({ slug: 'contacts', depth: 2, locale })
-  const socialNetworks = (contacts.form.socialNetworks ?? []).flatMap((social) => {
-    const icon = getMedia(social.icon)
-    return icon?.url ? [{ icon: icon.url, label: social.label, url: social.url }] : []
-  })
+  const socialNetworks = (contacts.form.socialNetworks ?? []).flatMap((social) =>
+    mapSocialNetwork(social),
+  )
 
   return (
     <div className="pt-5">
@@ -39,4 +38,15 @@ export default async function ContactsPage() {
 
 function getMedia(value: number | Media | null | undefined) {
   return typeof value === 'object' && value ? value : null
+}
+
+function getSocialNetwork(value: number | SocialNetwork | null | undefined) {
+  return typeof value === 'object' && value ? value : null
+}
+
+function mapSocialNetwork(value: number | SocialNetwork | null | undefined) {
+  const social = getSocialNetwork(value)
+  const icon = getMedia(social?.icon)
+
+  return social && icon?.url ? [{ icon: icon.url, label: social.label, url: social.url }] : []
 }

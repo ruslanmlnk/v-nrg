@@ -7,6 +7,7 @@ import * as migration_20260612_020000_locations from './20260612_020000_location
 import * as migration_20260613_010000_training from './20260613_010000_training'
 import * as migration_20260613_020000_contacts from './20260613_020000_contacts'
 import * as migration_20260613_030000_applications from './20260613_030000_applications'
+import * as migration_20260617_153500_social_networks_site_settings from './20260617_153500_social_networks_site_settings'
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260613_030000_applications.up,
     down: migration_20260613_030000_applications.down,
     name: '20260613_030000_applications',
+  },
+  {
+    up: migration_20260617_153500_social_networks_site_settings.up,
+    down: migration_20260617_153500_social_networks_site_settings.down,
+    name: '20260617_153500_social_networks_site_settings',
   },
 ]

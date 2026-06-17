@@ -1,13 +1,17 @@
 import type { ReactNode } from 'react'
 
+import configPromise from '@payload-config'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getPayload } from 'payload'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
+import type { Media, SocialNetwork } from '@/payload-types'
+import { getSiteLocale } from '../lib/getSiteLocale'
 import footerLogoIconAsset from '@public/icon/generated/components-site-footer-footer-logo.svg'
 import instagramIconAsset from '@public/icon/generated/components-site-footer-instagram.svg'
 import facebookIconAsset from '@public/icon/generated/components-site-footer-facebook.svg'
 import telegramIconAsset from '@public/icon/generated/components-site-footer-telegram.svg'
-import whatsappIconAsset from '@public/icon/generated/components-site-footer-whatsapp.svg'
+import whatsappIconAsset from '@public/icon/generated/contacts-contacts-page-whatsapp.svg'
 
 const catalogLinks = [
   { href: '/aparati-vakuumnogo-masazhu', label: 'Апарати вакуумного масажу' },
@@ -33,7 +37,49 @@ const legalLinks = [
   { href: '/offer', label: 'Публічна оферта' },
 ]
 
-export default function SiteFooter() {
+const fallbackFooterSocialNetworks: FooterSocialNetwork[] = [
+  {
+    icon: instagramIconAsset,
+    label: 'Instagram',
+    url: 'https://instagram.com/',
+  },
+  {
+    icon: facebookIconAsset,
+    label: 'Facebook',
+    url: 'https://facebook.com/',
+  },
+]
+
+const fallbackContactSocialNetworks: FooterSocialNetwork[] = [
+  {
+    icon: telegramIconAsset,
+    label: 'Telegram',
+    url: 'https://t.me/',
+  },
+  {
+    icon: whatsappIconAsset,
+    label: 'WhatsApp',
+    url: 'https://wa.me/380975468820',
+  },
+]
+
+type FooterSocialNetwork = {
+  icon: string | typeof instagramIconAsset
+  label: string
+  url: string
+}
+
+export default async function SiteFooter() {
+  const payload = await getPayload({ config: configPromise })
+  const locale = await getSiteLocale()
+  const [siteSettings, contacts] = await Promise.all([
+    payload.findGlobal({ slug: 'site-settings', depth: 2, locale }),
+    payload.findGlobal({ slug: 'contacts', depth: 0, locale }),
+  ])
+  const footerSocialNetworks = mapSocialNetworks(siteSettings.footer?.socialNetworks)
+  const contactSocialNetworks = mapSocialNetworks(siteSettings.footer?.contactSocialNetworks)
+  const phoneHref = `tel:${contacts.phone.replace(/[^\d+]/g, '')}`
+
   return (
     <footer className="flex flex-col items-center rounded-t-[32px] bg-[#22354A] px-6 pb-6 pt-12 text-white lg:rounded-t-[48px] lg:px-[clamp(64px,6.944vw,100px)] lg:pb-12 lg:pt-[100px]">
       <div className="flex w-full max-w-[1270px] flex-col gap-8 lg:w-[min(1270px,calc(100vw-48px))] lg:gap-[52px]">
@@ -53,12 +99,14 @@ export default function SiteFooter() {
               </span>
 
               <div className="flex items-center gap-3">
-                <FooterSocialLink href="https://instagram.com/" label="Instagram">
-                  <IconAsset src={instagramIconAsset} width={17} height={17} />
-                </FooterSocialLink>
-                <FooterSocialLink href="https://facebook.com/" label="Facebook">
-                  <IconAsset src={facebookIconAsset} width={17} height={17} />
-                </FooterSocialLink>
+                {(footerSocialNetworks.length
+                  ? footerSocialNetworks
+                  : fallbackFooterSocialNetworks
+                ).map((social) => (
+                  <FooterSocialLink href={social.url} key={social.label} label={social.label}>
+                    <IconAsset src={social.icon} width={17} height={17} />
+                  </FooterSocialLink>
+                ))}
               </div>
             </div>
           </div>
@@ -73,26 +121,28 @@ export default function SiteFooter() {
 
                 <div className="flex flex-col items-start gap-4 text-[16px] font-medium leading-[165%] text-white">
                   <div className="flex items-center gap-4">
-                    <Link href="tel:+380975468820">+38 (097) 546-88-20</Link>
+                    <Link href={phoneHref}>{contacts.phone}</Link>
 
                     <div className="flex items-center gap-3">
-                      <FooterSocialLink href="https://t.me/" label="Telegram">
-                        <IconAsset src={telegramIconAsset} width={17} height={17} />
-                      </FooterSocialLink>
-                      <FooterSocialLink href="https://wa.me/380975468820" label="WhatsApp">
-                        <IconAsset src={whatsappIconAsset} width={17} height={17} />
-                      </FooterSocialLink>
+                      {(contactSocialNetworks.length
+                        ? contactSocialNetworks
+                        : fallbackContactSocialNetworks
+                      ).map((social) => (
+                        <FooterSocialLink href={social.url} key={social.label} label={social.label}>
+                          <IconAsset src={social.icon} width={17} height={17} />
+                        </FooterSocialLink>
+                      ))}
                     </div>
                   </div>
 
-                  <Link href="mailto:0870758@gmail.com">0870758@gmail.com</Link>
+                  <Link href={`mailto:${contacts.email}`}>{contacts.email}</Link>
                 </div>
               </div>
 
               <div className="flex flex-col items-start gap-4">
                 <FooterHeading>Адреса</FooterHeading>
                 <p className="text-[16px] font-medium leading-[165%] text-white">
-                  м. Бровари, вул. Підприємницька, 22
+                  {contacts.address}
                 </p>
               </div>
             </div>
@@ -113,6 +163,23 @@ export default function SiteFooter() {
       </div>
     </footer>
   )
+}
+
+function getMedia(value: number | Media | null | undefined) {
+  return typeof value === 'object' && value ? value : null
+}
+
+function getSocialNetwork(value: number | SocialNetwork | null | undefined) {
+  return typeof value === 'object' && value ? value : null
+}
+
+function mapSocialNetworks(values: (number | SocialNetwork)[] | null | undefined) {
+  return (values ?? []).flatMap((value) => {
+    const social = getSocialNetwork(value)
+    const icon = getMedia(social?.icon)
+
+    return social && icon?.url ? [{ icon: icon.url, label: social.label, url: social.url }] : []
+  })
 }
 
 function FooterColumn({
