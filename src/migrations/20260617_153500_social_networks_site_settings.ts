@@ -1,6 +1,27 @@
 import { type MigrateDownArgs, type MigrateUpArgs, sql } from '@payloadcms/db-postgres'
+import type { Payload } from 'payload'
 
-export async function up({ db }: MigrateUpArgs): Promise<void> {
+type MigrationExecutor = MigrateUpArgs['db']
+type PayloadMigrationArgs = { payload?: Payload }
+
+function getExecutor(args: MigrateUpArgs | PayloadMigrationArgs): MigrationExecutor {
+  if ('db' in args && args.db) {
+    return args.db
+  }
+
+  const payload = 'payload' in args ? args.payload : undefined
+  const db = payload?.db as Payload['db'] & { drizzle?: MigrationExecutor }
+
+  if (!db.drizzle) {
+    throw new Error('No migration executor available')
+  }
+
+  return db.drizzle
+}
+
+export async function up(args: MigrateUpArgs | PayloadMigrationArgs): Promise<void> {
+  const db = getExecutor(args)
+
   await db.execute(sql`
     DO $$ BEGIN
       CREATE TYPE "public"."enum_social_networks_type" AS ENUM('instagram', 'facebook', 'telegram', 'whatsapp', 'custom');
@@ -125,7 +146,9 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   `)
 }
 
-export async function down({ db }: MigrateDownArgs): Promise<void> {
+export async function down(args: MigrateDownArgs | PayloadMigrationArgs): Promise<void> {
+  const db = getExecutor(args)
+
   await db.execute(sql`
     DROP TABLE IF EXISTS "site_settings_rels" CASCADE;
     DROP TABLE IF EXISTS "site_settings" CASCADE;
