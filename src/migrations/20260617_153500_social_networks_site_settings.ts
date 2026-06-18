@@ -1,27 +1,6 @@
 import { type MigrateDownArgs, type MigrateUpArgs, sql } from '@payloadcms/db-postgres'
-import type { Payload } from 'payload'
 
-type MigrationExecutor = MigrateUpArgs['db']
-type PayloadMigrationArgs = { payload?: Payload }
-
-function getExecutor(args: MigrateUpArgs | PayloadMigrationArgs): MigrationExecutor {
-  if ('db' in args && args.db) {
-    return args.db
-  }
-
-  const payload = 'payload' in args ? args.payload : undefined
-  const db = payload?.db as Payload['db'] & { drizzle?: MigrationExecutor }
-
-  if (!db.drizzle) {
-    throw new Error('No migration executor available')
-  }
-
-  return db.drizzle
-}
-
-export async function up(args: MigrateUpArgs | PayloadMigrationArgs): Promise<void> {
-  const db = getExecutor(args)
-
+export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
     DO $$ BEGIN
       CREATE TYPE "public"."enum_social_networks_type" AS ENUM('instagram', 'facebook', 'telegram', 'whatsapp', 'custom');
@@ -31,13 +10,19 @@ export async function up(args: MigrateUpArgs | PayloadMigrationArgs): Promise<vo
 
     CREATE TABLE IF NOT EXISTS "social_networks" (
       "id" serial PRIMARY KEY NOT NULL,
-      "label" varchar NOT NULL,
       "type" "enum_social_networks_type" NOT NULL,
       "url" varchar NOT NULL,
       "icon_id" integer NOT NULL,
       "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
       "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
       CONSTRAINT "social_networks_type_unique" UNIQUE("type")
+    );
+
+    CREATE TABLE IF NOT EXISTS "social_networks_locales" (
+      "label" varchar NOT NULL,
+      "id" serial PRIMARY KEY NOT NULL,
+      "_locale" "public"."_locales" NOT NULL,
+      "_parent_id" integer NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS "contacts_rels" (
@@ -69,6 +54,17 @@ export async function up(args: MigrateUpArgs | PayloadMigrationArgs): Promise<vo
       FOREIGN KEY ("icon_id")
       REFERENCES "public"."media"("id")
       ON DELETE set null
+      ON UPDATE no action;
+    EXCEPTION
+      WHEN duplicate_object THEN null;
+    END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "social_networks_locales"
+      ADD CONSTRAINT "social_networks_locales_parent_id_fk"
+      FOREIGN KEY ("_parent_id")
+      REFERENCES "public"."social_networks"("id")
+      ON DELETE cascade
       ON UPDATE no action;
     EXCEPTION
       WHEN duplicate_object THEN null;
@@ -132,6 +128,9 @@ export async function up(args: MigrateUpArgs | PayloadMigrationArgs): Promise<vo
     CREATE INDEX IF NOT EXISTS "social_networks_icon_idx" ON "social_networks" USING btree ("icon_id");
     CREATE INDEX IF NOT EXISTS "social_networks_updated_at_idx" ON "social_networks" USING btree ("updated_at");
     CREATE INDEX IF NOT EXISTS "social_networks_created_at_idx" ON "social_networks" USING btree ("created_at");
+    CREATE UNIQUE INDEX IF NOT EXISTS "social_networks_locales_locale_parent_id_unique" ON "social_networks_locales" USING btree ("_locale", "_parent_id");
+    CREATE INDEX IF NOT EXISTS "social_networks_locales_parent_id_idx" ON "social_networks_locales" USING btree ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "social_networks_locales_locale_idx" ON "social_networks_locales" USING btree ("_locale");
     CREATE INDEX IF NOT EXISTS "contacts_rels_order_idx" ON "contacts_rels" USING btree ("order");
     CREATE INDEX IF NOT EXISTS "contacts_rels_parent_idx" ON "contacts_rels" USING btree ("parent_id");
     CREATE INDEX IF NOT EXISTS "contacts_rels_path_idx" ON "contacts_rels" USING btree ("path");
@@ -146,13 +145,12 @@ export async function up(args: MigrateUpArgs | PayloadMigrationArgs): Promise<vo
   `)
 }
 
-export async function down(args: MigrateDownArgs | PayloadMigrationArgs): Promise<void> {
-  const db = getExecutor(args)
-
+export async function down({ db }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
     DROP TABLE IF EXISTS "site_settings_rels" CASCADE;
     DROP TABLE IF EXISTS "site_settings" CASCADE;
     DROP TABLE IF EXISTS "contacts_rels" CASCADE;
+    DROP TABLE IF EXISTS "social_networks_locales" CASCADE;
     DROP TABLE IF EXISTS "social_networks" CASCADE;
     DROP TYPE IF EXISTS "public"."enum_social_networks_type";
   `)
