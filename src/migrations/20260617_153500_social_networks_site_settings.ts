@@ -48,6 +48,9 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       "social_networks_id" integer
     );
 
+    ALTER TABLE "payload_locked_documents_rels"
+    ADD COLUMN IF NOT EXISTS "social_networks_id" integer;
+
     DO $$ BEGIN
       ALTER TABLE "social_networks"
       ADD CONSTRAINT "social_networks_icon_id_media_id_fk"
@@ -115,6 +118,17 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     END $$;
 
     DO $$ BEGIN
+      ALTER TABLE "payload_locked_documents_rels"
+      ADD CONSTRAINT "payload_locked_documents_rels_social_networks_fk"
+      FOREIGN KEY ("social_networks_id")
+      REFERENCES "public"."social_networks"("id")
+      ON DELETE cascade
+      ON UPDATE no action;
+    EXCEPTION
+      WHEN duplicate_object THEN null;
+    END $$;
+
+    DO $$ BEGIN
       ALTER TABLE "site_settings_rels"
       ADD CONSTRAINT "site_settings_rels_social_networks_fk"
       FOREIGN KEY ("social_networks_id")
@@ -142,6 +156,31 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     CREATE INDEX IF NOT EXISTS "site_settings_rels_parent_idx" ON "site_settings_rels" USING btree ("parent_id");
     CREATE INDEX IF NOT EXISTS "site_settings_rels_path_idx" ON "site_settings_rels" USING btree ("path");
     CREATE INDEX IF NOT EXISTS "site_settings_rels_social_networks_id_idx" ON "site_settings_rels" USING btree ("social_networks_id");
+    CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_social_networks_id_idx" ON "payload_locked_documents_rels" USING btree ("social_networks_id");
+
+    DO $$ BEGIN
+      IF EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'social_networks'
+          AND column_name = 'label'
+      ) THEN
+        INSERT INTO "social_networks_locales" ("label", "_locale", "_parent_id")
+        SELECT "label", 'uk'::"_locales", "id"
+        FROM "social_networks"
+        ON CONFLICT ("_locale", "_parent_id") DO UPDATE
+        SET "label" = excluded."label";
+
+        INSERT INTO "social_networks_locales" ("label", "_locale", "_parent_id")
+        SELECT "label", 'en'::"_locales", "id"
+        FROM "social_networks"
+        ON CONFLICT ("_locale", "_parent_id") DO UPDATE
+        SET "label" = excluded."label";
+      END IF;
+    END $$;
+
+    ALTER TABLE "social_networks" DROP COLUMN IF EXISTS "label";
   `)
 }
 
@@ -153,5 +192,6 @@ export async function down({ db }: MigrateDownArgs): Promise<void> {
     DROP TABLE IF EXISTS "social_networks_locales" CASCADE;
     DROP TABLE IF EXISTS "social_networks" CASCADE;
     DROP TYPE IF EXISTS "public"."enum_social_networks_type";
+    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN IF EXISTS "social_networks_id";
   `)
 }

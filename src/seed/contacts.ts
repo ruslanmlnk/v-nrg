@@ -13,7 +13,7 @@ const socialNetworks = [
     file: 'contacts-contacts-page-telegram.svg',
     label: 'Telegram',
     type: 'telegram',
-    url: 'https://t.me/',
+    url: 'https://t.me/pvv_x',
   },
   {
     file: 'contacts-contacts-page-whatsapp.svg',
@@ -25,13 +25,13 @@ const socialNetworks = [
     file: 'contacts-contacts-page-instagram.svg',
     label: 'Instagram',
     type: 'instagram',
-    url: 'https://instagram.com/',
+    url: 'https://www.instagram.com/v_nrg_pro',
   },
   {
     file: 'contacts-contacts-page-facebook.svg',
     label: 'Facebook',
     type: 'facebook',
-    url: 'https://facebook.com/',
+    url: 'https://www.facebook.com/v.nrg.pro/',
   },
 ] as const
 

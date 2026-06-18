@@ -24,10 +24,10 @@ export function ProductOverviewSection({
   onAddToCart,
   onDecreaseQuantity,
   onIncreaseQuantity,
+  onOpenPartsPayment,
   onSelectGallery,
   onToggleCompare,
   onShare,
-  paymentHref,
   product,
   productGallery,
   quantity,
@@ -40,10 +40,10 @@ export function ProductOverviewSection({
   onAddToCart: () => void
   onDecreaseQuantity: () => void
   onIncreaseQuantity: () => void
+  onOpenPartsPayment: () => void
   onSelectGallery: (index: number) => void
   onToggleCompare: () => void
   onShare: () => Promise<void>
-  paymentHref: string
   product: ProductData
   productGallery: Array<{ alt: string; thumb: string; video: boolean }>
   quantity: number
@@ -177,12 +177,13 @@ export function ProductOverviewSection({
                   Купити
                 </button>
 
-                <Link
-                  href={paymentHref}
+                <button
+                  type="button"
+                  onClick={onOpenPartsPayment}
                   className="flex h-[50px] w-full items-center justify-center rounded-[40px] border border-[#D5E0E8] bg-white px-6 text-[18px] font-medium leading-[145%] text-[#22354A] transition-colors hover:border-[#4FACF5] hover:text-[#4FACF5] xl:min-w-[287px] xl:whitespace-nowrap"
                 >
                   Оплатити частинами
-                </Link>
+                </button>
               </div>
 
               <div className="flex flex-col gap-4 rounded-[20px] bg-[#F5F8F9] p-6">

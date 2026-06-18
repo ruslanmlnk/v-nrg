@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 
+import { PartsPaymentModal } from '../checkout/CheckoutSections'
 import FaqSection from '../FaqSection'
 import { useCommerce } from '../providers/CommerceProvider'
 import {
@@ -18,7 +19,8 @@ import { chunkItems, createProductGallery, partnerReviews } from './data'
 import type { ProductData } from '../../data/products'
 
 export default function ProductDetailView({ product }: { product: ProductData }) {
-  const { addToCart, getProductById, isInCompare, products, toggleCompare } = useCommerce()
+  const { addToCart, checkoutOrder, getProductById, isInCompare, products, toggleCompare } =
+    useCommerce()
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
   const [activeReviewPage, setActiveReviewPage] = useState(0)
   const displayProduct = getProductById(product.id) ?? product
@@ -26,6 +28,8 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const [activeTabId, setActiveTabId] = useState<string>(displayTabs[0]?.id ?? 'description')
   const [isShareActive, setIsShareActive] = useState(false)
   const [quantity, setQuantity] = useState(1)
+  const [isPartsModalOpen, setIsPartsModalOpen] = useState(false)
+  const [partsCount, setPartsCount] = useState(8)
 
   const productGallery = useMemo(() => createProductGallery(displayProduct), [displayProduct])
   const relatedProducts = useMemo(
@@ -50,8 +54,8 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const isCompared = isInCompare(displayProduct.id)
   const reviewPages = chunkItems(partnerReviews, 2)
   const visibleReviews = reviewPages[activeReviewPage] ?? reviewPages[0] ?? []
-  const paymentHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Оплата частинами ${displayProduct.title}`)}`
   const deliveryHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Умови доставки та оплати ${displayProduct.title}`)}`
+  const partsMonthlyPayment = getMonthlyPayment(displayProduct.price * quantity, partsCount)
 
   useEffect(() => {
     setActiveGalleryIndex(0)
@@ -97,10 +101,10 @@ export default function ProductDetailView({ product }: { product: ProductData })
           onAddToCart={() => addToCart(displayProduct.id, quantity)}
           onDecreaseQuantity={() => setQuantity((current) => Math.max(1, current - 1))}
           onIncreaseQuantity={() => setQuantity((current) => current + 1)}
+          onOpenPartsPayment={() => setIsPartsModalOpen(true)}
           onSelectGallery={setActiveGalleryIndex}
           onShare={handleShare}
           onToggleCompare={() => toggleCompare(displayProduct.id)}
-          paymentHref={paymentHref}
           product={displayProduct}
           productGallery={productGallery}
           quantity={quantity}
@@ -138,6 +142,29 @@ export default function ProductDetailView({ product }: { product: ProductData })
       />
 
       <FaqSection columns={faqColumns} />
+
+      <PartsPaymentModal
+        isOpen={isPartsModalOpen}
+        monthlyPayment={partsMonthlyPayment}
+        onClose={() => setIsPartsModalOpen(false)}
+        onSelect={(nextPartsCount) => {
+          setIsPartsModalOpen(false)
+          checkoutOrder([{ productId: displayProduct.id, quantity }], {
+            partsCount: nextPartsCount,
+            paymentMethod: 'monobank-parts',
+          })
+        }}
+        onUpdatePartsCount={setPartsCount}
+        partsCount={partsCount}
+      />
     </div>
   )
+}
+
+function getMonthlyPayment(total: number, partsCount: number) {
+  if (!Number.isFinite(total) || total <= 0) {
+    return 0
+  }
+
+  return Math.ceil(total / Math.max(1, partsCount))
 }

@@ -86,7 +86,10 @@ type CommerceContextValue = {
   cartItems: CartItem[]
   cartItemsDetailed: DetailedCartItem[]
   cartTotal: number
-  checkoutOrder: (items: CartItem[]) => void
+  checkoutOrder: (
+    items: CartItem[],
+    options?: { partsCount?: number; paymentMethod?: 'monobank-parts' },
+  ) => void
   closeCart: () => void
   closeDealerModal: () => void
   closeLogoutModal: () => void
@@ -314,7 +317,7 @@ export function CommerceProvider({
     }))
   }
 
-  const checkoutOrder: CommerceContextValue['checkoutOrder'] = (items) => {
+  const checkoutOrder: CommerceContextValue['checkoutOrder'] = (items, options) => {
     const nextCartItems = items.filter(
       (item) => productsMap[item.productId] && Number.isFinite(item.quantity) && item.quantity > 0,
     )
@@ -328,7 +331,18 @@ export function CommerceProvider({
       cartItems: nextCartItems,
     }))
     setIsCartOpen(false)
-    router.push('/checkout')
+
+    const checkoutParams = new URLSearchParams()
+
+    if (options?.paymentMethod) {
+      checkoutParams.set('paymentMethod', options.paymentMethod)
+    }
+
+    if (options?.partsCount) {
+      checkoutParams.set('partsCount', String(options.partsCount))
+    }
+
+    router.push(checkoutParams.size ? `/checkout?${checkoutParams.toString()}` : '/checkout')
   }
 
   const toggleCompare: CommerceContextValue['toggleCompare'] = (productId) => {
