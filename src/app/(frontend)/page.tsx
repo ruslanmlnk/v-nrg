@@ -18,6 +18,17 @@ import HowItWorks from './components/mainPage/HowItWorks'
 import ModelComparisonSection from './components/mainPage/ModelComparisonSection'
 import { ProductComparisonSection } from './components/productDetail/ProductComparisonSection'
 import { getSiteLocale } from './lib/getSiteLocale'
+import { createSeoMetadata } from './lib/seo'
+
+export async function generateMetadata() {
+  const payload = await getPayload({ config: configPromise })
+  const home = await payload.findGlobal({
+    slug: 'home',
+    locale: await getSiteLocale(),
+  })
+
+  return createSeoMetadata(home.seo, 'V-NRG')
+}
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -36,14 +47,22 @@ export default async function HomePage() {
       locale,
     }),
   ])
-  const blogCards = articles.docs.map((article) => mapArticleToBlogCard(article, locale)).filter(isDefined)
+  const blogCards = articles.docs
+    .map((article) => mapArticleToBlogCard(article, locale))
+    .filter(isDefined)
   const heroImage = getMedia(home.hero.image)
   const beforeAfterCards = (home.beforeAfter ?? []).flatMap((item, index) => {
     const before = getMedia(item.before)
     const after = getMedia(item.after)
 
     return before?.url && after?.url
-      ? [{ afterImage: after.url, beforeImage: before.url, defaultPosition: [44, 58, 71][index] ?? 50 }]
+      ? [
+          {
+            afterImage: after.url,
+            beforeImage: before.url,
+            defaultPosition: [44, 58, 71][index] ?? 50,
+          },
+        ]
       : []
   })
 

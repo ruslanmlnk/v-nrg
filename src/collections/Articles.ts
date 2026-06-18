@@ -1,6 +1,8 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { slugField, type CollectionConfig } from 'payload'
 
+import { Seo } from '../fields/Seo'
+
 export const Articles: CollectionConfig = {
   slug: 'articles',
   labels: { plural: 'Статті', singular: 'Стаття' },
@@ -12,6 +14,7 @@ export const Articles: CollectionConfig = {
     read: () => true,
   },
   fields: [
+    Seo,
     {
       type: 'row',
       fields: [

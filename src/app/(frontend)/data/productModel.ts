@@ -91,6 +91,10 @@ export type ProductData = {
   regularPrice?: number
   shortDescription: string
   slug: string
+  seo?: {
+    metaDescription?: string | null
+    metaTitle?: string | null
+  } | null
   tabs: ProductTabData[]
   title: string
 }
@@ -128,6 +132,10 @@ export type ProductSource = {
   rating?: number | null
   shortDescription?: string | null
   slug?: string | null
+  seo?: {
+    metaDescription?: string | null
+    metaTitle?: string | null
+  } | null
   title?: string | null
   videoDescription?: string | null
   videos?: Array<ProductVideoSource | null> | null
@@ -160,6 +168,7 @@ export function unwrapProduct(product: ProductSource): ProductData {
     rating: product.rating ?? 4.8,
     shortDescription: unwrapText(product.shortDescription) ?? '',
     slug,
+    seo: product.seo,
     tabs: unwrapTabs(product),
     title: unwrapText(product.title) ?? 'Товар без назви',
   }

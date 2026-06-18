@@ -81,6 +81,12 @@ type Query {
   docAccessContact: contactsDocAccess
   SiteSetting(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): SiteSetting
   docAccessSiteSetting: site_settingsDocAccess
+  AboutPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): AboutPage
+  docAccessAboutPage: about_pageDocAccess
+  ReviewPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): ReviewPage
+  docAccessReviewPage: review_pageDocAccess
+  BlogPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): BlogPage
+  docAccessBlogPage: blog_pageDocAccess
   Access: Access
 }
 
@@ -1500,6 +1506,7 @@ type ReviewsDeleteDocAccess {
 
 type Product {
   id: Int!
+  seo: Product_Seo
   title: String
   price: Float!
   rating: Float
@@ -1528,8 +1535,14 @@ type Product {
   createdAt: DateTime
 }
 
+type Product_Seo {
+  metaTitle: String
+  metaDescription: String
+}
+
 type Category {
   id: Int!
+  seo: Category_Seo
   image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
   description: String
@@ -1537,6 +1550,11 @@ type Category {
   slug: String!
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type Category_Seo {
+  metaTitle: String
+  metaDescription: String
 }
 
 type Product_ListFeatures {
@@ -1614,6 +1632,8 @@ type Products {
 }
 
 input Product_where {
+  seo__metaTitle: Product_seo__metaTitle_operator
+  seo__metaDescription: Product_seo__metaDescription_operator
   title: Product_title_operator
   price: Product_price_operator
   rating: Product_rating_operator
@@ -1655,6 +1675,25 @@ input Product_where {
   id: Product_id_operator
   AND: [Product_where_and]
   OR: [Product_where_or]
+}
+
+input Product_seo__metaTitle_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Product_seo__metaDescription_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
 }
 
 input Product_title_operator {
@@ -2041,6 +2080,8 @@ input Product_id_operator {
 }
 
 input Product_where_and {
+  seo__metaTitle: Product_seo__metaTitle_operator
+  seo__metaDescription: Product_seo__metaDescription_operator
   title: Product_title_operator
   price: Product_price_operator
   rating: Product_rating_operator
@@ -2085,6 +2126,8 @@ input Product_where_and {
 }
 
 input Product_where_or {
+  seo__metaTitle: Product_seo__metaTitle_operator
+  seo__metaDescription: Product_seo__metaDescription_operator
   title: Product_title_operator
   price: Product_price_operator
   rating: Product_rating_operator
@@ -2141,6 +2184,7 @@ type productsDocAccess {
 }
 
 type ProductsDocAccessFields {
+  seo: ProductsDocAccessFields_seo
   title: ProductsDocAccessFields_title
   price: ProductsDocAccessFields_price
   rating: ProductsDocAccessFields_rating
@@ -2167,6 +2211,81 @@ type ProductsDocAccessFields {
   beforeafter: ProductsDocAccessFields_beforeafter
   updatedAt: ProductsDocAccessFields_updatedAt
   createdAt: ProductsDocAccessFields_createdAt
+}
+
+type ProductsDocAccessFields_seo {
+  create: ProductsDocAccessFields_seo_Create
+  read: ProductsDocAccessFields_seo_Read
+  update: ProductsDocAccessFields_seo_Update
+  delete: ProductsDocAccessFields_seo_Delete
+  fields: ProductsDocAccessFields_seo_Fields
+}
+
+type ProductsDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_Fields {
+  metaTitle: ProductsDocAccessFields_seo_metaTitle
+  metaDescription: ProductsDocAccessFields_seo_metaDescription
+}
+
+type ProductsDocAccessFields_seo_metaTitle {
+  create: ProductsDocAccessFields_seo_metaTitle_Create
+  read: ProductsDocAccessFields_seo_metaTitle_Read
+  update: ProductsDocAccessFields_seo_metaTitle_Update
+  delete: ProductsDocAccessFields_seo_metaTitle_Delete
+}
+
+type ProductsDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaDescription {
+  create: ProductsDocAccessFields_seo_metaDescription_Create
+  read: ProductsDocAccessFields_seo_metaDescription_Read
+  update: ProductsDocAccessFields_seo_metaDescription_Update
+  delete: ProductsDocAccessFields_seo_metaDescription_Delete
+}
+
+type ProductsDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type ProductsDocAccessFields_title {
@@ -3306,6 +3425,8 @@ type Categories {
 }
 
 input Category_where {
+  seo__metaTitle: Category_seo__metaTitle_operator
+  seo__metaDescription: Category_seo__metaDescription_operator
   image: Category_image_operator
   title: Category_title_operator
   description: Category_description_operator
@@ -3316,6 +3437,25 @@ input Category_where {
   id: Category_id_operator
   AND: [Category_where_and]
   OR: [Category_where_or]
+}
+
+input Category_seo__metaTitle_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Category_seo__metaDescription_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
 }
 
 input Category_image_operator {
@@ -3397,6 +3537,8 @@ input Category_id_operator {
 }
 
 input Category_where_and {
+  seo__metaTitle: Category_seo__metaTitle_operator
+  seo__metaDescription: Category_seo__metaDescription_operator
   image: Category_image_operator
   title: Category_title_operator
   description: Category_description_operator
@@ -3410,6 +3552,8 @@ input Category_where_and {
 }
 
 input Category_where_or {
+  seo__metaTitle: Category_seo__metaTitle_operator
+  seo__metaDescription: Category_seo__metaDescription_operator
   image: Category_image_operator
   title: Category_title_operator
   description: Category_description_operator
@@ -3435,6 +3579,7 @@ type categoryDocAccess {
 }
 
 type CategoryDocAccessFields {
+  seo: CategoryDocAccessFields_seo
   image: CategoryDocAccessFields_image
   title: CategoryDocAccessFields_title
   description: CategoryDocAccessFields_description
@@ -3442,6 +3587,81 @@ type CategoryDocAccessFields {
   slug: CategoryDocAccessFields_slug
   updatedAt: CategoryDocAccessFields_updatedAt
   createdAt: CategoryDocAccessFields_createdAt
+}
+
+type CategoryDocAccessFields_seo {
+  create: CategoryDocAccessFields_seo_Create
+  read: CategoryDocAccessFields_seo_Read
+  update: CategoryDocAccessFields_seo_Update
+  delete: CategoryDocAccessFields_seo_Delete
+  fields: CategoryDocAccessFields_seo_Fields
+}
+
+type CategoryDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_Fields {
+  metaTitle: CategoryDocAccessFields_seo_metaTitle
+  metaDescription: CategoryDocAccessFields_seo_metaDescription
+}
+
+type CategoryDocAccessFields_seo_metaTitle {
+  create: CategoryDocAccessFields_seo_metaTitle_Create
+  read: CategoryDocAccessFields_seo_metaTitle_Read
+  update: CategoryDocAccessFields_seo_metaTitle_Update
+  delete: CategoryDocAccessFields_seo_metaTitle_Delete
+}
+
+type CategoryDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaDescription {
+  create: CategoryDocAccessFields_seo_metaDescription_Create
+  read: CategoryDocAccessFields_seo_metaDescription_Read
+  update: CategoryDocAccessFields_seo_metaDescription_Update
+  delete: CategoryDocAccessFields_seo_metaDescription_Delete
+}
+
+type CategoryDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type CategoryDocAccessFields_image {
@@ -3627,6 +3847,7 @@ type CategoryDeleteDocAccess {
 
 type Article {
   id: Int!
+  seo: Article_Seo
   title: String
   publishedAt: DateTime!
   generateSlug: Boolean
@@ -3636,6 +3857,11 @@ type Article {
   content(depth: Int): JSON
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type Article_Seo {
+  metaTitle: String
+  metaDescription: String
 }
 
 type Articles {
@@ -3653,6 +3879,8 @@ type Articles {
 }
 
 input Article_where {
+  seo__metaTitle: Article_seo__metaTitle_operator
+  seo__metaDescription: Article_seo__metaDescription_operator
   title: Article_title_operator
   publishedAt: Article_publishedAt_operator
   generateSlug: Article_generateSlug_operator
@@ -3665,6 +3893,25 @@ input Article_where {
   id: Article_id_operator
   AND: [Article_where_and]
   OR: [Article_where_or]
+}
+
+input Article_seo__metaTitle_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Article_seo__metaDescription_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
 }
 
 input Article_title_operator {
@@ -3759,6 +4006,8 @@ input Article_id_operator {
 }
 
 input Article_where_and {
+  seo__metaTitle: Article_seo__metaTitle_operator
+  seo__metaDescription: Article_seo__metaDescription_operator
   title: Article_title_operator
   publishedAt: Article_publishedAt_operator
   generateSlug: Article_generateSlug_operator
@@ -3774,6 +4023,8 @@ input Article_where_and {
 }
 
 input Article_where_or {
+  seo__metaTitle: Article_seo__metaTitle_operator
+  seo__metaDescription: Article_seo__metaDescription_operator
   title: Article_title_operator
   publishedAt: Article_publishedAt_operator
   generateSlug: Article_generateSlug_operator
@@ -3801,6 +4052,7 @@ type articlesDocAccess {
 }
 
 type ArticlesDocAccessFields {
+  seo: ArticlesDocAccessFields_seo
   title: ArticlesDocAccessFields_title
   publishedAt: ArticlesDocAccessFields_publishedAt
   generateSlug: ArticlesDocAccessFields_generateSlug
@@ -3810,6 +4062,81 @@ type ArticlesDocAccessFields {
   content: ArticlesDocAccessFields_content
   updatedAt: ArticlesDocAccessFields_updatedAt
   createdAt: ArticlesDocAccessFields_createdAt
+}
+
+type ArticlesDocAccessFields_seo {
+  create: ArticlesDocAccessFields_seo_Create
+  read: ArticlesDocAccessFields_seo_Read
+  update: ArticlesDocAccessFields_seo_Update
+  delete: ArticlesDocAccessFields_seo_Delete
+  fields: ArticlesDocAccessFields_seo_Fields
+}
+
+type ArticlesDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_Fields {
+  metaTitle: ArticlesDocAccessFields_seo_metaTitle
+  metaDescription: ArticlesDocAccessFields_seo_metaDescription
+}
+
+type ArticlesDocAccessFields_seo_metaTitle {
+  create: ArticlesDocAccessFields_seo_metaTitle_Create
+  read: ArticlesDocAccessFields_seo_metaTitle_Read
+  update: ArticlesDocAccessFields_seo_metaTitle_Update
+  delete: ArticlesDocAccessFields_seo_metaTitle_Delete
+}
+
+type ArticlesDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaDescription {
+  create: ArticlesDocAccessFields_seo_metaDescription_Create
+  read: ArticlesDocAccessFields_seo_metaDescription_Read
+  update: ArticlesDocAccessFields_seo_metaDescription_Update
+  delete: ArticlesDocAccessFields_seo_metaDescription_Delete
+}
+
+type ArticlesDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ArticlesDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type ArticlesDocAccessFields_title {
@@ -4767,6 +5094,7 @@ type OrdersDeleteDocAccess {
 
 type LegalPage {
   id: Int!
+  seo: LegalPage_Seo
   title: String
   generateSlug: Boolean
   slug: String!
@@ -4774,6 +5102,11 @@ type LegalPage {
   contentMarkdown: String
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type LegalPage_Seo {
+  metaTitle: String
+  metaDescription: String
 }
 
 type LegalPages {
@@ -4791,6 +5124,8 @@ type LegalPages {
 }
 
 input LegalPage_where {
+  seo__metaTitle: LegalPage_seo__metaTitle_operator
+  seo__metaDescription: LegalPage_seo__metaDescription_operator
   title: LegalPage_title_operator
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
@@ -4801,6 +5136,25 @@ input LegalPage_where {
   id: LegalPage_id_operator
   AND: [LegalPage_where_and]
   OR: [LegalPage_where_or]
+}
+
+input LegalPage_seo__metaTitle_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input LegalPage_seo__metaDescription_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
 }
 
 input LegalPage_title_operator {
@@ -4878,6 +5232,8 @@ input LegalPage_id_operator {
 }
 
 input LegalPage_where_and {
+  seo__metaTitle: LegalPage_seo__metaTitle_operator
+  seo__metaDescription: LegalPage_seo__metaDescription_operator
   title: LegalPage_title_operator
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
@@ -4891,6 +5247,8 @@ input LegalPage_where_and {
 }
 
 input LegalPage_where_or {
+  seo__metaTitle: LegalPage_seo__metaTitle_operator
+  seo__metaDescription: LegalPage_seo__metaDescription_operator
   title: LegalPage_title_operator
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
@@ -4916,6 +5274,7 @@ type legal_pagesDocAccess {
 }
 
 type LegalPagesDocAccessFields {
+  seo: LegalPagesDocAccessFields_seo
   title: LegalPagesDocAccessFields_title
   generateSlug: LegalPagesDocAccessFields_generateSlug
   slug: LegalPagesDocAccessFields_slug
@@ -4923,6 +5282,81 @@ type LegalPagesDocAccessFields {
   contentMarkdown: LegalPagesDocAccessFields_contentMarkdown
   updatedAt: LegalPagesDocAccessFields_updatedAt
   createdAt: LegalPagesDocAccessFields_createdAt
+}
+
+type LegalPagesDocAccessFields_seo {
+  create: LegalPagesDocAccessFields_seo_Create
+  read: LegalPagesDocAccessFields_seo_Read
+  update: LegalPagesDocAccessFields_seo_Update
+  delete: LegalPagesDocAccessFields_seo_Delete
+  fields: LegalPagesDocAccessFields_seo_Fields
+}
+
+type LegalPagesDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_Fields {
+  metaTitle: LegalPagesDocAccessFields_seo_metaTitle
+  metaDescription: LegalPagesDocAccessFields_seo_metaDescription
+}
+
+type LegalPagesDocAccessFields_seo_metaTitle {
+  create: LegalPagesDocAccessFields_seo_metaTitle_Create
+  read: LegalPagesDocAccessFields_seo_metaTitle_Read
+  update: LegalPagesDocAccessFields_seo_metaTitle_Update
+  delete: LegalPagesDocAccessFields_seo_metaTitle_Delete
+}
+
+type LegalPagesDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaDescription {
+  create: LegalPagesDocAccessFields_seo_metaDescription_Create
+  read: LegalPagesDocAccessFields_seo_metaDescription_Read
+  update: LegalPagesDocAccessFields_seo_metaDescription_Update
+  delete: LegalPagesDocAccessFields_seo_metaDescription_Delete
+}
+
+type LegalPagesDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type LegalPagesDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type LegalPagesDocAccessFields_title {
@@ -8675,6 +9109,7 @@ type PayloadPreferencesDeleteDocAccess {
 }
 
 type Home {
+  seo: Home_Seo
   hero: Home_Hero
   howItWork: Home_HowItWork
   beforeAfter: [Home_BeforeAfter!]
@@ -8685,6 +9120,11 @@ type Home {
   faqSection: Home_FaqSection
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type Home_Seo {
+  metaTitle: String
+  metaDescription: String
 }
 
 type Home_Hero {
@@ -8768,6 +9208,7 @@ type homeDocAccess {
 }
 
 type HomeDocAccessFields {
+  seo: HomeDocAccessFields_seo
   hero: HomeDocAccessFields_hero
   howItWork: HomeDocAccessFields_howItWork
   beforeAfter: HomeDocAccessFields_beforeAfter
@@ -8778,6 +9219,81 @@ type HomeDocAccessFields {
   faqSection: HomeDocAccessFields_faqSection
   updatedAt: HomeDocAccessFields_updatedAt
   createdAt: HomeDocAccessFields_createdAt
+}
+
+type HomeDocAccessFields_seo {
+  create: HomeDocAccessFields_seo_Create
+  read: HomeDocAccessFields_seo_Read
+  update: HomeDocAccessFields_seo_Update
+  delete: HomeDocAccessFields_seo_Delete
+  fields: HomeDocAccessFields_seo_Fields
+}
+
+type HomeDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_Fields {
+  metaTitle: HomeDocAccessFields_seo_metaTitle
+  metaDescription: HomeDocAccessFields_seo_metaDescription
+}
+
+type HomeDocAccessFields_seo_metaTitle {
+  create: HomeDocAccessFields_seo_metaTitle_Create
+  read: HomeDocAccessFields_seo_metaTitle_Read
+  update: HomeDocAccessFields_seo_metaTitle_Update
+  delete: HomeDocAccessFields_seo_metaTitle_Delete
+}
+
+type HomeDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaDescription {
+  create: HomeDocAccessFields_seo_metaDescription_Create
+  read: HomeDocAccessFields_seo_metaDescription_Read
+  update: HomeDocAccessFields_seo_metaDescription_Update
+  delete: HomeDocAccessFields_seo_metaDescription_Delete
+}
+
+type HomeDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type HomeDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type HomeDocAccessFields_hero {
@@ -9981,6 +10497,7 @@ type HomeUpdateDocAccess {
 }
 
 type Training {
+  seo: Training_Seo
   title: String
   description: String
   formats: Training_Formats
@@ -9988,6 +10505,11 @@ type Training {
   faq: Training_Faq
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type Training_Seo {
+  metaTitle: String
+  metaDescription: String
 }
 
 type Training_Formats {
@@ -10027,6 +10549,7 @@ type trainingDocAccess {
 }
 
 type TrainingDocAccessFields {
+  seo: TrainingDocAccessFields_seo
   title: TrainingDocAccessFields_title
   description: TrainingDocAccessFields_description
   formats: TrainingDocAccessFields_formats
@@ -10034,6 +10557,81 @@ type TrainingDocAccessFields {
   faq: TrainingDocAccessFields_faq
   updatedAt: TrainingDocAccessFields_updatedAt
   createdAt: TrainingDocAccessFields_createdAt
+}
+
+type TrainingDocAccessFields_seo {
+  create: TrainingDocAccessFields_seo_Create
+  read: TrainingDocAccessFields_seo_Read
+  update: TrainingDocAccessFields_seo_Update
+  delete: TrainingDocAccessFields_seo_Delete
+  fields: TrainingDocAccessFields_seo_Fields
+}
+
+type TrainingDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_Fields {
+  metaTitle: TrainingDocAccessFields_seo_metaTitle
+  metaDescription: TrainingDocAccessFields_seo_metaDescription
+}
+
+type TrainingDocAccessFields_seo_metaTitle {
+  create: TrainingDocAccessFields_seo_metaTitle_Create
+  read: TrainingDocAccessFields_seo_metaTitle_Read
+  update: TrainingDocAccessFields_seo_metaTitle_Update
+  delete: TrainingDocAccessFields_seo_metaTitle_Delete
+}
+
+type TrainingDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaDescription {
+  create: TrainingDocAccessFields_seo_metaDescription_Create
+  read: TrainingDocAccessFields_seo_metaDescription_Read
+  update: TrainingDocAccessFields_seo_metaDescription_Update
+  delete: TrainingDocAccessFields_seo_metaDescription_Delete
+}
+
+type TrainingDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type TrainingDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type TrainingDocAccessFields_title {
@@ -10588,6 +11186,7 @@ type TrainingUpdateDocAccess {
 }
 
 type Contact {
+  seo: Contact_Seo
   title: String
   description: String
   phone: String!
@@ -10596,6 +11195,11 @@ type Contact {
   form: Contact_Form
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type Contact_Seo {
+  metaTitle: String
+  metaDescription: String
 }
 
 type Contact_Form {
@@ -10611,6 +11215,7 @@ type contactsDocAccess {
 }
 
 type ContactsDocAccessFields {
+  seo: ContactsDocAccessFields_seo
   title: ContactsDocAccessFields_title
   description: ContactsDocAccessFields_description
   phone: ContactsDocAccessFields_phone
@@ -10619,6 +11224,81 @@ type ContactsDocAccessFields {
   form: ContactsDocAccessFields_form
   updatedAt: ContactsDocAccessFields_updatedAt
   createdAt: ContactsDocAccessFields_createdAt
+}
+
+type ContactsDocAccessFields_seo {
+  create: ContactsDocAccessFields_seo_Create
+  read: ContactsDocAccessFields_seo_Read
+  update: ContactsDocAccessFields_seo_Update
+  delete: ContactsDocAccessFields_seo_Delete
+  fields: ContactsDocAccessFields_seo_Fields
+}
+
+type ContactsDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_Fields {
+  metaTitle: ContactsDocAccessFields_seo_metaTitle
+  metaDescription: ContactsDocAccessFields_seo_metaDescription
+}
+
+type ContactsDocAccessFields_seo_metaTitle {
+  create: ContactsDocAccessFields_seo_metaTitle_Create
+  read: ContactsDocAccessFields_seo_metaTitle_Read
+  update: ContactsDocAccessFields_seo_metaTitle_Update
+  delete: ContactsDocAccessFields_seo_metaTitle_Delete
+}
+
+type ContactsDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaDescription {
+  create: ContactsDocAccessFields_seo_metaDescription_Create
+  read: ContactsDocAccessFields_seo_metaDescription_Read
+  update: ContactsDocAccessFields_seo_metaDescription_Update
+  delete: ContactsDocAccessFields_seo_metaDescription_Delete
+}
+
+type ContactsDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type ContactsDocAccessFields_title {
@@ -11070,6 +11750,468 @@ type SiteSettingsUpdateDocAccess {
   where: JSONObject
 }
 
+type AboutPage {
+  seo: AboutPage_Seo
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type AboutPage_Seo {
+  metaTitle: String
+  metaDescription: String
+}
+
+type about_pageDocAccess {
+  fields: AboutPageDocAccessFields
+  read: AboutPageReadDocAccess
+  update: AboutPageUpdateDocAccess
+}
+
+type AboutPageDocAccessFields {
+  seo: AboutPageDocAccessFields_seo
+  updatedAt: AboutPageDocAccessFields_updatedAt
+  createdAt: AboutPageDocAccessFields_createdAt
+}
+
+type AboutPageDocAccessFields_seo {
+  create: AboutPageDocAccessFields_seo_Create
+  read: AboutPageDocAccessFields_seo_Read
+  update: AboutPageDocAccessFields_seo_Update
+  delete: AboutPageDocAccessFields_seo_Delete
+  fields: AboutPageDocAccessFields_seo_Fields
+}
+
+type AboutPageDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_Fields {
+  metaTitle: AboutPageDocAccessFields_seo_metaTitle
+  metaDescription: AboutPageDocAccessFields_seo_metaDescription
+}
+
+type AboutPageDocAccessFields_seo_metaTitle {
+  create: AboutPageDocAccessFields_seo_metaTitle_Create
+  read: AboutPageDocAccessFields_seo_metaTitle_Read
+  update: AboutPageDocAccessFields_seo_metaTitle_Update
+  delete: AboutPageDocAccessFields_seo_metaTitle_Delete
+}
+
+type AboutPageDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaDescription {
+  create: AboutPageDocAccessFields_seo_metaDescription_Create
+  read: AboutPageDocAccessFields_seo_metaDescription_Read
+  update: AboutPageDocAccessFields_seo_metaDescription_Update
+  delete: AboutPageDocAccessFields_seo_metaDescription_Delete
+}
+
+type AboutPageDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_updatedAt {
+  create: AboutPageDocAccessFields_updatedAt_Create
+  read: AboutPageDocAccessFields_updatedAt_Read
+  update: AboutPageDocAccessFields_updatedAt_Update
+  delete: AboutPageDocAccessFields_updatedAt_Delete
+}
+
+type AboutPageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_createdAt {
+  create: AboutPageDocAccessFields_createdAt_Create
+  read: AboutPageDocAccessFields_createdAt_Read
+  update: AboutPageDocAccessFields_createdAt_Update
+  delete: AboutPageDocAccessFields_createdAt_Delete
+}
+
+type AboutPageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type AboutPageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AboutPageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ReviewPage {
+  seo: ReviewPage_Seo
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type ReviewPage_Seo {
+  metaTitle: String
+  metaDescription: String
+}
+
+type review_pageDocAccess {
+  fields: ReviewPageDocAccessFields
+  read: ReviewPageReadDocAccess
+  update: ReviewPageUpdateDocAccess
+}
+
+type ReviewPageDocAccessFields {
+  seo: ReviewPageDocAccessFields_seo
+  updatedAt: ReviewPageDocAccessFields_updatedAt
+  createdAt: ReviewPageDocAccessFields_createdAt
+}
+
+type ReviewPageDocAccessFields_seo {
+  create: ReviewPageDocAccessFields_seo_Create
+  read: ReviewPageDocAccessFields_seo_Read
+  update: ReviewPageDocAccessFields_seo_Update
+  delete: ReviewPageDocAccessFields_seo_Delete
+  fields: ReviewPageDocAccessFields_seo_Fields
+}
+
+type ReviewPageDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_Fields {
+  metaTitle: ReviewPageDocAccessFields_seo_metaTitle
+  metaDescription: ReviewPageDocAccessFields_seo_metaDescription
+}
+
+type ReviewPageDocAccessFields_seo_metaTitle {
+  create: ReviewPageDocAccessFields_seo_metaTitle_Create
+  read: ReviewPageDocAccessFields_seo_metaTitle_Read
+  update: ReviewPageDocAccessFields_seo_metaTitle_Update
+  delete: ReviewPageDocAccessFields_seo_metaTitle_Delete
+}
+
+type ReviewPageDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaDescription {
+  create: ReviewPageDocAccessFields_seo_metaDescription_Create
+  read: ReviewPageDocAccessFields_seo_metaDescription_Read
+  update: ReviewPageDocAccessFields_seo_metaDescription_Update
+  delete: ReviewPageDocAccessFields_seo_metaDescription_Delete
+}
+
+type ReviewPageDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_updatedAt {
+  create: ReviewPageDocAccessFields_updatedAt_Create
+  read: ReviewPageDocAccessFields_updatedAt_Read
+  update: ReviewPageDocAccessFields_updatedAt_Update
+  delete: ReviewPageDocAccessFields_updatedAt_Delete
+}
+
+type ReviewPageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_createdAt {
+  create: ReviewPageDocAccessFields_createdAt_Create
+  read: ReviewPageDocAccessFields_createdAt_Read
+  update: ReviewPageDocAccessFields_createdAt_Update
+  delete: ReviewPageDocAccessFields_createdAt_Delete
+}
+
+type ReviewPageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ReviewPageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ReviewPageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BlogPage {
+  seo: BlogPage_Seo
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type BlogPage_Seo {
+  metaTitle: String
+  metaDescription: String
+}
+
+type blog_pageDocAccess {
+  fields: BlogPageDocAccessFields
+  read: BlogPageReadDocAccess
+  update: BlogPageUpdateDocAccess
+}
+
+type BlogPageDocAccessFields {
+  seo: BlogPageDocAccessFields_seo
+  updatedAt: BlogPageDocAccessFields_updatedAt
+  createdAt: BlogPageDocAccessFields_createdAt
+}
+
+type BlogPageDocAccessFields_seo {
+  create: BlogPageDocAccessFields_seo_Create
+  read: BlogPageDocAccessFields_seo_Read
+  update: BlogPageDocAccessFields_seo_Update
+  delete: BlogPageDocAccessFields_seo_Delete
+  fields: BlogPageDocAccessFields_seo_Fields
+}
+
+type BlogPageDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_Fields {
+  metaTitle: BlogPageDocAccessFields_seo_metaTitle
+  metaDescription: BlogPageDocAccessFields_seo_metaDescription
+}
+
+type BlogPageDocAccessFields_seo_metaTitle {
+  create: BlogPageDocAccessFields_seo_metaTitle_Create
+  read: BlogPageDocAccessFields_seo_metaTitle_Read
+  update: BlogPageDocAccessFields_seo_metaTitle_Update
+  delete: BlogPageDocAccessFields_seo_metaTitle_Delete
+}
+
+type BlogPageDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaDescription {
+  create: BlogPageDocAccessFields_seo_metaDescription_Create
+  read: BlogPageDocAccessFields_seo_metaDescription_Read
+  update: BlogPageDocAccessFields_seo_metaDescription_Update
+  delete: BlogPageDocAccessFields_seo_metaDescription_Delete
+}
+
+type BlogPageDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_updatedAt {
+  create: BlogPageDocAccessFields_updatedAt_Create
+  read: BlogPageDocAccessFields_updatedAt_Read
+  update: BlogPageDocAccessFields_updatedAt_Update
+  delete: BlogPageDocAccessFields_updatedAt_Delete
+}
+
+type BlogPageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_createdAt {
+  create: BlogPageDocAccessFields_createdAt_Create
+  read: BlogPageDocAccessFields_createdAt_Read
+  update: BlogPageDocAccessFields_createdAt_Update
+  delete: BlogPageDocAccessFields_createdAt_Delete
+}
+
+type BlogPageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type BlogPageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type BlogPageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BlogPageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -11094,6 +12236,9 @@ type Access {
   training: trainingAccess
   contacts: contactsAccess
   site_settings: site_settingsAccess
+  about_page: about_pageAccess
+  review_page: review_pageAccess
+  blog_page: blog_pageAccess
 }
 
 type usersAccess {
@@ -11904,6 +13049,7 @@ type productsAccess {
 }
 
 type ProductsFields {
+  seo: ProductsFields_seo
   title: ProductsFields_title
   price: ProductsFields_price
   rating: ProductsFields_rating
@@ -11930,6 +13076,81 @@ type ProductsFields {
   beforeafter: ProductsFields_beforeafter
   updatedAt: ProductsFields_updatedAt
   createdAt: ProductsFields_createdAt
+}
+
+type ProductsFields_seo {
+  create: ProductsFields_seo_Create
+  read: ProductsFields_seo_Read
+  update: ProductsFields_seo_Update
+  delete: ProductsFields_seo_Delete
+  fields: ProductsFields_seo_Fields
+}
+
+type ProductsFields_seo_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_Fields {
+  metaTitle: ProductsFields_seo_metaTitle
+  metaDescription: ProductsFields_seo_metaDescription
+}
+
+type ProductsFields_seo_metaTitle {
+  create: ProductsFields_seo_metaTitle_Create
+  read: ProductsFields_seo_metaTitle_Read
+  update: ProductsFields_seo_metaTitle_Update
+  delete: ProductsFields_seo_metaTitle_Delete
+}
+
+type ProductsFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaDescription {
+  create: ProductsFields_seo_metaDescription_Create
+  read: ProductsFields_seo_metaDescription_Read
+  update: ProductsFields_seo_metaDescription_Update
+  delete: ProductsFields_seo_metaDescription_Delete
+}
+
+type ProductsFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type ProductsFields_title {
@@ -13063,6 +14284,7 @@ type categoryAccess {
 }
 
 type CategoryFields {
+  seo: CategoryFields_seo
   image: CategoryFields_image
   title: CategoryFields_title
   description: CategoryFields_description
@@ -13070,6 +14292,81 @@ type CategoryFields {
   slug: CategoryFields_slug
   updatedAt: CategoryFields_updatedAt
   createdAt: CategoryFields_createdAt
+}
+
+type CategoryFields_seo {
+  create: CategoryFields_seo_Create
+  read: CategoryFields_seo_Read
+  update: CategoryFields_seo_Update
+  delete: CategoryFields_seo_Delete
+  fields: CategoryFields_seo_Fields
+}
+
+type CategoryFields_seo_Create {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_Read {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_Update {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_Delete {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_Fields {
+  metaTitle: CategoryFields_seo_metaTitle
+  metaDescription: CategoryFields_seo_metaDescription
+}
+
+type CategoryFields_seo_metaTitle {
+  create: CategoryFields_seo_metaTitle_Create
+  read: CategoryFields_seo_metaTitle_Read
+  update: CategoryFields_seo_metaTitle_Update
+  delete: CategoryFields_seo_metaTitle_Delete
+}
+
+type CategoryFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaDescription {
+  create: CategoryFields_seo_metaDescription_Create
+  read: CategoryFields_seo_metaDescription_Read
+  update: CategoryFields_seo_metaDescription_Update
+  delete: CategoryFields_seo_metaDescription_Delete
+}
+
+type CategoryFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type CategoryFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type CategoryFields_image {
@@ -13262,6 +14559,7 @@ type articlesAccess {
 }
 
 type ArticlesFields {
+  seo: ArticlesFields_seo
   title: ArticlesFields_title
   publishedAt: ArticlesFields_publishedAt
   generateSlug: ArticlesFields_generateSlug
@@ -13271,6 +14569,81 @@ type ArticlesFields {
   content: ArticlesFields_content
   updatedAt: ArticlesFields_updatedAt
   createdAt: ArticlesFields_createdAt
+}
+
+type ArticlesFields_seo {
+  create: ArticlesFields_seo_Create
+  read: ArticlesFields_seo_Read
+  update: ArticlesFields_seo_Update
+  delete: ArticlesFields_seo_Delete
+  fields: ArticlesFields_seo_Fields
+}
+
+type ArticlesFields_seo_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_Fields {
+  metaTitle: ArticlesFields_seo_metaTitle
+  metaDescription: ArticlesFields_seo_metaDescription
+}
+
+type ArticlesFields_seo_metaTitle {
+  create: ArticlesFields_seo_metaTitle_Create
+  read: ArticlesFields_seo_metaTitle_Read
+  update: ArticlesFields_seo_metaTitle_Update
+  delete: ArticlesFields_seo_metaTitle_Delete
+}
+
+type ArticlesFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaDescription {
+  create: ArticlesFields_seo_metaDescription_Create
+  read: ArticlesFields_seo_metaDescription_Read
+  update: ArticlesFields_seo_metaDescription_Update
+  delete: ArticlesFields_seo_metaDescription_Delete
+}
+
+type ArticlesFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ArticlesFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type ArticlesFields_title {
@@ -13924,6 +15297,7 @@ type legal_pagesAccess {
 }
 
 type LegalPagesFields {
+  seo: LegalPagesFields_seo
   title: LegalPagesFields_title
   generateSlug: LegalPagesFields_generateSlug
   slug: LegalPagesFields_slug
@@ -13931,6 +15305,81 @@ type LegalPagesFields {
   contentMarkdown: LegalPagesFields_contentMarkdown
   updatedAt: LegalPagesFields_updatedAt
   createdAt: LegalPagesFields_createdAt
+}
+
+type LegalPagesFields_seo {
+  create: LegalPagesFields_seo_Create
+  read: LegalPagesFields_seo_Read
+  update: LegalPagesFields_seo_Update
+  delete: LegalPagesFields_seo_Delete
+  fields: LegalPagesFields_seo_Fields
+}
+
+type LegalPagesFields_seo_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_Fields {
+  metaTitle: LegalPagesFields_seo_metaTitle
+  metaDescription: LegalPagesFields_seo_metaDescription
+}
+
+type LegalPagesFields_seo_metaTitle {
+  create: LegalPagesFields_seo_metaTitle_Create
+  read: LegalPagesFields_seo_metaTitle_Read
+  update: LegalPagesFields_seo_metaTitle_Update
+  delete: LegalPagesFields_seo_metaTitle_Delete
+}
+
+type LegalPagesFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaDescription {
+  create: LegalPagesFields_seo_metaDescription_Create
+  read: LegalPagesFields_seo_metaDescription_Read
+  update: LegalPagesFields_seo_metaDescription_Update
+  delete: LegalPagesFields_seo_metaDescription_Delete
+}
+
+type LegalPagesFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type LegalPagesFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type LegalPagesFields_title {
@@ -16111,6 +17560,7 @@ type homeAccess {
 }
 
 type HomeFields {
+  seo: HomeFields_seo
   hero: HomeFields_hero
   howItWork: HomeFields_howItWork
   beforeAfter: HomeFields_beforeAfter
@@ -16121,6 +17571,81 @@ type HomeFields {
   faqSection: HomeFields_faqSection
   updatedAt: HomeFields_updatedAt
   createdAt: HomeFields_createdAt
+}
+
+type HomeFields_seo {
+  create: HomeFields_seo_Create
+  read: HomeFields_seo_Read
+  update: HomeFields_seo_Update
+  delete: HomeFields_seo_Delete
+  fields: HomeFields_seo_Fields
+}
+
+type HomeFields_seo_Create {
+  permission: Boolean!
+}
+
+type HomeFields_seo_Read {
+  permission: Boolean!
+}
+
+type HomeFields_seo_Update {
+  permission: Boolean!
+}
+
+type HomeFields_seo_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_seo_Fields {
+  metaTitle: HomeFields_seo_metaTitle
+  metaDescription: HomeFields_seo_metaDescription
+}
+
+type HomeFields_seo_metaTitle {
+  create: HomeFields_seo_metaTitle_Create
+  read: HomeFields_seo_metaTitle_Read
+  update: HomeFields_seo_metaTitle_Update
+  delete: HomeFields_seo_metaTitle_Delete
+}
+
+type HomeFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaDescription {
+  create: HomeFields_seo_metaDescription_Create
+  read: HomeFields_seo_metaDescription_Read
+  update: HomeFields_seo_metaDescription_Update
+  delete: HomeFields_seo_metaDescription_Delete
+}
+
+type HomeFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type HomeFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type HomeFields_hero {
@@ -17330,6 +18855,7 @@ type trainingAccess {
 }
 
 type TrainingFields {
+  seo: TrainingFields_seo
   title: TrainingFields_title
   description: TrainingFields_description
   formats: TrainingFields_formats
@@ -17337,6 +18863,81 @@ type TrainingFields {
   faq: TrainingFields_faq
   updatedAt: TrainingFields_updatedAt
   createdAt: TrainingFields_createdAt
+}
+
+type TrainingFields_seo {
+  create: TrainingFields_seo_Create
+  read: TrainingFields_seo_Read
+  update: TrainingFields_seo_Update
+  delete: TrainingFields_seo_Delete
+  fields: TrainingFields_seo_Fields
+}
+
+type TrainingFields_seo_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_Fields {
+  metaTitle: TrainingFields_seo_metaTitle
+  metaDescription: TrainingFields_seo_metaDescription
+}
+
+type TrainingFields_seo_metaTitle {
+  create: TrainingFields_seo_metaTitle_Create
+  read: TrainingFields_seo_metaTitle_Read
+  update: TrainingFields_seo_metaTitle_Update
+  delete: TrainingFields_seo_metaTitle_Delete
+}
+
+type TrainingFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaDescription {
+  create: TrainingFields_seo_metaDescription_Create
+  read: TrainingFields_seo_metaDescription_Read
+  update: TrainingFields_seo_metaDescription_Update
+  delete: TrainingFields_seo_metaDescription_Delete
+}
+
+type TrainingFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type TrainingFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type TrainingFields_title {
@@ -17897,6 +19498,7 @@ type contactsAccess {
 }
 
 type ContactsFields {
+  seo: ContactsFields_seo
   title: ContactsFields_title
   description: ContactsFields_description
   phone: ContactsFields_phone
@@ -17905,6 +19507,81 @@ type ContactsFields {
   form: ContactsFields_form
   updatedAt: ContactsFields_updatedAt
   createdAt: ContactsFields_createdAt
+}
+
+type ContactsFields_seo {
+  create: ContactsFields_seo_Create
+  read: ContactsFields_seo_Read
+  update: ContactsFields_seo_Update
+  delete: ContactsFields_seo_Delete
+  fields: ContactsFields_seo_Fields
+}
+
+type ContactsFields_seo_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_Fields {
+  metaTitle: ContactsFields_seo_metaTitle
+  metaDescription: ContactsFields_seo_metaDescription
+}
+
+type ContactsFields_seo_metaTitle {
+  create: ContactsFields_seo_metaTitle_Create
+  read: ContactsFields_seo_metaTitle_Read
+  update: ContactsFields_seo_metaTitle_Update
+  delete: ContactsFields_seo_metaTitle_Delete
+}
+
+type ContactsFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaDescription {
+  create: ContactsFields_seo_metaDescription_Create
+  read: ContactsFields_seo_metaDescription_Read
+  update: ContactsFields_seo_metaDescription_Update
+  delete: ContactsFields_seo_metaDescription_Delete
+}
+
+type ContactsFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_seo_metaDescription_Delete {
+  permission: Boolean!
 }
 
 type ContactsFields_title {
@@ -18344,6 +20021,435 @@ type SiteSettingsUpdateAccess {
   where: JSONObject
 }
 
+type about_pageAccess {
+  fields: AboutPageFields
+  read: AboutPageReadAccess
+  update: AboutPageUpdateAccess
+}
+
+type AboutPageFields {
+  seo: AboutPageFields_seo
+  updatedAt: AboutPageFields_updatedAt
+  createdAt: AboutPageFields_createdAt
+}
+
+type AboutPageFields_seo {
+  create: AboutPageFields_seo_Create
+  read: AboutPageFields_seo_Read
+  update: AboutPageFields_seo_Update
+  delete: AboutPageFields_seo_Delete
+  fields: AboutPageFields_seo_Fields
+}
+
+type AboutPageFields_seo_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_Fields {
+  metaTitle: AboutPageFields_seo_metaTitle
+  metaDescription: AboutPageFields_seo_metaDescription
+}
+
+type AboutPageFields_seo_metaTitle {
+  create: AboutPageFields_seo_metaTitle_Create
+  read: AboutPageFields_seo_metaTitle_Read
+  update: AboutPageFields_seo_metaTitle_Update
+  delete: AboutPageFields_seo_metaTitle_Delete
+}
+
+type AboutPageFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaDescription {
+  create: AboutPageFields_seo_metaDescription_Create
+  read: AboutPageFields_seo_metaDescription_Read
+  update: AboutPageFields_seo_metaDescription_Update
+  delete: AboutPageFields_seo_metaDescription_Delete
+}
+
+type AboutPageFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_updatedAt {
+  create: AboutPageFields_updatedAt_Create
+  read: AboutPageFields_updatedAt_Read
+  update: AboutPageFields_updatedAt_Update
+  delete: AboutPageFields_updatedAt_Delete
+}
+
+type AboutPageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_createdAt {
+  create: AboutPageFields_createdAt_Create
+  read: AboutPageFields_createdAt_Read
+  update: AboutPageFields_createdAt_Update
+  delete: AboutPageFields_createdAt_Delete
+}
+
+type AboutPageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type AboutPageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AboutPageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type review_pageAccess {
+  fields: ReviewPageFields
+  read: ReviewPageReadAccess
+  update: ReviewPageUpdateAccess
+}
+
+type ReviewPageFields {
+  seo: ReviewPageFields_seo
+  updatedAt: ReviewPageFields_updatedAt
+  createdAt: ReviewPageFields_createdAt
+}
+
+type ReviewPageFields_seo {
+  create: ReviewPageFields_seo_Create
+  read: ReviewPageFields_seo_Read
+  update: ReviewPageFields_seo_Update
+  delete: ReviewPageFields_seo_Delete
+  fields: ReviewPageFields_seo_Fields
+}
+
+type ReviewPageFields_seo_Create {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_Read {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_Update {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_Fields {
+  metaTitle: ReviewPageFields_seo_metaTitle
+  metaDescription: ReviewPageFields_seo_metaDescription
+}
+
+type ReviewPageFields_seo_metaTitle {
+  create: ReviewPageFields_seo_metaTitle_Create
+  read: ReviewPageFields_seo_metaTitle_Read
+  update: ReviewPageFields_seo_metaTitle_Update
+  delete: ReviewPageFields_seo_metaTitle_Delete
+}
+
+type ReviewPageFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaDescription {
+  create: ReviewPageFields_seo_metaDescription_Create
+  read: ReviewPageFields_seo_metaDescription_Read
+  update: ReviewPageFields_seo_metaDescription_Update
+  delete: ReviewPageFields_seo_metaDescription_Delete
+}
+
+type ReviewPageFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type ReviewPageFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageFields_updatedAt {
+  create: ReviewPageFields_updatedAt_Create
+  read: ReviewPageFields_updatedAt_Read
+  update: ReviewPageFields_updatedAt_Update
+  delete: ReviewPageFields_updatedAt_Delete
+}
+
+type ReviewPageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ReviewPageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ReviewPageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ReviewPageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageFields_createdAt {
+  create: ReviewPageFields_createdAt_Create
+  read: ReviewPageFields_createdAt_Read
+  update: ReviewPageFields_createdAt_Update
+  delete: ReviewPageFields_createdAt_Delete
+}
+
+type ReviewPageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ReviewPageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ReviewPageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ReviewPageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ReviewPageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ReviewPageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type blog_pageAccess {
+  fields: BlogPageFields
+  read: BlogPageReadAccess
+  update: BlogPageUpdateAccess
+}
+
+type BlogPageFields {
+  seo: BlogPageFields_seo
+  updatedAt: BlogPageFields_updatedAt
+  createdAt: BlogPageFields_createdAt
+}
+
+type BlogPageFields_seo {
+  create: BlogPageFields_seo_Create
+  read: BlogPageFields_seo_Read
+  update: BlogPageFields_seo_Update
+  delete: BlogPageFields_seo_Delete
+  fields: BlogPageFields_seo_Fields
+}
+
+type BlogPageFields_seo_Create {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_Read {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_Update {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_Delete {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_Fields {
+  metaTitle: BlogPageFields_seo_metaTitle
+  metaDescription: BlogPageFields_seo_metaDescription
+}
+
+type BlogPageFields_seo_metaTitle {
+  create: BlogPageFields_seo_metaTitle_Create
+  read: BlogPageFields_seo_metaTitle_Read
+  update: BlogPageFields_seo_metaTitle_Update
+  delete: BlogPageFields_seo_metaTitle_Delete
+}
+
+type BlogPageFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaDescription {
+  create: BlogPageFields_seo_metaDescription_Create
+  read: BlogPageFields_seo_metaDescription_Read
+  update: BlogPageFields_seo_metaDescription_Update
+  delete: BlogPageFields_seo_metaDescription_Delete
+}
+
+type BlogPageFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type BlogPageFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type BlogPageFields_updatedAt {
+  create: BlogPageFields_updatedAt_Create
+  read: BlogPageFields_updatedAt_Read
+  update: BlogPageFields_updatedAt_Update
+  delete: BlogPageFields_updatedAt_Delete
+}
+
+type BlogPageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type BlogPageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type BlogPageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type BlogPageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type BlogPageFields_createdAt {
+  create: BlogPageFields_createdAt_Create
+  read: BlogPageFields_createdAt_Read
+  update: BlogPageFields_createdAt_Update
+  delete: BlogPageFields_createdAt_Delete
+}
+
+type BlogPageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type BlogPageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type BlogPageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type BlogPageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type BlogPageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BlogPageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean, locale: LocaleInputType): User
   updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): User
@@ -18427,6 +20533,9 @@ type Mutation {
   updateTraining(data: mutationTrainingInput!, draft: Boolean, locale: LocaleInputType): Training
   updateContact(data: mutationContactInput!, draft: Boolean, locale: LocaleInputType): Contact
   updateSiteSetting(data: mutationSiteSettingInput!, draft: Boolean, locale: LocaleInputType): SiteSetting
+  updateAboutPage(data: mutationAboutPageInput!, draft: Boolean, locale: LocaleInputType): AboutPage
+  updateReviewPage(data: mutationReviewPageInput!, draft: Boolean, locale: LocaleInputType): ReviewPage
+  updateBlogPage(data: mutationBlogPageInput!, draft: Boolean, locale: LocaleInputType): BlogPage
 }
 
 input mutationUserInput {
@@ -18569,6 +20678,7 @@ input mutationReviewUpdateInput {
 }
 
 input mutationProductInput {
+  seo: mutationProduct_SeoInput
   title: String
   price: Float!
   rating: Float
@@ -18595,6 +20705,11 @@ input mutationProductInput {
   beforeafter: [mutationProduct_BeforeafterInput]
   updatedAt: String
   createdAt: String
+}
+
+input mutationProduct_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationProduct_ListFeaturesInput {
@@ -18658,6 +20773,7 @@ input mutationProduct_BeforeafterInput {
 }
 
 input mutationProductUpdateInput {
+  seo: mutationProductUpdate_SeoInput
   title: String
   price: Float
   rating: Float
@@ -18684,6 +20800,11 @@ input mutationProductUpdateInput {
   beforeafter: [mutationProductUpdate_BeforeafterInput]
   updatedAt: String
   createdAt: String
+}
+
+input mutationProductUpdate_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationProductUpdate_ListFeaturesInput {
@@ -18747,6 +20868,7 @@ input mutationProductUpdate_BeforeafterInput {
 }
 
 input mutationCategoryInput {
+  seo: mutationCategory_SeoInput
   image: Int
   title: String
   description: String
@@ -18756,7 +20878,13 @@ input mutationCategoryInput {
   createdAt: String
 }
 
+input mutationCategory_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
 input mutationCategoryUpdateInput {
+  seo: mutationCategoryUpdate_SeoInput
   image: Int
   title: String
   description: String
@@ -18766,7 +20894,13 @@ input mutationCategoryUpdateInput {
   createdAt: String
 }
 
+input mutationCategoryUpdate_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
 input mutationArticleInput {
+  seo: mutationArticle_SeoInput
   title: String
   publishedAt: String!
   generateSlug: Boolean
@@ -18778,7 +20912,13 @@ input mutationArticleInput {
   createdAt: String
 }
 
+input mutationArticle_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
 input mutationArticleUpdateInput {
+  seo: mutationArticleUpdate_SeoInput
   title: String
   publishedAt: String
   generateSlug: Boolean
@@ -18788,6 +20928,11 @@ input mutationArticleUpdateInput {
   content: JSON
   updatedAt: String
   createdAt: String
+}
+
+input mutationArticleUpdate_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationOrderInput {
@@ -18875,6 +21020,7 @@ enum OrderUpdate_paymentMethod_MutationInput {
 }
 
 input mutationLegalPageInput {
+  seo: mutationLegalPage_SeoInput
   title: String
   generateSlug: Boolean
   slug: String!
@@ -18884,7 +21030,13 @@ input mutationLegalPageInput {
   createdAt: String
 }
 
+input mutationLegalPage_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
 input mutationLegalPageUpdateInput {
+  seo: mutationLegalPageUpdate_SeoInput
   title: String
   generateSlug: Boolean
   slug: String
@@ -18892,6 +21044,11 @@ input mutationLegalPageUpdateInput {
   contentMarkdown: String
   updatedAt: String
   createdAt: String
+}
+
+input mutationLegalPageUpdate_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationLocationInput {
@@ -19231,6 +21388,7 @@ enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
 }
 
 input mutationHomeInput {
+  seo: mutationHome_SeoInput
   hero: mutationHome_HeroInput!
   howItWork: mutationHome_HowItWorkInput!
   beforeAfter: [mutationHome_BeforeAfterInput]
@@ -19241,6 +21399,11 @@ input mutationHomeInput {
   faqSection: mutationHome_FaqSectionInput!
   updatedAt: String
   createdAt: String
+}
+
+input mutationHome_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationHome_HeroInput {
@@ -19318,6 +21481,7 @@ input mutationHome_FaqSection_ItemsInput {
 }
 
 input mutationTrainingInput {
+  seo: mutationTraining_SeoInput
   title: String
   description: String
   formats: mutationTraining_FormatsInput!
@@ -19325,6 +21489,11 @@ input mutationTrainingInput {
   faq: mutationTraining_FaqInput!
   updatedAt: String
   createdAt: String
+}
+
+input mutationTraining_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationTraining_FormatsInput {
@@ -19358,6 +21527,7 @@ input mutationTraining_Faq_ItemsInput {
 }
 
 input mutationContactInput {
+  seo: mutationContact_SeoInput
   title: String
   description: String
   phone: String!
@@ -19366,6 +21536,11 @@ input mutationContactInput {
   form: mutationContact_FormInput!
   updatedAt: String
   createdAt: String
+}
+
+input mutationContact_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }
 
 input mutationContact_FormInput {
@@ -19384,4 +21559,37 @@ input mutationSiteSettingInput {
 input mutationSiteSetting_FooterInput {
   socialNetworks: [Int]
   contactSocialNetworks: [Int]
+}
+
+input mutationAboutPageInput {
+  seo: mutationAboutPage_SeoInput
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationAboutPage_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
+input mutationReviewPageInput {
+  seo: mutationReviewPage_SeoInput
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationReviewPage_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
+input mutationBlogPageInput {
+  seo: mutationBlogPage_SeoInput
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationBlogPage_SeoInput {
+  metaTitle: String
+  metaDescription: String
 }

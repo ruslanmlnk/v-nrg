@@ -1,5 +1,9 @@
 fragment ProductFrontendFields on Product {
   id
+  seo {
+    metaTitle
+    metaDescription
+  }
   title
   price
   rating

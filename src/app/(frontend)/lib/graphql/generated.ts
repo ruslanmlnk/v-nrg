@@ -109,6 +109,12 @@ export type Query = {
   docAccessContact?: Maybe<ContactsDocAccess>;
   SiteSetting?: Maybe<SiteSetting>;
   docAccessSiteSetting?: Maybe<Site_SettingsDocAccess>;
+  AboutPage?: Maybe<AboutPage>;
+  docAccessAboutPage?: Maybe<About_PageDocAccess>;
+  ReviewPage?: Maybe<ReviewPage>;
+  docAccessReviewPage?: Maybe<Review_PageDocAccess>;
+  BlogPage?: Maybe<BlogPage>;
+  docAccessBlogPage?: Maybe<Blog_PageDocAccess>;
   Access?: Maybe<Access>;
 };
 
@@ -804,6 +810,30 @@ export type QueryContactArgs = {
 
 
 export type QuerySiteSettingArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryAboutPageArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryReviewPageArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryBlogPageArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
   locale?: InputMaybe<LocaleInputType>;
@@ -2389,6 +2419,7 @@ export type ReviewsDeleteDocAccess = {
 export type Product = {
   __typename?: 'Product';
   id: Scalars['Int']['output'];
+  seo?: Maybe<Product_Seo>;
   title?: Maybe<Scalars['String']['output']>;
   price: Scalars['Float']['output'];
   rating?: Maybe<Scalars['Float']['output']>;
@@ -2447,9 +2478,16 @@ export type ProductRecommendedTogetherArgs = {
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
+export type Product_Seo = {
+  __typename?: 'Product_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
 export type Category = {
   __typename?: 'Category';
   id: Scalars['Int']['output'];
+  seo?: Maybe<Category_Seo>;
   image?: Maybe<Media>;
   title?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -2463,6 +2501,12 @@ export type Category = {
 export type CategoryImageArgs = {
   locale?: InputMaybe<LocaleInputType>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+export type Category_Seo = {
+  __typename?: 'Category_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product_ListFeatures = {
@@ -2576,6 +2620,8 @@ export type Products = {
 };
 
 export type Product_Where = {
+  seo__metaTitle?: InputMaybe<Product_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Product_Seo__MetaDescription_Operator>;
   title?: InputMaybe<Product_Title_Operator>;
   price?: InputMaybe<Product_Price_Operator>;
   rating?: InputMaybe<Product_Rating_Operator>;
@@ -2617,6 +2663,25 @@ export type Product_Where = {
   id?: InputMaybe<Product_Id_Operator>;
   AND?: InputMaybe<Array<InputMaybe<Product_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Product_Where_Or>>>;
+};
+
+export type Product_Seo__MetaTitle_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Product_Seo__MetaDescription_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Product_Title_Operator = {
@@ -3003,6 +3068,8 @@ export type Product_Id_Operator = {
 };
 
 export type Product_Where_And = {
+  seo__metaTitle?: InputMaybe<Product_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Product_Seo__MetaDescription_Operator>;
   title?: InputMaybe<Product_Title_Operator>;
   price?: InputMaybe<Product_Price_Operator>;
   rating?: InputMaybe<Product_Rating_Operator>;
@@ -3047,6 +3114,8 @@ export type Product_Where_And = {
 };
 
 export type Product_Where_Or = {
+  seo__metaTitle?: InputMaybe<Product_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Product_Seo__MetaDescription_Operator>;
   title?: InputMaybe<Product_Title_Operator>;
   price?: InputMaybe<Product_Price_Operator>;
   rating?: InputMaybe<Product_Rating_Operator>;
@@ -3106,6 +3175,7 @@ export type ProductsDocAccess = {
 
 export type ProductsDocAccessFields = {
   __typename?: 'ProductsDocAccessFields';
+  seo?: Maybe<ProductsDocAccessFields_Seo>;
   title?: Maybe<ProductsDocAccessFields_Title>;
   price?: Maybe<ProductsDocAccessFields_Price>;
   rating?: Maybe<ProductsDocAccessFields_Rating>;
@@ -3132,6 +3202,97 @@ export type ProductsDocAccessFields = {
   beforeafter?: Maybe<ProductsDocAccessFields_Beforeafter>;
   updatedAt?: Maybe<ProductsDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<ProductsDocAccessFields_CreatedAt>;
+};
+
+export type ProductsDocAccessFields_Seo = {
+  __typename?: 'ProductsDocAccessFields_seo';
+  create?: Maybe<ProductsDocAccessFields_Seo_Create>;
+  read?: Maybe<ProductsDocAccessFields_Seo_Read>;
+  update?: Maybe<ProductsDocAccessFields_Seo_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Seo_Delete>;
+  fields?: Maybe<ProductsDocAccessFields_Seo_Fields>;
+};
+
+export type ProductsDocAccessFields_Seo_Create = {
+  __typename?: 'ProductsDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_Read = {
+  __typename?: 'ProductsDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_Update = {
+  __typename?: 'ProductsDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_Delete = {
+  __typename?: 'ProductsDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_Fields = {
+  __typename?: 'ProductsDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<ProductsDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ProductsDocAccessFields_Seo_MetaDescription>;
+};
+
+export type ProductsDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'ProductsDocAccessFields_seo_metaTitle';
+  create?: Maybe<ProductsDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ProductsDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ProductsDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type ProductsDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'ProductsDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'ProductsDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'ProductsDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ProductsDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'ProductsDocAccessFields_seo_metaDescription';
+  create?: Maybe<ProductsDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ProductsDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ProductsDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type ProductsDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'ProductsDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'ProductsDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'ProductsDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ProductsDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ProductsDocAccessFields_Title = {
@@ -4513,6 +4674,8 @@ export type Categories = {
 };
 
 export type Category_Where = {
+  seo__metaTitle?: InputMaybe<Category_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Category_Seo__MetaDescription_Operator>;
   image?: InputMaybe<Category_Image_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
   description?: InputMaybe<Category_Description_Operator>;
@@ -4523,6 +4686,25 @@ export type Category_Where = {
   id?: InputMaybe<Category_Id_Operator>;
   AND?: InputMaybe<Array<InputMaybe<Category_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Category_Where_Or>>>;
+};
+
+export type Category_Seo__MetaTitle_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Category_Seo__MetaDescription_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Category_Image_Operator = {
@@ -4604,6 +4786,8 @@ export type Category_Id_Operator = {
 };
 
 export type Category_Where_And = {
+  seo__metaTitle?: InputMaybe<Category_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Category_Seo__MetaDescription_Operator>;
   image?: InputMaybe<Category_Image_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
   description?: InputMaybe<Category_Description_Operator>;
@@ -4617,6 +4801,8 @@ export type Category_Where_And = {
 };
 
 export type Category_Where_Or = {
+  seo__metaTitle?: InputMaybe<Category_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Category_Seo__MetaDescription_Operator>;
   image?: InputMaybe<Category_Image_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
   description?: InputMaybe<Category_Description_Operator>;
@@ -4645,6 +4831,7 @@ export type CategoryDocAccess = {
 
 export type CategoryDocAccessFields = {
   __typename?: 'CategoryDocAccessFields';
+  seo?: Maybe<CategoryDocAccessFields_Seo>;
   image?: Maybe<CategoryDocAccessFields_Image>;
   title?: Maybe<CategoryDocAccessFields_Title>;
   description?: Maybe<CategoryDocAccessFields_Description>;
@@ -4652,6 +4839,97 @@ export type CategoryDocAccessFields = {
   slug?: Maybe<CategoryDocAccessFields_Slug>;
   updatedAt?: Maybe<CategoryDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<CategoryDocAccessFields_CreatedAt>;
+};
+
+export type CategoryDocAccessFields_Seo = {
+  __typename?: 'CategoryDocAccessFields_seo';
+  create?: Maybe<CategoryDocAccessFields_Seo_Create>;
+  read?: Maybe<CategoryDocAccessFields_Seo_Read>;
+  update?: Maybe<CategoryDocAccessFields_Seo_Update>;
+  delete?: Maybe<CategoryDocAccessFields_Seo_Delete>;
+  fields?: Maybe<CategoryDocAccessFields_Seo_Fields>;
+};
+
+export type CategoryDocAccessFields_Seo_Create = {
+  __typename?: 'CategoryDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_Read = {
+  __typename?: 'CategoryDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_Update = {
+  __typename?: 'CategoryDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_Delete = {
+  __typename?: 'CategoryDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_Fields = {
+  __typename?: 'CategoryDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<CategoryDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<CategoryDocAccessFields_Seo_MetaDescription>;
+};
+
+export type CategoryDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'CategoryDocAccessFields_seo_metaTitle';
+  create?: Maybe<CategoryDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<CategoryDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<CategoryDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<CategoryDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type CategoryDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'CategoryDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'CategoryDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'CategoryDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'CategoryDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'CategoryDocAccessFields_seo_metaDescription';
+  create?: Maybe<CategoryDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<CategoryDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<CategoryDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<CategoryDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type CategoryDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'CategoryDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'CategoryDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'CategoryDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'CategoryDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CategoryDocAccessFields_Image = {
@@ -4877,6 +5155,7 @@ export type CategoryDeleteDocAccess = {
 export type Article = {
   __typename?: 'Article';
   id: Scalars['Int']['output'];
+  seo?: Maybe<Article_Seo>;
   title?: Maybe<Scalars['String']['output']>;
   publishedAt: Scalars['DateTime']['output'];
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
@@ -4905,6 +5184,12 @@ export type ArticleContentArgs = {
   depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Article_Seo = {
+  __typename?: 'Article_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
 export type Articles = {
   __typename?: 'Articles';
   docs: Array<Article>;
@@ -4921,6 +5206,8 @@ export type Articles = {
 };
 
 export type Article_Where = {
+  seo__metaTitle?: InputMaybe<Article_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Article_Seo__MetaDescription_Operator>;
   title?: InputMaybe<Article_Title_Operator>;
   publishedAt?: InputMaybe<Article_PublishedAt_Operator>;
   generateSlug?: InputMaybe<Article_GenerateSlug_Operator>;
@@ -4933,6 +5220,25 @@ export type Article_Where = {
   id?: InputMaybe<Article_Id_Operator>;
   AND?: InputMaybe<Array<InputMaybe<Article_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Article_Where_Or>>>;
+};
+
+export type Article_Seo__MetaTitle_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Article_Seo__MetaDescription_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Article_Title_Operator = {
@@ -5027,6 +5333,8 @@ export type Article_Id_Operator = {
 };
 
 export type Article_Where_And = {
+  seo__metaTitle?: InputMaybe<Article_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Article_Seo__MetaDescription_Operator>;
   title?: InputMaybe<Article_Title_Operator>;
   publishedAt?: InputMaybe<Article_PublishedAt_Operator>;
   generateSlug?: InputMaybe<Article_GenerateSlug_Operator>;
@@ -5042,6 +5350,8 @@ export type Article_Where_And = {
 };
 
 export type Article_Where_Or = {
+  seo__metaTitle?: InputMaybe<Article_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<Article_Seo__MetaDescription_Operator>;
   title?: InputMaybe<Article_Title_Operator>;
   publishedAt?: InputMaybe<Article_PublishedAt_Operator>;
   generateSlug?: InputMaybe<Article_GenerateSlug_Operator>;
@@ -5072,6 +5382,7 @@ export type ArticlesDocAccess = {
 
 export type ArticlesDocAccessFields = {
   __typename?: 'ArticlesDocAccessFields';
+  seo?: Maybe<ArticlesDocAccessFields_Seo>;
   title?: Maybe<ArticlesDocAccessFields_Title>;
   publishedAt?: Maybe<ArticlesDocAccessFields_PublishedAt>;
   generateSlug?: Maybe<ArticlesDocAccessFields_GenerateSlug>;
@@ -5081,6 +5392,97 @@ export type ArticlesDocAccessFields = {
   content?: Maybe<ArticlesDocAccessFields_Content>;
   updatedAt?: Maybe<ArticlesDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<ArticlesDocAccessFields_CreatedAt>;
+};
+
+export type ArticlesDocAccessFields_Seo = {
+  __typename?: 'ArticlesDocAccessFields_seo';
+  create?: Maybe<ArticlesDocAccessFields_Seo_Create>;
+  read?: Maybe<ArticlesDocAccessFields_Seo_Read>;
+  update?: Maybe<ArticlesDocAccessFields_Seo_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_Seo_Delete>;
+  fields?: Maybe<ArticlesDocAccessFields_Seo_Fields>;
+};
+
+export type ArticlesDocAccessFields_Seo_Create = {
+  __typename?: 'ArticlesDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_Read = {
+  __typename?: 'ArticlesDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_Update = {
+  __typename?: 'ArticlesDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_Delete = {
+  __typename?: 'ArticlesDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_Fields = {
+  __typename?: 'ArticlesDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<ArticlesDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ArticlesDocAccessFields_Seo_MetaDescription>;
+};
+
+export type ArticlesDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaTitle';
+  create?: Maybe<ArticlesDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ArticlesDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ArticlesDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type ArticlesDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaDescription';
+  create?: Maybe<ArticlesDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ArticlesDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ArticlesDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ArticlesDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type ArticlesDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ArticlesDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ArticlesDocAccessFields_Title = {
@@ -6183,6 +6585,7 @@ export type OrdersDeleteDocAccess = {
 export type LegalPage = {
   __typename?: 'LegalPage';
   id: Scalars['Int']['output'];
+  seo?: Maybe<LegalPage_Seo>;
   title?: Maybe<Scalars['String']['output']>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
@@ -6195,6 +6598,12 @@ export type LegalPage = {
 
 export type LegalPageContentArgs = {
   depth?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type LegalPage_Seo = {
+  __typename?: 'LegalPage_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export type LegalPages = {
@@ -6213,6 +6622,8 @@ export type LegalPages = {
 };
 
 export type LegalPage_Where = {
+  seo__metaTitle?: InputMaybe<LegalPage_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<LegalPage_Seo__MetaDescription_Operator>;
   title?: InputMaybe<LegalPage_Title_Operator>;
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
@@ -6223,6 +6634,25 @@ export type LegalPage_Where = {
   id?: InputMaybe<LegalPage_Id_Operator>;
   AND?: InputMaybe<Array<InputMaybe<LegalPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<LegalPage_Where_Or>>>;
+};
+
+export type LegalPage_Seo__MetaTitle_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type LegalPage_Seo__MetaDescription_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type LegalPage_Title_Operator = {
@@ -6300,6 +6730,8 @@ export type LegalPage_Id_Operator = {
 };
 
 export type LegalPage_Where_And = {
+  seo__metaTitle?: InputMaybe<LegalPage_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<LegalPage_Seo__MetaDescription_Operator>;
   title?: InputMaybe<LegalPage_Title_Operator>;
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
@@ -6313,6 +6745,8 @@ export type LegalPage_Where_And = {
 };
 
 export type LegalPage_Where_Or = {
+  seo__metaTitle?: InputMaybe<LegalPage_Seo__MetaTitle_Operator>;
+  seo__metaDescription?: InputMaybe<LegalPage_Seo__MetaDescription_Operator>;
   title?: InputMaybe<LegalPage_Title_Operator>;
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
@@ -6341,6 +6775,7 @@ export type Legal_PagesDocAccess = {
 
 export type LegalPagesDocAccessFields = {
   __typename?: 'LegalPagesDocAccessFields';
+  seo?: Maybe<LegalPagesDocAccessFields_Seo>;
   title?: Maybe<LegalPagesDocAccessFields_Title>;
   generateSlug?: Maybe<LegalPagesDocAccessFields_GenerateSlug>;
   slug?: Maybe<LegalPagesDocAccessFields_Slug>;
@@ -6348,6 +6783,97 @@ export type LegalPagesDocAccessFields = {
   contentMarkdown?: Maybe<LegalPagesDocAccessFields_ContentMarkdown>;
   updatedAt?: Maybe<LegalPagesDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<LegalPagesDocAccessFields_CreatedAt>;
+};
+
+export type LegalPagesDocAccessFields_Seo = {
+  __typename?: 'LegalPagesDocAccessFields_seo';
+  create?: Maybe<LegalPagesDocAccessFields_Seo_Create>;
+  read?: Maybe<LegalPagesDocAccessFields_Seo_Read>;
+  update?: Maybe<LegalPagesDocAccessFields_Seo_Update>;
+  delete?: Maybe<LegalPagesDocAccessFields_Seo_Delete>;
+  fields?: Maybe<LegalPagesDocAccessFields_Seo_Fields>;
+};
+
+export type LegalPagesDocAccessFields_Seo_Create = {
+  __typename?: 'LegalPagesDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_Read = {
+  __typename?: 'LegalPagesDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_Update = {
+  __typename?: 'LegalPagesDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_Delete = {
+  __typename?: 'LegalPagesDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_Fields = {
+  __typename?: 'LegalPagesDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<LegalPagesDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<LegalPagesDocAccessFields_Seo_MetaDescription>;
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaTitle';
+  create?: Maybe<LegalPagesDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<LegalPagesDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<LegalPagesDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<LegalPagesDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaDescription';
+  create?: Maybe<LegalPagesDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<LegalPagesDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<LegalPagesDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<LegalPagesDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'LegalPagesDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type LegalPagesDocAccessFields_Title = {
@@ -10637,6 +11163,7 @@ export type PayloadPreferencesDeleteDocAccess = {
 
 export type Home = {
   __typename?: 'Home';
+  seo?: Maybe<Home_Seo>;
   hero?: Maybe<Home_Hero>;
   howItWork?: Maybe<Home_HowItWork>;
   beforeAfter?: Maybe<Array<Home_BeforeAfter>>;
@@ -10647,6 +11174,12 @@ export type Home = {
   faqSection?: Maybe<Home_FaqSection>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Home_Seo = {
+  __typename?: 'Home_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export type Home_Hero = {
@@ -10804,6 +11337,7 @@ export type HomeDocAccess = {
 
 export type HomeDocAccessFields = {
   __typename?: 'HomeDocAccessFields';
+  seo?: Maybe<HomeDocAccessFields_Seo>;
   hero?: Maybe<HomeDocAccessFields_Hero>;
   howItWork?: Maybe<HomeDocAccessFields_HowItWork>;
   beforeAfter?: Maybe<HomeDocAccessFields_BeforeAfter>;
@@ -10814,6 +11348,97 @@ export type HomeDocAccessFields = {
   faqSection?: Maybe<HomeDocAccessFields_FaqSection>;
   updatedAt?: Maybe<HomeDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<HomeDocAccessFields_CreatedAt>;
+};
+
+export type HomeDocAccessFields_Seo = {
+  __typename?: 'HomeDocAccessFields_seo';
+  create?: Maybe<HomeDocAccessFields_Seo_Create>;
+  read?: Maybe<HomeDocAccessFields_Seo_Read>;
+  update?: Maybe<HomeDocAccessFields_Seo_Update>;
+  delete?: Maybe<HomeDocAccessFields_Seo_Delete>;
+  fields?: Maybe<HomeDocAccessFields_Seo_Fields>;
+};
+
+export type HomeDocAccessFields_Seo_Create = {
+  __typename?: 'HomeDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_Read = {
+  __typename?: 'HomeDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_Update = {
+  __typename?: 'HomeDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_Delete = {
+  __typename?: 'HomeDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_Fields = {
+  __typename?: 'HomeDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<HomeDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<HomeDocAccessFields_Seo_MetaDescription>;
+};
+
+export type HomeDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'HomeDocAccessFields_seo_metaTitle';
+  create?: Maybe<HomeDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<HomeDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<HomeDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<HomeDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type HomeDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'HomeDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'HomeDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'HomeDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'HomeDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'HomeDocAccessFields_seo_metaDescription';
+  create?: Maybe<HomeDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<HomeDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<HomeDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<HomeDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type HomeDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'HomeDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'HomeDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'HomeDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'HomeDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type HomeDocAccessFields_Hero = {
@@ -12272,6 +12897,7 @@ export type HomeUpdateDocAccess = {
 
 export type Training = {
   __typename?: 'Training';
+  seo?: Maybe<Training_Seo>;
   title?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   formats?: Maybe<Training_Formats>;
@@ -12279,6 +12905,12 @@ export type Training = {
   faq?: Maybe<Training_Faq>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Training_Seo = {
+  __typename?: 'Training_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export type Training_Formats = {
@@ -12331,6 +12963,7 @@ export type TrainingDocAccess = {
 
 export type TrainingDocAccessFields = {
   __typename?: 'TrainingDocAccessFields';
+  seo?: Maybe<TrainingDocAccessFields_Seo>;
   title?: Maybe<TrainingDocAccessFields_Title>;
   description?: Maybe<TrainingDocAccessFields_Description>;
   formats?: Maybe<TrainingDocAccessFields_Formats>;
@@ -12338,6 +12971,97 @@ export type TrainingDocAccessFields = {
   faq?: Maybe<TrainingDocAccessFields_Faq>;
   updatedAt?: Maybe<TrainingDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<TrainingDocAccessFields_CreatedAt>;
+};
+
+export type TrainingDocAccessFields_Seo = {
+  __typename?: 'TrainingDocAccessFields_seo';
+  create?: Maybe<TrainingDocAccessFields_Seo_Create>;
+  read?: Maybe<TrainingDocAccessFields_Seo_Read>;
+  update?: Maybe<TrainingDocAccessFields_Seo_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Seo_Delete>;
+  fields?: Maybe<TrainingDocAccessFields_Seo_Fields>;
+};
+
+export type TrainingDocAccessFields_Seo_Create = {
+  __typename?: 'TrainingDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_Read = {
+  __typename?: 'TrainingDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_Update = {
+  __typename?: 'TrainingDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_Delete = {
+  __typename?: 'TrainingDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_Fields = {
+  __typename?: 'TrainingDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<TrainingDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<TrainingDocAccessFields_Seo_MetaDescription>;
+};
+
+export type TrainingDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'TrainingDocAccessFields_seo_metaTitle';
+  create?: Maybe<TrainingDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<TrainingDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<TrainingDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type TrainingDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'TrainingDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'TrainingDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'TrainingDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'TrainingDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'TrainingDocAccessFields_seo_metaDescription';
+  create?: Maybe<TrainingDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<TrainingDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<TrainingDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<TrainingDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type TrainingDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'TrainingDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'TrainingDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'TrainingDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'TrainingDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type TrainingDocAccessFields_Title = {
@@ -13010,6 +13734,7 @@ export type TrainingUpdateDocAccess = {
 
 export type Contact = {
   __typename?: 'Contact';
+  seo?: Maybe<Contact_Seo>;
   title?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
@@ -13018,6 +13743,12 @@ export type Contact = {
   form?: Maybe<Contact_Form>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Contact_Seo = {
+  __typename?: 'Contact_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export type Contact_Form = {
@@ -13042,6 +13773,7 @@ export type ContactsDocAccess = {
 
 export type ContactsDocAccessFields = {
   __typename?: 'ContactsDocAccessFields';
+  seo?: Maybe<ContactsDocAccessFields_Seo>;
   title?: Maybe<ContactsDocAccessFields_Title>;
   description?: Maybe<ContactsDocAccessFields_Description>;
   phone?: Maybe<ContactsDocAccessFields_Phone>;
@@ -13050,6 +13782,97 @@ export type ContactsDocAccessFields = {
   form?: Maybe<ContactsDocAccessFields_Form>;
   updatedAt?: Maybe<ContactsDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<ContactsDocAccessFields_CreatedAt>;
+};
+
+export type ContactsDocAccessFields_Seo = {
+  __typename?: 'ContactsDocAccessFields_seo';
+  create?: Maybe<ContactsDocAccessFields_Seo_Create>;
+  read?: Maybe<ContactsDocAccessFields_Seo_Read>;
+  update?: Maybe<ContactsDocAccessFields_Seo_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Seo_Delete>;
+  fields?: Maybe<ContactsDocAccessFields_Seo_Fields>;
+};
+
+export type ContactsDocAccessFields_Seo_Create = {
+  __typename?: 'ContactsDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_Read = {
+  __typename?: 'ContactsDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_Update = {
+  __typename?: 'ContactsDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_Delete = {
+  __typename?: 'ContactsDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_Fields = {
+  __typename?: 'ContactsDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<ContactsDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ContactsDocAccessFields_Seo_MetaDescription>;
+};
+
+export type ContactsDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'ContactsDocAccessFields_seo_metaTitle';
+  create?: Maybe<ContactsDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ContactsDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ContactsDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type ContactsDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'ContactsDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'ContactsDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'ContactsDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ContactsDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'ContactsDocAccessFields_seo_metaDescription';
+  create?: Maybe<ContactsDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ContactsDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ContactsDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ContactsDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type ContactsDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'ContactsDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'ContactsDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'ContactsDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ContactsDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ContactsDocAccessFields_Title = {
@@ -13614,6 +14437,564 @@ export type SiteSettingsUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type AboutPage = {
+  __typename?: 'AboutPage';
+  seo?: Maybe<AboutPage_Seo>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type AboutPage_Seo = {
+  __typename?: 'AboutPage_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
+export type About_PageDocAccess = {
+  __typename?: 'about_pageDocAccess';
+  fields?: Maybe<AboutPageDocAccessFields>;
+  read?: Maybe<AboutPageReadDocAccess>;
+  update?: Maybe<AboutPageUpdateDocAccess>;
+};
+
+export type AboutPageDocAccessFields = {
+  __typename?: 'AboutPageDocAccessFields';
+  seo?: Maybe<AboutPageDocAccessFields_Seo>;
+  updatedAt?: Maybe<AboutPageDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<AboutPageDocAccessFields_CreatedAt>;
+};
+
+export type AboutPageDocAccessFields_Seo = {
+  __typename?: 'AboutPageDocAccessFields_seo';
+  create?: Maybe<AboutPageDocAccessFields_Seo_Create>;
+  read?: Maybe<AboutPageDocAccessFields_Seo_Read>;
+  update?: Maybe<AboutPageDocAccessFields_Seo_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_Seo_Delete>;
+  fields?: Maybe<AboutPageDocAccessFields_Seo_Fields>;
+};
+
+export type AboutPageDocAccessFields_Seo_Create = {
+  __typename?: 'AboutPageDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_Read = {
+  __typename?: 'AboutPageDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_Update = {
+  __typename?: 'AboutPageDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_Delete = {
+  __typename?: 'AboutPageDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_Fields = {
+  __typename?: 'AboutPageDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<AboutPageDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<AboutPageDocAccessFields_Seo_MetaDescription>;
+};
+
+export type AboutPageDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaTitle';
+  create?: Maybe<AboutPageDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<AboutPageDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<AboutPageDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type AboutPageDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaDescription';
+  create?: Maybe<AboutPageDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<AboutPageDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<AboutPageDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type AboutPageDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'AboutPageDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_UpdatedAt = {
+  __typename?: 'AboutPageDocAccessFields_updatedAt';
+  create?: Maybe<AboutPageDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<AboutPageDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<AboutPageDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type AboutPageDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'AboutPageDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'AboutPageDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'AboutPageDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'AboutPageDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_CreatedAt = {
+  __typename?: 'AboutPageDocAccessFields_createdAt';
+  create?: Maybe<AboutPageDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<AboutPageDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<AboutPageDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_CreatedAt_Delete>;
+};
+
+export type AboutPageDocAccessFields_CreatedAt_Create = {
+  __typename?: 'AboutPageDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_CreatedAt_Read = {
+  __typename?: 'AboutPageDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_CreatedAt_Update = {
+  __typename?: 'AboutPageDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'AboutPageDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageReadDocAccess = {
+  __typename?: 'AboutPageReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AboutPageUpdateDocAccess = {
+  __typename?: 'AboutPageUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReviewPage = {
+  __typename?: 'ReviewPage';
+  seo?: Maybe<ReviewPage_Seo>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ReviewPage_Seo = {
+  __typename?: 'ReviewPage_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
+export type Review_PageDocAccess = {
+  __typename?: 'review_pageDocAccess';
+  fields?: Maybe<ReviewPageDocAccessFields>;
+  read?: Maybe<ReviewPageReadDocAccess>;
+  update?: Maybe<ReviewPageUpdateDocAccess>;
+};
+
+export type ReviewPageDocAccessFields = {
+  __typename?: 'ReviewPageDocAccessFields';
+  seo?: Maybe<ReviewPageDocAccessFields_Seo>;
+  updatedAt?: Maybe<ReviewPageDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<ReviewPageDocAccessFields_CreatedAt>;
+};
+
+export type ReviewPageDocAccessFields_Seo = {
+  __typename?: 'ReviewPageDocAccessFields_seo';
+  create?: Maybe<ReviewPageDocAccessFields_Seo_Create>;
+  read?: Maybe<ReviewPageDocAccessFields_Seo_Read>;
+  update?: Maybe<ReviewPageDocAccessFields_Seo_Update>;
+  delete?: Maybe<ReviewPageDocAccessFields_Seo_Delete>;
+  fields?: Maybe<ReviewPageDocAccessFields_Seo_Fields>;
+};
+
+export type ReviewPageDocAccessFields_Seo_Create = {
+  __typename?: 'ReviewPageDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_Read = {
+  __typename?: 'ReviewPageDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_Update = {
+  __typename?: 'ReviewPageDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_Delete = {
+  __typename?: 'ReviewPageDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_Fields = {
+  __typename?: 'ReviewPageDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<ReviewPageDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ReviewPageDocAccessFields_Seo_MetaDescription>;
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaTitle';
+  create?: Maybe<ReviewPageDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ReviewPageDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ReviewPageDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ReviewPageDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaDescription';
+  create?: Maybe<ReviewPageDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ReviewPageDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ReviewPageDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ReviewPageDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ReviewPageDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_UpdatedAt = {
+  __typename?: 'ReviewPageDocAccessFields_updatedAt';
+  create?: Maybe<ReviewPageDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<ReviewPageDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<ReviewPageDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<ReviewPageDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type ReviewPageDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'ReviewPageDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'ReviewPageDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'ReviewPageDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'ReviewPageDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_CreatedAt = {
+  __typename?: 'ReviewPageDocAccessFields_createdAt';
+  create?: Maybe<ReviewPageDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<ReviewPageDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<ReviewPageDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<ReviewPageDocAccessFields_CreatedAt_Delete>;
+};
+
+export type ReviewPageDocAccessFields_CreatedAt_Create = {
+  __typename?: 'ReviewPageDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_CreatedAt_Read = {
+  __typename?: 'ReviewPageDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_CreatedAt_Update = {
+  __typename?: 'ReviewPageDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'ReviewPageDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageReadDocAccess = {
+  __typename?: 'ReviewPageReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReviewPageUpdateDocAccess = {
+  __typename?: 'ReviewPageUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type BlogPage = {
+  __typename?: 'BlogPage';
+  seo?: Maybe<BlogPage_Seo>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type BlogPage_Seo = {
+  __typename?: 'BlogPage_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
+export type Blog_PageDocAccess = {
+  __typename?: 'blog_pageDocAccess';
+  fields?: Maybe<BlogPageDocAccessFields>;
+  read?: Maybe<BlogPageReadDocAccess>;
+  update?: Maybe<BlogPageUpdateDocAccess>;
+};
+
+export type BlogPageDocAccessFields = {
+  __typename?: 'BlogPageDocAccessFields';
+  seo?: Maybe<BlogPageDocAccessFields_Seo>;
+  updatedAt?: Maybe<BlogPageDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<BlogPageDocAccessFields_CreatedAt>;
+};
+
+export type BlogPageDocAccessFields_Seo = {
+  __typename?: 'BlogPageDocAccessFields_seo';
+  create?: Maybe<BlogPageDocAccessFields_Seo_Create>;
+  read?: Maybe<BlogPageDocAccessFields_Seo_Read>;
+  update?: Maybe<BlogPageDocAccessFields_Seo_Update>;
+  delete?: Maybe<BlogPageDocAccessFields_Seo_Delete>;
+  fields?: Maybe<BlogPageDocAccessFields_Seo_Fields>;
+};
+
+export type BlogPageDocAccessFields_Seo_Create = {
+  __typename?: 'BlogPageDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_Read = {
+  __typename?: 'BlogPageDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_Update = {
+  __typename?: 'BlogPageDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_Delete = {
+  __typename?: 'BlogPageDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_Fields = {
+  __typename?: 'BlogPageDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<BlogPageDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<BlogPageDocAccessFields_Seo_MetaDescription>;
+};
+
+export type BlogPageDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaTitle';
+  create?: Maybe<BlogPageDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<BlogPageDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<BlogPageDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<BlogPageDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type BlogPageDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaDescription';
+  create?: Maybe<BlogPageDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<BlogPageDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<BlogPageDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<BlogPageDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type BlogPageDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'BlogPageDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_UpdatedAt = {
+  __typename?: 'BlogPageDocAccessFields_updatedAt';
+  create?: Maybe<BlogPageDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<BlogPageDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<BlogPageDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<BlogPageDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type BlogPageDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'BlogPageDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'BlogPageDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'BlogPageDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'BlogPageDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_CreatedAt = {
+  __typename?: 'BlogPageDocAccessFields_createdAt';
+  create?: Maybe<BlogPageDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<BlogPageDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<BlogPageDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<BlogPageDocAccessFields_CreatedAt_Delete>;
+};
+
+export type BlogPageDocAccessFields_CreatedAt_Create = {
+  __typename?: 'BlogPageDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_CreatedAt_Read = {
+  __typename?: 'BlogPageDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_CreatedAt_Update = {
+  __typename?: 'BlogPageDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'BlogPageDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageReadDocAccess = {
+  __typename?: 'BlogPageReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type BlogPageUpdateDocAccess = {
+  __typename?: 'BlogPageUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Access = {
   __typename?: 'Access';
   canAccessAdmin: Scalars['Boolean']['output'];
@@ -13639,6 +15020,9 @@ export type Access = {
   training?: Maybe<TrainingAccess>;
   contacts?: Maybe<ContactsAccess>;
   site_settings?: Maybe<Site_SettingsAccess>;
+  about_page?: Maybe<About_PageAccess>;
+  review_page?: Maybe<Review_PageAccess>;
+  blog_page?: Maybe<Blog_PageAccess>;
 };
 
 export type UsersAccess = {
@@ -14616,6 +16000,7 @@ export type ProductsAccess = {
 
 export type ProductsFields = {
   __typename?: 'ProductsFields';
+  seo?: Maybe<ProductsFields_Seo>;
   title?: Maybe<ProductsFields_Title>;
   price?: Maybe<ProductsFields_Price>;
   rating?: Maybe<ProductsFields_Rating>;
@@ -14642,6 +16027,97 @@ export type ProductsFields = {
   beforeafter?: Maybe<ProductsFields_Beforeafter>;
   updatedAt?: Maybe<ProductsFields_UpdatedAt>;
   createdAt?: Maybe<ProductsFields_CreatedAt>;
+};
+
+export type ProductsFields_Seo = {
+  __typename?: 'ProductsFields_seo';
+  create?: Maybe<ProductsFields_Seo_Create>;
+  read?: Maybe<ProductsFields_Seo_Read>;
+  update?: Maybe<ProductsFields_Seo_Update>;
+  delete?: Maybe<ProductsFields_Seo_Delete>;
+  fields?: Maybe<ProductsFields_Seo_Fields>;
+};
+
+export type ProductsFields_Seo_Create = {
+  __typename?: 'ProductsFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_Read = {
+  __typename?: 'ProductsFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_Update = {
+  __typename?: 'ProductsFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_Delete = {
+  __typename?: 'ProductsFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_Fields = {
+  __typename?: 'ProductsFields_seo_Fields';
+  metaTitle?: Maybe<ProductsFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ProductsFields_Seo_MetaDescription>;
+};
+
+export type ProductsFields_Seo_MetaTitle = {
+  __typename?: 'ProductsFields_seo_metaTitle';
+  create?: Maybe<ProductsFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ProductsFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ProductsFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ProductsFields_Seo_MetaTitle_Delete>;
+};
+
+export type ProductsFields_Seo_MetaTitle_Create = {
+  __typename?: 'ProductsFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaTitle_Read = {
+  __typename?: 'ProductsFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaTitle_Update = {
+  __typename?: 'ProductsFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ProductsFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaDescription = {
+  __typename?: 'ProductsFields_seo_metaDescription';
+  create?: Maybe<ProductsFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ProductsFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ProductsFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ProductsFields_Seo_MetaDescription_Delete>;
+};
+
+export type ProductsFields_Seo_MetaDescription_Create = {
+  __typename?: 'ProductsFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaDescription_Read = {
+  __typename?: 'ProductsFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaDescription_Update = {
+  __typename?: 'ProductsFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ProductsFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ProductsFields_Title = {
@@ -16018,6 +17494,7 @@ export type CategoryAccess = {
 
 export type CategoryFields = {
   __typename?: 'CategoryFields';
+  seo?: Maybe<CategoryFields_Seo>;
   image?: Maybe<CategoryFields_Image>;
   title?: Maybe<CategoryFields_Title>;
   description?: Maybe<CategoryFields_Description>;
@@ -16025,6 +17502,97 @@ export type CategoryFields = {
   slug?: Maybe<CategoryFields_Slug>;
   updatedAt?: Maybe<CategoryFields_UpdatedAt>;
   createdAt?: Maybe<CategoryFields_CreatedAt>;
+};
+
+export type CategoryFields_Seo = {
+  __typename?: 'CategoryFields_seo';
+  create?: Maybe<CategoryFields_Seo_Create>;
+  read?: Maybe<CategoryFields_Seo_Read>;
+  update?: Maybe<CategoryFields_Seo_Update>;
+  delete?: Maybe<CategoryFields_Seo_Delete>;
+  fields?: Maybe<CategoryFields_Seo_Fields>;
+};
+
+export type CategoryFields_Seo_Create = {
+  __typename?: 'CategoryFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_Read = {
+  __typename?: 'CategoryFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_Update = {
+  __typename?: 'CategoryFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_Delete = {
+  __typename?: 'CategoryFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_Fields = {
+  __typename?: 'CategoryFields_seo_Fields';
+  metaTitle?: Maybe<CategoryFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<CategoryFields_Seo_MetaDescription>;
+};
+
+export type CategoryFields_Seo_MetaTitle = {
+  __typename?: 'CategoryFields_seo_metaTitle';
+  create?: Maybe<CategoryFields_Seo_MetaTitle_Create>;
+  read?: Maybe<CategoryFields_Seo_MetaTitle_Read>;
+  update?: Maybe<CategoryFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<CategoryFields_Seo_MetaTitle_Delete>;
+};
+
+export type CategoryFields_Seo_MetaTitle_Create = {
+  __typename?: 'CategoryFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaTitle_Read = {
+  __typename?: 'CategoryFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaTitle_Update = {
+  __typename?: 'CategoryFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaTitle_Delete = {
+  __typename?: 'CategoryFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaDescription = {
+  __typename?: 'CategoryFields_seo_metaDescription';
+  create?: Maybe<CategoryFields_Seo_MetaDescription_Create>;
+  read?: Maybe<CategoryFields_Seo_MetaDescription_Read>;
+  update?: Maybe<CategoryFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<CategoryFields_Seo_MetaDescription_Delete>;
+};
+
+export type CategoryFields_Seo_MetaDescription_Create = {
+  __typename?: 'CategoryFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaDescription_Read = {
+  __typename?: 'CategoryFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaDescription_Update = {
+  __typename?: 'CategoryFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_Seo_MetaDescription_Delete = {
+  __typename?: 'CategoryFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CategoryFields_Image = {
@@ -16258,6 +17826,7 @@ export type ArticlesAccess = {
 
 export type ArticlesFields = {
   __typename?: 'ArticlesFields';
+  seo?: Maybe<ArticlesFields_Seo>;
   title?: Maybe<ArticlesFields_Title>;
   publishedAt?: Maybe<ArticlesFields_PublishedAt>;
   generateSlug?: Maybe<ArticlesFields_GenerateSlug>;
@@ -16267,6 +17836,97 @@ export type ArticlesFields = {
   content?: Maybe<ArticlesFields_Content>;
   updatedAt?: Maybe<ArticlesFields_UpdatedAt>;
   createdAt?: Maybe<ArticlesFields_CreatedAt>;
+};
+
+export type ArticlesFields_Seo = {
+  __typename?: 'ArticlesFields_seo';
+  create?: Maybe<ArticlesFields_Seo_Create>;
+  read?: Maybe<ArticlesFields_Seo_Read>;
+  update?: Maybe<ArticlesFields_Seo_Update>;
+  delete?: Maybe<ArticlesFields_Seo_Delete>;
+  fields?: Maybe<ArticlesFields_Seo_Fields>;
+};
+
+export type ArticlesFields_Seo_Create = {
+  __typename?: 'ArticlesFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_Read = {
+  __typename?: 'ArticlesFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_Update = {
+  __typename?: 'ArticlesFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_Delete = {
+  __typename?: 'ArticlesFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_Fields = {
+  __typename?: 'ArticlesFields_seo_Fields';
+  metaTitle?: Maybe<ArticlesFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ArticlesFields_Seo_MetaDescription>;
+};
+
+export type ArticlesFields_Seo_MetaTitle = {
+  __typename?: 'ArticlesFields_seo_metaTitle';
+  create?: Maybe<ArticlesFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ArticlesFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ArticlesFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ArticlesFields_Seo_MetaTitle_Delete>;
+};
+
+export type ArticlesFields_Seo_MetaTitle_Create = {
+  __typename?: 'ArticlesFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaTitle_Read = {
+  __typename?: 'ArticlesFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaTitle_Update = {
+  __typename?: 'ArticlesFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ArticlesFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaDescription = {
+  __typename?: 'ArticlesFields_seo_metaDescription';
+  create?: Maybe<ArticlesFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ArticlesFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ArticlesFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ArticlesFields_Seo_MetaDescription_Delete>;
+};
+
+export type ArticlesFields_Seo_MetaDescription_Create = {
+  __typename?: 'ArticlesFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaDescription_Read = {
+  __typename?: 'ArticlesFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaDescription_Update = {
+  __typename?: 'ArticlesFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ArticlesFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ArticlesFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ArticlesFields_Title = {
@@ -17057,6 +18717,7 @@ export type Legal_PagesAccess = {
 
 export type LegalPagesFields = {
   __typename?: 'LegalPagesFields';
+  seo?: Maybe<LegalPagesFields_Seo>;
   title?: Maybe<LegalPagesFields_Title>;
   generateSlug?: Maybe<LegalPagesFields_GenerateSlug>;
   slug?: Maybe<LegalPagesFields_Slug>;
@@ -17064,6 +18725,97 @@ export type LegalPagesFields = {
   contentMarkdown?: Maybe<LegalPagesFields_ContentMarkdown>;
   updatedAt?: Maybe<LegalPagesFields_UpdatedAt>;
   createdAt?: Maybe<LegalPagesFields_CreatedAt>;
+};
+
+export type LegalPagesFields_Seo = {
+  __typename?: 'LegalPagesFields_seo';
+  create?: Maybe<LegalPagesFields_Seo_Create>;
+  read?: Maybe<LegalPagesFields_Seo_Read>;
+  update?: Maybe<LegalPagesFields_Seo_Update>;
+  delete?: Maybe<LegalPagesFields_Seo_Delete>;
+  fields?: Maybe<LegalPagesFields_Seo_Fields>;
+};
+
+export type LegalPagesFields_Seo_Create = {
+  __typename?: 'LegalPagesFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_Read = {
+  __typename?: 'LegalPagesFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_Update = {
+  __typename?: 'LegalPagesFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_Delete = {
+  __typename?: 'LegalPagesFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_Fields = {
+  __typename?: 'LegalPagesFields_seo_Fields';
+  metaTitle?: Maybe<LegalPagesFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<LegalPagesFields_Seo_MetaDescription>;
+};
+
+export type LegalPagesFields_Seo_MetaTitle = {
+  __typename?: 'LegalPagesFields_seo_metaTitle';
+  create?: Maybe<LegalPagesFields_Seo_MetaTitle_Create>;
+  read?: Maybe<LegalPagesFields_Seo_MetaTitle_Read>;
+  update?: Maybe<LegalPagesFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<LegalPagesFields_Seo_MetaTitle_Delete>;
+};
+
+export type LegalPagesFields_Seo_MetaTitle_Create = {
+  __typename?: 'LegalPagesFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaTitle_Read = {
+  __typename?: 'LegalPagesFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaTitle_Update = {
+  __typename?: 'LegalPagesFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaTitle_Delete = {
+  __typename?: 'LegalPagesFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaDescription = {
+  __typename?: 'LegalPagesFields_seo_metaDescription';
+  create?: Maybe<LegalPagesFields_Seo_MetaDescription_Create>;
+  read?: Maybe<LegalPagesFields_Seo_MetaDescription_Read>;
+  update?: Maybe<LegalPagesFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<LegalPagesFields_Seo_MetaDescription_Delete>;
+};
+
+export type LegalPagesFields_Seo_MetaDescription_Create = {
+  __typename?: 'LegalPagesFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaDescription_Read = {
+  __typename?: 'LegalPagesFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaDescription_Update = {
+  __typename?: 'LegalPagesFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type LegalPagesFields_Seo_MetaDescription_Delete = {
+  __typename?: 'LegalPagesFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type LegalPagesFields_Title = {
@@ -19695,6 +21447,7 @@ export type HomeAccess = {
 
 export type HomeFields = {
   __typename?: 'HomeFields';
+  seo?: Maybe<HomeFields_Seo>;
   hero?: Maybe<HomeFields_Hero>;
   howItWork?: Maybe<HomeFields_HowItWork>;
   beforeAfter?: Maybe<HomeFields_BeforeAfter>;
@@ -19705,6 +21458,97 @@ export type HomeFields = {
   faqSection?: Maybe<HomeFields_FaqSection>;
   updatedAt?: Maybe<HomeFields_UpdatedAt>;
   createdAt?: Maybe<HomeFields_CreatedAt>;
+};
+
+export type HomeFields_Seo = {
+  __typename?: 'HomeFields_seo';
+  create?: Maybe<HomeFields_Seo_Create>;
+  read?: Maybe<HomeFields_Seo_Read>;
+  update?: Maybe<HomeFields_Seo_Update>;
+  delete?: Maybe<HomeFields_Seo_Delete>;
+  fields?: Maybe<HomeFields_Seo_Fields>;
+};
+
+export type HomeFields_Seo_Create = {
+  __typename?: 'HomeFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_Read = {
+  __typename?: 'HomeFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_Update = {
+  __typename?: 'HomeFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_Delete = {
+  __typename?: 'HomeFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_Fields = {
+  __typename?: 'HomeFields_seo_Fields';
+  metaTitle?: Maybe<HomeFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<HomeFields_Seo_MetaDescription>;
+};
+
+export type HomeFields_Seo_MetaTitle = {
+  __typename?: 'HomeFields_seo_metaTitle';
+  create?: Maybe<HomeFields_Seo_MetaTitle_Create>;
+  read?: Maybe<HomeFields_Seo_MetaTitle_Read>;
+  update?: Maybe<HomeFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<HomeFields_Seo_MetaTitle_Delete>;
+};
+
+export type HomeFields_Seo_MetaTitle_Create = {
+  __typename?: 'HomeFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaTitle_Read = {
+  __typename?: 'HomeFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaTitle_Update = {
+  __typename?: 'HomeFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaTitle_Delete = {
+  __typename?: 'HomeFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaDescription = {
+  __typename?: 'HomeFields_seo_metaDescription';
+  create?: Maybe<HomeFields_Seo_MetaDescription_Create>;
+  read?: Maybe<HomeFields_Seo_MetaDescription_Read>;
+  update?: Maybe<HomeFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<HomeFields_Seo_MetaDescription_Delete>;
+};
+
+export type HomeFields_Seo_MetaDescription_Create = {
+  __typename?: 'HomeFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaDescription_Read = {
+  __typename?: 'HomeFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaDescription_Update = {
+  __typename?: 'HomeFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type HomeFields_Seo_MetaDescription_Delete = {
+  __typename?: 'HomeFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type HomeFields_Hero = {
@@ -21170,6 +23014,7 @@ export type TrainingAccess = {
 
 export type TrainingFields = {
   __typename?: 'TrainingFields';
+  seo?: Maybe<TrainingFields_Seo>;
   title?: Maybe<TrainingFields_Title>;
   description?: Maybe<TrainingFields_Description>;
   formats?: Maybe<TrainingFields_Formats>;
@@ -21177,6 +23022,97 @@ export type TrainingFields = {
   faq?: Maybe<TrainingFields_Faq>;
   updatedAt?: Maybe<TrainingFields_UpdatedAt>;
   createdAt?: Maybe<TrainingFields_CreatedAt>;
+};
+
+export type TrainingFields_Seo = {
+  __typename?: 'TrainingFields_seo';
+  create?: Maybe<TrainingFields_Seo_Create>;
+  read?: Maybe<TrainingFields_Seo_Read>;
+  update?: Maybe<TrainingFields_Seo_Update>;
+  delete?: Maybe<TrainingFields_Seo_Delete>;
+  fields?: Maybe<TrainingFields_Seo_Fields>;
+};
+
+export type TrainingFields_Seo_Create = {
+  __typename?: 'TrainingFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_Read = {
+  __typename?: 'TrainingFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_Update = {
+  __typename?: 'TrainingFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_Delete = {
+  __typename?: 'TrainingFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_Fields = {
+  __typename?: 'TrainingFields_seo_Fields';
+  metaTitle?: Maybe<TrainingFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<TrainingFields_Seo_MetaDescription>;
+};
+
+export type TrainingFields_Seo_MetaTitle = {
+  __typename?: 'TrainingFields_seo_metaTitle';
+  create?: Maybe<TrainingFields_Seo_MetaTitle_Create>;
+  read?: Maybe<TrainingFields_Seo_MetaTitle_Read>;
+  update?: Maybe<TrainingFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<TrainingFields_Seo_MetaTitle_Delete>;
+};
+
+export type TrainingFields_Seo_MetaTitle_Create = {
+  __typename?: 'TrainingFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaTitle_Read = {
+  __typename?: 'TrainingFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaTitle_Update = {
+  __typename?: 'TrainingFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaTitle_Delete = {
+  __typename?: 'TrainingFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaDescription = {
+  __typename?: 'TrainingFields_seo_metaDescription';
+  create?: Maybe<TrainingFields_Seo_MetaDescription_Create>;
+  read?: Maybe<TrainingFields_Seo_MetaDescription_Read>;
+  update?: Maybe<TrainingFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<TrainingFields_Seo_MetaDescription_Delete>;
+};
+
+export type TrainingFields_Seo_MetaDescription_Create = {
+  __typename?: 'TrainingFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaDescription_Read = {
+  __typename?: 'TrainingFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaDescription_Update = {
+  __typename?: 'TrainingFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type TrainingFields_Seo_MetaDescription_Delete = {
+  __typename?: 'TrainingFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type TrainingFields_Title = {
@@ -21856,6 +23792,7 @@ export type ContactsAccess = {
 
 export type ContactsFields = {
   __typename?: 'ContactsFields';
+  seo?: Maybe<ContactsFields_Seo>;
   title?: Maybe<ContactsFields_Title>;
   description?: Maybe<ContactsFields_Description>;
   phone?: Maybe<ContactsFields_Phone>;
@@ -21864,6 +23801,97 @@ export type ContactsFields = {
   form?: Maybe<ContactsFields_Form>;
   updatedAt?: Maybe<ContactsFields_UpdatedAt>;
   createdAt?: Maybe<ContactsFields_CreatedAt>;
+};
+
+export type ContactsFields_Seo = {
+  __typename?: 'ContactsFields_seo';
+  create?: Maybe<ContactsFields_Seo_Create>;
+  read?: Maybe<ContactsFields_Seo_Read>;
+  update?: Maybe<ContactsFields_Seo_Update>;
+  delete?: Maybe<ContactsFields_Seo_Delete>;
+  fields?: Maybe<ContactsFields_Seo_Fields>;
+};
+
+export type ContactsFields_Seo_Create = {
+  __typename?: 'ContactsFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_Read = {
+  __typename?: 'ContactsFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_Update = {
+  __typename?: 'ContactsFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_Delete = {
+  __typename?: 'ContactsFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_Fields = {
+  __typename?: 'ContactsFields_seo_Fields';
+  metaTitle?: Maybe<ContactsFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ContactsFields_Seo_MetaDescription>;
+};
+
+export type ContactsFields_Seo_MetaTitle = {
+  __typename?: 'ContactsFields_seo_metaTitle';
+  create?: Maybe<ContactsFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ContactsFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ContactsFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ContactsFields_Seo_MetaTitle_Delete>;
+};
+
+export type ContactsFields_Seo_MetaTitle_Create = {
+  __typename?: 'ContactsFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaTitle_Read = {
+  __typename?: 'ContactsFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaTitle_Update = {
+  __typename?: 'ContactsFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ContactsFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaDescription = {
+  __typename?: 'ContactsFields_seo_metaDescription';
+  create?: Maybe<ContactsFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ContactsFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ContactsFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ContactsFields_Seo_MetaDescription_Delete>;
+};
+
+export type ContactsFields_Seo_MetaDescription_Create = {
+  __typename?: 'ContactsFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaDescription_Read = {
+  __typename?: 'ContactsFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaDescription_Update = {
+  __typename?: 'ContactsFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ContactsFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ContactsFields_Title = {
@@ -22396,6 +24424,525 @@ export type SiteSettingsUpdateAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type About_PageAccess = {
+  __typename?: 'about_pageAccess';
+  fields?: Maybe<AboutPageFields>;
+  read?: Maybe<AboutPageReadAccess>;
+  update?: Maybe<AboutPageUpdateAccess>;
+};
+
+export type AboutPageFields = {
+  __typename?: 'AboutPageFields';
+  seo?: Maybe<AboutPageFields_Seo>;
+  updatedAt?: Maybe<AboutPageFields_UpdatedAt>;
+  createdAt?: Maybe<AboutPageFields_CreatedAt>;
+};
+
+export type AboutPageFields_Seo = {
+  __typename?: 'AboutPageFields_seo';
+  create?: Maybe<AboutPageFields_Seo_Create>;
+  read?: Maybe<AboutPageFields_Seo_Read>;
+  update?: Maybe<AboutPageFields_Seo_Update>;
+  delete?: Maybe<AboutPageFields_Seo_Delete>;
+  fields?: Maybe<AboutPageFields_Seo_Fields>;
+};
+
+export type AboutPageFields_Seo_Create = {
+  __typename?: 'AboutPageFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_Read = {
+  __typename?: 'AboutPageFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_Update = {
+  __typename?: 'AboutPageFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_Delete = {
+  __typename?: 'AboutPageFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_Fields = {
+  __typename?: 'AboutPageFields_seo_Fields';
+  metaTitle?: Maybe<AboutPageFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<AboutPageFields_Seo_MetaDescription>;
+};
+
+export type AboutPageFields_Seo_MetaTitle = {
+  __typename?: 'AboutPageFields_seo_metaTitle';
+  create?: Maybe<AboutPageFields_Seo_MetaTitle_Create>;
+  read?: Maybe<AboutPageFields_Seo_MetaTitle_Read>;
+  update?: Maybe<AboutPageFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<AboutPageFields_Seo_MetaTitle_Delete>;
+};
+
+export type AboutPageFields_Seo_MetaTitle_Create = {
+  __typename?: 'AboutPageFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaTitle_Read = {
+  __typename?: 'AboutPageFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaTitle_Update = {
+  __typename?: 'AboutPageFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaTitle_Delete = {
+  __typename?: 'AboutPageFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaDescription = {
+  __typename?: 'AboutPageFields_seo_metaDescription';
+  create?: Maybe<AboutPageFields_Seo_MetaDescription_Create>;
+  read?: Maybe<AboutPageFields_Seo_MetaDescription_Read>;
+  update?: Maybe<AboutPageFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<AboutPageFields_Seo_MetaDescription_Delete>;
+};
+
+export type AboutPageFields_Seo_MetaDescription_Create = {
+  __typename?: 'AboutPageFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaDescription_Read = {
+  __typename?: 'AboutPageFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaDescription_Update = {
+  __typename?: 'AboutPageFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_Seo_MetaDescription_Delete = {
+  __typename?: 'AboutPageFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_UpdatedAt = {
+  __typename?: 'AboutPageFields_updatedAt';
+  create?: Maybe<AboutPageFields_UpdatedAt_Create>;
+  read?: Maybe<AboutPageFields_UpdatedAt_Read>;
+  update?: Maybe<AboutPageFields_UpdatedAt_Update>;
+  delete?: Maybe<AboutPageFields_UpdatedAt_Delete>;
+};
+
+export type AboutPageFields_UpdatedAt_Create = {
+  __typename?: 'AboutPageFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_UpdatedAt_Read = {
+  __typename?: 'AboutPageFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_UpdatedAt_Update = {
+  __typename?: 'AboutPageFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_UpdatedAt_Delete = {
+  __typename?: 'AboutPageFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_CreatedAt = {
+  __typename?: 'AboutPageFields_createdAt';
+  create?: Maybe<AboutPageFields_CreatedAt_Create>;
+  read?: Maybe<AboutPageFields_CreatedAt_Read>;
+  update?: Maybe<AboutPageFields_CreatedAt_Update>;
+  delete?: Maybe<AboutPageFields_CreatedAt_Delete>;
+};
+
+export type AboutPageFields_CreatedAt_Create = {
+  __typename?: 'AboutPageFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_CreatedAt_Read = {
+  __typename?: 'AboutPageFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_CreatedAt_Update = {
+  __typename?: 'AboutPageFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_CreatedAt_Delete = {
+  __typename?: 'AboutPageFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageReadAccess = {
+  __typename?: 'AboutPageReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AboutPageUpdateAccess = {
+  __typename?: 'AboutPageUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Review_PageAccess = {
+  __typename?: 'review_pageAccess';
+  fields?: Maybe<ReviewPageFields>;
+  read?: Maybe<ReviewPageReadAccess>;
+  update?: Maybe<ReviewPageUpdateAccess>;
+};
+
+export type ReviewPageFields = {
+  __typename?: 'ReviewPageFields';
+  seo?: Maybe<ReviewPageFields_Seo>;
+  updatedAt?: Maybe<ReviewPageFields_UpdatedAt>;
+  createdAt?: Maybe<ReviewPageFields_CreatedAt>;
+};
+
+export type ReviewPageFields_Seo = {
+  __typename?: 'ReviewPageFields_seo';
+  create?: Maybe<ReviewPageFields_Seo_Create>;
+  read?: Maybe<ReviewPageFields_Seo_Read>;
+  update?: Maybe<ReviewPageFields_Seo_Update>;
+  delete?: Maybe<ReviewPageFields_Seo_Delete>;
+  fields?: Maybe<ReviewPageFields_Seo_Fields>;
+};
+
+export type ReviewPageFields_Seo_Create = {
+  __typename?: 'ReviewPageFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_Read = {
+  __typename?: 'ReviewPageFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_Update = {
+  __typename?: 'ReviewPageFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_Delete = {
+  __typename?: 'ReviewPageFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_Fields = {
+  __typename?: 'ReviewPageFields_seo_Fields';
+  metaTitle?: Maybe<ReviewPageFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<ReviewPageFields_Seo_MetaDescription>;
+};
+
+export type ReviewPageFields_Seo_MetaTitle = {
+  __typename?: 'ReviewPageFields_seo_metaTitle';
+  create?: Maybe<ReviewPageFields_Seo_MetaTitle_Create>;
+  read?: Maybe<ReviewPageFields_Seo_MetaTitle_Read>;
+  update?: Maybe<ReviewPageFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<ReviewPageFields_Seo_MetaTitle_Delete>;
+};
+
+export type ReviewPageFields_Seo_MetaTitle_Create = {
+  __typename?: 'ReviewPageFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaTitle_Read = {
+  __typename?: 'ReviewPageFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaTitle_Update = {
+  __typename?: 'ReviewPageFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaTitle_Delete = {
+  __typename?: 'ReviewPageFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaDescription = {
+  __typename?: 'ReviewPageFields_seo_metaDescription';
+  create?: Maybe<ReviewPageFields_Seo_MetaDescription_Create>;
+  read?: Maybe<ReviewPageFields_Seo_MetaDescription_Read>;
+  update?: Maybe<ReviewPageFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<ReviewPageFields_Seo_MetaDescription_Delete>;
+};
+
+export type ReviewPageFields_Seo_MetaDescription_Create = {
+  __typename?: 'ReviewPageFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaDescription_Read = {
+  __typename?: 'ReviewPageFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaDescription_Update = {
+  __typename?: 'ReviewPageFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_Seo_MetaDescription_Delete = {
+  __typename?: 'ReviewPageFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_UpdatedAt = {
+  __typename?: 'ReviewPageFields_updatedAt';
+  create?: Maybe<ReviewPageFields_UpdatedAt_Create>;
+  read?: Maybe<ReviewPageFields_UpdatedAt_Read>;
+  update?: Maybe<ReviewPageFields_UpdatedAt_Update>;
+  delete?: Maybe<ReviewPageFields_UpdatedAt_Delete>;
+};
+
+export type ReviewPageFields_UpdatedAt_Create = {
+  __typename?: 'ReviewPageFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_UpdatedAt_Read = {
+  __typename?: 'ReviewPageFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_UpdatedAt_Update = {
+  __typename?: 'ReviewPageFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_UpdatedAt_Delete = {
+  __typename?: 'ReviewPageFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_CreatedAt = {
+  __typename?: 'ReviewPageFields_createdAt';
+  create?: Maybe<ReviewPageFields_CreatedAt_Create>;
+  read?: Maybe<ReviewPageFields_CreatedAt_Read>;
+  update?: Maybe<ReviewPageFields_CreatedAt_Update>;
+  delete?: Maybe<ReviewPageFields_CreatedAt_Delete>;
+};
+
+export type ReviewPageFields_CreatedAt_Create = {
+  __typename?: 'ReviewPageFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_CreatedAt_Read = {
+  __typename?: 'ReviewPageFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_CreatedAt_Update = {
+  __typename?: 'ReviewPageFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageFields_CreatedAt_Delete = {
+  __typename?: 'ReviewPageFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReviewPageReadAccess = {
+  __typename?: 'ReviewPageReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReviewPageUpdateAccess = {
+  __typename?: 'ReviewPageUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Blog_PageAccess = {
+  __typename?: 'blog_pageAccess';
+  fields?: Maybe<BlogPageFields>;
+  read?: Maybe<BlogPageReadAccess>;
+  update?: Maybe<BlogPageUpdateAccess>;
+};
+
+export type BlogPageFields = {
+  __typename?: 'BlogPageFields';
+  seo?: Maybe<BlogPageFields_Seo>;
+  updatedAt?: Maybe<BlogPageFields_UpdatedAt>;
+  createdAt?: Maybe<BlogPageFields_CreatedAt>;
+};
+
+export type BlogPageFields_Seo = {
+  __typename?: 'BlogPageFields_seo';
+  create?: Maybe<BlogPageFields_Seo_Create>;
+  read?: Maybe<BlogPageFields_Seo_Read>;
+  update?: Maybe<BlogPageFields_Seo_Update>;
+  delete?: Maybe<BlogPageFields_Seo_Delete>;
+  fields?: Maybe<BlogPageFields_Seo_Fields>;
+};
+
+export type BlogPageFields_Seo_Create = {
+  __typename?: 'BlogPageFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_Read = {
+  __typename?: 'BlogPageFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_Update = {
+  __typename?: 'BlogPageFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_Delete = {
+  __typename?: 'BlogPageFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_Fields = {
+  __typename?: 'BlogPageFields_seo_Fields';
+  metaTitle?: Maybe<BlogPageFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<BlogPageFields_Seo_MetaDescription>;
+};
+
+export type BlogPageFields_Seo_MetaTitle = {
+  __typename?: 'BlogPageFields_seo_metaTitle';
+  create?: Maybe<BlogPageFields_Seo_MetaTitle_Create>;
+  read?: Maybe<BlogPageFields_Seo_MetaTitle_Read>;
+  update?: Maybe<BlogPageFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<BlogPageFields_Seo_MetaTitle_Delete>;
+};
+
+export type BlogPageFields_Seo_MetaTitle_Create = {
+  __typename?: 'BlogPageFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaTitle_Read = {
+  __typename?: 'BlogPageFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaTitle_Update = {
+  __typename?: 'BlogPageFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaTitle_Delete = {
+  __typename?: 'BlogPageFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaDescription = {
+  __typename?: 'BlogPageFields_seo_metaDescription';
+  create?: Maybe<BlogPageFields_Seo_MetaDescription_Create>;
+  read?: Maybe<BlogPageFields_Seo_MetaDescription_Read>;
+  update?: Maybe<BlogPageFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<BlogPageFields_Seo_MetaDescription_Delete>;
+};
+
+export type BlogPageFields_Seo_MetaDescription_Create = {
+  __typename?: 'BlogPageFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaDescription_Read = {
+  __typename?: 'BlogPageFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaDescription_Update = {
+  __typename?: 'BlogPageFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_Seo_MetaDescription_Delete = {
+  __typename?: 'BlogPageFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_UpdatedAt = {
+  __typename?: 'BlogPageFields_updatedAt';
+  create?: Maybe<BlogPageFields_UpdatedAt_Create>;
+  read?: Maybe<BlogPageFields_UpdatedAt_Read>;
+  update?: Maybe<BlogPageFields_UpdatedAt_Update>;
+  delete?: Maybe<BlogPageFields_UpdatedAt_Delete>;
+};
+
+export type BlogPageFields_UpdatedAt_Create = {
+  __typename?: 'BlogPageFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_UpdatedAt_Read = {
+  __typename?: 'BlogPageFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_UpdatedAt_Update = {
+  __typename?: 'BlogPageFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_UpdatedAt_Delete = {
+  __typename?: 'BlogPageFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_CreatedAt = {
+  __typename?: 'BlogPageFields_createdAt';
+  create?: Maybe<BlogPageFields_CreatedAt_Create>;
+  read?: Maybe<BlogPageFields_CreatedAt_Read>;
+  update?: Maybe<BlogPageFields_CreatedAt_Update>;
+  delete?: Maybe<BlogPageFields_CreatedAt_Delete>;
+};
+
+export type BlogPageFields_CreatedAt_Create = {
+  __typename?: 'BlogPageFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_CreatedAt_Read = {
+  __typename?: 'BlogPageFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_CreatedAt_Update = {
+  __typename?: 'BlogPageFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageFields_CreatedAt_Delete = {
+  __typename?: 'BlogPageFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type BlogPageReadAccess = {
+  __typename?: 'BlogPageReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type BlogPageUpdateAccess = {
+  __typename?: 'BlogPageUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
@@ -22480,6 +25027,9 @@ export type Mutation = {
   updateTraining?: Maybe<Training>;
   updateContact?: Maybe<Contact>;
   updateSiteSetting?: Maybe<SiteSetting>;
+  updateAboutPage?: Maybe<AboutPage>;
+  updateReviewPage?: Maybe<ReviewPage>;
+  updateBlogPage?: Maybe<BlogPage>;
 };
 
 
@@ -23058,6 +25608,27 @@ export type MutationUpdateSiteSettingArgs = {
   locale?: InputMaybe<LocaleInputType>;
 };
 
+
+export type MutationUpdateAboutPageArgs = {
+  data: MutationAboutPageInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateReviewPageArgs = {
+  data: MutationReviewPageInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateBlogPageArgs = {
+  data: MutationBlogPageInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
 export type MutationUserInput = {
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
@@ -23202,6 +25773,7 @@ export type MutationReviewUpdateInput = {
 };
 
 export type MutationProductInput = {
+  seo?: InputMaybe<MutationProduct_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   price: Scalars['Float']['input'];
   rating?: InputMaybe<Scalars['Float']['input']>;
@@ -23228,6 +25800,11 @@ export type MutationProductInput = {
   beforeafter?: InputMaybe<Array<InputMaybe<MutationProduct_BeforeafterInput>>>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationProduct_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProduct_ListFeaturesInput = {
@@ -23291,6 +25868,7 @@ export type MutationProduct_BeforeafterInput = {
 };
 
 export type MutationProductUpdateInput = {
+  seo?: InputMaybe<MutationProductUpdate_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   price?: InputMaybe<Scalars['Float']['input']>;
   rating?: InputMaybe<Scalars['Float']['input']>;
@@ -23317,6 +25895,11 @@ export type MutationProductUpdateInput = {
   beforeafter?: InputMaybe<Array<InputMaybe<MutationProductUpdate_BeforeafterInput>>>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationProductUpdate_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductUpdate_ListFeaturesInput = {
@@ -23380,6 +25963,7 @@ export type MutationProductUpdate_BeforeafterInput = {
 };
 
 export type MutationCategoryInput = {
+  seo?: InputMaybe<MutationCategory_SeoInput>;
   image?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -23389,7 +25973,13 @@ export type MutationCategoryInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationCategory_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationCategoryUpdateInput = {
+  seo?: InputMaybe<MutationCategoryUpdate_SeoInput>;
   image?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -23399,7 +25989,13 @@ export type MutationCategoryUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationCategoryUpdate_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationArticleInput = {
+  seo?: InputMaybe<MutationArticle_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   publishedAt: Scalars['String']['input'];
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
@@ -23411,7 +26007,13 @@ export type MutationArticleInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationArticle_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationArticleUpdateInput = {
+  seo?: InputMaybe<MutationArticleUpdate_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
@@ -23421,6 +26023,11 @@ export type MutationArticleUpdateInput = {
   content?: InputMaybe<Scalars['JSON']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationArticleUpdate_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationOrderInput = {
@@ -23508,6 +26115,7 @@ export enum OrderUpdate_PaymentMethod_MutationInput {
 }
 
 export type MutationLegalPageInput = {
+  seo?: InputMaybe<MutationLegalPage_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
@@ -23517,7 +26125,13 @@ export type MutationLegalPageInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationLegalPage_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationLegalPageUpdateInput = {
+  seo?: InputMaybe<MutationLegalPageUpdate_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -23525,6 +26139,11 @@ export type MutationLegalPageUpdateInput = {
   contentMarkdown?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationLegalPageUpdate_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationLocationInput = {
@@ -23864,6 +26483,7 @@ export enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
 }
 
 export type MutationHomeInput = {
+  seo?: InputMaybe<MutationHome_SeoInput>;
   hero: MutationHome_HeroInput;
   howItWork: MutationHome_HowItWorkInput;
   beforeAfter?: InputMaybe<Array<InputMaybe<MutationHome_BeforeAfterInput>>>;
@@ -23874,6 +26494,11 @@ export type MutationHomeInput = {
   faqSection: MutationHome_FaqSectionInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationHome_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationHome_HeroInput = {
@@ -23951,6 +26576,7 @@ export type MutationHome_FaqSection_ItemsInput = {
 };
 
 export type MutationTrainingInput = {
+  seo?: InputMaybe<MutationTraining_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   formats: MutationTraining_FormatsInput;
@@ -23958,6 +26584,11 @@ export type MutationTrainingInput = {
   faq: MutationTraining_FaqInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTraining_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationTraining_FormatsInput = {
@@ -23991,6 +26622,7 @@ export type MutationTraining_Faq_ItemsInput = {
 };
 
 export type MutationContactInput = {
+  seo?: InputMaybe<MutationContact_SeoInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
@@ -23999,6 +26631,11 @@ export type MutationContactInput = {
   form: MutationContact_FormInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationContact_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationContact_FormInput = {
@@ -24019,12 +26656,45 @@ export type MutationSiteSetting_FooterInput = {
   contactSocialNetworks?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
+export type MutationAboutPageInput = {
+  seo?: InputMaybe<MutationAboutPage_SeoInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationAboutPage_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationReviewPageInput = {
+  seo?: InputMaybe<MutationReviewPage_SeoInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationReviewPage_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationBlogPageInput = {
+  seo?: InputMaybe<MutationBlogPage_SeoInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationBlogPage_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GetLayoutDataQueryVariables = Exact<{
   locale?: InputMaybe<LocaleInputType>;
 }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -24032,13 +26702,17 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
 
-export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
+export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
 
 export const ProductFrontendFieldsFragmentDoc = gql`
     fragment ProductFrontendFields on Product {
   id
+  seo {
+    metaTitle
+    metaDescription
+  }
   title
   price
   rating

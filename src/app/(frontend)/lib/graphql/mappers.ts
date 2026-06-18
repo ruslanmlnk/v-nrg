@@ -64,6 +64,7 @@ function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
     powerWatts: product.powerWatts,
     price: product.price,
     rating: product.rating,
+    seo: product.seo,
     shortDescription: product.shortDescription,
     slug: product.slug,
     title: product.title,

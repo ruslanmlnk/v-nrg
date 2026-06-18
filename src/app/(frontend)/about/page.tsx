@@ -1,3 +1,6 @@
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+
 import {
   AboutCertificatesSection,
   AboutHeroSection,
@@ -5,9 +8,17 @@ import {
   AboutPrinciplesSection,
   AboutStorySection,
 } from '../components/about/AboutSections'
+import { getSiteLocale } from '../lib/getSiteLocale'
+import { createSeoMetadata } from '../lib/seo'
 
-export const metadata = {
-  title: 'Про бренд V-NRG',
+export async function generateMetadata() {
+  const payload = await getPayload({ config: configPromise })
+  const aboutPage = await payload.findGlobal({
+    slug: 'about-page',
+    locale: await getSiteLocale(),
+  })
+
+  return createSeoMetadata(aboutPage.seo, 'Про бренд V-NRG')
 }
 
 export default function AboutPage() {

@@ -1,5 +1,7 @@
 import type { Access, GlobalConfig } from 'payload'
 
+import { Seo } from '../fields/Seo'
+
 const isAdmin: Access = ({ req: { user } }) => user?.collection === 'users' && user.role === 'admin'
 
 export const Home: GlobalConfig = {
@@ -13,6 +15,7 @@ export const Home: GlobalConfig = {
     update: isAdmin,
   },
   fields: [
+    Seo,
     {
       name: 'hero',
       type: 'group',

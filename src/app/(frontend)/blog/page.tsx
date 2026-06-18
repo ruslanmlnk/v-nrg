@@ -6,9 +6,16 @@ import type { Article, Media } from '@/payload-types'
 import { BlogCard, type BlogCardData } from '../components/blog/BlogCard'
 import PageHero from '../components/shared/PageHero'
 import { getSiteLocale } from '../lib/getSiteLocale'
+import { createSeoMetadata } from '../lib/seo'
 
-export const metadata = {
-  title: 'Блог | V-NRG',
+export async function generateMetadata() {
+  const payload = await getPayload({ config: configPromise })
+  const blogPage = await payload.findGlobal({
+    slug: 'blog-page',
+    locale: await getSiteLocale(),
+  })
+
+  return createSeoMetadata(blogPage.seo, 'Блог | V-NRG')
 }
 
 export default async function BlogPage() {
@@ -22,7 +29,9 @@ export default async function BlogPage() {
     sort: '-publishedAt',
   })
 
-  const blogCards = articles.docs.map((article) => mapArticleToBlogCard(article, locale)).filter(isDefined)
+  const blogCards = articles.docs
+    .map((article) => mapArticleToBlogCard(article, locale))
+    .filter(isDefined)
 
   return (
     <div className="pt-5">
@@ -84,13 +93,7 @@ function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardDa
   }
 }
 
-function PaginationPage({
-  active = false,
-  children,
-}: {
-  active?: boolean
-  children: string
-}) {
+function PaginationPage({ active = false, children }: { active?: boolean; children: string }) {
   return (
     <button
       type="button"
@@ -117,7 +120,9 @@ function PaginationArrow({
       disabled={disabled}
       className="flex h-[50.75px] w-[42px] items-center justify-center rounded-[16px] bg-[#F5F8F9] text-[#22354A] transition-colors hover:bg-[#D5E0E8] disabled:cursor-not-allowed disabled:opacity-45"
     >
-      <span className={`block text-[24px] leading-none ${direction === 'left' ? 'rotate-180' : ''}`}>
+      <span
+        className={`block text-[24px] leading-none ${direction === 'left' ? 'rotate-180' : ''}`}
+      >
         ›
       </span>
     </button>

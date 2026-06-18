@@ -9,9 +9,16 @@ import {
   TrainingLessonsSection,
 } from '../components/training/TrainingSections'
 import { getSiteLocale } from '../lib/getSiteLocale'
+import { createSeoMetadata } from '../lib/seo'
 
-export const metadata = {
-  title: 'Навчання | V-NRG',
+export async function generateMetadata() {
+  const payload = await getPayload({ config: configPromise })
+  const training = await payload.findGlobal({
+    slug: 'training',
+    locale: await getSiteLocale(),
+  })
+
+  return createSeoMetadata(training.seo, 'Навчання | V-NRG')
 }
 
 export default async function TrainingPage() {

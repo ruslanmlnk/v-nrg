@@ -1,5 +1,7 @@
 import type { Access, GlobalConfig } from 'payload'
 
+import { Seo } from '../fields/Seo'
+
 const isAdmin: Access = ({ req: { user } }) => user?.collection === 'users' && user.role === 'admin'
 
 export const Contacts: GlobalConfig = {
@@ -13,6 +15,7 @@ export const Contacts: GlobalConfig = {
     update: isAdmin,
   },
   fields: [
+    Seo,
     {
       name: 'title',
       type: 'text',

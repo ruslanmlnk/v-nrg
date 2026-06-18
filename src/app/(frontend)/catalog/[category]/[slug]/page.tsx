@@ -17,7 +17,10 @@ export async function generateMetadata({ params }: ProductDetailsProps): Promise
   const product = await getProductBySlug(slug, await getSiteLocale())
 
   return {
-    title: product ? `${product.title} | V-NRG` : 'Товар не знайдено | V-NRG',
+    description: product?.seo?.metaDescription || undefined,
+    title: product
+      ? product.seo?.metaTitle || `${product.title} | V-NRG`
+      : 'Товар не знайдено | V-NRG',
   }
 }
 

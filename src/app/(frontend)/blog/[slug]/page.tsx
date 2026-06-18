@@ -17,14 +17,13 @@ import { BlogCard, type BlogCardData } from '../../components/blog/BlogCard'
 import { RichTextRenderer } from '../../components/blog/RichTextRenderer'
 import IconAsset from '../../components/ui/IconAsset'
 import { getSiteLocale } from '../../lib/getSiteLocale'
+import { createSeoMetadata } from '../../lib/seo'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const article = await getArticleBySlug(slug, undefined, await getSiteLocale())
 
-  return {
-    title: article ? `${article.title} | V-NRG` : 'Стаття | V-NRG',
-  }
+  return createSeoMetadata(article?.seo, article ? `${article.title} | V-NRG` : 'Стаття | V-NRG')
 }
 
 export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -51,7 +50,9 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
       },
     },
   })
-  const relatedCards = related.docs.map((relatedArticle) => mapArticleToBlogCard(relatedArticle, locale)).filter(isDefined)
+  const relatedCards = related.docs
+    .map((relatedArticle) => mapArticleToBlogCard(relatedArticle, locale))
+    .filter(isDefined)
 
   return (
     <div className="pt-5">

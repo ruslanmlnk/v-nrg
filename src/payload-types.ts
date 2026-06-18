@@ -118,12 +118,18 @@ export interface Config {
     training: Training;
     contacts: Contact;
     'site-settings': SiteSetting;
+    'about-page': AboutPage;
+    'review-page': ReviewPage;
+    'blog-page': BlogPage;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     training: TrainingSelect<false> | TrainingSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'review-page': ReviewPageSelect<false> | ReviewPageSelect<true>;
+    'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
   };
   locale: 'uk' | 'en';
   widgets: {
@@ -223,6 +229,10 @@ export interface Review {
  */
 export interface Product {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   title: string;
   price: number;
   rating?: number | null;
@@ -326,6 +336,10 @@ export interface Product {
  */
 export interface Category {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   image: number | Media;
   title?: string | null;
   description?: string | null;
@@ -343,6 +357,10 @@ export interface Category {
  */
 export interface Article {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   title: string;
   publishedAt: string;
   /**
@@ -423,6 +441,10 @@ export interface Order {
  */
 export interface LegalPage {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   title: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -745,6 +767,12 @@ export interface ReviewsSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   title?: T;
   price?: T;
   rating?: T;
@@ -837,6 +865,12 @@ export interface ProductsSelect<T extends boolean = true> {
  * via the `definition` "category_select".
  */
 export interface CategorySelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   image?: T;
   title?: T;
   description?: T;
@@ -850,6 +884,12 @@ export interface CategorySelect<T extends boolean = true> {
  * via the `definition` "articles_select".
  */
 export interface ArticlesSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   title?: T;
   publishedAt?: T;
   generateSlug?: T;
@@ -887,6 +927,12 @@ export interface OrdersSelect<T extends boolean = true> {
  * via the `definition` "legal-pages_select".
  */
 export interface LegalPagesSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   title?: T;
   generateSlug?: T;
   slug?: T;
@@ -1043,6 +1089,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Home {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   hero: {
     title: string;
     description: string;
@@ -1120,6 +1170,10 @@ export interface Home {
  */
 export interface Training {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   title: string;
   description: string;
   formats: {
@@ -1160,6 +1214,10 @@ export interface Training {
  */
 export interface Contact {
   id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
   title: string;
   description: string;
   phone: string;
@@ -1190,10 +1248,61 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * SEO settings for the about page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * SEO settings for the reviews page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "review-page".
+ */
+export interface ReviewPage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * SEO settings for the blog listing page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-page".
+ */
+export interface BlogPage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   hero?:
     | T
     | {
@@ -1285,6 +1394,12 @@ export interface HomeSelect<T extends boolean = true> {
  * via the `definition` "training_select".
  */
 export interface TrainingSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   title?: T;
   description?: T;
   formats?:
@@ -1329,6 +1444,12 @@ export interface TrainingSelect<T extends boolean = true> {
  * via the `definition` "contacts_select".
  */
 export interface ContactsSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
   title?: T;
   description?: T;
   phone?: T;
@@ -1356,6 +1477,51 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         socialNetworks?: T;
         contactSocialNetworks?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "review-page_select".
+ */
+export interface ReviewPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-page_select".
+ */
+export interface BlogPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -26,6 +26,9 @@ import { Home } from './globals/Home'
 import { Training } from './globals/Training'
 import { Contacts } from './globals/Contacts'
 import { SiteSettings } from './globals/SiteSettings'
+import { AboutPage } from './globals/AboutPage'
+import { ReviewPage } from './globals/ReviewPage'
+import { BlogPage } from './globals/BlogPage'
 import { localizedContent } from './plugins/localizedContent'
 
 const filename = fileURLToPath(import.meta.url)
@@ -78,7 +81,7 @@ export default buildConfig({
       'schema.graphql',
     ),
   },
-  globals: [Home, Training, Contacts, SiteSettings],
+  globals: [Home, Training, Contacts, SiteSettings, AboutPage, ReviewPage, BlogPage],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
