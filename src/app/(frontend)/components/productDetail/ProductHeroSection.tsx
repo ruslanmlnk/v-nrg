@@ -2,6 +2,9 @@
 
 import Link from 'next/link'
 
+import { translate } from '../../lib/siteTranslations'
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
+
 type ProductHeroSectionProps = {
   categoryLabel?: string
   categorySlug?: string
@@ -13,6 +16,7 @@ export function ProductHeroSection({
   categorySlug,
   title,
 }: ProductHeroSectionProps) {
+  const { locale } = useSitePreferences()
   const hasCategory = Boolean(
     categoryLabel && categorySlug && categorySlug !== 'catalog' && categorySlug !== 'product',
   )
@@ -21,9 +25,9 @@ export function ProductHeroSection({
     <section className="flex min-h-[268px] items-center justify-center rounded-[20px] bg-[#22354A] px-6 py-14 text-center text-white">
       <div className="flex max-w-[920px] flex-col items-center gap-4">
         <div className="flex flex-wrap items-center justify-center gap-2 text-[16px] font-bold uppercase leading-[145%]">
-          <Link href="/">Головна</Link>
+          <Link href="/">{translate(locale, 'main')}</Link>
           <span>/</span>
-          <Link href="/catalog">Каталог</Link>
+          <Link href="/catalog">{translate(locale, 'catalog')}</Link>
           {hasCategory ? (
             <>
               <span>/</span>

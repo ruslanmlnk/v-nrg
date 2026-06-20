@@ -7,10 +7,13 @@ import chevronRightIconAsset from '@public/icon/generated/review-chevron-right.s
 import { reviews } from './data'
 
 import { ReviewCard } from './ReviewCard'
+import { translate } from '../../lib/siteTranslations'
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
 
 const desktopReviewPages = chunkItems(reviews, 4)
 
 export function ReviewShowcaseSection() {
+  const { locale } = useSitePreferences()
   const [activeDesktopPage, setActiveDesktopPage] = useState(0)
   const activeDesktopReviews = desktopReviewPages[activeDesktopPage] ?? desktopReviewPages[0] ?? []
 
@@ -19,7 +22,7 @@ export function ReviewShowcaseSection() {
       <div className="mx-auto flex max-w-[1288px] flex-col items-center gap-12">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="flex items-center gap-2 text-[16px] font-bold uppercase leading-[145%]">
-            <span>Головна</span>
+            <span>{translate(locale, 'main')}</span>
             <span>/</span>
             <span className="text-[#4FACF5]">Відгуки</span>
           </div>

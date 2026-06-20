@@ -3,6 +3,9 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 
+import { translate } from '../../lib/siteTranslations'
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
+
 type PageHeroProps = {
   currentLabel: string
   title: string
@@ -26,6 +29,8 @@ export default function PageHero({
   titleClassName,
   descriptionClassName,
 }: PageHeroProps) {
+  const { locale } = useSitePreferences()
+
   return (
     <section
       className={joinClasses(
@@ -35,7 +40,7 @@ export default function PageHero({
     >
       <div className={joinClasses('flex max-w-[920px] flex-col items-center gap-4', contentClassName)}>
         <div className="flex flex-wrap items-center justify-center gap-2 text-[16px] font-bold uppercase leading-[145%]">
-          <Link href="/">Головна</Link>
+          <Link href="/">{translate(locale, 'main')}</Link>
           <span>/</span>
           <span className="text-[#4FACF5]">{currentLabel}</span>
         </div>

@@ -5,7 +5,9 @@ import { useEffect, useMemo, useState } from 'react'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import chevronDownIconAsset from '@public/icon/generated/catalog-chevron-down.svg'
 import { type ProductId } from '../../data/products'
+import { translate } from '../../lib/siteTranslations'
 import { useCommerce } from '../providers/CommerceProvider'
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
 import {
   CatalogGrid,
   CatalogHero,
@@ -27,6 +29,7 @@ import {
 
 export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }) {
   const { addToCart, categories, isInCompare, products, toggleCompare } = useCommerce()
+  const { locale } = useSitePreferences()
   const [sharedProductId, setSharedProductId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(routeCategory || null)
@@ -65,6 +68,11 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   const activeCategory = selectedCategory
     ? (categories.find((category) => category.slug === selectedCategory) ?? null)
     : null
+  const activeCategoryTitle = selectedCategory
+    ? activeCategory?.title ||
+      catalogItems.find((item) => item.category === selectedCategory)?.categoryLabel ||
+      selectedCategory
+    : translate(locale, 'catalog')
 
   const maniplesOptions = useMemo(
     () =>
@@ -188,7 +196,11 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   return (
     <div className="pt-5">
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 pb-[100px]">
-        <CatalogHero title={activeCategory?.title ?? 'Каталог'} />
+        <CatalogHero
+          hasCategory={Boolean(selectedCategory)}
+          locale={locale}
+          title={activeCategoryTitle}
+        />
 
         <MobileCatalogControls
           onOpenFilters={() => setIsMobileFiltersOpen(true)}
