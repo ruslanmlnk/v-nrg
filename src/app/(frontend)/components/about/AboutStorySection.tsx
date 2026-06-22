@@ -6,21 +6,25 @@ import { aboutHighlights } from './data'
 export function AboutStorySection() {
   return (
     <section className="grid items-center gap-12 lg:grid-cols-[500px_minmax(0,1fr)]">
-      <div className="relative order-2 mx-auto h-[479px] w-full max-w-[500px] lg:order-1">
+      <div className="relative order-2 mx-auto h-[280px] w-full max-w-[280px] md:h-[479px] md:max-w-[500px] lg:order-1">
         <Image
           src={aboutTeam1}
           alt="Команда V-NRG"
-          className="absolute left-0 top-5 h-[260px] w-[240px] rounded-[20px] object-cover"
+          className="absolute left-0 top-[10px] h-[140px] w-[128px] rounded-[14px] object-cover md:top-5 md:h-[260px] md:w-[240px] md:rounded-[20px]"
         />
-        <AboutStatCard className="right-5 top-0 bg-[#4FACF5]" value="15+" label="років досвіду" />
+        <AboutStatCard
+          className="right-[8px] top-0 h-[128px] w-[120px] bg-[#4FACF5] md:right-5 md:h-[179px] md:w-[220px]"
+          value="15+"
+          label="років досвіду"
+        />
 
         <Image
           src={aboutTeam2}
           alt="Виробництво V-NRG"
-          className="absolute bottom-0 right-0 h-[260px] w-[240px] rounded-[20px] object-cover"
+          className="absolute bottom-0 right-0 h-[160px] w-[140px] rounded-[14px] object-cover md:h-[260px] md:w-[240px] md:rounded-[20px]"
         />
         <AboutStatCard
-          className="bottom-0 left-5 bg-[#22354A]"
+          className="bottom-0 left-[10px] h-[120px] w-[120px] bg-[#22354A] md:left-5 md:h-[179px] md:w-[220px]"
           value="20+"
           label="країн присутності"
         />
@@ -68,10 +72,10 @@ function AboutStatCard({
 }) {
   return (
     <div
-      className={`absolute flex h-[179px] w-[220px] flex-col items-center justify-center rounded-[20px] p-8 text-center text-white ${className}`}
+      className={`absolute flex flex-col items-center justify-center rounded-[14px] p-4 text-center text-white md:rounded-[20px] md:p-8 ${className}`}
     >
-      <div className="text-[48px] font-bold leading-[145%]">{value}</div>
-      <div className="text-[16px] font-medium leading-[165%]">{label}</div>
+      <div className="text-[28px] font-bold leading-[145%] md:text-[48px]">{value}</div>
+      <div className="text-[11px] font-medium leading-[165%] md:text-[16px]">{label}</div>
     </div>
   )
 }
