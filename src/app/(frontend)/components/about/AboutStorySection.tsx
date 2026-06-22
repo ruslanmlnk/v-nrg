@@ -21,7 +21,7 @@ export function AboutStorySection() {
         <Image
           src={aboutTeam2}
           alt="Виробництво V-NRG"
-          className="absolute bottom-0 right-0 h-[160px] w-[140px] rounded-[14px] object-cover md:h-[260px] md:w-[240px] md:rounded-[20px]"
+          className="absolute bottom-0 right-0 h-[160px] w-[128px] rounded-[14px] object-cover md:h-[260px] md:w-[240px] md:rounded-[20px]"
         />
         <AboutStatCard
           className="bottom-0 left-[10px] h-[120px] w-[120px] bg-[#22354A] md:left-5 md:h-[179px] md:w-[220px]"
