@@ -5774,8 +5774,8 @@ export type Order = {
   paymentStatus: Order_PaymentStatus;
   paymentMethod: Order_PaymentMethod;
   total: Scalars['Float']['output'];
-  items: Scalars['JSON']['output'];
-  delivery?: Maybe<Scalars['JSON']['output']>;
+  items: Array<Order_Items>;
+  delivery?: Maybe<Order_Delivery>;
   comment?: Maybe<Scalars['String']['output']>;
   monobank?: Maybe<Scalars['JSON']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -5811,6 +5811,34 @@ export enum Order_PaymentMethod {
   CashOnDelivery = 'cash_on_delivery'
 }
 
+export type Order_Items = {
+  __typename?: 'Order_Items';
+  product?: Maybe<Product>;
+  title?: Maybe<Scalars['String']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  price?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type Order_ItemsProductArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+export type Order_Delivery = {
+  __typename?: 'Order_Delivery';
+  method?: Maybe<Order_Delivery_Method>;
+  pickupPoint?: Maybe<Scalars['String']['output']>;
+};
+
+export enum Order_Delivery_Method {
+  NovaPoshta = 'nova_poshta',
+  Courier = 'courier',
+  Pickup = 'pickup'
+}
+
 export type Orders = {
   __typename?: 'Orders';
   docs: Array<Order>;
@@ -5837,8 +5865,14 @@ export type Order_Where = {
   paymentStatus?: InputMaybe<Order_PaymentStatus_Operator>;
   paymentMethod?: InputMaybe<Order_PaymentMethod_Operator>;
   total?: InputMaybe<Order_Total_Operator>;
-  items?: InputMaybe<Order_Items_Operator>;
-  delivery?: InputMaybe<Order_Delivery_Operator>;
+  items__product?: InputMaybe<Order_Items__Product_Operator>;
+  items__title?: InputMaybe<Order_Items__Title_Operator>;
+  items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
+  items__price?: InputMaybe<Order_Items__Price_Operator>;
+  items__total?: InputMaybe<Order_Items__Total_Operator>;
+  items__id?: InputMaybe<Order_Items__Id_Operator>;
+  delivery__method?: InputMaybe<Order_Delivery__Method_Operator>;
+  delivery__pickupPoint?: InputMaybe<Order_Delivery__PickupPoint_Operator>;
   comment?: InputMaybe<Order_Comment_Operator>;
   monobank?: InputMaybe<Order_Monobank_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
@@ -5963,22 +5997,86 @@ export type Order_Total_Operator = {
   less_than?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type Order_Items_Operator = {
+export type Order_Items__Product_Operator = {
   equals?: InputMaybe<Scalars['JSON']['input']>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
-  contains?: InputMaybe<Scalars['JSON']['input']>;
-  within?: InputMaybe<Scalars['JSON']['input']>;
-  intersects?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Order_Delivery_Operator = {
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
-  contains?: InputMaybe<Scalars['JSON']['input']>;
-  within?: InputMaybe<Scalars['JSON']['input']>;
-  intersects?: InputMaybe<Scalars['JSON']['input']>;
+export type Order_Items__Title_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Quantity_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_Items__Price_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_Items__Total_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_Items__Id_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Order_Delivery__Method_Operator = {
+  equals?: InputMaybe<Order_Delivery__Method_Input>;
+  not_equals?: InputMaybe<Order_Delivery__Method_Input>;
+  in?: InputMaybe<Array<InputMaybe<Order_Delivery__Method_Input>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Order_Delivery__Method_Input>>>;
+  all?: InputMaybe<Array<InputMaybe<Order_Delivery__Method_Input>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum Order_Delivery__Method_Input {
+  NovaPoshta = 'nova_poshta',
+  Courier = 'courier',
+  Pickup = 'pickup'
+}
+
+export type Order_Delivery__PickupPoint_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -6043,8 +6141,14 @@ export type Order_Where_And = {
   paymentStatus?: InputMaybe<Order_PaymentStatus_Operator>;
   paymentMethod?: InputMaybe<Order_PaymentMethod_Operator>;
   total?: InputMaybe<Order_Total_Operator>;
-  items?: InputMaybe<Order_Items_Operator>;
-  delivery?: InputMaybe<Order_Delivery_Operator>;
+  items__product?: InputMaybe<Order_Items__Product_Operator>;
+  items__title?: InputMaybe<Order_Items__Title_Operator>;
+  items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
+  items__price?: InputMaybe<Order_Items__Price_Operator>;
+  items__total?: InputMaybe<Order_Items__Total_Operator>;
+  items__id?: InputMaybe<Order_Items__Id_Operator>;
+  delivery__method?: InputMaybe<Order_Delivery__Method_Operator>;
+  delivery__pickupPoint?: InputMaybe<Order_Delivery__PickupPoint_Operator>;
   comment?: InputMaybe<Order_Comment_Operator>;
   monobank?: InputMaybe<Order_Monobank_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
@@ -6065,8 +6169,14 @@ export type Order_Where_Or = {
   paymentStatus?: InputMaybe<Order_PaymentStatus_Operator>;
   paymentMethod?: InputMaybe<Order_PaymentMethod_Operator>;
   total?: InputMaybe<Order_Total_Operator>;
-  items?: InputMaybe<Order_Items_Operator>;
-  delivery?: InputMaybe<Order_Delivery_Operator>;
+  items__product?: InputMaybe<Order_Items__Product_Operator>;
+  items__title?: InputMaybe<Order_Items__Title_Operator>;
+  items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
+  items__price?: InputMaybe<Order_Items__Price_Operator>;
+  items__total?: InputMaybe<Order_Items__Total_Operator>;
+  items__id?: InputMaybe<Order_Items__Id_Operator>;
+  delivery__method?: InputMaybe<Order_Delivery__Method_Operator>;
+  delivery__pickupPoint?: InputMaybe<Order_Delivery__PickupPoint_Operator>;
   comment?: InputMaybe<Order_Comment_Operator>;
   monobank?: InputMaybe<Order_Monobank_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
@@ -6396,6 +6506,7 @@ export type OrdersDocAccessFields_Items = {
   read?: Maybe<OrdersDocAccessFields_Items_Read>;
   update?: Maybe<OrdersDocAccessFields_Items_Update>;
   delete?: Maybe<OrdersDocAccessFields_Items_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_Items_Fields>;
 };
 
 export type OrdersDocAccessFields_Items_Create = {
@@ -6418,12 +6529,191 @@ export type OrdersDocAccessFields_Items_Delete = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_Items_Fields = {
+  __typename?: 'OrdersDocAccessFields_items_Fields';
+  product?: Maybe<OrdersDocAccessFields_Items_Product>;
+  title?: Maybe<OrdersDocAccessFields_Items_Title>;
+  quantity?: Maybe<OrdersDocAccessFields_Items_Quantity>;
+  price?: Maybe<OrdersDocAccessFields_Items_Price>;
+  total?: Maybe<OrdersDocAccessFields_Items_Total>;
+  id?: Maybe<OrdersDocAccessFields_Items_Id>;
+};
+
+export type OrdersDocAccessFields_Items_Product = {
+  __typename?: 'OrdersDocAccessFields_items_product';
+  create?: Maybe<OrdersDocAccessFields_Items_Product_Create>;
+  read?: Maybe<OrdersDocAccessFields_Items_Product_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Product_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Product_Delete>;
+};
+
+export type OrdersDocAccessFields_Items_Product_Create = {
+  __typename?: 'OrdersDocAccessFields_items_product_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Product_Read = {
+  __typename?: 'OrdersDocAccessFields_items_product_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Product_Update = {
+  __typename?: 'OrdersDocAccessFields_items_product_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Product_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_product_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Title = {
+  __typename?: 'OrdersDocAccessFields_items_title';
+  create?: Maybe<OrdersDocAccessFields_Items_Title_Create>;
+  read?: Maybe<OrdersDocAccessFields_Items_Title_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Title_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Title_Delete>;
+};
+
+export type OrdersDocAccessFields_Items_Title_Create = {
+  __typename?: 'OrdersDocAccessFields_items_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Title_Read = {
+  __typename?: 'OrdersDocAccessFields_items_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Title_Update = {
+  __typename?: 'OrdersDocAccessFields_items_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Title_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Quantity = {
+  __typename?: 'OrdersDocAccessFields_items_quantity';
+  create?: Maybe<OrdersDocAccessFields_Items_Quantity_Create>;
+  read?: Maybe<OrdersDocAccessFields_Items_Quantity_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Quantity_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Quantity_Delete>;
+};
+
+export type OrdersDocAccessFields_Items_Quantity_Create = {
+  __typename?: 'OrdersDocAccessFields_items_quantity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Quantity_Read = {
+  __typename?: 'OrdersDocAccessFields_items_quantity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Quantity_Update = {
+  __typename?: 'OrdersDocAccessFields_items_quantity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Quantity_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_quantity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Price = {
+  __typename?: 'OrdersDocAccessFields_items_price';
+  create?: Maybe<OrdersDocAccessFields_Items_Price_Create>;
+  read?: Maybe<OrdersDocAccessFields_Items_Price_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Price_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Price_Delete>;
+};
+
+export type OrdersDocAccessFields_Items_Price_Create = {
+  __typename?: 'OrdersDocAccessFields_items_price_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Price_Read = {
+  __typename?: 'OrdersDocAccessFields_items_price_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Price_Update = {
+  __typename?: 'OrdersDocAccessFields_items_price_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Price_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_price_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Total = {
+  __typename?: 'OrdersDocAccessFields_items_total';
+  create?: Maybe<OrdersDocAccessFields_Items_Total_Create>;
+  read?: Maybe<OrdersDocAccessFields_Items_Total_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Total_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Total_Delete>;
+};
+
+export type OrdersDocAccessFields_Items_Total_Create = {
+  __typename?: 'OrdersDocAccessFields_items_total_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Total_Read = {
+  __typename?: 'OrdersDocAccessFields_items_total_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Total_Update = {
+  __typename?: 'OrdersDocAccessFields_items_total_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Total_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_total_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Id = {
+  __typename?: 'OrdersDocAccessFields_items_id';
+  create?: Maybe<OrdersDocAccessFields_Items_Id_Create>;
+  read?: Maybe<OrdersDocAccessFields_Items_Id_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Id_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Id_Delete>;
+};
+
+export type OrdersDocAccessFields_Items_Id_Create = {
+  __typename?: 'OrdersDocAccessFields_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Id_Read = {
+  __typename?: 'OrdersDocAccessFields_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Id_Update = {
+  __typename?: 'OrdersDocAccessFields_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Id_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_Delivery = {
   __typename?: 'OrdersDocAccessFields_delivery';
   create?: Maybe<OrdersDocAccessFields_Delivery_Create>;
   read?: Maybe<OrdersDocAccessFields_Delivery_Read>;
   update?: Maybe<OrdersDocAccessFields_Delivery_Update>;
   delete?: Maybe<OrdersDocAccessFields_Delivery_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_Delivery_Fields>;
 };
 
 export type OrdersDocAccessFields_Delivery_Create = {
@@ -6443,6 +6733,68 @@ export type OrdersDocAccessFields_Delivery_Update = {
 
 export type OrdersDocAccessFields_Delivery_Delete = {
   __typename?: 'OrdersDocAccessFields_delivery_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_Fields = {
+  __typename?: 'OrdersDocAccessFields_delivery_Fields';
+  method?: Maybe<OrdersDocAccessFields_Delivery_Method>;
+  pickupPoint?: Maybe<OrdersDocAccessFields_Delivery_PickupPoint>;
+};
+
+export type OrdersDocAccessFields_Delivery_Method = {
+  __typename?: 'OrdersDocAccessFields_delivery_method';
+  create?: Maybe<OrdersDocAccessFields_Delivery_Method_Create>;
+  read?: Maybe<OrdersDocAccessFields_Delivery_Method_Read>;
+  update?: Maybe<OrdersDocAccessFields_Delivery_Method_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Delivery_Method_Delete>;
+};
+
+export type OrdersDocAccessFields_Delivery_Method_Create = {
+  __typename?: 'OrdersDocAccessFields_delivery_method_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_Method_Read = {
+  __typename?: 'OrdersDocAccessFields_delivery_method_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_Method_Update = {
+  __typename?: 'OrdersDocAccessFields_delivery_method_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_Method_Delete = {
+  __typename?: 'OrdersDocAccessFields_delivery_method_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_PickupPoint = {
+  __typename?: 'OrdersDocAccessFields_delivery_pickupPoint';
+  create?: Maybe<OrdersDocAccessFields_Delivery_PickupPoint_Create>;
+  read?: Maybe<OrdersDocAccessFields_Delivery_PickupPoint_Read>;
+  update?: Maybe<OrdersDocAccessFields_Delivery_PickupPoint_Update>;
+  delete?: Maybe<OrdersDocAccessFields_Delivery_PickupPoint_Delete>;
+};
+
+export type OrdersDocAccessFields_Delivery_PickupPoint_Create = {
+  __typename?: 'OrdersDocAccessFields_delivery_pickupPoint_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_PickupPoint_Read = {
+  __typename?: 'OrdersDocAccessFields_delivery_pickupPoint_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_PickupPoint_Update = {
+  __typename?: 'OrdersDocAccessFields_delivery_pickupPoint_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Delivery_PickupPoint_Delete = {
+  __typename?: 'OrdersDocAccessFields_delivery_pickupPoint_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -18520,6 +18872,7 @@ export type OrdersFields_Items = {
   read?: Maybe<OrdersFields_Items_Read>;
   update?: Maybe<OrdersFields_Items_Update>;
   delete?: Maybe<OrdersFields_Items_Delete>;
+  fields?: Maybe<OrdersFields_Items_Fields>;
 };
 
 export type OrdersFields_Items_Create = {
@@ -18542,12 +18895,191 @@ export type OrdersFields_Items_Delete = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersFields_Items_Fields = {
+  __typename?: 'OrdersFields_items_Fields';
+  product?: Maybe<OrdersFields_Items_Product>;
+  title?: Maybe<OrdersFields_Items_Title>;
+  quantity?: Maybe<OrdersFields_Items_Quantity>;
+  price?: Maybe<OrdersFields_Items_Price>;
+  total?: Maybe<OrdersFields_Items_Total>;
+  id?: Maybe<OrdersFields_Items_Id>;
+};
+
+export type OrdersFields_Items_Product = {
+  __typename?: 'OrdersFields_items_product';
+  create?: Maybe<OrdersFields_Items_Product_Create>;
+  read?: Maybe<OrdersFields_Items_Product_Read>;
+  update?: Maybe<OrdersFields_Items_Product_Update>;
+  delete?: Maybe<OrdersFields_Items_Product_Delete>;
+};
+
+export type OrdersFields_Items_Product_Create = {
+  __typename?: 'OrdersFields_items_product_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Product_Read = {
+  __typename?: 'OrdersFields_items_product_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Product_Update = {
+  __typename?: 'OrdersFields_items_product_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Product_Delete = {
+  __typename?: 'OrdersFields_items_product_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Title = {
+  __typename?: 'OrdersFields_items_title';
+  create?: Maybe<OrdersFields_Items_Title_Create>;
+  read?: Maybe<OrdersFields_Items_Title_Read>;
+  update?: Maybe<OrdersFields_Items_Title_Update>;
+  delete?: Maybe<OrdersFields_Items_Title_Delete>;
+};
+
+export type OrdersFields_Items_Title_Create = {
+  __typename?: 'OrdersFields_items_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Title_Read = {
+  __typename?: 'OrdersFields_items_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Title_Update = {
+  __typename?: 'OrdersFields_items_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Title_Delete = {
+  __typename?: 'OrdersFields_items_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Quantity = {
+  __typename?: 'OrdersFields_items_quantity';
+  create?: Maybe<OrdersFields_Items_Quantity_Create>;
+  read?: Maybe<OrdersFields_Items_Quantity_Read>;
+  update?: Maybe<OrdersFields_Items_Quantity_Update>;
+  delete?: Maybe<OrdersFields_Items_Quantity_Delete>;
+};
+
+export type OrdersFields_Items_Quantity_Create = {
+  __typename?: 'OrdersFields_items_quantity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Quantity_Read = {
+  __typename?: 'OrdersFields_items_quantity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Quantity_Update = {
+  __typename?: 'OrdersFields_items_quantity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Quantity_Delete = {
+  __typename?: 'OrdersFields_items_quantity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Price = {
+  __typename?: 'OrdersFields_items_price';
+  create?: Maybe<OrdersFields_Items_Price_Create>;
+  read?: Maybe<OrdersFields_Items_Price_Read>;
+  update?: Maybe<OrdersFields_Items_Price_Update>;
+  delete?: Maybe<OrdersFields_Items_Price_Delete>;
+};
+
+export type OrdersFields_Items_Price_Create = {
+  __typename?: 'OrdersFields_items_price_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Price_Read = {
+  __typename?: 'OrdersFields_items_price_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Price_Update = {
+  __typename?: 'OrdersFields_items_price_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Price_Delete = {
+  __typename?: 'OrdersFields_items_price_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Total = {
+  __typename?: 'OrdersFields_items_total';
+  create?: Maybe<OrdersFields_Items_Total_Create>;
+  read?: Maybe<OrdersFields_Items_Total_Read>;
+  update?: Maybe<OrdersFields_Items_Total_Update>;
+  delete?: Maybe<OrdersFields_Items_Total_Delete>;
+};
+
+export type OrdersFields_Items_Total_Create = {
+  __typename?: 'OrdersFields_items_total_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Total_Read = {
+  __typename?: 'OrdersFields_items_total_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Total_Update = {
+  __typename?: 'OrdersFields_items_total_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Total_Delete = {
+  __typename?: 'OrdersFields_items_total_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Id = {
+  __typename?: 'OrdersFields_items_id';
+  create?: Maybe<OrdersFields_Items_Id_Create>;
+  read?: Maybe<OrdersFields_Items_Id_Read>;
+  update?: Maybe<OrdersFields_Items_Id_Update>;
+  delete?: Maybe<OrdersFields_Items_Id_Delete>;
+};
+
+export type OrdersFields_Items_Id_Create = {
+  __typename?: 'OrdersFields_items_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Id_Read = {
+  __typename?: 'OrdersFields_items_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Id_Update = {
+  __typename?: 'OrdersFields_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Id_Delete = {
+  __typename?: 'OrdersFields_items_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersFields_Delivery = {
   __typename?: 'OrdersFields_delivery';
   create?: Maybe<OrdersFields_Delivery_Create>;
   read?: Maybe<OrdersFields_Delivery_Read>;
   update?: Maybe<OrdersFields_Delivery_Update>;
   delete?: Maybe<OrdersFields_Delivery_Delete>;
+  fields?: Maybe<OrdersFields_Delivery_Fields>;
 };
 
 export type OrdersFields_Delivery_Create = {
@@ -18567,6 +19099,68 @@ export type OrdersFields_Delivery_Update = {
 
 export type OrdersFields_Delivery_Delete = {
   __typename?: 'OrdersFields_delivery_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_Fields = {
+  __typename?: 'OrdersFields_delivery_Fields';
+  method?: Maybe<OrdersFields_Delivery_Method>;
+  pickupPoint?: Maybe<OrdersFields_Delivery_PickupPoint>;
+};
+
+export type OrdersFields_Delivery_Method = {
+  __typename?: 'OrdersFields_delivery_method';
+  create?: Maybe<OrdersFields_Delivery_Method_Create>;
+  read?: Maybe<OrdersFields_Delivery_Method_Read>;
+  update?: Maybe<OrdersFields_Delivery_Method_Update>;
+  delete?: Maybe<OrdersFields_Delivery_Method_Delete>;
+};
+
+export type OrdersFields_Delivery_Method_Create = {
+  __typename?: 'OrdersFields_delivery_method_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_Method_Read = {
+  __typename?: 'OrdersFields_delivery_method_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_Method_Update = {
+  __typename?: 'OrdersFields_delivery_method_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_Method_Delete = {
+  __typename?: 'OrdersFields_delivery_method_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_PickupPoint = {
+  __typename?: 'OrdersFields_delivery_pickupPoint';
+  create?: Maybe<OrdersFields_Delivery_PickupPoint_Create>;
+  read?: Maybe<OrdersFields_Delivery_PickupPoint_Read>;
+  update?: Maybe<OrdersFields_Delivery_PickupPoint_Update>;
+  delete?: Maybe<OrdersFields_Delivery_PickupPoint_Delete>;
+};
+
+export type OrdersFields_Delivery_PickupPoint_Create = {
+  __typename?: 'OrdersFields_delivery_pickupPoint_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_PickupPoint_Read = {
+  __typename?: 'OrdersFields_delivery_pickupPoint_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_PickupPoint_Update = {
+  __typename?: 'OrdersFields_delivery_pickupPoint_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Delivery_PickupPoint_Delete = {
+  __typename?: 'OrdersFields_delivery_pickupPoint_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -26041,8 +26635,8 @@ export type MutationOrderInput = {
   paymentStatus: Order_PaymentStatus_MutationInput;
   paymentMethod: Order_PaymentMethod_MutationInput;
   total: Scalars['Float']['input'];
-  items: Scalars['JSON']['input'];
-  delivery?: InputMaybe<Scalars['JSON']['input']>;
+  items?: InputMaybe<Array<MutationOrder_ItemsInput>>;
+  delivery?: InputMaybe<MutationOrder_DeliveryInput>;
   comment?: InputMaybe<Scalars['String']['input']>;
   monobank?: InputMaybe<Scalars['JSON']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -26072,6 +26666,26 @@ export enum Order_PaymentMethod_MutationInput {
   CashOnDelivery = 'cash_on_delivery'
 }
 
+export type MutationOrder_ItemsInput = {
+  product?: InputMaybe<Scalars['Int']['input']>;
+  title: Scalars['String']['input'];
+  quantity: Scalars['Float']['input'];
+  price: Scalars['Float']['input'];
+  total: Scalars['Float']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOrder_DeliveryInput = {
+  method?: InputMaybe<Order_Delivery_Method_MutationInput>;
+  pickupPoint?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum Order_Delivery_Method_MutationInput {
+  NovaPoshta = 'nova_poshta',
+  Courier = 'courier',
+  Pickup = 'pickup'
+}
+
 export type MutationOrderUpdateInput = {
   orderNumber?: InputMaybe<Scalars['String']['input']>;
   customer?: InputMaybe<Scalars['Int']['input']>;
@@ -26083,8 +26697,8 @@ export type MutationOrderUpdateInput = {
   paymentStatus?: InputMaybe<OrderUpdate_PaymentStatus_MutationInput>;
   paymentMethod?: InputMaybe<OrderUpdate_PaymentMethod_MutationInput>;
   total?: InputMaybe<Scalars['Float']['input']>;
-  items?: InputMaybe<Scalars['JSON']['input']>;
-  delivery?: InputMaybe<Scalars['JSON']['input']>;
+  items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
+  delivery?: InputMaybe<MutationOrderUpdate_DeliveryInput>;
   comment?: InputMaybe<Scalars['String']['input']>;
   monobank?: InputMaybe<Scalars['JSON']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -26112,6 +26726,26 @@ export enum OrderUpdate_PaymentMethod_MutationInput {
   MonobankParts = 'monobank_parts',
   Invoice = 'invoice',
   CashOnDelivery = 'cash_on_delivery'
+}
+
+export type MutationOrderUpdate_ItemsInput = {
+  product?: InputMaybe<Scalars['Int']['input']>;
+  title: Scalars['String']['input'];
+  quantity: Scalars['Float']['input'];
+  price: Scalars['Float']['input'];
+  total: Scalars['Float']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOrderUpdate_DeliveryInput = {
+  method?: InputMaybe<OrderUpdate_Delivery_Method_MutationInput>;
+  pickupPoint?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum OrderUpdate_Delivery_Method_MutationInput {
+  NovaPoshta = 'nova_poshta',
+  Courier = 'courier',
+  Pickup = 'pickup'
 }
 
 export type MutationLegalPageInput = {

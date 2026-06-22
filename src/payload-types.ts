@@ -404,24 +404,18 @@ export interface Order {
   paymentStatus: 'awaiting_payment' | 'processing' | 'paid' | 'failed' | 'refunded';
   paymentMethod: 'card-online' | 'monobank-parts' | 'invoice' | 'cash-on-delivery';
   total: number;
-  items:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  delivery?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  items: {
+    product?: (number | null) | Product;
+    title: string;
+    quantity: number;
+    price: number;
+    total: number;
+    id?: string | null;
+  }[];
+  delivery?: {
+    method?: ('nova-poshta' | 'courier' | 'pickup') | null;
+    pickupPoint?: string | null;
+  };
   comment?: string | null;
   monobank?:
     | {
@@ -915,8 +909,22 @@ export interface OrdersSelect<T extends boolean = true> {
   paymentStatus?: T;
   paymentMethod?: T;
   total?: T;
-  items?: T;
-  delivery?: T;
+  items?:
+    | T
+    | {
+        product?: T;
+        title?: T;
+        quantity?: T;
+        price?: T;
+        total?: T;
+        id?: T;
+      };
+  delivery?:
+    | T
+    | {
+        method?: T;
+        pickupPoint?: T;
+      };
   comment?: T;
   monobank?: T;
   updatedAt?: T;

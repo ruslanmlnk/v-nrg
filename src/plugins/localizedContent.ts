@@ -60,10 +60,14 @@ function localizeFields(fields: Field[]): Field[] {
 
 export const localizedContent: Plugin = (config: Config): Config => ({
   ...config,
-  collections: config.collections?.map((collection) => ({
-    ...collection,
-    fields: localizeFields(collection.fields),
-  })),
+  collections: config.collections?.map((collection) =>
+    collection.slug === 'orders'
+      ? collection
+      : {
+          ...collection,
+          fields: localizeFields(collection.fields),
+        },
+  ),
   globals: config.globals?.map((global) => ({
     ...global,
     fields: localizeFields(global.fields),

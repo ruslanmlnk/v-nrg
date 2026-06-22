@@ -24,9 +24,8 @@ type CheckoutOrderBody = {
   total?: number
 }
 
-type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue }
-
 const paymentMethods = ['card-online', 'monobank-parts', 'invoice', 'cash-on-delivery'] as const
+const deliveryMethods = ['nova-poshta', 'courier', 'pickup'] as const
 
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as CheckoutOrderBody | null
@@ -62,7 +61,7 @@ export async function POST(request: NextRequest) {
         comment: normalizeText(body.comment),
         customer: user?.collection === 'users' ? user.id : undefined,
         customerEmail,
-        delivery: normalizeJson(body.delivery),
+        delivery: normalizeDelivery(body.delivery),
         firstName,
         items,
         lastName,
@@ -176,7 +175,7 @@ async function getServerPricedItems(
 
     return [
       {
-        productId,
+        product: product.id,
         price,
         quantity,
         title: product.title,
@@ -194,27 +193,21 @@ function getDealerDiscountPercent(user: User | null) {
   return Math.min(100, Math.max(0, user.dealerDiscountPercent ?? 0))
 }
 
-function normalizeJson(value: unknown): JsonValue {
-  if (
-    value === null ||
-    typeof value === 'string' ||
-    typeof value === 'number' ||
-    typeof value === 'boolean'
-  ) {
-    return value
+function normalizeDelivery(value: unknown) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return undefined
   }
 
-  if (Array.isArray(value)) {
-    return value.map(normalizeJson)
-  }
+  const delivery = value as Record<string, unknown>
+  const method = normalizeText(delivery.method)
+  const normalizedMethod = deliveryMethods.includes(method as (typeof deliveryMethods)[number])
+    ? (method as (typeof deliveryMethods)[number])
+    : undefined
 
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, entry]) => [key, normalizeJson(entry)]),
-    )
+  return {
+    method: normalizedMethod,
+    pickupPoint: normalizeText(delivery.pickupPoint),
   }
-
-  return null
 }
 
 function normalizeOrderNumber(value: unknown) {

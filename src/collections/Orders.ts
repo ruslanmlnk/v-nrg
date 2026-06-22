@@ -142,14 +142,83 @@ export const Orders: CollectionConfig = {
     },
     {
       name: 'items',
-      type: 'json',
+      type: 'array',
       label: 'Товари',
+      labels: {
+        plural: 'Товари',
+        singular: 'Товар',
+      },
+      admin: {
+        initCollapsed: false,
+      },
+      fields: [
+        {
+          name: 'product',
+          type: 'relationship',
+          label: 'Товар',
+          relationTo: 'products',
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Назва на момент замовлення',
+              required: true,
+            },
+            {
+              name: 'quantity',
+              type: 'number',
+              label: 'Кількість',
+              min: 1,
+              required: true,
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'price',
+              type: 'number',
+              label: 'Ціна за одиницю',
+              min: 0,
+              required: true,
+            },
+            {
+              name: 'total',
+              type: 'number',
+              label: 'Сума позиції',
+              min: 0,
+              required: true,
+            },
+          ],
+        },
+      ],
       required: true,
     },
     {
       name: 'delivery',
-      type: 'json',
+      type: 'group',
       label: 'Доставка',
+      fields: [
+        {
+          name: 'method',
+          type: 'select',
+          label: 'Спосіб доставки',
+          options: [
+            { label: 'Нова пошта', value: 'nova-poshta' },
+            { label: 'Курʼєр', value: 'courier' },
+            { label: 'Самовивіз', value: 'pickup' },
+          ],
+        },
+        {
+          name: 'pickupPoint',
+          type: 'text',
+          label: 'Відділення або адреса доставки',
+        },
+      ],
     },
     {
       name: 'comment',

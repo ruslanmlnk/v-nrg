@@ -9,6 +9,7 @@ import * as migration_20260613_020000_contacts from './20260613_020000_contacts'
 import * as migration_20260613_030000_applications from './20260613_030000_applications'
 import * as migration_20260617_153500_social_networks_site_settings from './20260617_153500_social_networks_site_settings'
 import * as migration_20260618_061500_page_seo_globals from './20260618_061500_page_seo_globals'
+import * as migration_20260622_010000_structured_order_fields from './20260622_010000_structured_order_fields'
 
 export const migrations = [
   {
@@ -65,5 +66,10 @@ export const migrations = [
     up: migration_20260618_061500_page_seo_globals.up,
     down: migration_20260618_061500_page_seo_globals.down,
     name: '20260618_061500_page_seo_globals',
+  },
+  {
+    up: migration_20260622_010000_structured_order_fields.up,
+    down: migration_20260622_010000_structured_order_fields.down,
+    name: '20260622_010000_structured_order_fields',
   },
 ]

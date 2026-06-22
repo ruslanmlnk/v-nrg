@@ -4378,8 +4378,8 @@ type Order {
   paymentStatus: Order_paymentStatus!
   paymentMethod: Order_paymentMethod!
   total: Float!
-  items: JSON!
-  delivery: JSON
+  items: [Order_Items!]!
+  delivery: Order_Delivery
   comment: String
   monobank: JSON
   updatedAt: DateTime
@@ -4409,6 +4409,26 @@ enum Order_paymentMethod {
   cash_on_delivery
 }
 
+type Order_Items {
+  product(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Product
+  title: String
+  quantity: Float
+  price: Float
+  total: Float
+  id: String
+}
+
+type Order_Delivery {
+  method: Order_Delivery_method
+  pickupPoint: String
+}
+
+enum Order_Delivery_method {
+  nova_poshta
+  courier
+  pickup
+}
+
 type Orders {
   docs: [Order!]!
   hasNextPage: Boolean!
@@ -4434,8 +4454,14 @@ input Order_where {
   paymentStatus: Order_paymentStatus_operator
   paymentMethod: Order_paymentMethod_operator
   total: Order_total_operator
-  items: Order_items_operator
-  delivery: Order_delivery_operator
+  items__product: Order_items__product_operator
+  items__title: Order_items__title_operator
+  items__quantity: Order_items__quantity_operator
+  items__price: Order_items__price_operator
+  items__total: Order_items__total_operator
+  items__id: Order_items__id_operator
+  delivery__method: Order_delivery__method_operator
+  delivery__pickupPoint: Order_delivery__pickupPoint_operator
   comment: Order_comment_operator
   monobank: Order_monobank_operator
   updatedAt: Order_updatedAt_operator
@@ -4560,22 +4586,86 @@ input Order_total_operator {
   less_than: Float
 }
 
-input Order_items_operator {
+input Order_items__product_operator {
   equals: JSON
   not_equals: JSON
-  like: JSON
-  contains: JSON
-  within: JSON
-  intersects: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
 }
 
-input Order_delivery_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  within: JSON
-  intersects: JSON
+input Order_items__title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Order_items__quantity_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Order_items__price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Order_items__total_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Order_items__id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Order_delivery__method_operator {
+  equals: Order_delivery__method_Input
+  not_equals: Order_delivery__method_Input
+  in: [Order_delivery__method_Input]
+  not_in: [Order_delivery__method_Input]
+  all: [Order_delivery__method_Input]
+  exists: Boolean
+}
+
+enum Order_delivery__method_Input {
+  nova_poshta
+  courier
+  pickup
+}
+
+input Order_delivery__pickupPoint_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -4640,8 +4730,14 @@ input Order_where_and {
   paymentStatus: Order_paymentStatus_operator
   paymentMethod: Order_paymentMethod_operator
   total: Order_total_operator
-  items: Order_items_operator
-  delivery: Order_delivery_operator
+  items__product: Order_items__product_operator
+  items__title: Order_items__title_operator
+  items__quantity: Order_items__quantity_operator
+  items__price: Order_items__price_operator
+  items__total: Order_items__total_operator
+  items__id: Order_items__id_operator
+  delivery__method: Order_delivery__method_operator
+  delivery__pickupPoint: Order_delivery__pickupPoint_operator
   comment: Order_comment_operator
   monobank: Order_monobank_operator
   updatedAt: Order_updatedAt_operator
@@ -4662,8 +4758,14 @@ input Order_where_or {
   paymentStatus: Order_paymentStatus_operator
   paymentMethod: Order_paymentMethod_operator
   total: Order_total_operator
-  items: Order_items_operator
-  delivery: Order_delivery_operator
+  items__product: Order_items__product_operator
+  items__title: Order_items__title_operator
+  items__quantity: Order_items__quantity_operator
+  items__price: Order_items__price_operator
+  items__total: Order_items__total_operator
+  items__id: Order_items__id_operator
+  delivery__method: Order_delivery__method_operator
+  delivery__pickupPoint: Order_delivery__pickupPoint_operator
   comment: Order_comment_operator
   monobank: Order_monobank_operator
   updatedAt: Order_updatedAt_operator
@@ -4939,6 +5041,7 @@ type OrdersDocAccessFields_items {
   read: OrdersDocAccessFields_items_Read
   update: OrdersDocAccessFields_items_Update
   delete: OrdersDocAccessFields_items_Delete
+  fields: OrdersDocAccessFields_items_Fields
 }
 
 type OrdersDocAccessFields_items_Create {
@@ -4957,11 +5060,159 @@ type OrdersDocAccessFields_items_Delete {
   permission: Boolean!
 }
 
+type OrdersDocAccessFields_items_Fields {
+  product: OrdersDocAccessFields_items_product
+  title: OrdersDocAccessFields_items_title
+  quantity: OrdersDocAccessFields_items_quantity
+  price: OrdersDocAccessFields_items_price
+  total: OrdersDocAccessFields_items_total
+  id: OrdersDocAccessFields_items_id
+}
+
+type OrdersDocAccessFields_items_product {
+  create: OrdersDocAccessFields_items_product_Create
+  read: OrdersDocAccessFields_items_product_Read
+  update: OrdersDocAccessFields_items_product_Update
+  delete: OrdersDocAccessFields_items_product_Delete
+}
+
+type OrdersDocAccessFields_items_product_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_product_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_product_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_product_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_title {
+  create: OrdersDocAccessFields_items_title_Create
+  read: OrdersDocAccessFields_items_title_Read
+  update: OrdersDocAccessFields_items_title_Update
+  delete: OrdersDocAccessFields_items_title_Delete
+}
+
+type OrdersDocAccessFields_items_title_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_title_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_title_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_title_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_quantity {
+  create: OrdersDocAccessFields_items_quantity_Create
+  read: OrdersDocAccessFields_items_quantity_Read
+  update: OrdersDocAccessFields_items_quantity_Update
+  delete: OrdersDocAccessFields_items_quantity_Delete
+}
+
+type OrdersDocAccessFields_items_quantity_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_quantity_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_quantity_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_quantity_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_price {
+  create: OrdersDocAccessFields_items_price_Create
+  read: OrdersDocAccessFields_items_price_Read
+  update: OrdersDocAccessFields_items_price_Update
+  delete: OrdersDocAccessFields_items_price_Delete
+}
+
+type OrdersDocAccessFields_items_price_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_price_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_price_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_price_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_total {
+  create: OrdersDocAccessFields_items_total_Create
+  read: OrdersDocAccessFields_items_total_Read
+  update: OrdersDocAccessFields_items_total_Update
+  delete: OrdersDocAccessFields_items_total_Delete
+}
+
+type OrdersDocAccessFields_items_total_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_total_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_total_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_total_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_id {
+  create: OrdersDocAccessFields_items_id_Create
+  read: OrdersDocAccessFields_items_id_Read
+  update: OrdersDocAccessFields_items_id_Update
+  delete: OrdersDocAccessFields_items_id_Delete
+}
+
+type OrdersDocAccessFields_items_id_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_id_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_id_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_items_id_Delete {
+  permission: Boolean!
+}
+
 type OrdersDocAccessFields_delivery {
   create: OrdersDocAccessFields_delivery_Create
   read: OrdersDocAccessFields_delivery_Read
   update: OrdersDocAccessFields_delivery_Update
   delete: OrdersDocAccessFields_delivery_Delete
+  fields: OrdersDocAccessFields_delivery_Fields
 }
 
 type OrdersDocAccessFields_delivery_Create {
@@ -4977,6 +5228,57 @@ type OrdersDocAccessFields_delivery_Update {
 }
 
 type OrdersDocAccessFields_delivery_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_Fields {
+  method: OrdersDocAccessFields_delivery_method
+  pickupPoint: OrdersDocAccessFields_delivery_pickupPoint
+}
+
+type OrdersDocAccessFields_delivery_method {
+  create: OrdersDocAccessFields_delivery_method_Create
+  read: OrdersDocAccessFields_delivery_method_Read
+  update: OrdersDocAccessFields_delivery_method_Update
+  delete: OrdersDocAccessFields_delivery_method_Delete
+}
+
+type OrdersDocAccessFields_delivery_method_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_method_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_method_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_method_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_pickupPoint {
+  create: OrdersDocAccessFields_delivery_pickupPoint_Create
+  read: OrdersDocAccessFields_delivery_pickupPoint_Read
+  update: OrdersDocAccessFields_delivery_pickupPoint_Update
+  delete: OrdersDocAccessFields_delivery_pickupPoint_Delete
+}
+
+type OrdersDocAccessFields_delivery_pickupPoint_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_pickupPoint_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_pickupPoint_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_delivery_pickupPoint_Delete {
   permission: Boolean!
 }
 
@@ -15135,6 +15437,7 @@ type OrdersFields_items {
   read: OrdersFields_items_Read
   update: OrdersFields_items_Update
   delete: OrdersFields_items_Delete
+  fields: OrdersFields_items_Fields
 }
 
 type OrdersFields_items_Create {
@@ -15153,11 +15456,159 @@ type OrdersFields_items_Delete {
   permission: Boolean!
 }
 
+type OrdersFields_items_Fields {
+  product: OrdersFields_items_product
+  title: OrdersFields_items_title
+  quantity: OrdersFields_items_quantity
+  price: OrdersFields_items_price
+  total: OrdersFields_items_total
+  id: OrdersFields_items_id
+}
+
+type OrdersFields_items_product {
+  create: OrdersFields_items_product_Create
+  read: OrdersFields_items_product_Read
+  update: OrdersFields_items_product_Update
+  delete: OrdersFields_items_product_Delete
+}
+
+type OrdersFields_items_product_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_product_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_product_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_product_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_items_title {
+  create: OrdersFields_items_title_Create
+  read: OrdersFields_items_title_Read
+  update: OrdersFields_items_title_Update
+  delete: OrdersFields_items_title_Delete
+}
+
+type OrdersFields_items_title_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_title_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_title_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_title_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_items_quantity {
+  create: OrdersFields_items_quantity_Create
+  read: OrdersFields_items_quantity_Read
+  update: OrdersFields_items_quantity_Update
+  delete: OrdersFields_items_quantity_Delete
+}
+
+type OrdersFields_items_quantity_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_quantity_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_quantity_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_quantity_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_items_price {
+  create: OrdersFields_items_price_Create
+  read: OrdersFields_items_price_Read
+  update: OrdersFields_items_price_Update
+  delete: OrdersFields_items_price_Delete
+}
+
+type OrdersFields_items_price_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_price_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_price_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_price_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_items_total {
+  create: OrdersFields_items_total_Create
+  read: OrdersFields_items_total_Read
+  update: OrdersFields_items_total_Update
+  delete: OrdersFields_items_total_Delete
+}
+
+type OrdersFields_items_total_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_total_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_total_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_total_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_items_id {
+  create: OrdersFields_items_id_Create
+  read: OrdersFields_items_id_Read
+  update: OrdersFields_items_id_Update
+  delete: OrdersFields_items_id_Delete
+}
+
+type OrdersFields_items_id_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_items_id_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_items_id_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_items_id_Delete {
+  permission: Boolean!
+}
+
 type OrdersFields_delivery {
   create: OrdersFields_delivery_Create
   read: OrdersFields_delivery_Read
   update: OrdersFields_delivery_Update
   delete: OrdersFields_delivery_Delete
+  fields: OrdersFields_delivery_Fields
 }
 
 type OrdersFields_delivery_Create {
@@ -15173,6 +15624,57 @@ type OrdersFields_delivery_Update {
 }
 
 type OrdersFields_delivery_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_Fields {
+  method: OrdersFields_delivery_method
+  pickupPoint: OrdersFields_delivery_pickupPoint
+}
+
+type OrdersFields_delivery_method {
+  create: OrdersFields_delivery_method_Create
+  read: OrdersFields_delivery_method_Read
+  update: OrdersFields_delivery_method_Update
+  delete: OrdersFields_delivery_method_Delete
+}
+
+type OrdersFields_delivery_method_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_method_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_method_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_method_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_pickupPoint {
+  create: OrdersFields_delivery_pickupPoint_Create
+  read: OrdersFields_delivery_pickupPoint_Read
+  update: OrdersFields_delivery_pickupPoint_Update
+  delete: OrdersFields_delivery_pickupPoint_Delete
+}
+
+type OrdersFields_delivery_pickupPoint_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_pickupPoint_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_pickupPoint_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_delivery_pickupPoint_Delete {
   permission: Boolean!
 }
 
@@ -20946,8 +21448,8 @@ input mutationOrderInput {
   paymentStatus: Order_paymentStatus_MutationInput!
   paymentMethod: Order_paymentMethod_MutationInput!
   total: Float!
-  items: JSON!
-  delivery: JSON
+  items: [mutationOrder_ItemsInput!]
+  delivery: mutationOrder_DeliveryInput
   comment: String
   monobank: JSON
   updatedAt: String
@@ -20977,6 +21479,26 @@ enum Order_paymentMethod_MutationInput {
   cash_on_delivery
 }
 
+input mutationOrder_ItemsInput {
+  product: Int
+  title: String!
+  quantity: Float!
+  price: Float!
+  total: Float!
+  id: String
+}
+
+input mutationOrder_DeliveryInput {
+  method: Order_Delivery_method_MutationInput
+  pickupPoint: String
+}
+
+enum Order_Delivery_method_MutationInput {
+  nova_poshta
+  courier
+  pickup
+}
+
 input mutationOrderUpdateInput {
   orderNumber: String
   customer: Int
@@ -20988,8 +21510,8 @@ input mutationOrderUpdateInput {
   paymentStatus: OrderUpdate_paymentStatus_MutationInput
   paymentMethod: OrderUpdate_paymentMethod_MutationInput
   total: Float
-  items: JSON
-  delivery: JSON
+  items: [mutationOrderUpdate_ItemsInput]
+  delivery: mutationOrderUpdate_DeliveryInput
   comment: String
   monobank: JSON
   updatedAt: String
@@ -21017,6 +21539,26 @@ enum OrderUpdate_paymentMethod_MutationInput {
   monobank_parts
   invoice
   cash_on_delivery
+}
+
+input mutationOrderUpdate_ItemsInput {
+  product: Int
+  title: String!
+  quantity: Float!
+  price: Float!
+  total: Float!
+  id: String
+}
+
+input mutationOrderUpdate_DeliveryInput {
+  method: OrderUpdate_Delivery_method_MutationInput
+  pickupPoint: String
+}
+
+enum OrderUpdate_Delivery_method_MutationInput {
+  nova_poshta
+  courier
+  pickup
 }
 
 input mutationLegalPageInput {

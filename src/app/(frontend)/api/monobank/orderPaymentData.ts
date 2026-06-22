@@ -5,6 +5,7 @@ type PaymentMethod = 'card-online' | 'monobank-parts'
 
 type StoredOrderItem = {
   price?: unknown
+  product?: unknown
   productId?: unknown
   quantity?: unknown
   title?: unknown
@@ -57,7 +58,11 @@ function normalizeStoredItems(value: unknown) {
       const quantity = normalizeQuantity(storedItem.quantity)
       const title = typeof storedItem.title === 'string' ? storedItem.title.trim() : ''
       const productId =
-        typeof storedItem.productId === 'string' || typeof storedItem.productId === 'number'
+        typeof storedItem.product === 'string' || typeof storedItem.product === 'number'
+          ? String(storedItem.product)
+          : typeof storedItem.product === 'object' && storedItem.product && 'id' in storedItem.product
+            ? String(storedItem.product.id)
+            : typeof storedItem.productId === 'string' || typeof storedItem.productId === 'number'
           ? String(storedItem.productId)
           : title
 
