@@ -6,14 +6,37 @@ import { aboutHighlights } from './data'
 export function AboutStorySection() {
   return (
     <section className="grid items-center gap-12 lg:grid-cols-[500px_minmax(0,1fr)]">
-      <div className="relative order-2 mx-auto h-[280px] w-full max-w-[280px] md:h-[479px] md:max-w-[500px] lg:order-1">
+      <div className="relative order-2 mx-auto aspect-[312/298.896] w-full max-w-[312px] md:hidden">
         <Image
           src={aboutTeam1}
           alt="Команда V-NRG"
-          className="absolute left-0 top-[10px] h-[140px] w-[128px] rounded-[14px] object-cover md:top-5 md:h-[260px] md:w-[240px] md:rounded-[20px]"
+          className="absolute left-0 top-[4.015%] h-[54.2%] w-[48.077%] rounded-[20px] object-cover"
         />
         <AboutStatCard
-          className="right-[8px] top-0 h-[128px] w-[120px] bg-[#4FACF5] md:right-5 md:h-[179px] md:w-[220px]"
+          className="absolute left-[51.923%] top-0 h-[37.472%] w-[43.91%] rounded-[20px] bg-[#4FACF5] p-4"
+          value="15+"
+          label="років досвіду"
+        />
+        <AboutStatCard
+          className="absolute left-[3.846%] top-[62.564%] h-[37.472%] w-[43.91%] rounded-[20px] bg-[#22354A] p-4"
+          value="20+"
+          label="країн присутності"
+        />
+        <Image
+          src={aboutTeam2}
+          alt="Виробництво V-NRG"
+          className="absolute left-[51.923%] top-[41.487%] h-[54.2%] w-[48.077%] rounded-[20px] object-cover"
+        />
+      </div>
+
+      <div className="relative order-2 mx-auto hidden h-[479px] w-full max-w-[500px] md:block lg:order-1">
+        <Image
+          src={aboutTeam1}
+          alt="Команда V-NRG"
+          className="absolute left-0 top-5 h-[260px] w-[240px] rounded-[20px] object-cover"
+        />
+        <AboutStatCard
+          className="absolute right-5 top-0 h-[179px] w-[220px] rounded-[20px] bg-[#4FACF5] p-8"
           value="15+"
           label="років досвіду"
         />
@@ -21,10 +44,10 @@ export function AboutStorySection() {
         <Image
           src={aboutTeam2}
           alt="Виробництво V-NRG"
-          className="absolute bottom-0 right-0 h-[160px] w-[128px] rounded-[14px] object-cover md:h-[260px] md:w-[240px] md:rounded-[20px]"
+          className="absolute bottom-0 right-0 h-[260px] w-[240px] rounded-[20px] object-cover"
         />
         <AboutStatCard
-          className="bottom-0 left-[10px] h-[120px] w-[120px] bg-[#22354A] md:left-5 md:h-[179px] md:w-[220px]"
+          className="absolute bottom-0 left-5 h-[179px] w-[220px] rounded-[20px] bg-[#22354A] p-8"
           value="20+"
           label="країн присутності"
         />
@@ -72,10 +95,10 @@ function AboutStatCard({
 }) {
   return (
     <div
-      className={`absolute flex flex-col items-center justify-center rounded-[14px] p-4 text-center text-white md:rounded-[20px] md:p-8 ${className}`}
+      className={`flex flex-col items-center justify-center text-center text-white ${className}`}
     >
       <div className="text-[28px] font-bold leading-[145%] md:text-[48px]">{value}</div>
-      <div className="text-[11px] font-medium leading-[165%] md:text-[16px]">{label}</div>
+      <div className="text-[12px] font-medium leading-[165%] md:text-[16px]">{label}</div>
     </div>
   )
 }
