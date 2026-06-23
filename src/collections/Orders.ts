@@ -226,9 +226,18 @@ export const Orders: CollectionConfig = {
       label: 'Коментар',
     },
     {
-      name: 'monobank',
-      type: 'json',
-      label: 'Monobank',
+      type: 'collapsible',
+      label: 'Monobank — технічні дані',
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'monobank',
+          type: 'json',
+          label: 'Відповідь Monobank',
+        },
+      ],
     },
   ],
   timestamps: true,
