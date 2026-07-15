@@ -9,8 +9,8 @@ import checkboxUncheckedIconAsset from '@public/icon/generated/catalog-checkbox-
 import radioCheckedIconAsset from '@public/icon/generated/catalog-radio-checked.svg'
 import radioUncheckedIconAsset from '@public/icon/generated/catalog-radio-unchecked.svg'
 import searchIconAsset from '@public/icon/generated/catalog-search.svg'
-import { type ProductId } from '../../data/products'
 import {
+  type CatalogModelKey,
   matchesPowerBandValue,
   powerLabels,
   type CatalogCategoryOption,
@@ -32,24 +32,24 @@ export function CatalogSidebar({
   searchQuery,
   selectedCategory,
   selectedManiples,
-  selectedModels,
+  selectedModelKeys,
   selectedPowerBands,
   showTitle = true,
 }: {
   categoryOptions: CatalogCategoryOption[]
   catalogItems: CatalogItem[]
   maniplesOptions: number[]
-  modelOptions: Array<{ id: ProductId; title: string }>
+  modelOptions: Array<{ key: CatalogModelKey; title: string }>
   onSearchChange: (value: string) => void
   onSelectCategory: (category: string) => void
   onToggleManiples: (maniples: number) => void
-  onToggleModel: (id: ProductId) => void
+  onToggleModel: (key: CatalogModelKey) => void
   onTogglePowerBand: (band: PowerBand) => void
   resetFilters: () => void
   searchQuery: string
   selectedCategory: string | null
   selectedManiples: number[]
-  selectedModels: ProductId[]
+  selectedModelKeys: CatalogModelKey[]
   selectedPowerBands: PowerBand[]
   showTitle?: boolean
 }) {
@@ -96,15 +96,15 @@ export function CatalogSidebar({
 
       <FilterSection title="Модель">
         {modelOptions.map((model) => {
-          const count = catalogItems.filter((item) => item.id === model.id).length
+          const count = catalogItems.filter((item) => item.modelKey === model.key).length
 
           return (
             <CheckboxOption
-              key={model.id}
-              checked={selectedModels.includes(model.id)}
+              key={model.key}
+              checked={selectedModelKeys.includes(model.key)}
               count={count}
               label={model.title}
-              onClick={() => onToggleModel(model.id)}
+              onClick={() => onToggleModel(model.key)}
             />
           )
         })}

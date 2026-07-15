@@ -5,11 +5,13 @@ export const ITEMS_PER_PAGE = 5
 export type ViewMode = 'grid' | 'list'
 export type SortOption = 'popular' | 'price-asc' | 'price-desc'
 export type PowerBand = 'under-1000' | 'over-1000'
+export type CatalogModelKey = string
 
 export type CatalogItem = ProductData & {
   category: ProductCategory
   categoryLabel: string
   maniples: number
+  modelKey: CatalogModelKey
   powerWatts: number
   summary: string
   uid: string
@@ -31,4 +33,8 @@ export function matchesPowerBandValue(powerWatts: number, band: PowerBand) {
   }
 
   return powerWatts > 1000
+}
+
+export function getCatalogModelKey(title: string): CatalogModelKey {
+  return title.trim().toLowerCase()
 }

@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react'
 
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import chevronDownIconAsset from '@public/icon/generated/catalog-chevron-down.svg'
-import { type ProductId } from '../../data/products'
 import { translate } from '../../lib/siteTranslations'
 import { useCommerce } from '../providers/CommerceProvider'
 import { useSitePreferences } from '../providers/SitePreferencesProvider'
@@ -18,6 +17,8 @@ import {
   CatalogToolbar,
 } from './CatalogSections'
 import {
+  type CatalogModelKey,
+  getCatalogModelKey,
   ITEMS_PER_PAGE,
   matchesPowerBandValue,
   type CatalogCategoryOption,
@@ -33,7 +34,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   const [sharedProductId, setSharedProductId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(routeCategory || null)
-  const [selectedModels, setSelectedModels] = useState<ProductId[]>([])
+  const [selectedModelKeys, setSelectedModelKeys] = useState<CatalogModelKey[]>([])
   const [selectedManiples, setSelectedManiples] = useState<number[]>([])
   const [selectedPowerBands, setSelectedPowerBands] = useState<PowerBand[]>([])
   const [sortOption, setSortOption] = useState<SortOption>('popular')
@@ -46,6 +47,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
       products.map((product, index) => ({
         ...product,
         maniples: product.maniples ?? 0,
+        modelKey: getCatalogModelKey(product.title),
         powerWatts: product.powerWatts ?? 0,
         summary: product.shortDescription,
         uid: `${product.id}-${index}`,
@@ -53,10 +55,17 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
     [products],
   )
 
-  const modelOptions = useMemo(
-    () => catalogItems.map((product) => ({ id: product.id, title: product.title })),
-    [catalogItems],
-  )
+  const modelOptions = useMemo(() => {
+    const modelsByKey = new Map<CatalogModelKey, { key: CatalogModelKey; title: string }>()
+
+    for (const product of catalogItems) {
+      if (!modelsByKey.has(product.modelKey)) {
+        modelsByKey.set(product.modelKey, { key: product.modelKey, title: product.title })
+      }
+    }
+
+    return Array.from(modelsByKey.values())
+  }, [catalogItems])
 
   const categoryOptions = useMemo<CatalogCategoryOption[]>(() => {
     return categories.map((category) => ({
@@ -83,9 +92,9 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   )
 
   useEffect(() => {
-    setSelectedModels((current) => {
-      const availableIds = modelOptions.map((option) => option.id)
-      return current.filter((id) => availableIds.includes(id))
+    setSelectedModelKeys((current) => {
+      const availableKeys = modelOptions.map((option) => option.key)
+      return current.filter((key) => availableKeys.includes(key))
     })
   }, [modelOptions])
 
@@ -109,7 +118,8 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
       item.listFeatures.some((feature) => feature.toLowerCase().includes(normalizedQuery))
 
     const matchesCategory = !selectedCategory || item.category === selectedCategory
-    const matchesModel = selectedModels.length === 0 || selectedModels.includes(item.id)
+    const matchesModel =
+      selectedModelKeys.length === 0 || selectedModelKeys.includes(item.modelKey)
     const matchesManiples =
       selectedManiples.length === 0 || selectedManiples.includes(item.maniples)
     const matchesPowerBand =
@@ -148,7 +158,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
     searchQuery,
     selectedCategory,
     selectedManiples,
-    selectedModels,
+    selectedModelKeys,
     selectedPowerBands,
     sortOption,
     viewMode,
@@ -186,7 +196,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   const resetFilters = () => {
     setSearchQuery('')
     setSelectedCategory(routeCategory || null)
-    setSelectedModels([])
+    setSelectedModelKeys([])
     setSelectedManiples([])
     setSelectedPowerBands([])
     setSortOption('popular')
@@ -220,7 +230,9 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
               onToggleManiples={(maniples) =>
                 setSelectedManiples((current) => toggleSelection(current, maniples))
               }
-              onToggleModel={(id) => setSelectedModels((current) => toggleSelection(current, id))}
+              onToggleModel={(key) =>
+                setSelectedModelKeys((current) => toggleSelection(current, key))
+              }
               onTogglePowerBand={(band) =>
                 setSelectedPowerBands((current) => toggleSelection(current, band))
               }
@@ -228,7 +240,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
               searchQuery={searchQuery}
               selectedCategory={selectedCategory}
               selectedManiples={selectedManiples}
-              selectedModels={selectedModels}
+              selectedModelKeys={selectedModelKeys}
               selectedPowerBands={selectedPowerBands}
             />
           </div>
@@ -312,7 +324,9 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
               onToggleManiples={(maniples) =>
                 setSelectedManiples((current) => toggleSelection(current, maniples))
               }
-              onToggleModel={(id) => setSelectedModels((current) => toggleSelection(current, id))}
+              onToggleModel={(key) =>
+                setSelectedModelKeys((current) => toggleSelection(current, key))
+              }
               onTogglePowerBand={(band) =>
                 setSelectedPowerBands((current) => toggleSelection(current, band))
               }
@@ -320,7 +334,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
               searchQuery={searchQuery}
               selectedCategory={selectedCategory}
               selectedManiples={selectedManiples}
-              selectedModels={selectedModels}
+              selectedModelKeys={selectedModelKeys}
               selectedPowerBands={selectedPowerBands}
               showTitle={false}
             />
