@@ -16,9 +16,11 @@ type CheckoutOrderBody = {
   customerEmail?: string
   delivery?: unknown
   firstName?: string
+  financialPhone?: string
   items?: CheckoutOrderItem[]
   lastName?: string
   orderNumber?: string
+  partsCount?: number
   paymentMethod?: string
   phone?: string
   total?: number
@@ -63,10 +65,13 @@ export async function POST(request: NextRequest) {
         customerEmail,
         delivery: normalizeDelivery(body.delivery),
         firstName,
+        financialPhone: normalizeText(body.financialPhone),
         items,
         lastName,
         orderNumber,
         orderStatus: 'new',
+        partsCount: normalizePartsCount(body.partsCount),
+        paymentApprovalStatus: getInitialPaymentApprovalStatus(paymentMethod),
         paymentMethod,
         paymentStatus: getInitialPaymentStatus(paymentMethod),
         phone,
@@ -113,6 +118,14 @@ function getInitialPaymentStatus(paymentMethod: (typeof paymentMethods)[number])
   }
 
   return 'processing'
+}
+
+function getInitialPaymentApprovalStatus(paymentMethod: (typeof paymentMethods)[number]) {
+  if (paymentMethod === 'card-online' || paymentMethod === 'monobank-parts') {
+    return 'pending_admin'
+  }
+
+  return 'confirmed'
 }
 
 async function getServerPricedItems(
@@ -162,7 +175,6 @@ async function getServerPricedItems(
   const discountMultiplier = (100 - discountPercent) / 100
 
   return docs.flatMap((product) => {
-    const productId = product.slug || String(product.id)
     const quantity =
       requestedQuantities.get(String(product.id)) ?? requestedQuantities.get(product.slug)
     const basePrice = normalizeMoney(product.price)
@@ -242,4 +254,12 @@ function normalizeMoney(value: unknown) {
 
 function normalizeQuantity(value: unknown) {
   return typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0
+}
+
+function normalizePartsCount(value: unknown) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return 8
+  }
+
+  return Math.min(8, Math.max(3, Math.floor(value)))
 }

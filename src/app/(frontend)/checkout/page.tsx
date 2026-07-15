@@ -20,17 +20,6 @@ import {
   checkoutFieldClasses,
 } from '../components/checkout/CheckoutSections'
 
-type MonobankCreateResponse = {
-  details?: unknown
-  error?: string
-  invoiceUrl?: string
-  message?: string
-  pageUrl?: string
-  redirectUrl?: string
-  redirect_url?: string
-  url?: string
-}
-
 type CreatedOrderResponse = {
   error?: string
   id: number | string
@@ -131,67 +120,24 @@ export default function CheckoutPage() {
           pickupPoint: formState.pickupPoint,
         },
         firstName: formState.firstName,
+        financialPhone: getFinancialPhone(formState.financialPhone, formState.phone),
         items: paymentItems,
         lastName: formState.lastName,
         orderNumber: orderId,
+        partsCount,
         paymentMethod: formState.paymentMethod,
         phone: formState.phone,
         total: cartTotal,
       })
       const orderNumber = createdOrder.orderNumber
 
-      if (formState.paymentMethod === 'card-online') {
-        const response = await createMonobankPayment('/api/monobank/payment/create', {
-          orderId: orderNumber,
-        })
-        const redirectUrl = getPaymentRedirectUrl(response)
-
-        if (!redirectUrl) {
-          throw new Error('Monobank did not return payment url')
-        }
-
-        completeOrder({
-          email: formState.email,
-          firstName: formState.firstName,
-          lastName: formState.lastName,
-          orderId: orderNumber,
-          phone: formState.phone,
-        })
-        window.location.assign(redirectUrl)
-        return
-      }
-
-      if (formState.paymentMethod === 'monobank-parts') {
-        const response = await createMonobankPayment('/api/monobank/parts/create', {
-          financialPhone: getFinancialPhone(formState.financialPhone, formState.phone),
-          orderId: orderNumber,
-          partsCount,
-        })
-        const redirectUrl = getPaymentRedirectUrl(response)
-
-        completeOrder({
-          email: formState.email,
-          firstName: formState.firstName,
-          lastName: formState.lastName,
-          orderId: orderNumber,
-          phone: formState.phone,
-        })
-
-        if (redirectUrl) {
-          window.location.assign(redirectUrl)
-          return
-        }
-      }
-
-      if (formState.paymentMethod !== 'monobank-parts') {
-        completeOrder({
-          email: formState.email,
-          firstName: formState.firstName,
-          lastName: formState.lastName,
-          orderId: orderNumber,
-          phone: formState.phone,
-        })
-      }
+      completeOrder({
+        email: formState.email,
+        firstName: formState.firstName,
+        lastName: formState.lastName,
+        orderId: orderNumber,
+        phone: formState.phone,
+      })
 
       router.push('/checkout/success')
     } catch (error) {
@@ -474,88 +420,6 @@ async function createCheckoutOrder(payload: Record<string, unknown>) {
   }
 
   return data
-}
-
-async function createMonobankPayment(endpoint: string, payload: Record<string, unknown>) {
-  const response = await fetch(endpoint, {
-    body: JSON.stringify(payload),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  })
-  const data = (await response.json().catch(() => null)) as MonobankCreateResponse | null
-
-  if (!response.ok || !data) {
-    throw new Error(getMonobankErrorMessage(data))
-  }
-
-  return data
-}
-
-function getPaymentRedirectUrl(response: MonobankCreateResponse) {
-  return (
-    response.pageUrl ||
-    response.invoiceUrl ||
-    response.redirectUrl ||
-    response.redirect_url ||
-    response.url ||
-    ''
-  )
-}
-
-function getMonobankErrorMessage(response: MonobankCreateResponse | null) {
-  const explicitMessage = response?.message || response?.error
-
-  if (explicitMessage) {
-    return explicitMessage
-  }
-
-  const detailsMessage = getDetailsMessage(response?.details)
-
-  return (
-    detailsMessage || 'Не вдалося створити оплату Monobank. Перевірте дані та спробуйте ще раз.'
-  )
-}
-
-function getDetailsMessage(details: unknown) {
-  if (!details || typeof details !== 'object') {
-    return ''
-  }
-
-  const record = details as Record<string, unknown>
-
-  if (typeof record.message === 'string') {
-    const nestedMessage = getNestedErrorMessage(record.errors)
-
-    return nestedMessage ? `${record.message}: ${nestedMessage}` : record.message
-  }
-
-  if (typeof record.errText === 'string') {
-    return record.errText
-  }
-
-  if (typeof record.error === 'string') {
-    return record.error
-  }
-
-  return ''
-}
-
-function getNestedErrorMessage(errors: unknown) {
-  if (!Array.isArray(errors)) {
-    return ''
-  }
-
-  const firstError = errors.find((error) => error && typeof error === 'object') as
-    | Record<string, unknown>
-    | undefined
-
-  if (!firstError) {
-    return ''
-  }
-
-  return typeof firstError.error === 'string' ? firstError.error : ''
 }
 
 function getFinancialPhone(financialPhone: string, phone: string) {

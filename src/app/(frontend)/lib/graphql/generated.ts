@@ -5772,8 +5772,12 @@ export type Order = {
   customerEmail: Scalars['EmailAddress']['output'];
   orderStatus: Order_OrderStatus;
   paymentStatus: Order_PaymentStatus;
+  paymentApprovalStatus: Order_PaymentApprovalStatus;
+  confirmedPaymentAt?: Maybe<Scalars['DateTime']['output']>;
   paymentMethod: Order_PaymentMethod;
   total: Scalars['Float']['output'];
+  financialPhone?: Maybe<Scalars['String']['output']>;
+  partsCount?: Maybe<Scalars['Float']['output']>;
   items: Array<Order_Items>;
   delivery?: Maybe<Order_Delivery>;
   comment?: Maybe<Scalars['String']['output']>;
@@ -5802,6 +5806,12 @@ export enum Order_PaymentStatus {
   Paid = 'paid',
   Failed = 'failed',
   Refunded = 'refunded'
+}
+
+export enum Order_PaymentApprovalStatus {
+  PendingAdmin = 'pending_admin',
+  Confirmed = 'confirmed',
+  Rejected = 'rejected'
 }
 
 export enum Order_PaymentMethod {
@@ -5863,8 +5873,12 @@ export type Order_Where = {
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
   orderStatus?: InputMaybe<Order_OrderStatus_Operator>;
   paymentStatus?: InputMaybe<Order_PaymentStatus_Operator>;
+  paymentApprovalStatus?: InputMaybe<Order_PaymentApprovalStatus_Operator>;
+  confirmedPaymentAt?: InputMaybe<Order_ConfirmedPaymentAt_Operator>;
   paymentMethod?: InputMaybe<Order_PaymentMethod_Operator>;
   total?: InputMaybe<Order_Total_Operator>;
+  financialPhone?: InputMaybe<Order_FinancialPhone_Operator>;
+  partsCount?: InputMaybe<Order_PartsCount_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
   items__title?: InputMaybe<Order_Items__Title_Operator>;
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
@@ -5973,6 +5987,31 @@ export enum Order_PaymentStatus_Input {
   Refunded = 'refunded'
 }
 
+export type Order_PaymentApprovalStatus_Operator = {
+  equals?: InputMaybe<Order_PaymentApprovalStatus_Input>;
+  not_equals?: InputMaybe<Order_PaymentApprovalStatus_Input>;
+  in?: InputMaybe<Array<InputMaybe<Order_PaymentApprovalStatus_Input>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Order_PaymentApprovalStatus_Input>>>;
+  all?: InputMaybe<Array<InputMaybe<Order_PaymentApprovalStatus_Input>>>;
+};
+
+export enum Order_PaymentApprovalStatus_Input {
+  PendingAdmin = 'pending_admin',
+  Confirmed = 'confirmed',
+  Rejected = 'rejected'
+}
+
+export type Order_ConfirmedPaymentAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Order_PaymentMethod_Operator = {
   equals?: InputMaybe<Order_PaymentMethod_Input>;
   not_equals?: InputMaybe<Order_PaymentMethod_Input>;
@@ -5995,6 +6034,27 @@ export type Order_Total_Operator = {
   greater_than?: InputMaybe<Scalars['Float']['input']>;
   less_than_equal?: InputMaybe<Scalars['Float']['input']>;
   less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_FinancialPhone_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Order_PartsCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Order_Items__Product_Operator = {
@@ -6139,8 +6199,12 @@ export type Order_Where_And = {
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
   orderStatus?: InputMaybe<Order_OrderStatus_Operator>;
   paymentStatus?: InputMaybe<Order_PaymentStatus_Operator>;
+  paymentApprovalStatus?: InputMaybe<Order_PaymentApprovalStatus_Operator>;
+  confirmedPaymentAt?: InputMaybe<Order_ConfirmedPaymentAt_Operator>;
   paymentMethod?: InputMaybe<Order_PaymentMethod_Operator>;
   total?: InputMaybe<Order_Total_Operator>;
+  financialPhone?: InputMaybe<Order_FinancialPhone_Operator>;
+  partsCount?: InputMaybe<Order_PartsCount_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
   items__title?: InputMaybe<Order_Items__Title_Operator>;
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
@@ -6167,8 +6231,12 @@ export type Order_Where_Or = {
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
   orderStatus?: InputMaybe<Order_OrderStatus_Operator>;
   paymentStatus?: InputMaybe<Order_PaymentStatus_Operator>;
+  paymentApprovalStatus?: InputMaybe<Order_PaymentApprovalStatus_Operator>;
+  confirmedPaymentAt?: InputMaybe<Order_ConfirmedPaymentAt_Operator>;
   paymentMethod?: InputMaybe<Order_PaymentMethod_Operator>;
   total?: InputMaybe<Order_Total_Operator>;
+  financialPhone?: InputMaybe<Order_FinancialPhone_Operator>;
+  partsCount?: InputMaybe<Order_PartsCount_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
   items__title?: InputMaybe<Order_Items__Title_Operator>;
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
@@ -6210,8 +6278,12 @@ export type OrdersDocAccessFields = {
   customerEmail?: Maybe<OrdersDocAccessFields_CustomerEmail>;
   orderStatus?: Maybe<OrdersDocAccessFields_OrderStatus>;
   paymentStatus?: Maybe<OrdersDocAccessFields_PaymentStatus>;
+  paymentApprovalStatus?: Maybe<OrdersDocAccessFields_PaymentApprovalStatus>;
+  confirmedPaymentAt?: Maybe<OrdersDocAccessFields_ConfirmedPaymentAt>;
   paymentMethod?: Maybe<OrdersDocAccessFields_PaymentMethod>;
   total?: Maybe<OrdersDocAccessFields_Total>;
+  financialPhone?: Maybe<OrdersDocAccessFields_FinancialPhone>;
+  partsCount?: Maybe<OrdersDocAccessFields_PartsCount>;
   items?: Maybe<OrdersDocAccessFields_Items>;
   delivery?: Maybe<OrdersDocAccessFields_Delivery>;
   comment?: Maybe<OrdersDocAccessFields_Comment>;
@@ -6444,6 +6516,62 @@ export type OrdersDocAccessFields_PaymentStatus_Delete = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_PaymentApprovalStatus = {
+  __typename?: 'OrdersDocAccessFields_paymentApprovalStatus';
+  create?: Maybe<OrdersDocAccessFields_PaymentApprovalStatus_Create>;
+  read?: Maybe<OrdersDocAccessFields_PaymentApprovalStatus_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentApprovalStatus_Update>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentApprovalStatus_Delete>;
+};
+
+export type OrdersDocAccessFields_PaymentApprovalStatus_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentApprovalStatus_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentApprovalStatus_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentApprovalStatus_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentApprovalStatus_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentApprovalStatus_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentApprovalStatus_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentApprovalStatus_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_ConfirmedPaymentAt = {
+  __typename?: 'OrdersDocAccessFields_confirmedPaymentAt';
+  create?: Maybe<OrdersDocAccessFields_ConfirmedPaymentAt_Create>;
+  read?: Maybe<OrdersDocAccessFields_ConfirmedPaymentAt_Read>;
+  update?: Maybe<OrdersDocAccessFields_ConfirmedPaymentAt_Update>;
+  delete?: Maybe<OrdersDocAccessFields_ConfirmedPaymentAt_Delete>;
+};
+
+export type OrdersDocAccessFields_ConfirmedPaymentAt_Create = {
+  __typename?: 'OrdersDocAccessFields_confirmedPaymentAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_ConfirmedPaymentAt_Read = {
+  __typename?: 'OrdersDocAccessFields_confirmedPaymentAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_ConfirmedPaymentAt_Update = {
+  __typename?: 'OrdersDocAccessFields_confirmedPaymentAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_ConfirmedPaymentAt_Delete = {
+  __typename?: 'OrdersDocAccessFields_confirmedPaymentAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_PaymentMethod = {
   __typename?: 'OrdersDocAccessFields_paymentMethod';
   create?: Maybe<OrdersDocAccessFields_PaymentMethod_Create>;
@@ -6497,6 +6625,62 @@ export type OrdersDocAccessFields_Total_Update = {
 
 export type OrdersDocAccessFields_Total_Delete = {
   __typename?: 'OrdersDocAccessFields_total_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_FinancialPhone = {
+  __typename?: 'OrdersDocAccessFields_financialPhone';
+  create?: Maybe<OrdersDocAccessFields_FinancialPhone_Create>;
+  read?: Maybe<OrdersDocAccessFields_FinancialPhone_Read>;
+  update?: Maybe<OrdersDocAccessFields_FinancialPhone_Update>;
+  delete?: Maybe<OrdersDocAccessFields_FinancialPhone_Delete>;
+};
+
+export type OrdersDocAccessFields_FinancialPhone_Create = {
+  __typename?: 'OrdersDocAccessFields_financialPhone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_FinancialPhone_Read = {
+  __typename?: 'OrdersDocAccessFields_financialPhone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_FinancialPhone_Update = {
+  __typename?: 'OrdersDocAccessFields_financialPhone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_FinancialPhone_Delete = {
+  __typename?: 'OrdersDocAccessFields_financialPhone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PartsCount = {
+  __typename?: 'OrdersDocAccessFields_partsCount';
+  create?: Maybe<OrdersDocAccessFields_PartsCount_Create>;
+  read?: Maybe<OrdersDocAccessFields_PartsCount_Read>;
+  update?: Maybe<OrdersDocAccessFields_PartsCount_Update>;
+  delete?: Maybe<OrdersDocAccessFields_PartsCount_Delete>;
+};
+
+export type OrdersDocAccessFields_PartsCount_Create = {
+  __typename?: 'OrdersDocAccessFields_partsCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PartsCount_Read = {
+  __typename?: 'OrdersDocAccessFields_partsCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PartsCount_Update = {
+  __typename?: 'OrdersDocAccessFields_partsCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PartsCount_Delete = {
+  __typename?: 'OrdersDocAccessFields_partsCount_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -18576,8 +18760,12 @@ export type OrdersFields = {
   customerEmail?: Maybe<OrdersFields_CustomerEmail>;
   orderStatus?: Maybe<OrdersFields_OrderStatus>;
   paymentStatus?: Maybe<OrdersFields_PaymentStatus>;
+  paymentApprovalStatus?: Maybe<OrdersFields_PaymentApprovalStatus>;
+  confirmedPaymentAt?: Maybe<OrdersFields_ConfirmedPaymentAt>;
   paymentMethod?: Maybe<OrdersFields_PaymentMethod>;
   total?: Maybe<OrdersFields_Total>;
+  financialPhone?: Maybe<OrdersFields_FinancialPhone>;
+  partsCount?: Maybe<OrdersFields_PartsCount>;
   items?: Maybe<OrdersFields_Items>;
   delivery?: Maybe<OrdersFields_Delivery>;
   comment?: Maybe<OrdersFields_Comment>;
@@ -18810,6 +18998,62 @@ export type OrdersFields_PaymentStatus_Delete = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersFields_PaymentApprovalStatus = {
+  __typename?: 'OrdersFields_paymentApprovalStatus';
+  create?: Maybe<OrdersFields_PaymentApprovalStatus_Create>;
+  read?: Maybe<OrdersFields_PaymentApprovalStatus_Read>;
+  update?: Maybe<OrdersFields_PaymentApprovalStatus_Update>;
+  delete?: Maybe<OrdersFields_PaymentApprovalStatus_Delete>;
+};
+
+export type OrdersFields_PaymentApprovalStatus_Create = {
+  __typename?: 'OrdersFields_paymentApprovalStatus_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentApprovalStatus_Read = {
+  __typename?: 'OrdersFields_paymentApprovalStatus_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentApprovalStatus_Update = {
+  __typename?: 'OrdersFields_paymentApprovalStatus_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentApprovalStatus_Delete = {
+  __typename?: 'OrdersFields_paymentApprovalStatus_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_ConfirmedPaymentAt = {
+  __typename?: 'OrdersFields_confirmedPaymentAt';
+  create?: Maybe<OrdersFields_ConfirmedPaymentAt_Create>;
+  read?: Maybe<OrdersFields_ConfirmedPaymentAt_Read>;
+  update?: Maybe<OrdersFields_ConfirmedPaymentAt_Update>;
+  delete?: Maybe<OrdersFields_ConfirmedPaymentAt_Delete>;
+};
+
+export type OrdersFields_ConfirmedPaymentAt_Create = {
+  __typename?: 'OrdersFields_confirmedPaymentAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_ConfirmedPaymentAt_Read = {
+  __typename?: 'OrdersFields_confirmedPaymentAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_ConfirmedPaymentAt_Update = {
+  __typename?: 'OrdersFields_confirmedPaymentAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_ConfirmedPaymentAt_Delete = {
+  __typename?: 'OrdersFields_confirmedPaymentAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersFields_PaymentMethod = {
   __typename?: 'OrdersFields_paymentMethod';
   create?: Maybe<OrdersFields_PaymentMethod_Create>;
@@ -18863,6 +19107,62 @@ export type OrdersFields_Total_Update = {
 
 export type OrdersFields_Total_Delete = {
   __typename?: 'OrdersFields_total_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_FinancialPhone = {
+  __typename?: 'OrdersFields_financialPhone';
+  create?: Maybe<OrdersFields_FinancialPhone_Create>;
+  read?: Maybe<OrdersFields_FinancialPhone_Read>;
+  update?: Maybe<OrdersFields_FinancialPhone_Update>;
+  delete?: Maybe<OrdersFields_FinancialPhone_Delete>;
+};
+
+export type OrdersFields_FinancialPhone_Create = {
+  __typename?: 'OrdersFields_financialPhone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_FinancialPhone_Read = {
+  __typename?: 'OrdersFields_financialPhone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_FinancialPhone_Update = {
+  __typename?: 'OrdersFields_financialPhone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_FinancialPhone_Delete = {
+  __typename?: 'OrdersFields_financialPhone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PartsCount = {
+  __typename?: 'OrdersFields_partsCount';
+  create?: Maybe<OrdersFields_PartsCount_Create>;
+  read?: Maybe<OrdersFields_PartsCount_Read>;
+  update?: Maybe<OrdersFields_PartsCount_Update>;
+  delete?: Maybe<OrdersFields_PartsCount_Delete>;
+};
+
+export type OrdersFields_PartsCount_Create = {
+  __typename?: 'OrdersFields_partsCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PartsCount_Read = {
+  __typename?: 'OrdersFields_partsCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PartsCount_Update = {
+  __typename?: 'OrdersFields_partsCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PartsCount_Delete = {
+  __typename?: 'OrdersFields_partsCount_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -26633,8 +26933,12 @@ export type MutationOrderInput = {
   customerEmail: Scalars['String']['input'];
   orderStatus: Order_OrderStatus_MutationInput;
   paymentStatus: Order_PaymentStatus_MutationInput;
+  paymentApprovalStatus: Order_PaymentApprovalStatus_MutationInput;
+  confirmedPaymentAt?: InputMaybe<Scalars['String']['input']>;
   paymentMethod: Order_PaymentMethod_MutationInput;
   total: Scalars['Float']['input'];
+  financialPhone?: InputMaybe<Scalars['String']['input']>;
+  partsCount?: InputMaybe<Scalars['Float']['input']>;
   items?: InputMaybe<Array<MutationOrder_ItemsInput>>;
   delivery?: InputMaybe<MutationOrder_DeliveryInput>;
   comment?: InputMaybe<Scalars['String']['input']>;
@@ -26657,6 +26961,12 @@ export enum Order_PaymentStatus_MutationInput {
   Paid = 'paid',
   Failed = 'failed',
   Refunded = 'refunded'
+}
+
+export enum Order_PaymentApprovalStatus_MutationInput {
+  PendingAdmin = 'pending_admin',
+  Confirmed = 'confirmed',
+  Rejected = 'rejected'
 }
 
 export enum Order_PaymentMethod_MutationInput {
@@ -26695,8 +27005,12 @@ export type MutationOrderUpdateInput = {
   customerEmail?: InputMaybe<Scalars['String']['input']>;
   orderStatus?: InputMaybe<OrderUpdate_OrderStatus_MutationInput>;
   paymentStatus?: InputMaybe<OrderUpdate_PaymentStatus_MutationInput>;
+  paymentApprovalStatus?: InputMaybe<OrderUpdate_PaymentApprovalStatus_MutationInput>;
+  confirmedPaymentAt?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<OrderUpdate_PaymentMethod_MutationInput>;
   total?: InputMaybe<Scalars['Float']['input']>;
+  financialPhone?: InputMaybe<Scalars['String']['input']>;
+  partsCount?: InputMaybe<Scalars['Float']['input']>;
   items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
   delivery?: InputMaybe<MutationOrderUpdate_DeliveryInput>;
   comment?: InputMaybe<Scalars['String']['input']>;
@@ -26719,6 +27033,12 @@ export enum OrderUpdate_PaymentStatus_MutationInput {
   Paid = 'paid',
   Failed = 'failed',
   Refunded = 'refunded'
+}
+
+export enum OrderUpdate_PaymentApprovalStatus_MutationInput {
+  PendingAdmin = 'pending_admin',
+  Confirmed = 'confirmed',
+  Rejected = 'rejected'
 }
 
 export enum OrderUpdate_PaymentMethod_MutationInput {

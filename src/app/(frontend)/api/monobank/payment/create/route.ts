@@ -21,6 +21,10 @@ type PaymentRequestBody = {
 const MONOBANK_ACQUIRING_URL = 'https://api.monobank.ua/api/merchant/invoice/create'
 
 export async function POST(request: NextRequest) {
+  if (!(await isAdminRequest(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const token = process.env.MONOBANK_ACQUIRING_TOKEN
 
   if (!token) {
@@ -91,6 +95,18 @@ export async function POST(request: NextRequest) {
   })
 
   return NextResponse.json(payload)
+}
+
+async function isAdminRequest(request: NextRequest) {
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const authResult = await payload.auth({ headers: request.headers })
+    const user = authResult.user
+
+    return user?.collection === 'users' && user.role === 'admin'
+  } catch {
+    return false
+  }
 }
 
 function getMonobankErrorMessage(payload: unknown, fallback: string) {

@@ -27,6 +27,10 @@ const DEFAULT_PARTS_CREATE_URL = 'https://u2.monobank.com.ua/api/order/create'
 const DEFAULT_PARTS_COUNT = 8
 
 export async function POST(request: NextRequest) {
+  if (!(await isAdminRequest(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const storeId = process.env.MONOBANK_PARTS_STORE_ID
   const secret = process.env.MONOBANK_PARTS_SECRET
   const createUrl = process.env.MONOBANK_PARTS_API_URL || DEFAULT_PARTS_CREATE_URL
@@ -113,6 +117,18 @@ export async function POST(request: NextRequest) {
   })
 
   return NextResponse.json(responsePayload)
+}
+
+async function isAdminRequest(request: NextRequest) {
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const authResult = await payload.auth({ headers: request.headers })
+    const user = authResult.user
+
+    return user?.collection === 'users' && user.role === 'admin'
+  } catch {
+    return false
+  }
 }
 
 function getMonobankErrorMessage(payload: unknown, fallback: string) {

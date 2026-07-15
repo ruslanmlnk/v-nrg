@@ -4376,8 +4376,12 @@ type Order {
   customerEmail: EmailAddress!
   orderStatus: Order_orderStatus!
   paymentStatus: Order_paymentStatus!
+  paymentApprovalStatus: Order_paymentApprovalStatus!
+  confirmedPaymentAt: DateTime
   paymentMethod: Order_paymentMethod!
   total: Float!
+  financialPhone: String
+  partsCount: Float
   items: [Order_Items!]!
   delivery: Order_Delivery
   comment: String
@@ -4400,6 +4404,12 @@ enum Order_paymentStatus {
   paid
   failed
   refunded
+}
+
+enum Order_paymentApprovalStatus {
+  pending_admin
+  confirmed
+  rejected
 }
 
 enum Order_paymentMethod {
@@ -4452,8 +4462,12 @@ input Order_where {
   customerEmail: Order_customerEmail_operator
   orderStatus: Order_orderStatus_operator
   paymentStatus: Order_paymentStatus_operator
+  paymentApprovalStatus: Order_paymentApprovalStatus_operator
+  confirmedPaymentAt: Order_confirmedPaymentAt_operator
   paymentMethod: Order_paymentMethod_operator
   total: Order_total_operator
+  financialPhone: Order_financialPhone_operator
+  partsCount: Order_partsCount_operator
   items__product: Order_items__product_operator
   items__title: Order_items__title_operator
   items__quantity: Order_items__quantity_operator
@@ -4562,6 +4576,31 @@ enum Order_paymentStatus_Input {
   refunded
 }
 
+input Order_paymentApprovalStatus_operator {
+  equals: Order_paymentApprovalStatus_Input
+  not_equals: Order_paymentApprovalStatus_Input
+  in: [Order_paymentApprovalStatus_Input]
+  not_in: [Order_paymentApprovalStatus_Input]
+  all: [Order_paymentApprovalStatus_Input]
+}
+
+enum Order_paymentApprovalStatus_Input {
+  pending_admin
+  confirmed
+  rejected
+}
+
+input Order_confirmedPaymentAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
 input Order_paymentMethod_operator {
   equals: Order_paymentMethod_Input
   not_equals: Order_paymentMethod_Input
@@ -4584,6 +4623,27 @@ input Order_total_operator {
   greater_than: Float
   less_than_equal: Float
   less_than: Float
+}
+
+input Order_financialPhone_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Order_partsCount_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
 }
 
 input Order_items__product_operator {
@@ -4728,8 +4788,12 @@ input Order_where_and {
   customerEmail: Order_customerEmail_operator
   orderStatus: Order_orderStatus_operator
   paymentStatus: Order_paymentStatus_operator
+  paymentApprovalStatus: Order_paymentApprovalStatus_operator
+  confirmedPaymentAt: Order_confirmedPaymentAt_operator
   paymentMethod: Order_paymentMethod_operator
   total: Order_total_operator
+  financialPhone: Order_financialPhone_operator
+  partsCount: Order_partsCount_operator
   items__product: Order_items__product_operator
   items__title: Order_items__title_operator
   items__quantity: Order_items__quantity_operator
@@ -4756,8 +4820,12 @@ input Order_where_or {
   customerEmail: Order_customerEmail_operator
   orderStatus: Order_orderStatus_operator
   paymentStatus: Order_paymentStatus_operator
+  paymentApprovalStatus: Order_paymentApprovalStatus_operator
+  confirmedPaymentAt: Order_confirmedPaymentAt_operator
   paymentMethod: Order_paymentMethod_operator
   total: Order_total_operator
+  financialPhone: Order_financialPhone_operator
+  partsCount: Order_partsCount_operator
   items__product: Order_items__product_operator
   items__title: Order_items__title_operator
   items__quantity: Order_items__quantity_operator
@@ -4796,8 +4864,12 @@ type OrdersDocAccessFields {
   customerEmail: OrdersDocAccessFields_customerEmail
   orderStatus: OrdersDocAccessFields_orderStatus
   paymentStatus: OrdersDocAccessFields_paymentStatus
+  paymentApprovalStatus: OrdersDocAccessFields_paymentApprovalStatus
+  confirmedPaymentAt: OrdersDocAccessFields_confirmedPaymentAt
   paymentMethod: OrdersDocAccessFields_paymentMethod
   total: OrdersDocAccessFields_total
+  financialPhone: OrdersDocAccessFields_financialPhone
+  partsCount: OrdersDocAccessFields_partsCount
   items: OrdersDocAccessFields_items
   delivery: OrdersDocAccessFields_delivery
   comment: OrdersDocAccessFields_comment
@@ -4990,6 +5062,52 @@ type OrdersDocAccessFields_paymentStatus_Delete {
   permission: Boolean!
 }
 
+type OrdersDocAccessFields_paymentApprovalStatus {
+  create: OrdersDocAccessFields_paymentApprovalStatus_Create
+  read: OrdersDocAccessFields_paymentApprovalStatus_Read
+  update: OrdersDocAccessFields_paymentApprovalStatus_Update
+  delete: OrdersDocAccessFields_paymentApprovalStatus_Delete
+}
+
+type OrdersDocAccessFields_paymentApprovalStatus_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentApprovalStatus_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentApprovalStatus_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_paymentApprovalStatus_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_confirmedPaymentAt {
+  create: OrdersDocAccessFields_confirmedPaymentAt_Create
+  read: OrdersDocAccessFields_confirmedPaymentAt_Read
+  update: OrdersDocAccessFields_confirmedPaymentAt_Update
+  delete: OrdersDocAccessFields_confirmedPaymentAt_Delete
+}
+
+type OrdersDocAccessFields_confirmedPaymentAt_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_confirmedPaymentAt_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_confirmedPaymentAt_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_confirmedPaymentAt_Delete {
+  permission: Boolean!
+}
+
 type OrdersDocAccessFields_paymentMethod {
   create: OrdersDocAccessFields_paymentMethod_Create
   read: OrdersDocAccessFields_paymentMethod_Read
@@ -5033,6 +5151,52 @@ type OrdersDocAccessFields_total_Update {
 }
 
 type OrdersDocAccessFields_total_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_financialPhone {
+  create: OrdersDocAccessFields_financialPhone_Create
+  read: OrdersDocAccessFields_financialPhone_Read
+  update: OrdersDocAccessFields_financialPhone_Update
+  delete: OrdersDocAccessFields_financialPhone_Delete
+}
+
+type OrdersDocAccessFields_financialPhone_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_financialPhone_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_financialPhone_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_financialPhone_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_partsCount {
+  create: OrdersDocAccessFields_partsCount_Create
+  read: OrdersDocAccessFields_partsCount_Read
+  update: OrdersDocAccessFields_partsCount_Update
+  delete: OrdersDocAccessFields_partsCount_Delete
+}
+
+type OrdersDocAccessFields_partsCount_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_partsCount_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_partsCount_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_partsCount_Delete {
   permission: Boolean!
 }
 
@@ -15192,8 +15356,12 @@ type OrdersFields {
   customerEmail: OrdersFields_customerEmail
   orderStatus: OrdersFields_orderStatus
   paymentStatus: OrdersFields_paymentStatus
+  paymentApprovalStatus: OrdersFields_paymentApprovalStatus
+  confirmedPaymentAt: OrdersFields_confirmedPaymentAt
   paymentMethod: OrdersFields_paymentMethod
   total: OrdersFields_total
+  financialPhone: OrdersFields_financialPhone
+  partsCount: OrdersFields_partsCount
   items: OrdersFields_items
   delivery: OrdersFields_delivery
   comment: OrdersFields_comment
@@ -15386,6 +15554,52 @@ type OrdersFields_paymentStatus_Delete {
   permission: Boolean!
 }
 
+type OrdersFields_paymentApprovalStatus {
+  create: OrdersFields_paymentApprovalStatus_Create
+  read: OrdersFields_paymentApprovalStatus_Read
+  update: OrdersFields_paymentApprovalStatus_Update
+  delete: OrdersFields_paymentApprovalStatus_Delete
+}
+
+type OrdersFields_paymentApprovalStatus_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentApprovalStatus_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentApprovalStatus_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_paymentApprovalStatus_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_confirmedPaymentAt {
+  create: OrdersFields_confirmedPaymentAt_Create
+  read: OrdersFields_confirmedPaymentAt_Read
+  update: OrdersFields_confirmedPaymentAt_Update
+  delete: OrdersFields_confirmedPaymentAt_Delete
+}
+
+type OrdersFields_confirmedPaymentAt_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_confirmedPaymentAt_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_confirmedPaymentAt_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_confirmedPaymentAt_Delete {
+  permission: Boolean!
+}
+
 type OrdersFields_paymentMethod {
   create: OrdersFields_paymentMethod_Create
   read: OrdersFields_paymentMethod_Read
@@ -15429,6 +15643,52 @@ type OrdersFields_total_Update {
 }
 
 type OrdersFields_total_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_financialPhone {
+  create: OrdersFields_financialPhone_Create
+  read: OrdersFields_financialPhone_Read
+  update: OrdersFields_financialPhone_Update
+  delete: OrdersFields_financialPhone_Delete
+}
+
+type OrdersFields_financialPhone_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_financialPhone_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_financialPhone_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_financialPhone_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_partsCount {
+  create: OrdersFields_partsCount_Create
+  read: OrdersFields_partsCount_Read
+  update: OrdersFields_partsCount_Update
+  delete: OrdersFields_partsCount_Delete
+}
+
+type OrdersFields_partsCount_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_partsCount_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_partsCount_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_partsCount_Delete {
   permission: Boolean!
 }
 
@@ -21446,8 +21706,12 @@ input mutationOrderInput {
   customerEmail: String!
   orderStatus: Order_orderStatus_MutationInput!
   paymentStatus: Order_paymentStatus_MutationInput!
+  paymentApprovalStatus: Order_paymentApprovalStatus_MutationInput!
+  confirmedPaymentAt: String
   paymentMethod: Order_paymentMethod_MutationInput!
   total: Float!
+  financialPhone: String
+  partsCount: Float
   items: [mutationOrder_ItemsInput!]
   delivery: mutationOrder_DeliveryInput
   comment: String
@@ -21470,6 +21734,12 @@ enum Order_paymentStatus_MutationInput {
   paid
   failed
   refunded
+}
+
+enum Order_paymentApprovalStatus_MutationInput {
+  pending_admin
+  confirmed
+  rejected
 }
 
 enum Order_paymentMethod_MutationInput {
@@ -21508,8 +21778,12 @@ input mutationOrderUpdateInput {
   customerEmail: String
   orderStatus: OrderUpdate_orderStatus_MutationInput
   paymentStatus: OrderUpdate_paymentStatus_MutationInput
+  paymentApprovalStatus: OrderUpdate_paymentApprovalStatus_MutationInput
+  confirmedPaymentAt: String
   paymentMethod: OrderUpdate_paymentMethod_MutationInput
   total: Float
+  financialPhone: String
+  partsCount: Float
   items: [mutationOrderUpdate_ItemsInput]
   delivery: mutationOrderUpdate_DeliveryInput
   comment: String
@@ -21532,6 +21806,12 @@ enum OrderUpdate_paymentStatus_MutationInput {
   paid
   failed
   refunded
+}
+
+enum OrderUpdate_paymentApprovalStatus_MutationInput {
+  pending_admin
+  confirmed
+  rejected
 }
 
 enum OrderUpdate_paymentMethod_MutationInput {

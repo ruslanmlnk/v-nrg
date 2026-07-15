@@ -402,8 +402,12 @@ export interface Order {
   customerEmail: string;
   orderStatus: 'new' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   paymentStatus: 'awaiting_payment' | 'processing' | 'paid' | 'failed' | 'refunded';
+  paymentApprovalStatus: 'pending_admin' | 'confirmed' | 'rejected';
+  confirmedPaymentAt?: string | null;
   paymentMethod: 'card-online' | 'monobank-parts' | 'invoice' | 'cash-on-delivery';
   total: number;
+  financialPhone?: string | null;
+  partsCount?: number | null;
   items: {
     product?: (number | null) | Product;
     title: string;
@@ -907,8 +911,12 @@ export interface OrdersSelect<T extends boolean = true> {
   customerEmail?: T;
   orderStatus?: T;
   paymentStatus?: T;
+  paymentApprovalStatus?: T;
+  confirmedPaymentAt?: T;
   paymentMethod?: T;
   total?: T;
+  financialPhone?: T;
+  partsCount?: T;
   items?:
     | T
     | {
