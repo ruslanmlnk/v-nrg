@@ -39,10 +39,35 @@ export type ProductVideoItem = {
   src: string
 }
 
+export type ProductRichTextNode = {
+  children?: ProductRichTextNode[]
+  fields?: {
+    blockType?: string
+    linkType?: string
+    newTab?: boolean | null
+    url?: string | null
+  }
+  format?: number | string
+  listType?: string
+  tag?: string
+  text?: string
+  type?: string
+}
+
+export type ProductRichTextContent = {
+  root?: {
+    children?: ProductRichTextNode[]
+  }
+}
+
 export type ProductTabContent =
   | {
       paragraphs: string[]
       type: 'paragraphs'
+    }
+  | {
+      content: ProductRichTextContent
+      type: 'richText'
     }
   | {
       items: string[]
@@ -119,7 +144,7 @@ export type ProductSource = {
     | Array<{ label?: string | null; value?: string | null } | null>
     | null
     | undefined
-  description?: unknown
+  description?: ProductRichTextContent | null
   details?: string | null
   equipment?: Array<string | null | undefined> | null
   faq?: Array<{ answer?: string | null; question?: string | null } | null> | null | undefined
@@ -205,7 +230,6 @@ export function formatPrice(value: number) {
 }
 
 function unwrapTabs(product: ProductSource): ProductTabData[] {
-  const description = unwrapRichTextLines(product.description)
   const specifications = unwrapSpecifications(product.characteristics)
   const equipment = unwrapTextList(product.equipment)
   const advantages = unwrapTextList(product.advantages)
@@ -213,12 +237,28 @@ function unwrapTabs(product: ProductSource): ProductTabData[] {
   const videoDescription = unwrapText(product.videoDescription)
 
   return [
-    createParagraphTab('description', 'Опис', description),
+    createRichTextTab('description', 'Опис', product.description),
     createSpecificationTab('specs', 'Характеристики', specifications),
     createChecklistTab('package', 'Комплектація', equipment),
     createChecklistTab('advantages', 'Переваги', advantages),
     createVideoTab('video', 'Відео роботи', videos, videoDescription),
   ].filter(isDefined)
+}
+
+function createRichTextTab(
+  id: string,
+  label: string,
+  content?: ProductRichTextContent | null,
+): ProductTabData | undefined {
+  if (!hasRichTextContent(content)) {
+    return undefined
+  }
+
+  return {
+    content: { content, type: 'richText' },
+    id,
+    label,
+  }
 }
 
 function createParagraphTab(
@@ -370,30 +410,26 @@ function unwrapSlug(product: ProductSource): string {
   return unwrapText(product.slug) ?? formatSlug(unwrapText(product.title)) ?? String(product.cmsId)
 }
 
-function unwrapRichTextLines(value: unknown): string[] {
-  const children = asArray(asRecord(asRecord(value)?.root)?.children)
-
-  return children
-    .map(collectText)
-    .map((line) => line.trim())
-    .filter(Boolean)
-}
-
-function collectText(value: unknown): string {
-  const record = asRecord(value)
-
-  if (!record) {
-    return ''
-  }
-
-  const text = unwrapText(record.text) ?? ''
-  const childText = asArray(record.children).map(collectText).filter(Boolean).join(' ')
-
-  return [text, childText].filter(Boolean).join(' ')
-}
-
 function unwrapTextList(value: Array<string | null | undefined> | null | undefined): string[] {
   return asArray<string | null | undefined>(value).map(unwrapText).filter(isDefined)
+}
+
+function hasRichTextContent(
+  content?: ProductRichTextContent | null,
+): content is ProductRichTextContent {
+  return asArray<ProductRichTextNode>(content?.root?.children).some(hasRichTextNodeContent)
+}
+
+function hasRichTextNodeContent(node: ProductRichTextNode): boolean {
+  if (unwrapText(node.text)) {
+    return true
+  }
+
+  if (node.type && node.type !== 'paragraph') {
+    return true
+  }
+
+  return asArray<ProductRichTextNode>(node.children).some(hasRichTextNodeContent)
 }
 
 function unwrapText(value: unknown): string | undefined {

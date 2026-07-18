@@ -11,6 +11,7 @@ import {
   type ProductTabData,
   type ProductVideoItem,
 } from '../../data/products'
+import { ProductRichTextContent } from './ProductRichTextContent'
 
 export function ProductTabsSection({
   activeTab,
@@ -85,6 +86,10 @@ function TabLabel({
 }
 
 function TabContent({ tab }: { tab: ProductTabData }) {
+  if (tab.content.type === 'richText') {
+    return <ProductRichTextContent content={tab.content.content} />
+  }
+
   if (tab.content.type === 'paragraphs') {
     return (
       <div className="flex flex-col gap-4 pt-8">

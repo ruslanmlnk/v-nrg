@@ -5,6 +5,7 @@ import {
   unwrapProduct,
   type ProductCategoryData,
   type ProductData,
+  type ProductRichTextContent,
   type ProductSource,
 } from '../../data/products'
 import type { GetLayoutDataQuery, ProductFrontendFieldsFragment } from './generated'
@@ -53,7 +54,7 @@ function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
     })),
     cmsId: product.id,
     compareFeatures: product.compareFeatures,
-    description: product.description?.content,
+    description: product.description?.content as ProductRichTextContent | null | undefined,
     details: product.details,
     equipment: product.equipment?.items?.map((item) => item?.item),
     faq: product.faq,
