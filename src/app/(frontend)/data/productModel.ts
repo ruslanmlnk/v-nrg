@@ -43,6 +43,10 @@ export type ProductRichTextNode = {
   children?: ProductRichTextNode[]
   fields?: {
     blockType?: string
+    doc?: {
+      relationTo?: string
+      value?: number | string | Record<string, unknown> | null
+    } | null
     linkType?: string
     newTab?: boolean | null
     url?: string | null

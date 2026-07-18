@@ -1,159 +1,88 @@
-import type { ReactNode } from 'react'
-import type {
-  ProductRichTextContent as ProductRichTextContentData,
-  ProductRichTextNode,
-} from '../../data/products'
+import { LinkJSXConverter, RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedLinkNode } from '@payloadcms/richtext-lexical'
+import type { SerializedEditorState } from 'lexical'
+
+import type { ProductRichTextContent as ProductRichTextContentData } from '../../data/products'
+
+const richTextClassName = [
+  'pt-8 text-[18px] font-medium leading-[165%] text-[#22354A]',
+  '[&_>*+*]:mt-4',
+  '[&_a]:font-bold [&_a]:text-[#4FACF5] [&_a]:underline-offset-4 hover:[&_a]:underline',
+  '[&_blockquote]:border-l-4 [&_blockquote]:border-[#4FACF5] [&_blockquote]:pl-5 [&_blockquote]:text-[#5C7288]',
+  '[&_code]:rounded [&_code]:bg-[#F5F8F9] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.92em]',
+  '[&_h1]:text-[30px] [&_h1]:font-medium [&_h1]:leading-[125%]',
+  '[&_h2]:text-[26px] [&_h2]:font-medium [&_h2]:leading-[125%]',
+  '[&_h3]:text-[22px] [&_h3]:font-bold [&_h3]:leading-[145%]',
+  '[&_h4]:text-[20px] [&_h4]:font-bold [&_h4]:leading-[145%]',
+  '[&_hr]:my-6 [&_hr]:border-[#D5E0E8]',
+  '[&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[20px]',
+  '[&_li]:pl-1',
+  '[&_ol]:list-decimal [&_ol]:pl-7',
+  '[&_picture]:block',
+  '[&_table]:w-full [&_table]:border-collapse [&_table]:overflow-hidden [&_table]:rounded-[12px]',
+  '[&_td]:border [&_td]:border-[#D5E0E8] [&_td]:p-3 [&_td]:align-top',
+  '[&_th]:border [&_th]:border-[#D5E0E8] [&_th]:bg-[#F5F8F9] [&_th]:p-3 [&_th]:text-left [&_th]:font-bold',
+  '[&_ul]:list-disc [&_ul]:pl-7 [&_li::marker]:text-[#4FACF5]',
+].join(' ')
 
 export function ProductRichTextContent({ content }: { content: ProductRichTextContentData }) {
   return (
-    <div className="flex flex-col gap-4 pt-8 text-[18px] font-medium leading-[165%] text-[#22354A]">
-      {content.root?.children?.map((node, index) => (
-        <ProductRichTextNodeView key={index} node={node} />
-      ))}
-    </div>
+    <RichText
+      className={richTextClassName}
+      converters={({ defaultConverters }) => ({
+        ...defaultConverters,
+        ...LinkJSXConverter({ internalDocToHref }),
+      })}
+      data={content as SerializedEditorState}
+    />
   )
 }
 
-function ProductRichTextNodeView({ node }: { node: ProductRichTextNode }) {
-  const children = renderChildren(node.children)
-  const alignmentClass = getAlignmentClass(node.format)
+function internalDocToHref({ linkNode }: { linkNode: SerializedLinkNode }) {
+  const relationTo = linkNode.fields?.doc?.relationTo
+  const value = linkNode.fields?.doc?.value
+  const doc = value && typeof value === 'object' ? value : undefined
+  const slug = getStringField(doc, 'slug')
 
-  if (node.type === 'heading') {
-    if (node.tag === 'h3') {
-      return (
-        <h3 className={`text-[22px] font-bold leading-[145%] text-[#22354A] ${alignmentClass}`}>
-          {children}
-        </h3>
-      )
-    }
-
-    if (node.tag === 'h4') {
-      return (
-        <h4 className={`text-[20px] font-bold leading-[145%] text-[#22354A] ${alignmentClass}`}>
-          {children}
-        </h4>
-      )
-    }
-
-    return (
-      <h2 className={`text-[26px] font-medium leading-[125%] text-[#22354A] ${alignmentClass}`}>
-        {children}
-      </h2>
-    )
+  if (!relationTo || !slug) {
+    return '#'
   }
 
-  if (node.type === 'list') {
-    const isOrdered = node.listType === 'number'
-    const ListTag = isOrdered ? 'ol' : 'ul'
+  if (relationTo === 'products') {
+    const categorySlug = getCategorySlug(doc)
 
-    return (
-      <ListTag
-        className={`flex flex-col gap-2 pl-7 marker:text-[#4FACF5] ${
-          isOrdered ? 'list-decimal' : 'list-disc'
-        } ${alignmentClass}`}
-      >
-        {node.children?.map((child, index) => (
-          <ProductRichTextNodeView key={index} node={child} />
-        ))}
-      </ListTag>
-    )
+    return `/catalog/${categorySlug ?? 'product'}/${slug}`
   }
 
-  if (node.type === 'listitem') {
-    return <li>{children}</li>
+  if (relationTo === 'category') {
+    return `/catalog/${slug}`
   }
 
-  if (node.type === 'quote') {
-    return (
-      <blockquote className="border-l-4 border-[#4FACF5] pl-5 text-[#5C7288]">
-        {children}
-      </blockquote>
-    )
+  if (relationTo === 'articles') {
+    return `/blog/${slug}`
   }
 
-  if (node.type === 'linebreak') {
-    return <br />
+  if (relationTo === 'legal-pages') {
+    return `/${slug}`
   }
 
-  return <p className={alignmentClass}>{children}</p>
+  return `/${slug}`
 }
 
-function renderChildren(children: ProductRichTextNode[] | undefined): ReactNode {
-  return children?.map((child, index) => {
-    if (child.type === 'text') {
-      return renderFormattedText(child, index)
-    }
+function getCategorySlug(doc: Record<string, unknown> | undefined) {
+  const category = doc?.category
 
-    if (child.type === 'link' && child.fields?.url) {
-      return (
-        <a
-          className="font-bold text-[#4FACF5] underline-offset-4 hover:underline"
-          href={child.fields.url}
-          key={index}
-          rel={child.fields.newTab ? 'noreferrer' : undefined}
-          target={child.fields.newTab ? '_blank' : undefined}
-        >
-          {renderChildren(child.children)}
-        </a>
-      )
-    }
+  if (Array.isArray(category)) {
+    return category.map((item) => getStringField(item, 'slug')).find(Boolean)
+  }
 
-    if (child.type === 'linebreak') {
-      return <br key={index} />
-    }
-
-    return <ProductRichTextNodeView key={index} node={child} />
-  })
+  return getStringField(category, 'slug')
 }
 
-function renderFormattedText(node: ProductRichTextNode, key: number) {
-  let content: ReactNode = node.text
-
-  if (hasFormat(node, 'code', 16)) {
-    content = (
-      <code className="rounded bg-[#F5F8F9] px-1.5 py-0.5 font-mono text-[0.92em]">{content}</code>
-    )
-  }
-
-  if (hasFormat(node, 'bold', 1)) {
-    content = <strong>{content}</strong>
-  }
-
-  if (hasFormat(node, 'italic', 2)) {
-    content = <em>{content}</em>
-  }
-
-  if (hasFormat(node, 'underline', 8)) {
-    content = <span className="underline underline-offset-4">{content}</span>
-  }
-
-  if (hasFormat(node, 'strikethrough', 4)) {
-    content = <span className="line-through">{content}</span>
-  }
-
-  return <span key={key}>{content}</span>
-}
-
-function hasFormat(node: ProductRichTextNode, name: string, bit: number) {
-  if (typeof node.format === 'number') {
-    return (node.format & bit) === bit
-  }
-
-  return typeof node.format === 'string' && node.format.includes(name)
-}
-
-function getAlignmentClass(format: ProductRichTextNode['format']) {
-  if (format === 'center') {
-    return 'text-center'
-  }
-
-  if (format === 'right') {
-    return 'text-right'
-  }
-
-  if (format === 'justify') {
-    return 'text-justify'
-  }
-
-  return ''
+function getStringField(value: unknown, field: string) {
+  return value && typeof value === 'object' && field in value
+    ? typeof (value as Record<string, unknown>)[field] === 'string'
+      ? ((value as Record<string, unknown>)[field] as string)
+      : undefined
+    : undefined
 }
