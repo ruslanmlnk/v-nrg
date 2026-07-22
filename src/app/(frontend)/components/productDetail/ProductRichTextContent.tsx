@@ -5,7 +5,7 @@ import type { SerializedEditorState } from 'lexical'
 import type { ProductRichTextContent as ProductRichTextContentData } from '../../data/products'
 
 const richTextClassName = [
-  'pt-8 text-[18px] font-medium leading-[165%] text-[#22354A]',
+  'product-rich-text pt-8 text-[18px] font-medium leading-[165%] text-[#22354A]',
   '[&_>*+*]:mt-4',
   '[&_a]:font-bold [&_a]:text-[#4FACF5] [&_a]:underline-offset-4 hover:[&_a]:underline',
   '[&_blockquote]:border-l-4 [&_blockquote]:border-[#4FACF5] [&_blockquote]:pl-5 [&_blockquote]:text-[#5C7288]',
@@ -16,13 +16,10 @@ const richTextClassName = [
   '[&_h4]:text-[20px] [&_h4]:font-bold [&_h4]:leading-[145%]',
   '[&_hr]:my-6 [&_hr]:border-[#D5E0E8]',
   '[&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[20px]',
-  '[&_li]:pl-1',
-  '[&_ol]:list-decimal [&_ol]:pl-7',
   '[&_picture]:block',
   '[&_table]:w-full [&_table]:border-collapse [&_table]:overflow-hidden [&_table]:rounded-[12px]',
   '[&_td]:border [&_td]:border-[#D5E0E8] [&_td]:p-3 [&_td]:align-top',
   '[&_th]:border [&_th]:border-[#D5E0E8] [&_th]:bg-[#F5F8F9] [&_th]:p-3 [&_th]:text-left [&_th]:font-bold',
-  '[&_ul]:list-disc [&_ul]:pl-7 [&_li::marker]:text-[#4FACF5]',
 ].join(' ')
 
 export function ProductRichTextContent({ content }: { content: ProductRichTextContentData }) {
