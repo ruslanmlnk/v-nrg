@@ -157,6 +157,7 @@ export type ProductSource = {
   maniples?: number | null
   oldprice?: number | null
   powerWatts?: number | null
+  posterUrl?: string | null
   price?: number | null
   rating?: number | null
   shortDescription?: string | null
@@ -178,7 +179,7 @@ export function unwrapProduct(product: ProductSource): ProductData {
 
   return {
     cartImage: galleryImages[2] ?? primaryImage,
-    catalogImage: primaryImage,
+    catalogImage: unwrapText(product.posterUrl) ?? primaryImage,
     category: category.slug,
     categoryLabel: category.title,
     cmsId: product.cmsId,

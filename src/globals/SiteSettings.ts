@@ -20,6 +20,27 @@ export const SiteSettings: GlobalConfig = {
       label: 'Favicon',
     },
     {
+      name: 'topbar',
+      type: 'group',
+      label: { en: 'Topbar', uk: 'Верхня панель' },
+      fields: [
+        {
+          name: 'phone',
+          type: 'text',
+          label: { en: 'Phone number', uk: 'Номер телефону' },
+          defaultValue: '0-800-123-456',
+          required: true,
+        },
+        {
+          name: 'deliveryText',
+          type: 'text',
+          label: { en: 'Free delivery text', uk: 'Напис про безкоштовну доставку' },
+          defaultValue: 'Безкоштовна доставка від 5000 грн',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'footer',
       type: 'group',
       label: { en: 'Footer', uk: 'Футер' },

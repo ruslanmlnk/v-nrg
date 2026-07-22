@@ -59,6 +59,7 @@ function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
     equipment: product.equipment?.items?.map((item) => item?.item),
     faq: product.faq,
     galleryUrls: product.gallery?.map((item) => item?.url),
+    posterUrl: product.poster?.url,
     listFeatures: product.listFeatures?.map((item) => item?.feature),
     maniples: product.maniples,
     oldprice: product.oldprice,

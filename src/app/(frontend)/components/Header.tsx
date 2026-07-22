@@ -13,7 +13,7 @@ import NavBar from './NavBar'
 import { useSitePreferences } from './providers/SitePreferencesProvider'
 import { translate } from '../lib/siteTranslations'
 
-export default function Header() {
+export default function Header({ deliveryText, phone }: { deliveryText: string; phone: string }) {
   const { currencies, currency, locale, setCurrency, setLocale } = useSitePreferences()
 
   return (
@@ -22,9 +22,11 @@ export default function Header() {
         <div className="flex flex-wrap items-center gap-[25px]">
           <div className="flex items-center gap-[8px]">
             <Image src={phoneIcon} alt="" aria-hidden="true" width={16} height={16} />
-            <div className="font-medium">0-800-123-456</div>
+            <Link href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="font-medium">
+              {phone}
+            </Link>
           </div>
-          <div className="uppercase text-[#D5E0E8]">{translate(locale, 'delivery')}</div>
+          <div className="uppercase text-[#D5E0E8]">{deliveryText}</div>
         </div>
 
         <div className="flex flex-wrap items-center gap-[25px]">
@@ -57,7 +59,7 @@ export default function Header() {
         </div>
       </div>
 
-      <NavBar />
+      <NavBar phone={phone} />
     </header>
   )
 }

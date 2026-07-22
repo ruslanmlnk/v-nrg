@@ -20,7 +20,7 @@ import { useCommerce } from './providers/CommerceProvider'
 import { useSitePreferences } from './providers/SitePreferencesProvider'
 import { translate, translateNavLink } from '../lib/siteTranslations'
 
-export default function NavBar() {
+export default function NavBar({ phone }: { phone: string }) {
   const { cartCount, categories, compareCount, isLoggedIn, openCart } = useCommerce()
   const { currencies, currency, locale, setCurrency, setLocale } = useSitePreferences()
   const pathname = usePathname()
@@ -119,7 +119,11 @@ export default function NavBar() {
         </div>
 
         <div className="flex items-center gap-6 lg:hidden">
-          <Link href="tel:0800123456" aria-label="Телефон" className="flex h-5 w-5 items-center justify-center">
+          <Link
+            href={`tel:${phone.replace(/[^\d+]/g, '')}`}
+            aria-label="Телефон"
+            className="flex h-5 w-5 items-center justify-center"
+          >
             <Image src={phoneIcon} alt="" aria-hidden="true" className="h-5 w-5" />
           </Link>
 

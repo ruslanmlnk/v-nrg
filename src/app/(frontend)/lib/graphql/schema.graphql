@@ -1519,6 +1519,7 @@ type Product {
   details: String
   shortDescription: String
   gallery(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
+  poster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   listFeatures: [Product_ListFeatures!]
   compareFeatures: [Product_CompareFeatures!]
   description: Product_Description
@@ -1646,6 +1647,7 @@ input Product_where {
   details: Product_details_operator
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
+  poster: Product_poster_operator
   listFeatures__feature: Product_listFeatures__feature_operator
   listFeatures__id: Product_listFeatures__id_operator
   compareFeatures__label: Product_compareFeatures__label_operator
@@ -1800,6 +1802,15 @@ input Product_shortDescription_operator {
 }
 
 input Product_gallery_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Product_poster_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -2094,6 +2105,7 @@ input Product_where_and {
   details: Product_details_operator
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
+  poster: Product_poster_operator
   listFeatures__feature: Product_listFeatures__feature_operator
   listFeatures__id: Product_listFeatures__id_operator
   compareFeatures__label: Product_compareFeatures__label_operator
@@ -2140,6 +2152,7 @@ input Product_where_or {
   details: Product_details_operator
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
+  poster: Product_poster_operator
   listFeatures__feature: Product_listFeatures__feature_operator
   listFeatures__id: Product_listFeatures__id_operator
   compareFeatures__label: Product_compareFeatures__label_operator
@@ -2197,6 +2210,7 @@ type ProductsDocAccessFields {
   details: ProductsDocAccessFields_details
   shortDescription: ProductsDocAccessFields_shortDescription
   gallery: ProductsDocAccessFields_gallery
+  poster: ProductsDocAccessFields_poster
   listFeatures: ProductsDocAccessFields_listFeatures
   compareFeatures: ProductsDocAccessFields_compareFeatures
   description: ProductsDocAccessFields_description
@@ -2561,6 +2575,29 @@ type ProductsDocAccessFields_gallery_Update {
 }
 
 type ProductsDocAccessFields_gallery_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_poster {
+  create: ProductsDocAccessFields_poster_Create
+  read: ProductsDocAccessFields_poster_Read
+  update: ProductsDocAccessFields_poster_Update
+  delete: ProductsDocAccessFields_poster_Delete
+}
+
+type ProductsDocAccessFields_poster_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_poster_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_poster_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_poster_Delete {
   permission: Boolean!
 }
 
@@ -12039,9 +12076,15 @@ type ContactsUpdateDocAccess {
 
 type SiteSetting {
   favicon(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
+  topbar: SiteSetting_Topbar
   footer: SiteSetting_Footer
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+type SiteSetting_Topbar {
+  phone: String
+  deliveryText: String
 }
 
 type SiteSetting_Footer {
@@ -12057,6 +12100,7 @@ type site_settingsDocAccess {
 
 type SiteSettingsDocAccessFields {
   favicon: SiteSettingsDocAccessFields_favicon
+  topbar: SiteSettingsDocAccessFields_topbar
   footer: SiteSettingsDocAccessFields_footer
   updatedAt: SiteSettingsDocAccessFields_updatedAt
   createdAt: SiteSettingsDocAccessFields_createdAt
@@ -12082,6 +12126,81 @@ type SiteSettingsDocAccessFields_favicon_Update {
 }
 
 type SiteSettingsDocAccessFields_favicon_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar {
+  create: SiteSettingsDocAccessFields_topbar_Create
+  read: SiteSettingsDocAccessFields_topbar_Read
+  update: SiteSettingsDocAccessFields_topbar_Update
+  delete: SiteSettingsDocAccessFields_topbar_Delete
+  fields: SiteSettingsDocAccessFields_topbar_Fields
+}
+
+type SiteSettingsDocAccessFields_topbar_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_Fields {
+  phone: SiteSettingsDocAccessFields_topbar_phone
+  deliveryText: SiteSettingsDocAccessFields_topbar_deliveryText
+}
+
+type SiteSettingsDocAccessFields_topbar_phone {
+  create: SiteSettingsDocAccessFields_topbar_phone_Create
+  read: SiteSettingsDocAccessFields_topbar_phone_Read
+  update: SiteSettingsDocAccessFields_topbar_phone_Update
+  delete: SiteSettingsDocAccessFields_topbar_phone_Delete
+}
+
+type SiteSettingsDocAccessFields_topbar_phone_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_phone_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_phone_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_phone_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_deliveryText {
+  create: SiteSettingsDocAccessFields_topbar_deliveryText_Create
+  read: SiteSettingsDocAccessFields_topbar_deliveryText_Read
+  update: SiteSettingsDocAccessFields_topbar_deliveryText_Update
+  delete: SiteSettingsDocAccessFields_topbar_deliveryText_Delete
+}
+
+type SiteSettingsDocAccessFields_topbar_deliveryText_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_deliveryText_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_deliveryText_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsDocAccessFields_topbar_deliveryText_Delete {
   permission: Boolean!
 }
 
@@ -13528,6 +13647,7 @@ type ProductsFields {
   details: ProductsFields_details
   shortDescription: ProductsFields_shortDescription
   gallery: ProductsFields_gallery
+  poster: ProductsFields_poster
   listFeatures: ProductsFields_listFeatures
   compareFeatures: ProductsFields_compareFeatures
   description: ProductsFields_description
@@ -13892,6 +14012,29 @@ type ProductsFields_gallery_Update {
 }
 
 type ProductsFields_gallery_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_poster {
+  create: ProductsFields_poster_Create
+  read: ProductsFields_poster_Read
+  update: ProductsFields_poster_Update
+  delete: ProductsFields_poster_Delete
+}
+
+type ProductsFields_poster_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_poster_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_poster_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_poster_Delete {
   permission: Boolean!
 }
 
@@ -20624,6 +20767,7 @@ type site_settingsAccess {
 
 type SiteSettingsFields {
   favicon: SiteSettingsFields_favicon
+  topbar: SiteSettingsFields_topbar
   footer: SiteSettingsFields_footer
   updatedAt: SiteSettingsFields_updatedAt
   createdAt: SiteSettingsFields_createdAt
@@ -20649,6 +20793,81 @@ type SiteSettingsFields_favicon_Update {
 }
 
 type SiteSettingsFields_favicon_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar {
+  create: SiteSettingsFields_topbar_Create
+  read: SiteSettingsFields_topbar_Read
+  update: SiteSettingsFields_topbar_Update
+  delete: SiteSettingsFields_topbar_Delete
+  fields: SiteSettingsFields_topbar_Fields
+}
+
+type SiteSettingsFields_topbar_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_Fields {
+  phone: SiteSettingsFields_topbar_phone
+  deliveryText: SiteSettingsFields_topbar_deliveryText
+}
+
+type SiteSettingsFields_topbar_phone {
+  create: SiteSettingsFields_topbar_phone_Create
+  read: SiteSettingsFields_topbar_phone_Read
+  update: SiteSettingsFields_topbar_phone_Update
+  delete: SiteSettingsFields_topbar_phone_Delete
+}
+
+type SiteSettingsFields_topbar_phone_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_phone_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_phone_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_phone_Delete {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_deliveryText {
+  create: SiteSettingsFields_topbar_deliveryText_Create
+  read: SiteSettingsFields_topbar_deliveryText_Read
+  update: SiteSettingsFields_topbar_deliveryText_Update
+  delete: SiteSettingsFields_topbar_deliveryText_Delete
+}
+
+type SiteSettingsFields_topbar_deliveryText_Create {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_deliveryText_Read {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_deliveryText_Update {
+  permission: Boolean!
+}
+
+type SiteSettingsFields_topbar_deliveryText_Delete {
   permission: Boolean!
 }
 
@@ -21453,6 +21672,7 @@ input mutationProductInput {
   details: String
   shortDescription: String
   gallery: [Int]
+  poster: Int
   listFeatures: [mutationProduct_ListFeaturesInput]
   compareFeatures: [mutationProduct_CompareFeaturesInput]
   description: mutationProduct_DescriptionInput
@@ -21548,6 +21768,7 @@ input mutationProductUpdateInput {
   details: String
   shortDescription: String
   gallery: [Int]
+  poster: Int
   listFeatures: [mutationProductUpdate_ListFeaturesInput]
   compareFeatures: [mutationProductUpdate_CompareFeaturesInput]
   description: mutationProductUpdate_DescriptionInput
@@ -22373,9 +22594,15 @@ input mutationContact_FormInput {
 
 input mutationSiteSettingInput {
   favicon: Int
+  topbar: mutationSiteSetting_TopbarInput!
   footer: mutationSiteSetting_FooterInput
   updatedAt: String
   createdAt: String
+}
+
+input mutationSiteSetting_TopbarInput {
+  phone: String!
+  deliveryText: String!
 }
 
 input mutationSiteSetting_FooterInput {

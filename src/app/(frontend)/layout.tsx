@@ -40,13 +40,16 @@ export default async function RootLayout(props: { children: ReactNode }) {
   const initialLocale = await getSiteLocale()
   const { initialCategories, initialProducts, initialUser } = await getLayoutData(initialLocale)
   const payload = await getPayload({ config })
-  const currencyResult = await payload.find({
-    collection: 'currencies',
-    locale: initialLocale,
-    pagination: false,
-    sort: 'sortOrder',
-    where: { active: { equals: true } },
-  })
+  const [currencyResult, siteSettings] = await Promise.all([
+    payload.find({
+      collection: 'currencies',
+      locale: initialLocale,
+      pagination: false,
+      sort: 'sortOrder',
+      where: { active: { equals: true } },
+    }),
+    payload.findGlobal({ slug: 'site-settings', depth: 0, locale: initialLocale }),
+  ])
   const initialCurrencies: SiteCurrency[] = currencyResult.docs.map((currency) => ({
     code: currency.code,
     name: currency.name,
@@ -67,7 +70,10 @@ export default async function RootLayout(props: { children: ReactNode }) {
             initialProducts={initialProducts}
             initialUser={initialUser}
           >
-            <Header />
+            <Header
+              deliveryText={siteSettings.topbar?.deliveryText ?? 'Безкоштовна доставка від 5000 грн'}
+              phone={siteSettings.topbar?.phone ?? '0-800-123-456'}
+            />
             <main>{children}</main>
             <SiteFooter />
           </CommerceProvider>

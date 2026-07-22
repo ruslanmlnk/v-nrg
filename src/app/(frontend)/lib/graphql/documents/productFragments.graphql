@@ -20,6 +20,9 @@ fragment ProductFrontendFields on Product {
   gallery {
     url
   }
+  poster {
+    url
+  }
   listFeatures {
     feature
   }

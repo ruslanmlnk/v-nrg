@@ -2432,6 +2432,7 @@ export type Product = {
   details?: Maybe<Scalars['String']['output']>;
   shortDescription?: Maybe<Scalars['String']['output']>;
   gallery?: Maybe<Array<Media>>;
+  poster?: Maybe<Media>;
   listFeatures?: Maybe<Array<Product_ListFeatures>>;
   compareFeatures?: Maybe<Array<Product_CompareFeatures>>;
   description?: Maybe<Product_Description>;
@@ -2456,6 +2457,12 @@ export type ProductCategoryArgs = {
 
 
 export type ProductGalleryArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type ProductPosterArgs = {
   locale?: InputMaybe<LocaleInputType>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
@@ -2634,6 +2641,7 @@ export type Product_Where = {
   details?: InputMaybe<Product_Details_Operator>;
   shortDescription?: InputMaybe<Product_ShortDescription_Operator>;
   gallery?: InputMaybe<Product_Gallery_Operator>;
+  poster?: InputMaybe<Product_Poster_Operator>;
   listFeatures__feature?: InputMaybe<Product_ListFeatures__Feature_Operator>;
   listFeatures__id?: InputMaybe<Product_ListFeatures__Id_Operator>;
   compareFeatures__label?: InputMaybe<Product_CompareFeatures__Label_Operator>;
@@ -2788,6 +2796,15 @@ export type Product_ShortDescription_Operator = {
 };
 
 export type Product_Gallery_Operator = {
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Product_Poster_Operator = {
   equals?: InputMaybe<Scalars['JSON']['input']>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -3082,6 +3099,7 @@ export type Product_Where_And = {
   details?: InputMaybe<Product_Details_Operator>;
   shortDescription?: InputMaybe<Product_ShortDescription_Operator>;
   gallery?: InputMaybe<Product_Gallery_Operator>;
+  poster?: InputMaybe<Product_Poster_Operator>;
   listFeatures__feature?: InputMaybe<Product_ListFeatures__Feature_Operator>;
   listFeatures__id?: InputMaybe<Product_ListFeatures__Id_Operator>;
   compareFeatures__label?: InputMaybe<Product_CompareFeatures__Label_Operator>;
@@ -3128,6 +3146,7 @@ export type Product_Where_Or = {
   details?: InputMaybe<Product_Details_Operator>;
   shortDescription?: InputMaybe<Product_ShortDescription_Operator>;
   gallery?: InputMaybe<Product_Gallery_Operator>;
+  poster?: InputMaybe<Product_Poster_Operator>;
   listFeatures__feature?: InputMaybe<Product_ListFeatures__Feature_Operator>;
   listFeatures__id?: InputMaybe<Product_ListFeatures__Id_Operator>;
   compareFeatures__label?: InputMaybe<Product_CompareFeatures__Label_Operator>;
@@ -3188,6 +3207,7 @@ export type ProductsDocAccessFields = {
   details?: Maybe<ProductsDocAccessFields_Details>;
   shortDescription?: Maybe<ProductsDocAccessFields_ShortDescription>;
   gallery?: Maybe<ProductsDocAccessFields_Gallery>;
+  poster?: Maybe<ProductsDocAccessFields_Poster>;
   listFeatures?: Maybe<ProductsDocAccessFields_ListFeatures>;
   compareFeatures?: Maybe<ProductsDocAccessFields_CompareFeatures>;
   description?: Maybe<ProductsDocAccessFields_Description>;
@@ -3628,6 +3648,34 @@ export type ProductsDocAccessFields_Gallery_Update = {
 
 export type ProductsDocAccessFields_Gallery_Delete = {
   __typename?: 'ProductsDocAccessFields_gallery_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Poster = {
+  __typename?: 'ProductsDocAccessFields_poster';
+  create?: Maybe<ProductsDocAccessFields_Poster_Create>;
+  read?: Maybe<ProductsDocAccessFields_Poster_Read>;
+  update?: Maybe<ProductsDocAccessFields_Poster_Update>;
+  delete?: Maybe<ProductsDocAccessFields_Poster_Delete>;
+};
+
+export type ProductsDocAccessFields_Poster_Create = {
+  __typename?: 'ProductsDocAccessFields_poster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Poster_Read = {
+  __typename?: 'ProductsDocAccessFields_poster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Poster_Update = {
+  __typename?: 'ProductsDocAccessFields_poster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Poster_Delete = {
+  __typename?: 'ProductsDocAccessFields_poster_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -14742,6 +14790,7 @@ export type ContactsUpdateDocAccess = {
 export type SiteSetting = {
   __typename?: 'SiteSetting';
   favicon?: Maybe<Media>;
+  topbar?: Maybe<SiteSetting_Topbar>;
   footer?: Maybe<SiteSetting_Footer>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -14751,6 +14800,12 @@ export type SiteSetting = {
 export type SiteSettingFaviconArgs = {
   locale?: InputMaybe<LocaleInputType>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+export type SiteSetting_Topbar = {
+  __typename?: 'SiteSetting_Topbar';
+  phone?: Maybe<Scalars['String']['output']>;
+  deliveryText?: Maybe<Scalars['String']['output']>;
 };
 
 export type SiteSetting_Footer = {
@@ -14781,6 +14836,7 @@ export type Site_SettingsDocAccess = {
 export type SiteSettingsDocAccessFields = {
   __typename?: 'SiteSettingsDocAccessFields';
   favicon?: Maybe<SiteSettingsDocAccessFields_Favicon>;
+  topbar?: Maybe<SiteSettingsDocAccessFields_Topbar>;
   footer?: Maybe<SiteSettingsDocAccessFields_Footer>;
   updatedAt?: Maybe<SiteSettingsDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<SiteSettingsDocAccessFields_CreatedAt>;
@@ -14811,6 +14867,97 @@ export type SiteSettingsDocAccessFields_Favicon_Update = {
 
 export type SiteSettingsDocAccessFields_Favicon_Delete = {
   __typename?: 'SiteSettingsDocAccessFields_favicon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar';
+  create?: Maybe<SiteSettingsDocAccessFields_Topbar_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Topbar_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Topbar_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Topbar_Delete>;
+  fields?: Maybe<SiteSettingsDocAccessFields_Topbar_Fields>;
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Fields = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_Fields';
+  phone?: Maybe<SiteSettingsDocAccessFields_Topbar_Phone>;
+  deliveryText?: Maybe<SiteSettingsDocAccessFields_Topbar_DeliveryText>;
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Phone = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_phone';
+  create?: Maybe<SiteSettingsDocAccessFields_Topbar_Phone_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Topbar_Phone_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Topbar_Phone_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Topbar_Phone_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Phone_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Phone_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Phone_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_Phone_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_DeliveryText = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_deliveryText';
+  create?: Maybe<SiteSettingsDocAccessFields_Topbar_DeliveryText_Create>;
+  read?: Maybe<SiteSettingsDocAccessFields_Topbar_DeliveryText_Read>;
+  update?: Maybe<SiteSettingsDocAccessFields_Topbar_DeliveryText_Update>;
+  delete?: Maybe<SiteSettingsDocAccessFields_Topbar_DeliveryText_Delete>;
+};
+
+export type SiteSettingsDocAccessFields_Topbar_DeliveryText_Create = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_deliveryText_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_DeliveryText_Read = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_deliveryText_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_DeliveryText_Update = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_deliveryText_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsDocAccessFields_Topbar_DeliveryText_Delete = {
+  __typename?: 'SiteSettingsDocAccessFields_topbar_deliveryText_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -16549,6 +16696,7 @@ export type ProductsFields = {
   details?: Maybe<ProductsFields_Details>;
   shortDescription?: Maybe<ProductsFields_ShortDescription>;
   gallery?: Maybe<ProductsFields_Gallery>;
+  poster?: Maybe<ProductsFields_Poster>;
   listFeatures?: Maybe<ProductsFields_ListFeatures>;
   compareFeatures?: Maybe<ProductsFields_CompareFeatures>;
   description?: Maybe<ProductsFields_Description>;
@@ -16989,6 +17137,34 @@ export type ProductsFields_Gallery_Update = {
 
 export type ProductsFields_Gallery_Delete = {
   __typename?: 'ProductsFields_gallery_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Poster = {
+  __typename?: 'ProductsFields_poster';
+  create?: Maybe<ProductsFields_Poster_Create>;
+  read?: Maybe<ProductsFields_Poster_Read>;
+  update?: Maybe<ProductsFields_Poster_Update>;
+  delete?: Maybe<ProductsFields_Poster_Delete>;
+};
+
+export type ProductsFields_Poster_Create = {
+  __typename?: 'ProductsFields_poster_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Poster_Read = {
+  __typename?: 'ProductsFields_poster_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Poster_Update = {
+  __typename?: 'ProductsFields_poster_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Poster_Delete = {
+  __typename?: 'ProductsFields_poster_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -25126,6 +25302,7 @@ export type Site_SettingsAccess = {
 export type SiteSettingsFields = {
   __typename?: 'SiteSettingsFields';
   favicon?: Maybe<SiteSettingsFields_Favicon>;
+  topbar?: Maybe<SiteSettingsFields_Topbar>;
   footer?: Maybe<SiteSettingsFields_Footer>;
   updatedAt?: Maybe<SiteSettingsFields_UpdatedAt>;
   createdAt?: Maybe<SiteSettingsFields_CreatedAt>;
@@ -25156,6 +25333,97 @@ export type SiteSettingsFields_Favicon_Update = {
 
 export type SiteSettingsFields_Favicon_Delete = {
   __typename?: 'SiteSettingsFields_favicon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar = {
+  __typename?: 'SiteSettingsFields_topbar';
+  create?: Maybe<SiteSettingsFields_Topbar_Create>;
+  read?: Maybe<SiteSettingsFields_Topbar_Read>;
+  update?: Maybe<SiteSettingsFields_Topbar_Update>;
+  delete?: Maybe<SiteSettingsFields_Topbar_Delete>;
+  fields?: Maybe<SiteSettingsFields_Topbar_Fields>;
+};
+
+export type SiteSettingsFields_Topbar_Create = {
+  __typename?: 'SiteSettingsFields_topbar_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Read = {
+  __typename?: 'SiteSettingsFields_topbar_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Update = {
+  __typename?: 'SiteSettingsFields_topbar_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Delete = {
+  __typename?: 'SiteSettingsFields_topbar_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Fields = {
+  __typename?: 'SiteSettingsFields_topbar_Fields';
+  phone?: Maybe<SiteSettingsFields_Topbar_Phone>;
+  deliveryText?: Maybe<SiteSettingsFields_Topbar_DeliveryText>;
+};
+
+export type SiteSettingsFields_Topbar_Phone = {
+  __typename?: 'SiteSettingsFields_topbar_phone';
+  create?: Maybe<SiteSettingsFields_Topbar_Phone_Create>;
+  read?: Maybe<SiteSettingsFields_Topbar_Phone_Read>;
+  update?: Maybe<SiteSettingsFields_Topbar_Phone_Update>;
+  delete?: Maybe<SiteSettingsFields_Topbar_Phone_Delete>;
+};
+
+export type SiteSettingsFields_Topbar_Phone_Create = {
+  __typename?: 'SiteSettingsFields_topbar_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Phone_Read = {
+  __typename?: 'SiteSettingsFields_topbar_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Phone_Update = {
+  __typename?: 'SiteSettingsFields_topbar_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_Phone_Delete = {
+  __typename?: 'SiteSettingsFields_topbar_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_DeliveryText = {
+  __typename?: 'SiteSettingsFields_topbar_deliveryText';
+  create?: Maybe<SiteSettingsFields_Topbar_DeliveryText_Create>;
+  read?: Maybe<SiteSettingsFields_Topbar_DeliveryText_Read>;
+  update?: Maybe<SiteSettingsFields_Topbar_DeliveryText_Update>;
+  delete?: Maybe<SiteSettingsFields_Topbar_DeliveryText_Delete>;
+};
+
+export type SiteSettingsFields_Topbar_DeliveryText_Create = {
+  __typename?: 'SiteSettingsFields_topbar_deliveryText_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_DeliveryText_Read = {
+  __typename?: 'SiteSettingsFields_topbar_deliveryText_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_DeliveryText_Update = {
+  __typename?: 'SiteSettingsFields_topbar_deliveryText_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SiteSettingsFields_Topbar_DeliveryText_Delete = {
+  __typename?: 'SiteSettingsFields_topbar_deliveryText_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -26680,6 +26948,7 @@ export type MutationProductInput = {
   details?: InputMaybe<Scalars['String']['input']>;
   shortDescription?: InputMaybe<Scalars['String']['input']>;
   gallery?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  poster?: InputMaybe<Scalars['Int']['input']>;
   listFeatures?: InputMaybe<Array<InputMaybe<MutationProduct_ListFeaturesInput>>>;
   compareFeatures?: InputMaybe<Array<InputMaybe<MutationProduct_CompareFeaturesInput>>>;
   description?: InputMaybe<MutationProduct_DescriptionInput>;
@@ -26775,6 +27044,7 @@ export type MutationProductUpdateInput = {
   details?: InputMaybe<Scalars['String']['input']>;
   shortDescription?: InputMaybe<Scalars['String']['input']>;
   gallery?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  poster?: InputMaybe<Scalars['Int']['input']>;
   listFeatures?: InputMaybe<Array<InputMaybe<MutationProductUpdate_ListFeaturesInput>>>;
   compareFeatures?: InputMaybe<Array<InputMaybe<MutationProductUpdate_CompareFeaturesInput>>>;
   description?: InputMaybe<MutationProductUpdate_DescriptionInput>;
@@ -27600,9 +27870,15 @@ export type MutationContact_FormInput = {
 
 export type MutationSiteSettingInput = {
   favicon?: InputMaybe<Scalars['Int']['input']>;
+  topbar: MutationSiteSetting_TopbarInput;
   footer?: InputMaybe<MutationSiteSetting_FooterInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationSiteSetting_TopbarInput = {
+  phone: Scalars['String']['input'];
+  deliveryText: Scalars['String']['input'];
 };
 
 export type MutationSiteSetting_FooterInput = {
@@ -27648,7 +27924,7 @@ export type GetLayoutDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -27656,9 +27932,9 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
+export type GetProductBySlugQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null }> } | null };
 
-export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
+export type ProductFrontendFieldsFragment = { __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, listFeatures?: Array<{ __typename?: 'Product_ListFeatures', feature?: string | null }> | null, compareFeatures?: Array<{ __typename?: 'Product_CompareFeatures', label?: string | null, value?: string | null }> | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null };
 
 export const ProductFrontendFieldsFragmentDoc = gql`
     fragment ProductFrontendFields on Product {
@@ -27681,6 +27957,9 @@ export const ProductFrontendFieldsFragmentDoc = gql`
     title
   }
   gallery {
+    url
+  }
+  poster {
     url
   }
   listFeatures {

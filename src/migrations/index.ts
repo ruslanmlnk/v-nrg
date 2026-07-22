@@ -11,6 +11,8 @@ import * as migration_20260617_153500_social_networks_site_settings from './2026
 import * as migration_20260618_061500_page_seo_globals from './20260618_061500_page_seo_globals'
 import * as migration_20260622_010000_structured_order_fields from './20260622_010000_structured_order_fields'
 import * as migration_20260712_000000_admin_confirmed_order_payments from './20260712_000000_admin_confirmed_order_payments'
+import * as migration_20260722_080000_site_settings_topbar from './20260722_080000_site_settings_topbar'
+import * as migration_20260722_090000_product_catalog_poster from './20260722_090000_product_catalog_poster'
 
 export const migrations = [
   {
@@ -77,5 +79,15 @@ export const migrations = [
     up: migration_20260712_000000_admin_confirmed_order_payments.up,
     down: migration_20260712_000000_admin_confirmed_order_payments.down,
     name: '20260712_000000_admin_confirmed_order_payments',
+  },
+  {
+    up: migration_20260722_080000_site_settings_topbar.up,
+    down: migration_20260722_080000_site_settings_topbar.down,
+    name: '20260722_080000_site_settings_topbar',
+  },
+  {
+    up: migration_20260722_090000_product_catalog_poster.up,
+    down: migration_20260722_090000_product_catalog_poster.down,
+    name: '20260722_090000_product_catalog_poster',
   },
 ]

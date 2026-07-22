@@ -251,6 +251,10 @@ export interface Product {
   details?: string | null;
   shortDescription?: string | null;
   gallery?: (number | Media)[] | null;
+  /**
+   * Якщо постер не вибрано, у картці буде показано перше зображення з галереї.
+   */
+  poster?: (number | null) | Media;
   listFeatures?:
     | {
         feature: string;
@@ -783,6 +787,7 @@ export interface ProductsSelect<T extends boolean = true> {
   details?: T;
   shortDescription?: T;
   gallery?: T;
+  poster?: T;
   listFeatures?:
     | T
     | {
@@ -1256,6 +1261,10 @@ export interface Contact {
 export interface SiteSetting {
   id: number;
   favicon?: (number | null) | Media;
+  topbar: {
+    phone: string;
+    deliveryText: string;
+  };
   footer?: {
     socialNetworks?: (number | SocialNetwork)[] | null;
     contactSocialNetworks?: (number | SocialNetwork)[] | null;
@@ -1488,6 +1497,12 @@ export interface ContactsSelect<T extends boolean = true> {
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
   favicon?: T;
+  topbar?:
+    | T
+    | {
+        phone?: T;
+        deliveryText?: T;
+      };
   footer?:
     | T
     | {

@@ -28,6 +28,7 @@ function toPayloadProductSource(product: PayloadProduct): ProductSource {
     equipment: product.equipment?.items?.map((item) => item.item),
     faq: product.faq,
     galleryUrls: unwrapGalleryUrls(product.gallery),
+    posterUrl: isMedia(product.poster) ? product.poster.url : undefined,
     listFeatures: product.listFeatures?.map((item) => item.feature),
     maniples: product.maniples,
     oldprice: product.oldprice,

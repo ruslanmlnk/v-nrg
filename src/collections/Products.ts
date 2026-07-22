@@ -97,6 +97,15 @@ export const Products: CollectionConfig = {
       label: 'Галерея товару',
     },
     {
+      name: 'poster',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Постер для картки каталогу',
+      admin: {
+        description: 'Якщо постер не вибрано, у картці буде показано перше зображення з галереї.',
+      },
+    },
+    {
       name: 'listFeatures',
       type: 'array',
       label: 'Переваги для картки каталогу',
