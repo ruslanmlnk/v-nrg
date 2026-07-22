@@ -6,18 +6,12 @@ import SectionHeading from '../shared/SectionHeading'
 import BeforeAfterGrid from '../ui/BeforeAfterGrid'
 import ArrowPillButton from '../ui/ArrowPillButton'
 import { ProductPageSection } from './ProductPageSection'
-import beforeAfterAfter from '@public/assets/product/before-after-after.jpg'
-import beforeAfterBefore from '@public/assets/product/before-after-before.jpg'
 
 export function ProductComparisonSection({
-  cards = [
-    { afterImage: beforeAfterAfter.src, beforeImage: beforeAfterBefore.src, defaultPosition: 44 },
-    { afterImage: beforeAfterAfter.src, beforeImage: beforeAfterBefore.src, defaultPosition: 58 },
-    { afterImage: beforeAfterAfter.src, beforeImage: beforeAfterBefore.src, defaultPosition: 71 },
-  ],
+  cards,
   title = 'Результати наших клієнтів',
 }: {
-  cards?: Array<{ afterImage: string; beforeImage: string; defaultPosition?: number }>
+  cards: Array<{ afterImage: string; beforeImage: string; defaultPosition?: number }>
   title?: string
 }) {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)

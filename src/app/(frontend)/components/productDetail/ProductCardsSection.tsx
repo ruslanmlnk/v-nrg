@@ -88,9 +88,9 @@ function ProductCard({
       <div className="flex flex-col gap-4 px-8 py-6">
         <div className="flex flex-col gap-2">
           <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">{title}</h3>
-          <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-            {details || 'Немає даних'}
-          </p>
+          {details ? (
+            <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">{details}</p>
+          ) : null}
         </div>
         <div className="flex items-center justify-between gap-4">
           <ProductPrice oldPrice={oldPrice} price={price} regularPrice={regularPrice} />

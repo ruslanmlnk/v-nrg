@@ -43,6 +43,11 @@ export function mapGraphQLUser(user: GraphQLUser | null | undefined): FrontendUs
 function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
   return {
     advantages: product.advantages?.items?.map((item) => item?.item),
+    beforeAfter: product.beforeafter?.map((item) => ({
+      afterUrl: item?.after?.url,
+      beforeUrl: item?.before?.url,
+    })),
+    certificates: product.certificates?.map((item) => item?.url),
     categories: product.category?.map((item) => ({
       slug: item?.slug,
       title: item?.title,
@@ -62,10 +67,13 @@ function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
     posterUrl: product.poster?.url,
     listFeatures: product.listFeatures?.map((item) => item?.feature),
     maniples: product.maniples,
+    moreProductIds: product.moreProducts?.map((item) => item?.id),
     oldprice: product.oldprice,
     powerWatts: product.powerWatts,
     price: product.price,
     rating: product.rating,
+    recommendedTogetherIds: product.recommendedTogether?.map((item) => item?.id),
+    reviews: product.reviews?.map((item) => ({ author: item?.name, quote: item?.text })),
     seo: product.seo,
     shortDescription: product.shortDescription,
     slug: product.slug,

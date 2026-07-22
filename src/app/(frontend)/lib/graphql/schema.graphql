@@ -1528,6 +1528,7 @@ type Product {
   advantages: Product_Advantages
   video: Product_Video
   reviews(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Review!]
+  certificates(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
   moreProducts(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Product!]
   recommendedTogether(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Product!]
   faq: [Product_Faq!]
@@ -1664,6 +1665,7 @@ input Product_where {
   video__items: Product_video__items_operator
   video__description: Product_video__description_operator
   reviews: Product_reviews_operator
+  certificates: Product_certificates_operator
   moreProducts: Product_moreProducts_operator
   recommendedTogether: Product_recommendedTogether_operator
   faq__question: Product_faq__question_operator
@@ -1978,6 +1980,15 @@ input Product_reviews_operator {
   exists: Boolean
 }
 
+input Product_certificates_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
 input Product_moreProducts_operator {
   equals: JSON
   not_equals: JSON
@@ -2122,6 +2133,7 @@ input Product_where_and {
   video__items: Product_video__items_operator
   video__description: Product_video__description_operator
   reviews: Product_reviews_operator
+  certificates: Product_certificates_operator
   moreProducts: Product_moreProducts_operator
   recommendedTogether: Product_recommendedTogether_operator
   faq__question: Product_faq__question_operator
@@ -2169,6 +2181,7 @@ input Product_where_or {
   video__items: Product_video__items_operator
   video__description: Product_video__description_operator
   reviews: Product_reviews_operator
+  certificates: Product_certificates_operator
   moreProducts: Product_moreProducts_operator
   recommendedTogether: Product_recommendedTogether_operator
   faq__question: Product_faq__question_operator
@@ -2219,6 +2232,7 @@ type ProductsDocAccessFields {
   advantages: ProductsDocAccessFields_advantages
   video: ProductsDocAccessFields_video
   reviews: ProductsDocAccessFields_reviews
+  certificates: ProductsDocAccessFields_certificates
   moreProducts: ProductsDocAccessFields_moreProducts
   recommendedTogether: ProductsDocAccessFields_recommendedTogether
   faq: ProductsDocAccessFields_faq
@@ -3134,6 +3148,29 @@ type ProductsDocAccessFields_reviews_Update {
 }
 
 type ProductsDocAccessFields_reviews_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_certificates {
+  create: ProductsDocAccessFields_certificates_Create
+  read: ProductsDocAccessFields_certificates_Read
+  update: ProductsDocAccessFields_certificates_Update
+  delete: ProductsDocAccessFields_certificates_Delete
+}
+
+type ProductsDocAccessFields_certificates_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_certificates_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_certificates_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_certificates_Delete {
   permission: Boolean!
 }
 
@@ -13656,6 +13693,7 @@ type ProductsFields {
   advantages: ProductsFields_advantages
   video: ProductsFields_video
   reviews: ProductsFields_reviews
+  certificates: ProductsFields_certificates
   moreProducts: ProductsFields_moreProducts
   recommendedTogether: ProductsFields_recommendedTogether
   faq: ProductsFields_faq
@@ -14571,6 +14609,29 @@ type ProductsFields_reviews_Update {
 }
 
 type ProductsFields_reviews_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_certificates {
+  create: ProductsFields_certificates_Create
+  read: ProductsFields_certificates_Read
+  update: ProductsFields_certificates_Update
+  delete: ProductsFields_certificates_Delete
+}
+
+type ProductsFields_certificates_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_certificates_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_certificates_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_certificates_Delete {
   permission: Boolean!
 }
 
@@ -21681,6 +21742,7 @@ input mutationProductInput {
   advantages: mutationProduct_AdvantagesInput
   video: mutationProduct_VideoInput
   reviews: [Int]
+  certificates: [Int]
   moreProducts: [Int]
   recommendedTogether: [Int]
   faq: [mutationProduct_FaqInput]
@@ -21777,6 +21839,7 @@ input mutationProductUpdateInput {
   advantages: mutationProductUpdate_AdvantagesInput
   video: mutationProductUpdate_VideoInput
   reviews: [Int]
+  certificates: [Int]
   moreProducts: [Int]
   recommendedTogether: [Int]
   faq: [mutationProductUpdate_FaqInput]

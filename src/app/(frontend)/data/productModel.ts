@@ -98,25 +98,40 @@ export type ProductFaqItem = {
   question: string
 }
 
+export type ProductReviewItem = {
+  author: string
+  quote: string
+}
+
+export type ProductBeforeAfterItem = {
+  afterImage: string
+  beforeImage: string
+}
+
 export type ProductData = {
   cartImage: ProductImage
+  certificates: string[]
   catalogImage: ProductImage
   category: ProductCategory
   categoryLabel: string
   cmsId: number
   compareFeatures: ProductFeature[]
   compareImage: ProductImage
+  beforeAfter: ProductBeforeAfterItem[]
   details: string
   faq: ProductFaqItem[]
   galleryImages: ProductImage[]
   href: string
   id: ProductId
   listFeatures: string[]
+  moreProductIds: number[]
   maniples?: number
   oldPrice?: number
   powerWatts?: number
   price: number
   rating: number
+  recommendedTogetherIds: number[]
+  reviews: ProductReviewItem[]
   regularPrice?: number
   shortDescription: string
   slug: string
@@ -137,6 +152,8 @@ export type ProductVideoSource = {
 
 export type ProductSource = {
   advantages?: Array<string | null | undefined> | null
+  beforeAfter?: Array<{ afterUrl?: string | null; beforeUrl?: string | null } | null> | null
+  certificates?: Array<string | null | undefined> | null
   categories?: Array<ProductCategorySource | null | undefined> | null
   categorySlugs?: Array<string | null | undefined> | null
   characteristics?:
@@ -155,11 +172,14 @@ export type ProductSource = {
   galleryUrls?: Array<string | null | undefined> | null
   listFeatures?: Array<string | null | undefined> | null
   maniples?: number | null
+  moreProductIds?: Array<number | null | undefined> | null
   oldprice?: number | null
   powerWatts?: number | null
   posterUrl?: string | null
   price?: number | null
   rating?: number | null
+  recommendedTogetherIds?: Array<number | null | undefined> | null
+  reviews?: Array<{ author?: string | null; quote?: string | null } | null> | null
   shortDescription?: string | null
   slug?: string | null
   seo?: {
@@ -178,7 +198,9 @@ export function unwrapProduct(product: ProductSource): ProductData {
   const primaryImage = galleryImages[0] ?? null
 
   return {
+    beforeAfter: unwrapBeforeAfter(product.beforeAfter),
     cartImage: galleryImages[2] ?? primaryImage,
+    certificates: unwrapTextList(product.certificates),
     catalogImage: unwrapText(product.posterUrl) ?? primaryImage,
     category: category.slug,
     categoryLabel: category.title,
@@ -191,11 +213,14 @@ export function unwrapProduct(product: ProductSource): ProductData {
     href: `/catalog/${category.slug}/${slug}`,
     id: slug,
     listFeatures: unwrapTextList(product.listFeatures),
+    moreProductIds: unwrapNumberList(product.moreProductIds),
     maniples: unwrapNumber(product.maniples),
     oldPrice: unwrapNumber(product.oldprice),
     powerWatts: unwrapNumber(product.powerWatts),
     price: product.price ?? 0,
     rating: product.rating ?? 4.8,
+    recommendedTogetherIds: unwrapNumberList(product.recommendedTogetherIds),
+    reviews: unwrapReviews(product.reviews),
     shortDescription: unwrapText(product.shortDescription) ?? '',
     slug,
     seo: product.seo,
@@ -378,6 +403,34 @@ function unwrapFaq(value: ProductSource['faq']): ProductFaqItem[] {
       question: unwrapText(item?.question) ?? '',
     }))
     .filter((item) => item.question)
+}
+
+function unwrapBeforeAfter(value: ProductSource['beforeAfter']): ProductBeforeAfterItem[] {
+  return asArray<NonNullable<NonNullable<ProductSource['beforeAfter']>[number]>>(value).flatMap(
+    (item) => {
+      const beforeImage = unwrapText(item?.beforeUrl)
+      const afterImage = unwrapText(item?.afterUrl)
+
+      return beforeImage && afterImage ? [{ afterImage, beforeImage }] : []
+    },
+  )
+}
+
+function unwrapNumberList(value: Array<number | null | undefined> | null | undefined): number[] {
+  return asArray<number | null | undefined>(value).filter(
+    (item): item is number => typeof item === 'number',
+  )
+}
+
+function unwrapReviews(value: ProductSource['reviews']): ProductReviewItem[] {
+  return asArray<NonNullable<NonNullable<ProductSource['reviews']>[number]>>(value).flatMap(
+    (item) => {
+      const author = unwrapText(item?.author)
+      const quote = unwrapText(item?.quote)
+
+      return author && quote ? [{ author, quote }] : []
+    },
+  )
 }
 
 function unwrapVideos(value: ProductSource['videos']): ProductVideoItem[] {

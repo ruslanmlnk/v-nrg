@@ -25,13 +25,7 @@ export function ProductTabsSection({
   onSelectTab: (tabId: string) => void
 }) {
   if (displayTabs.length === 0 || !activeTab) {
-    return (
-      <div className="rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
-        <div className="text-[18px] font-medium leading-[165%] text-[#6F8498]">
-          Інформація по вкладках відсутня.
-        </div>
-      </div>
-    )
+    return null
   }
 
   return (

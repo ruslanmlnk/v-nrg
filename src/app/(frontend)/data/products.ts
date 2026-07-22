@@ -15,6 +15,11 @@ export function mapPayloadProduct(product: PayloadProduct) {
 function toPayloadProductSource(product: PayloadProduct): ProductSource {
   return {
     advantages: product.advantages?.items?.map((item) => item.item),
+    beforeAfter: product.beforeafter?.map((item) => ({
+      afterUrl: isMedia(item.after) ? item.after.url : undefined,
+      beforeUrl: isMedia(item.before) ? item.before.url : undefined,
+    })),
+    certificates: unwrapGalleryUrls(product.certificates),
     categories: unwrapCategorySources(product.category),
     categorySlugs: unwrapCategorySlugs(product.category),
     characteristics: product.characteristics?.items?.map((item) => ({
@@ -31,10 +36,15 @@ function toPayloadProductSource(product: PayloadProduct): ProductSource {
     posterUrl: isMedia(product.poster) ? product.poster.url : undefined,
     listFeatures: product.listFeatures?.map((item) => item.feature),
     maniples: product.maniples,
+    moreProductIds: unwrapRelationshipIds(product.moreProducts),
     oldprice: product.oldprice,
     powerWatts: product.powerWatts,
     price: product.price,
     rating: product.rating,
+    recommendedTogetherIds: unwrapRelationshipIds(product.recommendedTogether),
+    reviews: product.reviews?.map((item) =>
+      typeof item === 'object' && item ? { author: item.name, quote: item.text } : {},
+    ),
     seo: product.seo,
     shortDescription: product.shortDescription,
     slug: product.slug,
@@ -63,6 +73,14 @@ function unwrapCategorySlugs(value: PayloadProduct['category']) {
 
 function unwrapGalleryUrls(value: PayloadProduct['gallery']) {
   return Array.isArray(value) ? value.map((item) => (isMedia(item) ? item.url : undefined)) : []
+}
+
+function unwrapRelationshipIds(
+  value: Array<number | { id: number }> | null | undefined,
+): Array<number | undefined> {
+  return Array.isArray(value)
+    ? value.map((item) => (typeof item === 'number' ? item : item.id))
+    : []
 }
 
 function unwrapVideoSources(value: Array<number | Media> | null | undefined): ProductVideoSource[] {

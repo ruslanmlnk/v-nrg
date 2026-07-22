@@ -2,12 +2,11 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import certificate from '@public/assets/product/certificate.jpg'
 import SectionHeading from '../shared/SectionHeading'
 
 import { ProductPageSection } from './ProductPageSection'
 
-export function ProductCertificatesSection() {
+export function ProductCertificatesSection({ certificates }: { certificates: string[] }) {
   const sliderRef = useCenteredMobileSlide()
 
   return (
@@ -21,15 +20,15 @@ export function ProductCertificatesSection() {
         ref={sliderRef}
         className="-mx-6 flex w-[calc(100%+48px)] snap-x snap-mandatory items-center gap-5 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:w-auto md:flex-wrap md:justify-center md:overflow-visible md:px-0 md:pb-0"
       >
-        <CertificateCard />
-        <CertificateCard />
-        <CertificateCard />
+        {certificates.map((certificate, index) => (
+          <CertificateCard certificate={certificate} key={`${certificate}-${index}`} />
+        ))}
       </div>
     </ProductPageSection>
   )
 }
 
-function CertificateCard() {
+function CertificateCard({ certificate }: { certificate: string }) {
   return (
     <div className="flex w-[232px] shrink-0 snap-center items-center justify-center rounded-[20px] bg-white px-8 py-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)] md:shrink">
       <Image

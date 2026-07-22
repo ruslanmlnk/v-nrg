@@ -247,6 +247,13 @@ export const Products: CollectionConfig = {
       label: 'Відгуки',
     },
     {
+      name: 'certificates',
+      type: 'upload',
+      relationTo: 'media',
+      hasMany: true,
+      label: 'Сертифікати',
+    },
+    {
       name: 'moreProducts',
       type: 'relationship',
       relationTo: 'products',

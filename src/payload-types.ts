@@ -315,6 +315,7 @@ export interface Product {
     description?: string | null;
   };
   reviews?: (number | Review)[] | null;
+  certificates?: (number | Media)[] | null;
   moreProducts?: (number | Product)[] | null;
   recommendedTogether?: (number | Product)[] | null;
   faq?:
@@ -844,6 +845,7 @@ export interface ProductsSelect<T extends boolean = true> {
         description?: T;
       };
   reviews?: T;
+  certificates?: T;
   moreProducts?: T;
   recommendedTogether?: T;
   faq?:

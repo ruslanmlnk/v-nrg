@@ -15,7 +15,7 @@ import {
   ProductReviewsSection,
   ProductTabsSection,
 } from './ProductDetailSections'
-import { chunkItems, createProductGallery, partnerReviews } from './data'
+import { chunkItems, createProductGallery } from './data'
 import type { ProductData } from '../../data/products'
 
 export default function ProductDetailView({ product }: { product: ProductData }) {
@@ -32,9 +32,29 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const [partsCount, setPartsCount] = useState(8)
 
   const productGallery = useMemo(() => createProductGallery(displayProduct), [displayProduct])
-  const relatedProducts = useMemo(
-    () => products.filter((item) => item.id !== displayProduct.id).slice(0, 3),
-    [displayProduct.id, products],
+  const moreProducts = useMemo(
+    () => {
+      const selectedProducts = products.filter((item) =>
+        displayProduct.moreProductIds.includes(item.cmsId),
+      )
+
+      return selectedProducts.length > 0
+        ? selectedProducts
+        : products.filter((item) => item.id !== displayProduct.id).slice(0, 3)
+    },
+    [displayProduct.id, displayProduct.moreProductIds, products],
+  )
+  const recommendedProducts = useMemo(
+    () => {
+      const selectedProducts = products.filter((item) =>
+        displayProduct.recommendedTogetherIds.includes(item.cmsId),
+      )
+
+      return selectedProducts.length > 0
+        ? selectedProducts
+        : products.filter((item) => item.id !== displayProduct.id).slice(0, 3)
+    },
+    [displayProduct.id, displayProduct.recommendedTogetherIds, products],
   )
   const faqColumns = useMemo(() => {
     if (displayProduct.faq.length === 0) {
@@ -52,7 +72,7 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const activeGalleryItem = productGallery[activeGalleryIndex] ?? productGallery[0]
   const activeTab = displayTabs.find((tab) => tab.id === activeTabId) ?? displayTabs[0]
   const isCompared = isInCompare(displayProduct.id)
-  const reviewPages = chunkItems(partnerReviews, 2)
+  const reviewPages = chunkItems(displayProduct.reviews, 2)
   const visibleReviews = reviewPages[activeReviewPage] ?? reviewPages[0] ?? []
   const deliveryHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Умови доставки та оплати ${displayProduct.title}`)}`
   const partsMonthlyPayment = getMonthlyPayment(displayProduct.price * quantity, partsCount)
@@ -110,38 +130,50 @@ export default function ProductDetailView({ product }: { product: ProductData })
           quantity={quantity}
         />
 
-        <ProductTabsSection
-          activeTab={activeTab}
-          activeTabId={activeTabId}
-          displayTabs={displayTabs}
-          onSelectTab={setActiveTabId}
-        />
+        {displayTabs.length > 0 ? (
+          <ProductTabsSection
+            activeTab={activeTab}
+            activeTabId={activeTabId}
+            displayTabs={displayTabs}
+            onSelectTab={setActiveTabId}
+          />
+        ) : null}
       </ProductPageSection>
 
-      <ProductComparisonSection />
-      <ProductCertificatesSection />
-      <ProductReviewsSection
-        activePage={activeReviewPage}
-        pageCount={reviewPages.length}
-        reviews={visibleReviews}
-        onNext={() => setActiveReviewPage((current) => (current + 1) % reviewPages.length)}
-        onPrev={() =>
-          setActiveReviewPage((current) => (current - 1 + reviewPages.length) % reviewPages.length)
-        }
-        onSelect={setActiveReviewPage}
-      />
-      <ProductCardsSection
-        eyebrow="Більше товарів"
-        products={relatedProducts}
-        title="Схожі товари"
-      />
-      <ProductCardsSection
-        eyebrow="Рекомендуємо разом"
-        products={relatedProducts}
-        title="Разом з цим товаром купують"
-      />
+      {displayProduct.beforeAfter.length > 0 ? (
+        <ProductComparisonSection cards={displayProduct.beforeAfter} />
+      ) : null}
+      {displayProduct.certificates.length > 0 ? (
+        <ProductCertificatesSection certificates={displayProduct.certificates} />
+      ) : null}
+      {displayProduct.reviews.length > 0 ? (
+        <ProductReviewsSection
+          activePage={activeReviewPage}
+          pageCount={reviewPages.length}
+          reviews={visibleReviews}
+          onNext={() => setActiveReviewPage((current) => (current + 1) % reviewPages.length)}
+          onPrev={() =>
+            setActiveReviewPage((current) => (current - 1 + reviewPages.length) % reviewPages.length)
+          }
+          onSelect={setActiveReviewPage}
+        />
+      ) : null}
+      {moreProducts.length > 0 ? (
+        <ProductCardsSection
+          eyebrow="Більше товарів"
+          products={moreProducts}
+          title="Схожі товари"
+        />
+      ) : null}
+      {recommendedProducts.length > 0 ? (
+        <ProductCardsSection
+          eyebrow="Рекомендуємо разом"
+          products={recommendedProducts}
+          title="Разом з цим товаром купують"
+        />
+      ) : null}
 
-      <FaqSection columns={faqColumns} />
+      {faqColumns ? <FaqSection columns={faqColumns} /> : null}
 
       <PartsPaymentModal
         isOpen={isPartsModalOpen}

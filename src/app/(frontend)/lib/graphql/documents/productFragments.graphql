@@ -62,4 +62,25 @@ fragment ProductFrontendFields on Product {
     question
     answer
   }
+  beforeafter {
+    before {
+      url
+    }
+    after {
+      url
+    }
+  }
+  reviews {
+    name
+    text
+  }
+  certificates {
+    url
+  }
+  moreProducts {
+    id
+  }
+  recommendedTogether {
+    id
+  }
 }
