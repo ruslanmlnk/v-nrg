@@ -66,9 +66,20 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   )
 
   const characteristicOptions = useMemo<CharacteristicFilterOption[]>(
-    () => buildCharacteristicOptions(catalogItems),
-    [catalogItems],
+    () =>
+      buildCharacteristicOptions(
+        selectedCategory
+          ? catalogItems.filter((item) => item.category === selectedCategory)
+          : catalogItems,
+      ),
+    [catalogItems, selectedCategory],
   )
+
+  useEffect(() => {
+    setSelectedCharacteristics((current) =>
+      pruneCharacteristicFilters(current, characteristicOptions),
+    )
+  }, [characteristicOptions])
 
   const categoryOptions = useMemo<CatalogCategoryOption[]>(() => {
     return categories.map((category) => ({
@@ -100,7 +111,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
       normalizedQuery.length === 0 ||
       item.title.toLowerCase().includes(normalizedQuery) ||
       item.summary.toLowerCase().includes(normalizedQuery) ||
-      item.listFeatures.some((feature) => feature.toLowerCase().includes(normalizedQuery))
+      item.advantages.some((advantage) => advantage.toLowerCase().includes(normalizedQuery))
 
     const matchesCategory = !selectedCategory || item.category === selectedCategory
     const matchesCharacteristics = Object.entries(selectedCharacteristics).every(
@@ -415,6 +426,24 @@ function readCharacteristicFilters(params: URLSearchParams): Record<string, stri
   }
 
   return filters
+}
+
+function pruneCharacteristicFilters(
+  filters: Record<string, string[]>,
+  options: CharacteristicFilterOption[],
+) {
+  const availableValues = new Map(
+    options.map((option) => [option.label, new Set(option.values.map((item) => item.value))]),
+  )
+
+  return Object.fromEntries(
+    Object.entries(filters).flatMap(([label, values]) => {
+      const allowedValues = availableValues.get(label)
+      const nextValues = allowedValues ? values.filter((value) => allowedValues.has(value)) : []
+
+      return nextValues.length > 0 ? [[label, nextValues]] : []
+    }),
+  )
 }
 
 function toggleCharacteristic(filters: Record<string, string[]>, label: string, value: string) {

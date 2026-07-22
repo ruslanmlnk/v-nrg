@@ -23,9 +23,6 @@ fragment ProductFrontendFields on Product {
   poster {
     url
   }
-  listFeatures {
-    feature
-  }
   compareFeatures {
     label
     value

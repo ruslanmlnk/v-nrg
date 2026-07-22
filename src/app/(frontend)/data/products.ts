@@ -34,7 +34,6 @@ function toPayloadProductSource(product: PayloadProduct): ProductSource {
     faq: product.faq,
     galleryUrls: unwrapGalleryUrls(product.gallery),
     posterUrl: isMedia(product.poster) ? product.poster.url : undefined,
-    listFeatures: product.listFeatures?.map((item) => item.feature),
     maniples: product.maniples,
     moreProductIds: unwrapRelationshipIds(product.moreProducts),
     oldprice: product.oldprice,

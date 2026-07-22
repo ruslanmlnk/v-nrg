@@ -108,19 +108,6 @@ export const Products: CollectionConfig = {
       },
     },
     {
-      name: 'listFeatures',
-      type: 'array',
-      label: 'Переваги для картки каталогу',
-      fields: [
-        {
-          name: 'feature',
-          type: 'text',
-          label: 'Перевага',
-          required: true,
-        },
-      ],
-    },
-    {
       name: 'compareFeatures',
       type: 'array',
       label: 'Характеристики для порівняння',

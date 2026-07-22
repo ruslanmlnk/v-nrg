@@ -51,20 +51,18 @@ export function CatalogList({
                 <h3 className="text-[24px] font-medium leading-[145%] text-[#22354A]">
                   {product.title}
                 </h3>
-                <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                  {product.summary || 'Опис відсутній'}
-                </p>
-                {product.listFeatures.length > 0 ? (
+                {product.summary ? (
+                  <p className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+                    {product.summary}
+                  </p>
+                ) : null}
+                {product.advantages.length > 0 ? (
                   <div className="text-[16px] font-medium leading-[165%] text-[#22354A]">
-                    {product.listFeatures.map((feature) => (
-                      <div key={`${product.uid}-${feature}`}>• {feature}</div>
+                    {product.advantages.slice(0, 3).map((advantage) => (
+                      <div key={`${product.uid}-${advantage}`}>• {advantage}</div>
                     ))}
                   </div>
-                ) : (
-                  <div className="text-[16px] font-medium leading-[165%] text-[#6F8498]">
-                    Додаткові характеристики відсутні
-                  </div>
-                )}
+                ) : null}
               </div>
 
               <div className="flex items-center justify-between gap-4">

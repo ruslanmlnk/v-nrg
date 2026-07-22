@@ -124,7 +124,7 @@ export type ProductData = {
   galleryImages: ProductImage[]
   href: string
   id: ProductId
-  listFeatures: string[]
+  advantages: string[]
   moreProductIds: number[]
   maniples?: number
   oldPrice?: number
@@ -171,7 +171,6 @@ export type ProductSource = {
   equipment?: Array<string | null | undefined> | null
   faq?: Array<{ answer?: string | null; question?: string | null } | null> | null | undefined
   galleryUrls?: Array<string | null | undefined> | null
-  listFeatures?: Array<string | null | undefined> | null
   maniples?: number | null
   moreProductIds?: Array<number | null | undefined> | null
   oldprice?: number | null
@@ -214,7 +213,7 @@ export function unwrapProduct(product: ProductSource): ProductData {
     galleryImages,
     href: `/catalog/${category.slug}/${slug}`,
     id: slug,
-    listFeatures: unwrapTextList(product.listFeatures),
+    advantages: unwrapTextList(product.advantages),
     moreProductIds: unwrapNumberList(product.moreProductIds),
     maniples: unwrapNumber(product.maniples),
     oldPrice: unwrapNumber(product.oldprice),

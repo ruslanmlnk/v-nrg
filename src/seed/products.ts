@@ -31,11 +31,6 @@ const products: ProductSeed[] = [
     powerWatts: 800,
     details: '18 маніпул · 800 Вт',
     shortDescription: 'Професійний апарат вакуумного масажу для кабінету та одного спеціаліста.',
-    listFeatures: [
-      { feature: '18 маніпул для різних зон тіла' },
-      { feature: 'Потужність 800 Вт' },
-      { feature: 'Професійне використання' },
-    ],
     compareFeatures: [
       { label: 'Кількість маніпул', value: '18 шт' },
       { label: 'Потужність', value: '800 Вт' },
@@ -107,11 +102,6 @@ const products: ProductSeed[] = [
     details: '36 маніпул · 1200 Вт',
     shortDescription:
       'Посилена конфігурація для салонів з вищим навантаженням і ширшим набором процедур.',
-    listFeatures: [
-      { feature: '36 маніпул для інтенсивної роботи' },
-      { feature: 'Потужність 1200 Вт' },
-      { feature: 'Для салонів із щільним графіком' },
-    ],
     compareFeatures: [
       { label: 'Кількість маніпул', value: '36 шт' },
       { label: 'Потужність', value: '1200 Вт' },
@@ -147,12 +137,14 @@ const products: ProductSeed[] = [
       'Стабільна робота протягом дня',
     ]),
     video: {
-      description: 'Відеоматеріали допомагають команді швидко освоїти налаштування та базові режими роботи.',
+      description:
+        'Відеоматеріали допомагають команді швидко освоїти налаштування та базові режими роботи.',
     },
     faq: [
       {
         question: 'Чим 36 PRO відрізняється від 18 PRO?',
-        answer: '36 PRO має більше маніпул, вищу потужність і краще підходить для інтенсивної роботи.',
+        answer:
+          '36 PRO має більше маніпул, вищу потужність і краще підходить для інтенсивної роботи.',
       },
       {
         question: 'Чи можна використовувати модель у салоні з кількома спеціалістами?',
@@ -170,11 +162,6 @@ const products: ProductSeed[] = [
     powerWatts: 650,
     details: '12 маніпул · 650 Вт',
     shortDescription: 'Компактний тестовий апарат для локальних процедур і невеликих кабінетів.',
-    listFeatures: [
-      { feature: '12 маніпул' },
-      { feature: 'Компактний формат' },
-      { feature: 'Для локальних процедур' },
-    ],
     compareFeatures: [
       { label: 'Кількість маніпул', value: '12 шт' },
       { label: 'Потужність', value: '650 Вт' },
@@ -196,7 +183,8 @@ const products: ProductSeed[] = [
     equipment: textItems(['Основний блок', 'Набір маніпул', 'Кабель живлення']),
     advantages: textItems(['Компактність', 'Легкий старт', 'Зручність для локальних процедур']),
     video: {
-      description: 'Відеоінструкції можна додати в адмінці після тестування або наповнення контентом.',
+      description:
+        'Відеоінструкції можна додати в адмінці після тестування або наповнення контентом.',
     },
     faq: [
       {
@@ -281,7 +269,10 @@ async function seedProducts() {
   console.log(`Seeded ${products.length} products`)
 }
 
-async function upsertRemoteMedia(payload: Awaited<ReturnType<typeof getPayload>>, source: VideoPreviewSource) {
+async function upsertRemoteMedia(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  source: VideoPreviewSource,
+) {
   const existing = await payload.find({
     collection: 'media',
     depth: 0,
@@ -300,7 +291,9 @@ async function upsertRemoteMedia(payload: Awaited<ReturnType<typeof getPayload>>
   const response = await fetch(source.url)
 
   if (!response.ok) {
-    throw new Error(`Failed to download media for ${source.alt}: ${response.status} ${response.statusText}`)
+    throw new Error(
+      `Failed to download media for ${source.alt}: ${response.status} ${response.statusText}`,
+    )
   }
 
   const extension = getFileExtension(response.headers.get('content-type') ?? '')

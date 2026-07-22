@@ -255,12 +255,6 @@ export interface Product {
    * Якщо постер не вибрано, у картці буде показано перше зображення з галереї.
    */
   poster?: (number | null) | Media;
-  listFeatures?:
-    | {
-        feature: string;
-        id?: string | null;
-      }[]
-    | null;
   compareFeatures?:
     | {
         label: string;
@@ -789,12 +783,6 @@ export interface ProductsSelect<T extends boolean = true> {
   shortDescription?: T;
   gallery?: T;
   poster?: T;
-  listFeatures?:
-    | T
-    | {
-        feature?: T;
-        id?: T;
-      };
   compareFeatures?:
     | T
     | {

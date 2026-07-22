@@ -1520,7 +1520,6 @@ type Product {
   shortDescription: String
   gallery(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
   poster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
-  listFeatures: [Product_ListFeatures!]
   compareFeatures: [Product_CompareFeatures!]
   description: Product_Description
   characteristics: Product_Characteristics
@@ -1557,11 +1556,6 @@ type Category {
 type Category_Seo {
   metaTitle: String
   metaDescription: String
-}
-
-type Product_ListFeatures {
-  feature: String
-  id: String
 }
 
 type Product_CompareFeatures {
@@ -1649,8 +1643,6 @@ input Product_where {
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
   poster: Product_poster_operator
-  listFeatures__feature: Product_listFeatures__feature_operator
-  listFeatures__id: Product_listFeatures__id_operator
   compareFeatures__label: Product_compareFeatures__label_operator
   compareFeatures__value: Product_compareFeatures__value_operator
   compareFeatures__id: Product_compareFeatures__id_operator
@@ -1818,27 +1810,6 @@ input Product_poster_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
-  exists: Boolean
-}
-
-input Product_listFeatures__feature_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Product_listFeatures__id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
   exists: Boolean
 }
 
@@ -2117,8 +2088,6 @@ input Product_where_and {
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
   poster: Product_poster_operator
-  listFeatures__feature: Product_listFeatures__feature_operator
-  listFeatures__id: Product_listFeatures__id_operator
   compareFeatures__label: Product_compareFeatures__label_operator
   compareFeatures__value: Product_compareFeatures__value_operator
   compareFeatures__id: Product_compareFeatures__id_operator
@@ -2165,8 +2134,6 @@ input Product_where_or {
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
   poster: Product_poster_operator
-  listFeatures__feature: Product_listFeatures__feature_operator
-  listFeatures__id: Product_listFeatures__id_operator
   compareFeatures__label: Product_compareFeatures__label_operator
   compareFeatures__value: Product_compareFeatures__value_operator
   compareFeatures__id: Product_compareFeatures__id_operator
@@ -2224,7 +2191,6 @@ type ProductsDocAccessFields {
   shortDescription: ProductsDocAccessFields_shortDescription
   gallery: ProductsDocAccessFields_gallery
   poster: ProductsDocAccessFields_poster
-  listFeatures: ProductsDocAccessFields_listFeatures
   compareFeatures: ProductsDocAccessFields_compareFeatures
   description: ProductsDocAccessFields_description
   characteristics: ProductsDocAccessFields_characteristics
@@ -2612,81 +2578,6 @@ type ProductsDocAccessFields_poster_Update {
 }
 
 type ProductsDocAccessFields_poster_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures {
-  create: ProductsDocAccessFields_listFeatures_Create
-  read: ProductsDocAccessFields_listFeatures_Read
-  update: ProductsDocAccessFields_listFeatures_Update
-  delete: ProductsDocAccessFields_listFeatures_Delete
-  fields: ProductsDocAccessFields_listFeatures_Fields
-}
-
-type ProductsDocAccessFields_listFeatures_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_Fields {
-  feature: ProductsDocAccessFields_listFeatures_feature
-  id: ProductsDocAccessFields_listFeatures_id
-}
-
-type ProductsDocAccessFields_listFeatures_feature {
-  create: ProductsDocAccessFields_listFeatures_feature_Create
-  read: ProductsDocAccessFields_listFeatures_feature_Read
-  update: ProductsDocAccessFields_listFeatures_feature_Update
-  delete: ProductsDocAccessFields_listFeatures_feature_Delete
-}
-
-type ProductsDocAccessFields_listFeatures_feature_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_feature_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_feature_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_feature_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_id {
-  create: ProductsDocAccessFields_listFeatures_id_Create
-  read: ProductsDocAccessFields_listFeatures_id_Read
-  update: ProductsDocAccessFields_listFeatures_id_Update
-  delete: ProductsDocAccessFields_listFeatures_id_Delete
-}
-
-type ProductsDocAccessFields_listFeatures_id_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_id_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_id_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_listFeatures_id_Delete {
   permission: Boolean!
 }
 
@@ -13685,7 +13576,6 @@ type ProductsFields {
   shortDescription: ProductsFields_shortDescription
   gallery: ProductsFields_gallery
   poster: ProductsFields_poster
-  listFeatures: ProductsFields_listFeatures
   compareFeatures: ProductsFields_compareFeatures
   description: ProductsFields_description
   characteristics: ProductsFields_characteristics
@@ -14073,81 +13963,6 @@ type ProductsFields_poster_Update {
 }
 
 type ProductsFields_poster_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures {
-  create: ProductsFields_listFeatures_Create
-  read: ProductsFields_listFeatures_Read
-  update: ProductsFields_listFeatures_Update
-  delete: ProductsFields_listFeatures_Delete
-  fields: ProductsFields_listFeatures_Fields
-}
-
-type ProductsFields_listFeatures_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_Fields {
-  feature: ProductsFields_listFeatures_feature
-  id: ProductsFields_listFeatures_id
-}
-
-type ProductsFields_listFeatures_feature {
-  create: ProductsFields_listFeatures_feature_Create
-  read: ProductsFields_listFeatures_feature_Read
-  update: ProductsFields_listFeatures_feature_Update
-  delete: ProductsFields_listFeatures_feature_Delete
-}
-
-type ProductsFields_listFeatures_feature_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_feature_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_feature_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_feature_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_id {
-  create: ProductsFields_listFeatures_id_Create
-  read: ProductsFields_listFeatures_id_Read
-  update: ProductsFields_listFeatures_id_Update
-  delete: ProductsFields_listFeatures_id_Delete
-}
-
-type ProductsFields_listFeatures_id_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_id_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_id_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_listFeatures_id_Delete {
   permission: Boolean!
 }
 
@@ -21734,7 +21549,6 @@ input mutationProductInput {
   shortDescription: String
   gallery: [Int]
   poster: Int
-  listFeatures: [mutationProduct_ListFeaturesInput]
   compareFeatures: [mutationProduct_CompareFeaturesInput]
   description: mutationProduct_DescriptionInput
   characteristics: mutationProduct_CharacteristicsInput
@@ -21754,11 +21568,6 @@ input mutationProductInput {
 input mutationProduct_SeoInput {
   metaTitle: String
   metaDescription: String
-}
-
-input mutationProduct_ListFeaturesInput {
-  feature: String
-  id: String
 }
 
 input mutationProduct_CompareFeaturesInput {
@@ -21831,7 +21640,6 @@ input mutationProductUpdateInput {
   shortDescription: String
   gallery: [Int]
   poster: Int
-  listFeatures: [mutationProductUpdate_ListFeaturesInput]
   compareFeatures: [mutationProductUpdate_CompareFeaturesInput]
   description: mutationProductUpdate_DescriptionInput
   characteristics: mutationProductUpdate_CharacteristicsInput
@@ -21851,11 +21659,6 @@ input mutationProductUpdateInput {
 input mutationProductUpdate_SeoInput {
   metaTitle: String
   metaDescription: String
-}
-
-input mutationProductUpdate_ListFeaturesInput {
-  feature: String
-  id: String
 }
 
 input mutationProductUpdate_CompareFeaturesInput {
