@@ -22,11 +22,6 @@ export type CatalogCategorySource = ProductCategorySource & {
   imageUrl?: string | null
 }
 
-export type ProductFeature = {
-  label: string
-  value: string
-}
-
 export type ProductSpecification = {
   label: string
   value: string
@@ -116,7 +111,6 @@ export type ProductData = {
   categoryLabel: string
   characteristics: ProductSpecification[]
   cmsId: number
-  compareFeatures: ProductFeature[]
   compareImage: ProductImage
   beforeAfter: ProductBeforeAfterItem[]
   details: string
@@ -162,10 +156,6 @@ export type ProductSource = {
     | null
     | undefined
   cmsId: number
-  compareFeatures?:
-    | Array<{ label?: string | null; value?: string | null } | null>
-    | null
-    | undefined
   description?: ProductRichTextContent | null
   details?: string | null
   equipment?: Array<string | null | undefined> | null
@@ -206,7 +196,6 @@ export function unwrapProduct(product: ProductSource): ProductData {
     categoryLabel: category.title,
     characteristics: unwrapSpecifications(product.characteristics),
     cmsId: product.cmsId,
-    compareFeatures: unwrapCompareFeatures(product.compareFeatures),
     compareImage: galleryImages[1] ?? primaryImage,
     details: unwrapDetails(product),
     faq: unwrapFaq(product.faq),
@@ -386,15 +375,6 @@ function unwrapSpecifications(value: ProductSource['characteristics']): ProductS
       value: unwrapText(item?.value) ?? '',
     }))
     .filter((item) => item.label && item.value)
-}
-
-function unwrapCompareFeatures(value: ProductSource['compareFeatures']): ProductFeature[] {
-  return asArray<NonNullable<NonNullable<ProductSource['compareFeatures']>[number]>>(value)
-    .map((feature) => ({
-      label: unwrapText(feature?.label) ?? '',
-      value: unwrapText(feature?.value) ?? '',
-    }))
-    .filter((feature) => feature.label && feature.value)
 }
 
 function unwrapFaq(value: ProductSource['faq']): ProductFaqItem[] {

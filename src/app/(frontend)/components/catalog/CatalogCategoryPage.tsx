@@ -93,8 +93,8 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
     : null
   const activeCategoryTitle = selectedCategory
     ? activeCategory?.title ||
-      catalogItems.find((item) => item.category === selectedCategory)?.categoryLabel ||
-      selectedCategory
+    catalogItems.find((item) => item.category === selectedCategory)?.categoryLabel ||
+    selectedCategory
     : translate(locale, 'catalog')
 
   useEffect(() => {

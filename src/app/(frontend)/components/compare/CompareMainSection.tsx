@@ -14,7 +14,7 @@ export function CompareMainSection() {
 
   const featureLabels = Array.from(
     new Set(
-      compareProducts.flatMap((product) => product.compareFeatures.map((feature) => feature.label)),
+      compareProducts.flatMap((product) => product.characteristics.map((feature) => feature.label)),
     ),
   )
   const compareColumnsStyle =

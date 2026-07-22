@@ -51,7 +51,7 @@ export function CompareFeaturesTable({
                       key={`${product.id}-${label}`}
                       className="text-[18px] font-medium leading-[165%] text-[#22354A]"
                     >
-                      {product.compareFeatures.find((feature) => feature.label === label)?.value}
+                      {product.characteristics.find((feature) => feature.label === label)?.value}
                     </div>
                   ))}
                 </div>

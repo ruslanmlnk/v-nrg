@@ -58,7 +58,6 @@ function toGraphQLProductSource(product: GraphQLProduct): ProductSource {
       value: item?.value,
     })),
     cmsId: product.id,
-    compareFeatures: product.compareFeatures,
     description: product.description?.content as ProductRichTextContent | null | undefined,
     details: product.details,
     equipment: product.equipment?.items?.map((item) => item?.item),

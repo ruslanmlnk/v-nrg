@@ -108,25 +108,6 @@ export const Products: CollectionConfig = {
       },
     },
     {
-      name: 'compareFeatures',
-      type: 'array',
-      label: 'Характеристики для порівняння',
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          label: 'Назва',
-          required: true,
-        },
-        {
-          name: 'value',
-          type: 'text',
-          label: 'Значення',
-          required: true,
-        },
-      ],
-    },
-    {
       type: 'tabs',
       tabs: [
         {

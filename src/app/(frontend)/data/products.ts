@@ -27,7 +27,6 @@ function toPayloadProductSource(product: PayloadProduct): ProductSource {
       value: item.value,
     })),
     cmsId: product.id,
-    compareFeatures: product.compareFeatures,
     description: product.description?.content,
     details: product.details,
     equipment: product.equipment?.items?.map((item) => item.item),

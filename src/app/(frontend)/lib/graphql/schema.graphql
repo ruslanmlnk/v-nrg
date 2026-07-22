@@ -1520,7 +1520,6 @@ type Product {
   shortDescription: String
   gallery(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Media!]
   poster(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
-  compareFeatures: [Product_CompareFeatures!]
   description: Product_Description
   characteristics: Product_Characteristics
   equipment: Product_Equipment
@@ -1556,12 +1555,6 @@ type Category {
 type Category_Seo {
   metaTitle: String
   metaDescription: String
-}
-
-type Product_CompareFeatures {
-  label: String
-  value: String
-  id: String
 }
 
 type Product_Description {
@@ -1643,9 +1636,6 @@ input Product_where {
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
   poster: Product_poster_operator
-  compareFeatures__label: Product_compareFeatures__label_operator
-  compareFeatures__value: Product_compareFeatures__value_operator
-  compareFeatures__id: Product_compareFeatures__id_operator
   description__content: Product_description__content_operator
   characteristics__items__label: Product_characteristics__items__label_operator
   characteristics__items__value: Product_characteristics__items__value_operator
@@ -1810,37 +1800,6 @@ input Product_poster_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
-  exists: Boolean
-}
-
-input Product_compareFeatures__label_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Product_compareFeatures__value_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Product_compareFeatures__id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
   exists: Boolean
 }
 
@@ -2088,9 +2047,6 @@ input Product_where_and {
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
   poster: Product_poster_operator
-  compareFeatures__label: Product_compareFeatures__label_operator
-  compareFeatures__value: Product_compareFeatures__value_operator
-  compareFeatures__id: Product_compareFeatures__id_operator
   description__content: Product_description__content_operator
   characteristics__items__label: Product_characteristics__items__label_operator
   characteristics__items__value: Product_characteristics__items__value_operator
@@ -2134,9 +2090,6 @@ input Product_where_or {
   shortDescription: Product_shortDescription_operator
   gallery: Product_gallery_operator
   poster: Product_poster_operator
-  compareFeatures__label: Product_compareFeatures__label_operator
-  compareFeatures__value: Product_compareFeatures__value_operator
-  compareFeatures__id: Product_compareFeatures__id_operator
   description__content: Product_description__content_operator
   characteristics__items__label: Product_characteristics__items__label_operator
   characteristics__items__value: Product_characteristics__items__value_operator
@@ -2191,7 +2144,6 @@ type ProductsDocAccessFields {
   shortDescription: ProductsDocAccessFields_shortDescription
   gallery: ProductsDocAccessFields_gallery
   poster: ProductsDocAccessFields_poster
-  compareFeatures: ProductsDocAccessFields_compareFeatures
   description: ProductsDocAccessFields_description
   characteristics: ProductsDocAccessFields_characteristics
   equipment: ProductsDocAccessFields_equipment
@@ -2578,105 +2530,6 @@ type ProductsDocAccessFields_poster_Update {
 }
 
 type ProductsDocAccessFields_poster_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures {
-  create: ProductsDocAccessFields_compareFeatures_Create
-  read: ProductsDocAccessFields_compareFeatures_Read
-  update: ProductsDocAccessFields_compareFeatures_Update
-  delete: ProductsDocAccessFields_compareFeatures_Delete
-  fields: ProductsDocAccessFields_compareFeatures_Fields
-}
-
-type ProductsDocAccessFields_compareFeatures_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_Fields {
-  label: ProductsDocAccessFields_compareFeatures_label
-  value: ProductsDocAccessFields_compareFeatures_value
-  id: ProductsDocAccessFields_compareFeatures_id
-}
-
-type ProductsDocAccessFields_compareFeatures_label {
-  create: ProductsDocAccessFields_compareFeatures_label_Create
-  read: ProductsDocAccessFields_compareFeatures_label_Read
-  update: ProductsDocAccessFields_compareFeatures_label_Update
-  delete: ProductsDocAccessFields_compareFeatures_label_Delete
-}
-
-type ProductsDocAccessFields_compareFeatures_label_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_label_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_label_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_label_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_value {
-  create: ProductsDocAccessFields_compareFeatures_value_Create
-  read: ProductsDocAccessFields_compareFeatures_value_Read
-  update: ProductsDocAccessFields_compareFeatures_value_Update
-  delete: ProductsDocAccessFields_compareFeatures_value_Delete
-}
-
-type ProductsDocAccessFields_compareFeatures_value_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_value_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_value_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_value_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_id {
-  create: ProductsDocAccessFields_compareFeatures_id_Create
-  read: ProductsDocAccessFields_compareFeatures_id_Read
-  update: ProductsDocAccessFields_compareFeatures_id_Update
-  delete: ProductsDocAccessFields_compareFeatures_id_Delete
-}
-
-type ProductsDocAccessFields_compareFeatures_id_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_id_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_id_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_compareFeatures_id_Delete {
   permission: Boolean!
 }
 
@@ -13576,7 +13429,6 @@ type ProductsFields {
   shortDescription: ProductsFields_shortDescription
   gallery: ProductsFields_gallery
   poster: ProductsFields_poster
-  compareFeatures: ProductsFields_compareFeatures
   description: ProductsFields_description
   characteristics: ProductsFields_characteristics
   equipment: ProductsFields_equipment
@@ -13963,105 +13815,6 @@ type ProductsFields_poster_Update {
 }
 
 type ProductsFields_poster_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures {
-  create: ProductsFields_compareFeatures_Create
-  read: ProductsFields_compareFeatures_Read
-  update: ProductsFields_compareFeatures_Update
-  delete: ProductsFields_compareFeatures_Delete
-  fields: ProductsFields_compareFeatures_Fields
-}
-
-type ProductsFields_compareFeatures_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_Fields {
-  label: ProductsFields_compareFeatures_label
-  value: ProductsFields_compareFeatures_value
-  id: ProductsFields_compareFeatures_id
-}
-
-type ProductsFields_compareFeatures_label {
-  create: ProductsFields_compareFeatures_label_Create
-  read: ProductsFields_compareFeatures_label_Read
-  update: ProductsFields_compareFeatures_label_Update
-  delete: ProductsFields_compareFeatures_label_Delete
-}
-
-type ProductsFields_compareFeatures_label_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_label_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_label_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_label_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_value {
-  create: ProductsFields_compareFeatures_value_Create
-  read: ProductsFields_compareFeatures_value_Read
-  update: ProductsFields_compareFeatures_value_Update
-  delete: ProductsFields_compareFeatures_value_Delete
-}
-
-type ProductsFields_compareFeatures_value_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_value_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_value_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_value_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_id {
-  create: ProductsFields_compareFeatures_id_Create
-  read: ProductsFields_compareFeatures_id_Read
-  update: ProductsFields_compareFeatures_id_Update
-  delete: ProductsFields_compareFeatures_id_Delete
-}
-
-type ProductsFields_compareFeatures_id_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_id_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_id_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_compareFeatures_id_Delete {
   permission: Boolean!
 }
 
@@ -21549,7 +21302,6 @@ input mutationProductInput {
   shortDescription: String
   gallery: [Int]
   poster: Int
-  compareFeatures: [mutationProduct_CompareFeaturesInput]
   description: mutationProduct_DescriptionInput
   characteristics: mutationProduct_CharacteristicsInput
   equipment: mutationProduct_EquipmentInput
@@ -21568,12 +21320,6 @@ input mutationProductInput {
 input mutationProduct_SeoInput {
   metaTitle: String
   metaDescription: String
-}
-
-input mutationProduct_CompareFeaturesInput {
-  label: String
-  value: String
-  id: String
 }
 
 input mutationProduct_DescriptionInput {
@@ -21640,7 +21386,6 @@ input mutationProductUpdateInput {
   shortDescription: String
   gallery: [Int]
   poster: Int
-  compareFeatures: [mutationProductUpdate_CompareFeaturesInput]
   description: mutationProductUpdate_DescriptionInput
   characteristics: mutationProductUpdate_CharacteristicsInput
   equipment: mutationProductUpdate_EquipmentInput
@@ -21659,12 +21404,6 @@ input mutationProductUpdateInput {
 input mutationProductUpdate_SeoInput {
   metaTitle: String
   metaDescription: String
-}
-
-input mutationProductUpdate_CompareFeaturesInput {
-  label: String
-  value: String
-  id: String
 }
 
 input mutationProductUpdate_DescriptionInput {
