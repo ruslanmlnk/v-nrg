@@ -396,7 +396,7 @@ function buildCharacteristicOptions(items: CatalogItem[]): CharacteristicFilterO
   return Array.from(valuesByLabel, ([label, values]) => ({
     label,
     values: Array.from(values, ([value, count]) => ({ count, value })),
-  }))
+  })).filter((characteristic) => characteristic.values.length > 1)
 }
 
 function readCharacteristicFilters(params: URLSearchParams): Record<string, string[]> {
