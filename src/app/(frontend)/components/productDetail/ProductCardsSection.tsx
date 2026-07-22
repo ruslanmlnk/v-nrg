@@ -22,7 +22,7 @@ export function ProductCardsSection({
   title: string
 }) {
   return (
-    <ProductPageSection sectionClassName="pt-[100px]" className="gap-12">
+    <ProductPageSection className="gap-12">
       <SectionHeading eyebrow={eyebrow} title={title} />
       <div className="grid gap-5 lg:grid-cols-3">
         {products.map((product, index) => (

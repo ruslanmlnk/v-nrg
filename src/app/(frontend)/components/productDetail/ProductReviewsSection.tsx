@@ -22,6 +22,7 @@ export function ProductReviewsSection({
       activePage={activePage}
       pageCount={pageCount}
       reviews={reviews}
+      sectionClassName="px-6 lg:px-[100px]"
       onNext={onNext}
       onPrev={onPrev}
       onSelect={onSelect}

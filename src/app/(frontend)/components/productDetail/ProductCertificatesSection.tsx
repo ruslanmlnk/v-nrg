@@ -10,7 +10,7 @@ export function ProductCertificatesSection({ certificates }: { certificates: str
   const sliderRef = useCenteredMobileSlide()
 
   return (
-    <ProductPageSection sectionClassName="pt-[100px]" className="gap-12">
+    <ProductPageSection className="gap-12">
       <SectionHeading
         align="center"
         eyebrow="Надійність та підтримка"
@@ -50,7 +50,9 @@ function useCenteredMobileSlide() {
       return
     }
 
-    const centerSlide = slider.children[Math.floor(slider.children.length / 2)] as HTMLElement | undefined
+    const centerSlide = slider.children[Math.floor(slider.children.length / 2)] as
+      | HTMLElement
+      | undefined
 
     if (!centerSlide) {
       return

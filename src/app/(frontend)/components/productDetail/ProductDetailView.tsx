@@ -32,30 +32,24 @@ export default function ProductDetailView({ product }: { product: ProductData })
   const [partsCount, setPartsCount] = useState(8)
 
   const productGallery = useMemo(() => createProductGallery(displayProduct), [displayProduct])
-  const moreProducts = useMemo(
-    () => {
-      const selectedProducts = products.filter((item) =>
-        displayProduct.moreProductIds.includes(item.cmsId),
-      )
+  const moreProducts = useMemo(() => {
+    const selectedProducts = products.filter((item) =>
+      displayProduct.moreProductIds.includes(item.cmsId),
+    )
 
-      return selectedProducts.length > 0
-        ? selectedProducts
-        : products.filter((item) => item.id !== displayProduct.id).slice(0, 3)
-    },
-    [displayProduct.id, displayProduct.moreProductIds, products],
-  )
-  const recommendedProducts = useMemo(
-    () => {
-      const selectedProducts = products.filter((item) =>
-        displayProduct.recommendedTogetherIds.includes(item.cmsId),
-      )
+    return selectedProducts.length > 0
+      ? selectedProducts
+      : products.filter((item) => item.id !== displayProduct.id).slice(0, 3)
+  }, [displayProduct.id, displayProduct.moreProductIds, products])
+  const recommendedProducts = useMemo(() => {
+    const selectedProducts = products.filter((item) =>
+      displayProduct.recommendedTogetherIds.includes(item.cmsId),
+    )
 
-      return selectedProducts.length > 0
-        ? selectedProducts
-        : products.filter((item) => item.id !== displayProduct.id).slice(0, 3)
-    },
-    [displayProduct.id, displayProduct.recommendedTogetherIds, products],
-  )
+    return selectedProducts.length > 0
+      ? selectedProducts
+      : products.filter((item) => item.id !== displayProduct.id).slice(0, 3)
+  }, [displayProduct.id, displayProduct.recommendedTogetherIds, products])
   const faqColumns = useMemo(() => {
     if (displayProduct.faq.length === 0) {
       return undefined
@@ -104,76 +98,80 @@ export default function ProductDetailView({ product }: { product: ProductData })
   }
 
   return (
-    <div className="bg-[#F5F8F9] pt-5">
-      <ProductPageSection className="gap-12" sectionClassName="lg:pb-[100px]">
-        <ProductHeroSection
-          categoryLabel={displayProduct.categoryLabel}
-          categorySlug={displayProduct.category}
-          title={displayProduct.title}
-        />
+    <div className="bg-[#F5F8F9] pb-[100px] pt-5">
+      <div className="flex flex-col gap-[100px]">
+        <ProductPageSection className="gap-12">
+          <ProductHeroSection
+            categoryLabel={displayProduct.categoryLabel}
+            categorySlug={displayProduct.category}
+            title={displayProduct.title}
+          />
 
-        <ProductOverviewSection
-          activeGalleryIndex={activeGalleryIndex}
-          activeGalleryItem={activeGalleryItem}
-          deliveryHref={deliveryHref}
-          isCompared={isCompared}
-          isShareActive={isShareActive}
-          onAddToCart={() => addToCart(displayProduct.id, quantity)}
-          onDecreaseQuantity={() => setQuantity((current) => Math.max(1, current - 1))}
-          onIncreaseQuantity={() => setQuantity((current) => current + 1)}
-          onOpenPartsPayment={() => setIsPartsModalOpen(true)}
-          onSelectGallery={setActiveGalleryIndex}
-          onShare={handleShare}
-          onToggleCompare={() => toggleCompare(displayProduct.id)}
-          product={displayProduct}
-          productGallery={productGallery}
-          quantity={quantity}
-        />
+          <ProductOverviewSection
+            activeGalleryIndex={activeGalleryIndex}
+            activeGalleryItem={activeGalleryItem}
+            deliveryHref={deliveryHref}
+            isCompared={isCompared}
+            isShareActive={isShareActive}
+            onAddToCart={() => addToCart(displayProduct.id, quantity)}
+            onDecreaseQuantity={() => setQuantity((current) => Math.max(1, current - 1))}
+            onIncreaseQuantity={() => setQuantity((current) => current + 1)}
+            onOpenPartsPayment={() => setIsPartsModalOpen(true)}
+            onSelectGallery={setActiveGalleryIndex}
+            onShare={handleShare}
+            onToggleCompare={() => toggleCompare(displayProduct.id)}
+            product={displayProduct}
+            productGallery={productGallery}
+            quantity={quantity}
+          />
 
-        {displayTabs.length > 0 ? (
-          <ProductTabsSection
-            activeTab={activeTab}
-            activeTabId={activeTabId}
-            displayTabs={displayTabs}
-            onSelectTab={setActiveTabId}
+          {displayTabs.length > 0 ? (
+            <ProductTabsSection
+              activeTab={activeTab}
+              activeTabId={activeTabId}
+              displayTabs={displayTabs}
+              onSelectTab={setActiveTabId}
+            />
+          ) : null}
+        </ProductPageSection>
+
+        {displayProduct.beforeAfter.length > 0 ? (
+          <ProductComparisonSection cards={displayProduct.beforeAfter} />
+        ) : null}
+        {displayProduct.certificates.length > 0 ? (
+          <ProductCertificatesSection certificates={displayProduct.certificates} />
+        ) : null}
+        {displayProduct.reviews.length > 0 ? (
+          <ProductReviewsSection
+            activePage={activeReviewPage}
+            pageCount={reviewPages.length}
+            reviews={visibleReviews}
+            onNext={() => setActiveReviewPage((current) => (current + 1) % reviewPages.length)}
+            onPrev={() =>
+              setActiveReviewPage(
+                (current) => (current - 1 + reviewPages.length) % reviewPages.length,
+              )
+            }
+            onSelect={setActiveReviewPage}
           />
         ) : null}
-      </ProductPageSection>
+        {moreProducts.length > 0 ? (
+          <ProductCardsSection
+            eyebrow="Більше товарів"
+            products={moreProducts}
+            title="Схожі товари"
+          />
+        ) : null}
+        {recommendedProducts.length > 0 ? (
+          <ProductCardsSection
+            eyebrow="Рекомендуємо разом"
+            products={recommendedProducts}
+            title="Разом з цим товаром купують"
+          />
+        ) : null}
 
-      {displayProduct.beforeAfter.length > 0 ? (
-        <ProductComparisonSection cards={displayProduct.beforeAfter} />
-      ) : null}
-      {displayProduct.certificates.length > 0 ? (
-        <ProductCertificatesSection certificates={displayProduct.certificates} />
-      ) : null}
-      {displayProduct.reviews.length > 0 ? (
-        <ProductReviewsSection
-          activePage={activeReviewPage}
-          pageCount={reviewPages.length}
-          reviews={visibleReviews}
-          onNext={() => setActiveReviewPage((current) => (current + 1) % reviewPages.length)}
-          onPrev={() =>
-            setActiveReviewPage((current) => (current - 1 + reviewPages.length) % reviewPages.length)
-          }
-          onSelect={setActiveReviewPage}
-        />
-      ) : null}
-      {moreProducts.length > 0 ? (
-        <ProductCardsSection
-          eyebrow="Більше товарів"
-          products={moreProducts}
-          title="Схожі товари"
-        />
-      ) : null}
-      {recommendedProducts.length > 0 ? (
-        <ProductCardsSection
-          eyebrow="Рекомендуємо разом"
-          products={recommendedProducts}
-          title="Разом з цим товаром купують"
-        />
-      ) : null}
-
-      {faqColumns ? <FaqSection columns={faqColumns} /> : null}
+        {faqColumns ? <FaqSection columns={faqColumns} sectionClassName="px-6" /> : null}
+      </div>
 
       <PartsPaymentModal
         isOpen={isPartsModalOpen}
