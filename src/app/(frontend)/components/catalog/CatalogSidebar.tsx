@@ -9,48 +9,36 @@ import checkboxUncheckedIconAsset from '@public/icon/generated/catalog-checkbox-
 import radioCheckedIconAsset from '@public/icon/generated/catalog-radio-checked.svg'
 import radioUncheckedIconAsset from '@public/icon/generated/catalog-radio-unchecked.svg'
 import searchIconAsset from '@public/icon/generated/catalog-search.svg'
-import {
-  type CatalogModelKey,
-  matchesPowerBandValue,
-  powerLabels,
-  type CatalogCategoryOption,
-  type CatalogItem,
-  type PowerBand,
-} from './catalogData'
+import { type CatalogCategoryOption, type CatalogItem } from './catalogData'
+
+export type CharacteristicFilterOption = {
+  label: string
+  values: Array<{ count: number; value: string }>
+}
 
 export function CatalogSidebar({
   categoryOptions,
   catalogItems,
-  maniplesOptions,
-  modelOptions,
+  characteristicOptions,
   onSearchChange,
   onSelectCategory,
-  onToggleManiples,
-  onToggleModel,
-  onTogglePowerBand,
+  onToggleCharacteristic,
   resetFilters,
   searchQuery,
   selectedCategory,
-  selectedManiples,
-  selectedModelKeys,
-  selectedPowerBands,
+  selectedCharacteristics,
   showTitle = true,
 }: {
   categoryOptions: CatalogCategoryOption[]
   catalogItems: CatalogItem[]
-  maniplesOptions: number[]
-  modelOptions: Array<{ key: CatalogModelKey; title: string }>
+  characteristicOptions: CharacteristicFilterOption[]
   onSearchChange: (value: string) => void
   onSelectCategory: (category: string) => void
-  onToggleManiples: (maniples: number) => void
-  onToggleModel: (key: CatalogModelKey) => void
-  onTogglePowerBand: (band: PowerBand) => void
+  onToggleCharacteristic: (label: string, value: string) => void
   resetFilters: () => void
   searchQuery: string
   selectedCategory: string | null
-  selectedManiples: number[]
-  selectedModelKeys: CatalogModelKey[]
-  selectedPowerBands: PowerBand[]
+  selectedCharacteristics: Record<string, string[]>
   showTitle?: boolean
 }) {
   return (
@@ -94,55 +82,19 @@ export function CatalogSidebar({
         })}
       </FilterSection>
 
-      <FilterSection title="Модель">
-        {modelOptions.map((model) => {
-          const count = catalogItems.filter((item) => item.modelKey === model.key).length
-
-          return (
+      {characteristicOptions.map((characteristic) => (
+        <FilterSection key={characteristic.label} title={characteristic.label}>
+          {characteristic.values.map((option) => (
             <CheckboxOption
-              key={model.key}
-              checked={selectedModelKeys.includes(model.key)}
-              count={count}
-              label={model.title}
-              onClick={() => onToggleModel(model.key)}
+              key={option.value}
+              checked={(selectedCharacteristics[characteristic.label] ?? []).includes(option.value)}
+              count={option.count}
+              label={option.value}
+              onClick={() => onToggleCharacteristic(characteristic.label, option.value)}
             />
-          )
-        })}
-      </FilterSection>
-
-      <FilterSection title="Кількість маніпул">
-        {maniplesOptions.map((maniples) => {
-          const count = catalogItems.filter((item) => item.maniples === maniples).length
-
-          return (
-            <CheckboxOption
-              key={maniples}
-              checked={selectedManiples.includes(maniples)}
-              count={count}
-              label={`${maniples}`}
-              onClick={() => onToggleManiples(maniples)}
-            />
-          )
-        })}
-      </FilterSection>
-
-      <FilterSection title="Потужність">
-        {(['under-1000', 'over-1000'] as PowerBand[]).map((band) => {
-          const count = catalogItems.filter((item) =>
-            matchesPowerBandValue(item.powerWatts, band),
-          ).length
-
-          return (
-            <CheckboxOption
-              key={band}
-              checked={selectedPowerBands.includes(band)}
-              count={count}
-              label={powerLabels[band]}
-              onClick={() => onTogglePowerBand(band)}
-            />
-          )
-        })}
-      </FilterSection>
+          ))}
+        </FilterSection>
+      ))}
 
       <button
         type="button"

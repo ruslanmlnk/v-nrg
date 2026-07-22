@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import chevronDownIconAsset from '@public/icon/generated/catalog-chevron-down.svg'
 import { translate } from '../../lib/siteTranslations'
+import type { CharacteristicFilterOption } from './CatalogSidebar'
 import { useCommerce } from '../providers/CommerceProvider'
 import { useSitePreferences } from '../providers/SitePreferencesProvider'
 import {
@@ -17,13 +18,9 @@ import {
   CatalogToolbar,
 } from './CatalogSections'
 import {
-  type CatalogModelKey,
-  getCatalogModelKey,
   ITEMS_PER_PAGE,
-  matchesPowerBandValue,
   type CatalogCategoryOption,
   type CatalogItem,
-  type PowerBand,
   type SortOption,
   type ViewMode,
 } from './catalogData'
@@ -34,38 +31,44 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   const [sharedProductId, setSharedProductId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(routeCategory || null)
-  const [selectedModelKeys, setSelectedModelKeys] = useState<CatalogModelKey[]>([])
-  const [selectedManiples, setSelectedManiples] = useState<number[]>([])
-  const [selectedPowerBands, setSelectedPowerBands] = useState<PowerBand[]>([])
+  const [selectedCharacteristics, setSelectedCharacteristics] = useState<Record<string, string[]>>(
+    {},
+  )
   const [sortOption, setSortOption] = useState<SortOption>('popular')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [currentPage, setCurrentPage] = useState(0)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
+  const [filtersReady, setFiltersReady] = useState(false)
+  const previousRouteCategory = useRef(routeCategory)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const categoryParam = params.get('category')
+    const sortParam = params.get('sort')
+    const viewParam = params.get('view')
+
+    setSearchQuery(params.get('q') ?? '')
+    setSelectedCategory(categoryParam === 'all' ? '' : categoryParam || routeCategory || null)
+    setSelectedCharacteristics(readCharacteristicFilters(params))
+    setSortOption(sortParam === 'price-asc' || sortParam === 'price-desc' ? sortParam : 'popular')
+    setViewMode(viewParam === 'list' ? 'list' : 'grid')
+    setFiltersReady(true)
+  }, [routeCategory])
 
   const catalogItems = useMemo<CatalogItem[]>(
     () =>
       products.map((product, index) => ({
         ...product,
-        maniples: product.maniples ?? 0,
-        modelKey: getCatalogModelKey(product.title),
-        powerWatts: product.powerWatts ?? 0,
         summary: product.shortDescription,
         uid: `${product.id}-${index}`,
       })),
     [products],
   )
 
-  const modelOptions = useMemo(() => {
-    const modelsByKey = new Map<CatalogModelKey, { key: CatalogModelKey; title: string }>()
-
-    for (const product of catalogItems) {
-      if (!modelsByKey.has(product.modelKey)) {
-        modelsByKey.set(product.modelKey, { key: product.modelKey, title: product.title })
-      }
-    }
-
-    return Array.from(modelsByKey.values())
-  }, [catalogItems])
+  const characteristicOptions = useMemo<CharacteristicFilterOption[]>(
+    () => buildCharacteristicOptions(catalogItems),
+    [catalogItems],
+  )
 
   const categoryOptions = useMemo<CatalogCategoryOption[]>(() => {
     return categories.map((category) => ({
@@ -83,28 +86,10 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
       selectedCategory
     : translate(locale, 'catalog')
 
-  const maniplesOptions = useMemo(
-    () =>
-      Array.from(new Set(catalogItems.map((item) => item.maniples).filter(Boolean))).sort(
-        (left, right) => left - right,
-      ),
-    [catalogItems],
-  )
-
   useEffect(() => {
-    setSelectedModelKeys((current) => {
-      const availableKeys = modelOptions.map((option) => option.key)
-      return current.filter((key) => availableKeys.includes(key))
-    })
-  }, [modelOptions])
+    if (previousRouteCategory.current === routeCategory) return
 
-  useEffect(() => {
-    setSelectedManiples((current) => {
-      return current.filter((maniples) => maniplesOptions.includes(maniples))
-    })
-  }, [maniplesOptions])
-
-  useEffect(() => {
+    previousRouteCategory.current = routeCategory
     setSelectedCategory(routeCategory || null)
   }, [routeCategory])
 
@@ -118,15 +103,16 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
       item.listFeatures.some((feature) => feature.toLowerCase().includes(normalizedQuery))
 
     const matchesCategory = !selectedCategory || item.category === selectedCategory
-    const matchesModel =
-      selectedModelKeys.length === 0 || selectedModelKeys.includes(item.modelKey)
-    const matchesManiples =
-      selectedManiples.length === 0 || selectedManiples.includes(item.maniples)
-    const matchesPowerBand =
-      selectedPowerBands.length === 0 ||
-      selectedPowerBands.some((band) => matchesPowerBandValue(item.powerWatts, band))
+    const matchesCharacteristics = Object.entries(selectedCharacteristics).every(
+      ([label, values]) =>
+        values.length === 0 ||
+        item.characteristics.some(
+          (characteristic) =>
+            characteristic.label === label && values.includes(characteristic.value),
+        ),
+    )
 
-    return matchesSearch && matchesCategory && matchesModel && matchesManiples && matchesPowerBand
+    return matchesSearch && matchesCategory && matchesCharacteristics
   })
 
   const sortedProducts = [...filteredProducts].sort((left, right) => {
@@ -154,19 +140,45 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
 
   useEffect(() => {
     setCurrentPage(0)
-  }, [
-    searchQuery,
-    selectedCategory,
-    selectedManiples,
-    selectedModelKeys,
-    selectedPowerBands,
-    sortOption,
-    viewMode,
-  ])
+  }, [searchQuery, selectedCategory, selectedCharacteristics, sortOption, viewMode])
 
   useEffect(() => {
     setCurrentPage((page) => Math.min(page, totalPages - 1))
   }, [totalPages])
+
+  useEffect(() => {
+    if (!filtersReady) return
+
+    const params = new URLSearchParams(window.location.search)
+
+    for (const key of ['category', 'filter', 'maniples', 'model', 'power', 'q', 'sort', 'view']) {
+      params.delete(key)
+    }
+
+    if (searchQuery.trim()) params.set('q', searchQuery.trim())
+    if (selectedCategory === '') {
+      params.set('category', 'all')
+    } else if (selectedCategory && selectedCategory !== routeCategory) {
+      params.set('category', selectedCategory)
+    }
+    for (const [label, values] of Object.entries(selectedCharacteristics)) {
+      for (const value of values) params.append('filter', JSON.stringify({ label, value }))
+    }
+    if (sortOption !== 'popular') params.set('sort', sortOption)
+    if (viewMode !== 'grid') params.set('view', viewMode)
+
+    const query = params.toString()
+    const nextUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`
+    window.history.replaceState(window.history.state, '', nextUrl)
+  }, [
+    filtersReady,
+    routeCategory,
+    searchQuery,
+    selectedCategory,
+    selectedCharacteristics,
+    sortOption,
+    viewMode,
+  ])
 
   useEffect(() => {
     document.body.style.overflow = isMobileFiltersOpen ? 'hidden' : ''
@@ -196,9 +208,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
   const resetFilters = () => {
     setSearchQuery('')
     setSelectedCategory(routeCategory || null)
-    setSelectedModelKeys([])
-    setSelectedManiples([])
-    setSelectedPowerBands([])
+    setSelectedCharacteristics({})
     setSortOption('popular')
     setCurrentPage(0)
   }
@@ -223,25 +233,16 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
             <CatalogSidebar
               categoryOptions={categoryOptions}
               catalogItems={catalogItems}
-              maniplesOptions={maniplesOptions}
-              modelOptions={modelOptions}
+              characteristicOptions={characteristicOptions}
               onSearchChange={setSearchQuery}
               onSelectCategory={setSelectedCategory}
-              onToggleManiples={(maniples) =>
-                setSelectedManiples((current) => toggleSelection(current, maniples))
-              }
-              onToggleModel={(key) =>
-                setSelectedModelKeys((current) => toggleSelection(current, key))
-              }
-              onTogglePowerBand={(band) =>
-                setSelectedPowerBands((current) => toggleSelection(current, band))
+              onToggleCharacteristic={(label, value) =>
+                setSelectedCharacteristics((current) => toggleCharacteristic(current, label, value))
               }
               resetFilters={resetFilters}
               searchQuery={searchQuery}
               selectedCategory={selectedCategory}
-              selectedManiples={selectedManiples}
-              selectedModelKeys={selectedModelKeys}
-              selectedPowerBands={selectedPowerBands}
+              selectedCharacteristics={selectedCharacteristics}
             />
           </div>
 
@@ -317,25 +318,16 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
             <CatalogSidebar
               categoryOptions={categoryOptions}
               catalogItems={catalogItems}
-              maniplesOptions={maniplesOptions}
-              modelOptions={modelOptions}
+              characteristicOptions={characteristicOptions}
               onSearchChange={setSearchQuery}
               onSelectCategory={setSelectedCategory}
-              onToggleManiples={(maniples) =>
-                setSelectedManiples((current) => toggleSelection(current, maniples))
-              }
-              onToggleModel={(key) =>
-                setSelectedModelKeys((current) => toggleSelection(current, key))
-              }
-              onTogglePowerBand={(band) =>
-                setSelectedPowerBands((current) => toggleSelection(current, band))
+              onToggleCharacteristic={(label, value) =>
+                setSelectedCharacteristics((current) => toggleCharacteristic(current, label, value))
               }
               resetFilters={resetFilters}
               searchQuery={searchQuery}
               selectedCategory={selectedCategory}
-              selectedManiples={selectedManiples}
-              selectedModelKeys={selectedModelKeys}
-              selectedPowerBands={selectedPowerBands}
+              selectedCharacteristics={selectedCharacteristics}
               showTitle={false}
             />
 
@@ -390,6 +382,51 @@ function MobileCatalogControls({
   )
 }
 
-function toggleSelection<T>(items: T[], value: T) {
-  return items.includes(value) ? items.filter((item) => item !== value) : [...items, value]
+function buildCharacteristicOptions(items: CatalogItem[]): CharacteristicFilterOption[] {
+  const valuesByLabel = new Map<string, Map<string, number>>()
+
+  for (const item of items) {
+    for (const characteristic of item.characteristics) {
+      const values = valuesByLabel.get(characteristic.label) ?? new Map<string, number>()
+      values.set(characteristic.value, (values.get(characteristic.value) ?? 0) + 1)
+      valuesByLabel.set(characteristic.label, values)
+    }
+  }
+
+  return Array.from(valuesByLabel, ([label, values]) => ({
+    label,
+    values: Array.from(values, ([value, count]) => ({ count, value })),
+  }))
+}
+
+function readCharacteristicFilters(params: URLSearchParams): Record<string, string[]> {
+  const filters: Record<string, string[]> = {}
+
+  for (const rawFilter of params.getAll('filter')) {
+    try {
+      const filter = JSON.parse(rawFilter) as { label?: unknown; value?: unknown }
+
+      if (typeof filter.label === 'string' && typeof filter.value === 'string') {
+        filters[filter.label] = [...(filters[filter.label] ?? []), filter.value]
+      }
+    } catch {
+      // Ignore invalid filter parameters.
+    }
+  }
+
+  return filters
+}
+
+function toggleCharacteristic(filters: Record<string, string[]>, label: string, value: string) {
+  const currentValues = filters[label] ?? []
+  const values = currentValues.includes(value)
+    ? currentValues.filter((item) => item !== value)
+    : [...currentValues, value]
+
+  if (values.length === 0) {
+    const { [label]: _removed, ...rest } = filters
+    return rest
+  }
+
+  return { ...filters, [label]: values }
 }

@@ -10,9 +10,6 @@ export type CatalogModelKey = string
 export type CatalogItem = ProductData & {
   category: ProductCategory
   categoryLabel: string
-  maniples: number
-  modelKey: CatalogModelKey
-  powerWatts: number
   summary: string
   uid: string
 }

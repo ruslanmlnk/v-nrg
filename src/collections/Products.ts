@@ -57,6 +57,7 @@ export const Products: CollectionConfig = {
           type: 'number',
           label: 'Кількість маніпул',
           admin: {
+            hidden: true,
             step: 1,
           },
         },
@@ -65,6 +66,7 @@ export const Products: CollectionConfig = {
           type: 'number',
           label: 'Потужність, Вт',
           admin: {
+            hidden: true,
             step: 1,
           },
         },

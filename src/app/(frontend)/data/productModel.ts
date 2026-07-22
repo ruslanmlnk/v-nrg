@@ -114,6 +114,7 @@ export type ProductData = {
   catalogImage: ProductImage
   category: ProductCategory
   categoryLabel: string
+  characteristics: ProductSpecification[]
   cmsId: number
   compareFeatures: ProductFeature[]
   compareImage: ProductImage
@@ -204,6 +205,7 @@ export function unwrapProduct(product: ProductSource): ProductData {
     catalogImage: unwrapText(product.posterUrl) ?? primaryImage,
     category: category.slug,
     categoryLabel: category.title,
+    characteristics: unwrapSpecifications(product.characteristics),
     cmsId: product.cmsId,
     compareFeatures: unwrapCompareFeatures(product.compareFeatures),
     compareImage: galleryImages[1] ?? primaryImage,
