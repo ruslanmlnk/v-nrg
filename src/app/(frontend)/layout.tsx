@@ -26,6 +26,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'A blank template using Payload in a Next.js app.',
     icons: favicon?.url ? [{ rel: 'icon', url: favicon.url }] : undefined,
     title: 'Payload Blank Template',
+    verification: {
+      google: 'uyIXHnl4oWIiblqvEgBRYUgquDE2RkL6AlSTNJI20dg',
+    },
   }
 }
 
