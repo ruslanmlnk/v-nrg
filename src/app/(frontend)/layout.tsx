@@ -62,6 +62,19 @@ export default async function RootLayout(props: { children: ReactNode }) {
 
   return (
     <html lang={initialLocale}>
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7E64MVKPB9" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-7E64MVKPB9');
+            `,
+          }}
+        />
+      </head>
       <body className={googleSans.className}>
         <SitePreferencesProvider
           initialCurrencies={initialCurrencies}
