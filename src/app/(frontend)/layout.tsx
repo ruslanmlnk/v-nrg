@@ -14,8 +14,10 @@ import {
 } from './components/providers/SitePreferencesProvider'
 import { GlobalEnglishTranslator } from './components/providers/GlobalEnglishTranslator'
 import SiteFooter from './components/SiteFooter'
+import { JsonLd } from './components/seo/JsonLd'
 import { getLayoutData } from './lib/graphql/queries'
 import { getSiteLocale } from './lib/getSiteLocale'
+import { SITE_URL } from './lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config })
@@ -23,9 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const favicon = getMedia(siteSettings.favicon)
 
   return {
-    description: 'A blank template using Payload in a Next.js app.',
+    description:
+      'Професійні апарати вакуумного масажу V-NRG: обладнання для косметологів, навчання, гарантія та підтримка виробника.',
     icons: favicon?.url ? [{ rel: 'icon', url: favicon.url }] : undefined,
-    title: 'Payload Blank Template',
+    metadataBase: new URL(SITE_URL),
+    title: 'V-NRG — професійне обладнання для вакуумного масажу',
     verification: {
       google: 'uyIXHnl4oWIiblqvEgBRYUgquDE2RkL6AlSTNJI20dg',
     },
@@ -63,6 +67,14 @@ export default async function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang={initialLocale}>
       <head>
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'V-NRG',
+            url: SITE_URL,
+          }}
+        />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-7E64MVKPB9" />
         <script
           dangerouslySetInnerHTML={{

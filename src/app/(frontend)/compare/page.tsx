@@ -1,6 +1,7 @@
 import { CompareHeroSection, CompareMainSection } from '../components/compare/CompareSections'
 
 export const metadata = {
+  alternates: { canonical: '/compare' },
   title: 'Порівняння товарів V-NRG',
 }
 

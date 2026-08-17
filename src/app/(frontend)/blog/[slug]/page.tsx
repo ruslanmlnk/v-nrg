@@ -15,15 +15,20 @@ import {
 } from '../../components/blog/ArticleTableOfContents'
 import { BlogCard, type BlogCardData } from '../../components/blog/BlogCard'
 import { RichTextRenderer } from '../../components/blog/RichTextRenderer'
+import { JsonLd } from '../../components/seo/JsonLd'
 import IconAsset from '../../components/ui/IconAsset'
 import { getSiteLocale } from '../../lib/getSiteLocale'
-import { createSeoMetadata } from '../../lib/seo'
+import { absoluteUrl, createSeoMetadata } from '../../lib/seo'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const article = await getArticleBySlug(slug, undefined, await getSiteLocale())
 
-  return createSeoMetadata(article?.seo, article ? `${article.title} | V-NRG` : 'Стаття | V-NRG')
+  return createSeoMetadata(
+    article?.seo,
+    article ? `${article.title} | V-NRG` : 'Стаття | V-NRG',
+    `/blog/${slug}`,
+  )
 }
 
 export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -56,6 +61,17 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
 
   return (
     <div className="pt-5">
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          datePublished: article.publishedAt,
+          headline: article.title,
+          image: heroImage?.url ? absoluteUrl(heroImage.url) : undefined,
+          mainEntityOfPage: absoluteUrl(`/blog/${article.slug}`),
+          publisher: { '@type': 'Organization', name: 'V-NRG', url: absoluteUrl('/') },
+        }}
+      />
       <article className="mx-auto flex max-w-[1288px] flex-col px-6 pb-[100px]">
         <header className="flex flex-col items-center gap-4 py-12 text-center">
           <div className="text-[18px] font-bold leading-[145%] text-[#4FACF5]">
@@ -164,6 +180,7 @@ function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardDa
     href: `/blog/${article.slug}`,
     id: String(article.id),
     image,
+    imageAlt: cardPoster?.alt || article.title,
     title: article.title,
   }
 }

@@ -18,7 +18,13 @@ import {
 import { chunkItems, createProductGallery } from './data'
 import type { ProductData } from '../../data/products'
 
-export default function ProductDetailView({ product }: { product: ProductData }) {
+export default function ProductDetailView({
+  heading,
+  product,
+}: {
+  heading?: string
+  product: ProductData
+}) {
   const { addToCart, checkoutOrder, getProductById, isInCompare, products, toggleCompare } =
     useCommerce()
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
@@ -104,7 +110,7 @@ export default function ProductDetailView({ product }: { product: ProductData })
           <ProductHeroSection
             categoryLabel={displayProduct.categoryLabel}
             categorySlug={displayProduct.category}
-            title={displayProduct.title}
+            title={heading ?? displayProduct.title}
           />
 
           <ProductOverviewSection

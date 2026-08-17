@@ -46,7 +46,11 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   })
 
   if (legalPage.docs[0]) {
-    return createSeoMetadata(legalPage.docs[0].seo, `${legalPage.docs[0].title} | V-NRG`)
+    return createSeoMetadata(
+      legalPage.docs[0].seo,
+      `${legalPage.docs[0].title} | V-NRG`,
+      `/${category}`,
+    )
   }
 
   const categoryPage = await payload.find({
@@ -63,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
   const doc = categoryPage.docs[0]
 
-  return doc ? createSeoMetadata(doc.seo, `${doc.title || category} | V-NRG`) : {}
+  return doc ? createSeoMetadata(doc.seo, `${doc.title || category} | V-NRG`, `/${category}`) : {}
 }
 
 export default async function RootCatalogCategoryPage({

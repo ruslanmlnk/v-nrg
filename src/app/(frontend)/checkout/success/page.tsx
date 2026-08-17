@@ -1,6 +1,7 @@
 import { CheckoutSuccessSection } from '../../components/checkout/CheckoutSuccessSections'
 
 export const metadata = {
+  alternates: { canonical: '/checkout/success' },
   title: 'Дякуємо за замовлення | V-NRG',
 }
 

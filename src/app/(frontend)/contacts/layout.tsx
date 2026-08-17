@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     locale: await getSiteLocale(),
   })
 
-  return createSeoMetadata(contacts.seo, 'Контакти V-NRG')
+  return createSeoMetadata(contacts.seo, 'Контакти V-NRG', '/contacts')
 }
 
 export default function ContactsLayout({ children }: { children: ReactNode }) {

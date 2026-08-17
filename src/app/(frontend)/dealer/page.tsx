@@ -10,6 +10,7 @@ import { DealerHeroSection } from '../components/dealer/DealerHeroSection'
 import ArrowPillButton from '../components/ui/ArrowPillButton'
 
 export const metadata = {
+  alternates: { canonical: '/dealer' },
   title: 'Стати дилером V-NRG',
 }
 

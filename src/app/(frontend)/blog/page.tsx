@@ -15,7 +15,7 @@ export async function generateMetadata() {
     locale: await getSiteLocale(),
   })
 
-  return createSeoMetadata(blogPage.seo, 'Блог | V-NRG')
+  return createSeoMetadata(blogPage.seo, 'Блог | V-NRG', '/blog')
 }
 
 export default async function BlogPage() {
@@ -89,6 +89,7 @@ function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardDa
     href: `/blog/${article.slug}`,
     id: String(article.id),
     image,
+    imageAlt: cardPoster?.alt || article.title,
     title: article.title,
   }
 }

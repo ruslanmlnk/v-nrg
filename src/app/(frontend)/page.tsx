@@ -16,6 +16,7 @@ import HomeReviewsSection from './components/mainPage/HomeReviewsSection'
 import HomeVideoTeaserSection from './components/mainPage/HomeVideoTeaserSection'
 import HowItWorks from './components/mainPage/HowItWorks'
 import ModelComparisonSection from './components/mainPage/ModelComparisonSection'
+import { JsonLd } from './components/seo/JsonLd'
 import { ProductComparisonSection } from './components/productDetail/ProductComparisonSection'
 import { getSiteLocale } from './lib/getSiteLocale'
 import { createSeoMetadata } from './lib/seo'
@@ -27,7 +28,7 @@ export async function generateMetadata() {
     locale: await getSiteLocale(),
   })
 
-  return createSeoMetadata(home.seo, 'V-NRG')
+  return createSeoMetadata(home.seo, 'V-NRG', '/')
 }
 
 export default async function HomePage() {
@@ -68,6 +69,19 @@ export default async function HomePage() {
 
   return (
     <>
+      {home.faqSection.items?.length ? (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: home.faqSection.items.map((item) => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: { '@type': 'Answer', text: item.answer },
+            })),
+          }}
+        />
+      ) : null}
       {heroImage?.url ? <Hero {...home.hero} image={heroImage.url} /> : null}
       <HowItWorks
         cards={(home.howItWork.cards ?? []).flatMap((card) => {
@@ -168,6 +182,7 @@ function mapArticleToBlogCard(article: Article, locale: 'uk' | 'en'): BlogCardDa
     href: `/blog/${article.slug}`,
     id: String(article.id),
     image,
+    imageAlt: cardPoster?.alt || article.title,
     title: article.title,
   }
 }

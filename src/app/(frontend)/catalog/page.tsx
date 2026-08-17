@@ -1,6 +1,7 @@
 import { CatalogCategoriesSection, CatalogHeroSection } from '../components/catalog/CatalogSections'
 
 export const metadata = {
+  alternates: { canonical: '/catalog' },
   title: 'Каталог V-NRG',
 }
 

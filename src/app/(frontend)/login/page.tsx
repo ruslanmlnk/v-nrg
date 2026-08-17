@@ -1,6 +1,7 @@
 import LoginForm from '../components/login/LoginForm'
 
 export const metadata = {
+  alternates: { canonical: '/login' },
   title: 'Вхід до особистого кабінету | V-NRG',
 }
 

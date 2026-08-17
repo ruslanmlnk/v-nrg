@@ -13,7 +13,7 @@ export async function generateMetadata() {
     locale: await getSiteLocale(),
   })
 
-  return createSeoMetadata(reviewPage.seo, 'Відгуки | V-NRG')
+  return createSeoMetadata(reviewPage.seo, 'Відгуки | V-NRG', '/review')
 }
 
 export default function ReviewPage() {

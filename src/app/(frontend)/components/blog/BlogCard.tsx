@@ -8,15 +8,16 @@ export type BlogCardData = {
   href: string
   id: string
   image: StaticImageData | string
+  imageAlt?: string
   title: string
 }
 
-export function BlogCard({ date, href, image, title }: BlogCardData) {
+export function BlogCard({ date, href, image, imageAlt, title }: BlogCardData) {
   return (
     <article className="group relative aspect-square min-h-[280px] overflow-hidden rounded-[20px] bg-[#D5E0E8] lg:h-[400px]">
       <Image
         src={image}
-        alt=""
+        alt={imageAlt || title}
         fill
         sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
         className="object-cover transition-transform duration-300 group-hover:scale-105"

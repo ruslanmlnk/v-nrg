@@ -18,7 +18,7 @@ export async function generateMetadata() {
     locale: await getSiteLocale(),
   })
 
-  return createSeoMetadata(aboutPage.seo, 'Про бренд V-NRG')
+  return createSeoMetadata(aboutPage.seo, 'Про бренд V-NRG', '/about')
 }
 
 export default function AboutPage() {

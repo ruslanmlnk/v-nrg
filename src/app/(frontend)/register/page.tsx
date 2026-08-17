@@ -1,6 +1,7 @@
 import RegisterForm from '../components/register/RegisterForm'
 
 export const metadata = {
+  alternates: { canonical: '/register' },
   title: 'Реєстрація | V-NRG',
 }
 

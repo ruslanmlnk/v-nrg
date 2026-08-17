@@ -18,7 +18,7 @@ export async function generateMetadata() {
     locale: await getSiteLocale(),
   })
 
-  return createSeoMetadata(training.seo, 'Навчання | V-NRG')
+  return createSeoMetadata(training.seo, 'Навчання | V-NRG', '/training')
 }
 
 export default async function TrainingPage() {

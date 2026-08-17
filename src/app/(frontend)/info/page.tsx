@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { InfoPageContent } from '../components/info/InfoSections'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/info' },
   title: 'Інформація | V-NRG',
 }
 

@@ -1,6 +1,7 @@
 import { DealerSuccessSection } from '../../components/dealer/DealerSuccessSections'
 
 export const metadata = {
+  alternates: { canonical: '/dealer/application-sent' },
   title: 'Заявку надіслано | V-NRG',
 }
 

@@ -16,10 +16,10 @@ import whatsappIconAsset from '@public/icon/generated/contacts-contacts-page-wha
 const catalogLinks = [
   { href: '/aparati-vakuumnogo-masazhu', label: 'Апарати вакуумного масажу' },
   { href: '/catalog', label: 'Апарати фізіотерапії' },
-  { href: '/info?topic=components', label: 'Комплектуючі (маніпули / насадки, фільтри, шланги)' },
-  { href: '/info?topic=materials', label: 'Витратні матеріали' },
-  { href: '/info?topic=accessories', label: 'Аксесуари' },
-  { href: '/info?topic=chairs', label: 'Стільці для масажу' },
+  { href: '/komplektuyuchi', label: 'Комплектуючі (маніпули / насадки, фільтри, шланги)' },
+  { href: '/rashidniki', label: 'Витратні матеріали' },
+  { href: '/aksesuari', label: 'Аксесуари' },
+  { href: '/stilci-dlya-masazhu', label: 'Стільці для масажу' },
 ]
 
 const infoLinks = [
