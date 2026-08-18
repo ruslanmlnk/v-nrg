@@ -2,14 +2,7 @@ import type { ProductData } from '../../data/products'
 
 export function createProductGallery(product: ProductData) {
   const images = Array.from(
-    new Set(
-      [
-        ...product.galleryImages,
-        product.compareImage,
-        product.catalogImage,
-        product.cartImage,
-      ].filter((image): image is string => Boolean(image)),
-    ),
+    new Set(product.galleryImages.filter((image): image is string => Boolean(image))),
   )
 
   const imageItems = images.map((image, index) => ({

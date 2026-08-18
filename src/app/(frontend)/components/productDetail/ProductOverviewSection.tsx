@@ -14,6 +14,7 @@ import productMiniChevronUpIconAsset from '@public/icon/generated/product-mini-c
 import shareIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-share.svg'
 import starIconAsset from '@public/icon/generated/catalog-aparaty-vakuumnoho-masazhu-product-detail-page-star.svg'
 import { type ProductData } from '../../data/products'
+import { ProductGalleryLightbox } from './ProductGalleryLightbox'
 
 export function ProductOverviewSection({
   activeGalleryIndex,
@@ -45,18 +46,25 @@ export function ProductOverviewSection({
   onToggleCompare: () => void
   onShare: () => Promise<void>
   product: ProductData
-  productGallery: Array<{ alt: string; thumb: string; video: boolean }>
+  productGallery: Array<{ alt: string; main: string; thumb: string; video: boolean }>
   quantity: number
 }) {
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false)
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
 
   return (
     <>
       <section className="flex flex-col gap-5">
         <div className="grid items-start gap-5 xl:grid-cols-[610px_minmax(0,1fr)]">
           <div className="flex flex-col gap-4 rounded-[20px] bg-white p-6 shadow-[0_20px_60px_rgba(34,53,74,0.04)] xl:h-[621px]">
-            <div className="relative flex min-h-[340px] flex-1 items-center justify-center overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-[linear-gradient(180deg,rgba(255,255,255,0)_54.61%,rgba(255,255,255,0.8)_91.48%)] px-8 py-8">
+            <button
+              type="button"
+              aria-label="Відкрити зображення на весь екран"
+              disabled={!activeGalleryItem}
+              onClick={() => setIsLightboxOpen(true)}
+              className="group relative flex min-h-[340px] flex-1 cursor-zoom-in items-center justify-center overflow-hidden rounded-[20px] border border-[#D5E0E8] bg-[linear-gradient(180deg,rgba(255,255,255,0)_54.61%,rgba(255,255,255,0.8)_91.48%)] px-8 py-8 disabled:cursor-default"
+            >
               {activeGalleryItem ? (
                 <>
                   <Image
@@ -72,6 +80,9 @@ export function ProductOverviewSection({
                       <PlayBadge large />
                     </div>
                   ) : null}
+                  <span className="absolute bottom-4 right-4 flex h-11 items-center rounded-full bg-white/90 px-4 text-sm font-medium text-[#22354A] opacity-0 shadow-md transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                    Розгорнути
+                  </span>
                 </>
               ) : (
                 <ProductImagePlaceholder
@@ -79,7 +90,7 @@ export function ProductOverviewSection({
                   label="Фото товару відсутнє"
                 />
               )}
-            </div>
+            </button>
 
             {productGallery.length > 0 ? (
               <div className="grid grid-cols-5 gap-4">
@@ -232,6 +243,14 @@ export function ProductOverviewSection({
         isOpen={isConsultationModalOpen}
         onClose={() => setIsConsultationModalOpen(false)}
       />
+      {isLightboxOpen ? (
+        <ProductGalleryLightbox
+          activeIndex={activeGalleryIndex}
+          items={productGallery}
+          onClose={() => setIsLightboxOpen(false)}
+          onSelect={onSelectGallery}
+        />
+      ) : null}
       <DemoConsultationModal
         actionLabel="Записатися на демонстрацію"
         isOpen={isDemoModalOpen}
