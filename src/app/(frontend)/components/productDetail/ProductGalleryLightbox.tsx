@@ -79,7 +79,7 @@ export function ProductGalleryLightbox({
       </div>
 
       <div
-        className="relative min-h-0 flex-1 touch-pan-y select-none"
+        className="pointer-events-none relative flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center"
         onTouchStart={(event) => {
           touchStartX.current = event.touches[0]?.clientX ?? null
         }}
@@ -94,13 +94,12 @@ export function ProductGalleryLightbox({
           else selectNext()
         }}
       >
-        <Image
+        {/* The native image keeps its real rendered box clickable while the surrounding overlay stays clickable. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={activeItem.main}
           alt={activeItem.alt}
-          fill
-          priority
-          className="pointer-events-none object-contain"
-          sizes="100vw"
+          className="pointer-events-auto max-h-full max-w-full object-contain"
         />
 
         {hasMultipleItems ? (
