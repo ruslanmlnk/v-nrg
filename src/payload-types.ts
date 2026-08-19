@@ -1222,6 +1222,10 @@ export interface Contact {
   phone: string;
   email: string;
   address: string;
+  /**
+   * Соціальні мережі для четвертого сегмента контактного бара.
+   */
+  contactBarSocialNetworks?: (number | SocialNetwork)[] | null;
   form: {
     title: string;
     description: string;
@@ -1477,6 +1481,7 @@ export interface ContactsSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
   address?: T;
+  contactBarSocialNetworks?: T;
   form?:
     | T
     | {

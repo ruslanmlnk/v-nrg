@@ -11478,6 +11478,7 @@ type Contact {
   phone: String!
   email: EmailAddress!
   address: String
+  contactBarSocialNetworks(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [SocialNetwork!]
   form: Contact_Form
   updatedAt: DateTime
   createdAt: DateTime
@@ -11507,6 +11508,7 @@ type ContactsDocAccessFields {
   phone: ContactsDocAccessFields_phone
   email: ContactsDocAccessFields_email
   address: ContactsDocAccessFields_address
+  contactBarSocialNetworks: ContactsDocAccessFields_contactBarSocialNetworks
   form: ContactsDocAccessFields_form
   updatedAt: ContactsDocAccessFields_updatedAt
   createdAt: ContactsDocAccessFields_createdAt
@@ -11699,6 +11701,29 @@ type ContactsDocAccessFields_address_Update {
 }
 
 type ContactsDocAccessFields_address_Delete {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_contactBarSocialNetworks {
+  create: ContactsDocAccessFields_contactBarSocialNetworks_Create
+  read: ContactsDocAccessFields_contactBarSocialNetworks_Read
+  update: ContactsDocAccessFields_contactBarSocialNetworks_Update
+  delete: ContactsDocAccessFields_contactBarSocialNetworks_Delete
+}
+
+type ContactsDocAccessFields_contactBarSocialNetworks_Create {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_contactBarSocialNetworks_Read {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_contactBarSocialNetworks_Update {
+  permission: Boolean!
+}
+
+type ContactsDocAccessFields_contactBarSocialNetworks_Delete {
   permission: Boolean!
 }
 
@@ -20277,6 +20302,7 @@ type ContactsFields {
   phone: ContactsFields_phone
   email: ContactsFields_email
   address: ContactsFields_address
+  contactBarSocialNetworks: ContactsFields_contactBarSocialNetworks
   form: ContactsFields_form
   updatedAt: ContactsFields_updatedAt
   createdAt: ContactsFields_createdAt
@@ -20469,6 +20495,29 @@ type ContactsFields_address_Update {
 }
 
 type ContactsFields_address_Delete {
+  permission: Boolean!
+}
+
+type ContactsFields_contactBarSocialNetworks {
+  create: ContactsFields_contactBarSocialNetworks_Create
+  read: ContactsFields_contactBarSocialNetworks_Read
+  update: ContactsFields_contactBarSocialNetworks_Update
+  delete: ContactsFields_contactBarSocialNetworks_Delete
+}
+
+type ContactsFields_contactBarSocialNetworks_Create {
+  permission: Boolean!
+}
+
+type ContactsFields_contactBarSocialNetworks_Read {
+  permission: Boolean!
+}
+
+type ContactsFields_contactBarSocialNetworks_Update {
+  permission: Boolean!
+}
+
+type ContactsFields_contactBarSocialNetworks_Delete {
   permission: Boolean!
 }
 
@@ -22640,6 +22689,7 @@ input mutationContactInput {
   phone: String!
   email: String!
   address: String
+  contactBarSocialNetworks: [Int]
   form: mutationContact_FormInput!
   updatedAt: String
   createdAt: String

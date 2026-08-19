@@ -52,6 +52,16 @@ export const Contacts: GlobalConfig = {
       ],
     },
     {
+      name: 'contactBarSocialNetworks',
+      type: 'relationship',
+      relationTo: 'social-networks',
+      hasMany: true,
+      label: 'Соцмережі контактного бара',
+      admin: {
+        description: 'Соціальні мережі для четвертого сегмента контактного бара.',
+      },
+    },
+    {
       name: 'form',
       type: 'group',
       label: 'Форма',

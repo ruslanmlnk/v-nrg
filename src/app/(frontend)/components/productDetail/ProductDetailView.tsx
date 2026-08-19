@@ -74,7 +74,7 @@ export default function ProductDetailView({
   const isCompared = isInCompare(displayProduct.id)
   const reviewPages = chunkItems(displayProduct.reviews, 2)
   const visibleReviews = reviewPages[activeReviewPage] ?? reviewPages[0] ?? []
-  const deliveryHref = `mailto:0870758@gmail.com?subject=${encodeURIComponent(`Умови доставки та оплати ${displayProduct.title}`)}`
+  const deliveryHref = '/deliverypayment'
   const partsMonthlyPayment = getMonthlyPayment(displayProduct.price * quantity, partsCount)
 
   useEffect(() => {

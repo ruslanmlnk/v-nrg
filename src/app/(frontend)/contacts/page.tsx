@@ -16,6 +16,9 @@ export default async function ContactsPage() {
   const socialNetworks = (contacts.form.socialNetworks ?? []).flatMap((social) =>
     mapSocialNetwork(social),
   )
+  const contactBarSocialNetworks = (contacts.contactBarSocialNetworks ?? []).flatMap((social) =>
+    mapSocialNetwork(social),
+  )
 
   return (
     <div className="pt-5">
@@ -25,6 +28,7 @@ export default async function ContactsPage() {
           address={contacts.address}
           email={contacts.email}
           phone={contacts.phone}
+          socialNetworks={contactBarSocialNetworks}
         />
         <ContactRequestSection
           description={contacts.form.description}

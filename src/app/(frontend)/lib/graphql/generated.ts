@@ -14087,9 +14087,16 @@ export type Contact = {
   phone: Scalars['String']['output'];
   email: Scalars['EmailAddress']['output'];
   address?: Maybe<Scalars['String']['output']>;
+  contactBarSocialNetworks?: Maybe<Array<SocialNetwork>>;
   form?: Maybe<Contact_Form>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type ContactContactBarSocialNetworksArgs = {
+  locale?: InputMaybe<LocaleInputType>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
 };
 
 export type Contact_Seo = {
@@ -14126,6 +14133,7 @@ export type ContactsDocAccessFields = {
   phone?: Maybe<ContactsDocAccessFields_Phone>;
   email?: Maybe<ContactsDocAccessFields_Email>;
   address?: Maybe<ContactsDocAccessFields_Address>;
+  contactBarSocialNetworks?: Maybe<ContactsDocAccessFields_ContactBarSocialNetworks>;
   form?: Maybe<ContactsDocAccessFields_Form>;
   updatedAt?: Maybe<ContactsDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<ContactsDocAccessFields_CreatedAt>;
@@ -14359,6 +14367,34 @@ export type ContactsDocAccessFields_Address_Update = {
 
 export type ContactsDocAccessFields_Address_Delete = {
   __typename?: 'ContactsDocAccessFields_address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_ContactBarSocialNetworks = {
+  __typename?: 'ContactsDocAccessFields_contactBarSocialNetworks';
+  create?: Maybe<ContactsDocAccessFields_ContactBarSocialNetworks_Create>;
+  read?: Maybe<ContactsDocAccessFields_ContactBarSocialNetworks_Read>;
+  update?: Maybe<ContactsDocAccessFields_ContactBarSocialNetworks_Update>;
+  delete?: Maybe<ContactsDocAccessFields_ContactBarSocialNetworks_Delete>;
+};
+
+export type ContactsDocAccessFields_ContactBarSocialNetworks_Create = {
+  __typename?: 'ContactsDocAccessFields_contactBarSocialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_ContactBarSocialNetworks_Read = {
+  __typename?: 'ContactsDocAccessFields_contactBarSocialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_ContactBarSocialNetworks_Update = {
+  __typename?: 'ContactsDocAccessFields_contactBarSocialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsDocAccessFields_ContactBarSocialNetworks_Delete = {
+  __typename?: 'ContactsDocAccessFields_contactBarSocialNetworks_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -24733,6 +24769,7 @@ export type ContactsFields = {
   phone?: Maybe<ContactsFields_Phone>;
   email?: Maybe<ContactsFields_Email>;
   address?: Maybe<ContactsFields_Address>;
+  contactBarSocialNetworks?: Maybe<ContactsFields_ContactBarSocialNetworks>;
   form?: Maybe<ContactsFields_Form>;
   updatedAt?: Maybe<ContactsFields_UpdatedAt>;
   createdAt?: Maybe<ContactsFields_CreatedAt>;
@@ -24966,6 +25003,34 @@ export type ContactsFields_Address_Update = {
 
 export type ContactsFields_Address_Delete = {
   __typename?: 'ContactsFields_address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_ContactBarSocialNetworks = {
+  __typename?: 'ContactsFields_contactBarSocialNetworks';
+  create?: Maybe<ContactsFields_ContactBarSocialNetworks_Create>;
+  read?: Maybe<ContactsFields_ContactBarSocialNetworks_Read>;
+  update?: Maybe<ContactsFields_ContactBarSocialNetworks_Update>;
+  delete?: Maybe<ContactsFields_ContactBarSocialNetworks_Delete>;
+};
+
+export type ContactsFields_ContactBarSocialNetworks_Create = {
+  __typename?: 'ContactsFields_contactBarSocialNetworks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_ContactBarSocialNetworks_Read = {
+  __typename?: 'ContactsFields_contactBarSocialNetworks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_ContactBarSocialNetworks_Update = {
+  __typename?: 'ContactsFields_contactBarSocialNetworks_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ContactsFields_ContactBarSocialNetworks_Delete = {
+  __typename?: 'ContactsFields_contactBarSocialNetworks_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -27966,6 +28031,7 @@ export type MutationContactInput = {
   phone: Scalars['String']['input'];
   email: Scalars['String']['input'];
   address?: InputMaybe<Scalars['String']['input']>;
+  contactBarSocialNetworks?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   form: MutationContact_FormInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
