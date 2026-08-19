@@ -53,6 +53,7 @@ export default function DemoConsultationModal({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        email: formData.get('email'),
         message: formData.get('comment'),
         name: formData.get('name'),
         phone: formData.get('phone'),
@@ -166,6 +167,20 @@ export default function DemoConsultationModal({
                 />
               </label>
             </div>
+
+            <label className="flex flex-col gap-2 text-[18px] font-medium leading-[165%] text-[#22354A]">
+              <span>
+                Email <span className="text-[#4FACF5]">*</span>
+              </span>
+              <input
+                autoComplete="email"
+                className={inputClassName}
+                name="email"
+                placeholder="Введіть ваш email"
+                required
+                type="email"
+              />
+            </label>
 
             <label className="flex flex-col gap-2 text-[18px] font-medium leading-[165%] text-[#22354A]">
               Коментар

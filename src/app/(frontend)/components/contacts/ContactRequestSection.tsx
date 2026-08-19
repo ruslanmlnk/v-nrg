@@ -28,6 +28,7 @@ export function ContactRequestSection({
     email: '',
     message: '',
     name: '',
+    phone: '',
   })
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -45,7 +46,7 @@ export function ContactRequestSection({
       return
     }
     setIsSubmitted(true)
-    setFormState({ email: '', message: '', name: '' })
+    setFormState({ email: '', message: '', name: '', phone: '' })
   }
 
   return (
@@ -79,6 +80,22 @@ export function ContactRequestSection({
             />
           </ContactField>
         </div>
+
+        <ContactField label="Телефон" required>
+          <input
+            required
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            pattern="[\d\s()+-]{10,}"
+            value={formState.phone}
+            onChange={(event) =>
+              setFormState((current) => ({ ...current, phone: event.target.value }))
+            }
+            placeholder="+380"
+            className={`${contactFieldClasses} h-[58px]`}
+          />
+        </ContactField>
 
         <ContactField label="Повідомлення">
           <textarea

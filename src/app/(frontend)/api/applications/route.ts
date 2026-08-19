@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   const phone = normalizeText(body.phone, 40)
   const message = normalizeText(body.message, 3000)
 
-  if (!source || !name || (source === 'contacts' && !email) || (source === 'hero-popup' && !phone)) {
+  if (!source || !name || !email || !phone || !isEmail(email)) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
@@ -41,6 +41,10 @@ export async function POST(request: NextRequest) {
   })
 
   return NextResponse.json({ id: application.id }, { status: 201 })
+}
+
+function isEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 }
 
 function normalizeText(value: unknown, maxLength: number) {
