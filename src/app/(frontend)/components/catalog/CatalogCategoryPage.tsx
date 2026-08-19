@@ -302,7 +302,10 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
           </div>
         </section>
 
-        <CatalogInfoSection category={activeCategory} />
+        <CatalogInfoSection
+          description={activeCategory?.description}
+          title={activeCategory?.title}
+        />
       </div>
 
       {isMobileFiltersOpen ? (

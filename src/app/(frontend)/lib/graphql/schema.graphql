@@ -87,6 +87,8 @@ type Query {
   docAccessReviewPage: review_pageDocAccess
   BlogPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): BlogPage
   docAccessBlogPage: blog_pageDocAccess
+  CatalogPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): CatalogPage
+  docAccessCatalogPage: catalog_pageDocAccess
   Access: Access
 }
 
@@ -12578,6 +12580,242 @@ type BlogPageUpdateDocAccess {
   where: JSONObject
 }
 
+type CatalogPage {
+  seo: CatalogPage_Seo
+  seoText: CatalogPage_SeoText
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type CatalogPage_Seo {
+  metaTitle: String
+  metaDescription: String
+}
+
+type CatalogPage_SeoText {
+  title: String
+  description: String
+}
+
+type catalog_pageDocAccess {
+  fields: CatalogPageDocAccessFields
+  read: CatalogPageReadDocAccess
+  update: CatalogPageUpdateDocAccess
+}
+
+type CatalogPageDocAccessFields {
+  seo: CatalogPageDocAccessFields_seo
+  seoText: CatalogPageDocAccessFields_seoText
+  updatedAt: CatalogPageDocAccessFields_updatedAt
+  createdAt: CatalogPageDocAccessFields_createdAt
+}
+
+type CatalogPageDocAccessFields_seo {
+  create: CatalogPageDocAccessFields_seo_Create
+  read: CatalogPageDocAccessFields_seo_Read
+  update: CatalogPageDocAccessFields_seo_Update
+  delete: CatalogPageDocAccessFields_seo_Delete
+  fields: CatalogPageDocAccessFields_seo_Fields
+}
+
+type CatalogPageDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_Fields {
+  metaTitle: CatalogPageDocAccessFields_seo_metaTitle
+  metaDescription: CatalogPageDocAccessFields_seo_metaDescription
+}
+
+type CatalogPageDocAccessFields_seo_metaTitle {
+  create: CatalogPageDocAccessFields_seo_metaTitle_Create
+  read: CatalogPageDocAccessFields_seo_metaTitle_Read
+  update: CatalogPageDocAccessFields_seo_metaTitle_Update
+  delete: CatalogPageDocAccessFields_seo_metaTitle_Delete
+}
+
+type CatalogPageDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaDescription {
+  create: CatalogPageDocAccessFields_seo_metaDescription_Create
+  read: CatalogPageDocAccessFields_seo_metaDescription_Read
+  update: CatalogPageDocAccessFields_seo_metaDescription_Update
+  delete: CatalogPageDocAccessFields_seo_metaDescription_Delete
+}
+
+type CatalogPageDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText {
+  create: CatalogPageDocAccessFields_seoText_Create
+  read: CatalogPageDocAccessFields_seoText_Read
+  update: CatalogPageDocAccessFields_seoText_Update
+  delete: CatalogPageDocAccessFields_seoText_Delete
+  fields: CatalogPageDocAccessFields_seoText_Fields
+}
+
+type CatalogPageDocAccessFields_seoText_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_Fields {
+  title: CatalogPageDocAccessFields_seoText_title
+  description: CatalogPageDocAccessFields_seoText_description
+}
+
+type CatalogPageDocAccessFields_seoText_title {
+  create: CatalogPageDocAccessFields_seoText_title_Create
+  read: CatalogPageDocAccessFields_seoText_title_Read
+  update: CatalogPageDocAccessFields_seoText_title_Update
+  delete: CatalogPageDocAccessFields_seoText_title_Delete
+}
+
+type CatalogPageDocAccessFields_seoText_title_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_title_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_title_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_title_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_description {
+  create: CatalogPageDocAccessFields_seoText_description_Create
+  read: CatalogPageDocAccessFields_seoText_description_Read
+  update: CatalogPageDocAccessFields_seoText_description_Update
+  delete: CatalogPageDocAccessFields_seoText_description_Delete
+}
+
+type CatalogPageDocAccessFields_seoText_description_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_description_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_description_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_seoText_description_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_updatedAt {
+  create: CatalogPageDocAccessFields_updatedAt_Create
+  read: CatalogPageDocAccessFields_updatedAt_Read
+  update: CatalogPageDocAccessFields_updatedAt_Update
+  delete: CatalogPageDocAccessFields_updatedAt_Delete
+}
+
+type CatalogPageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_createdAt {
+  create: CatalogPageDocAccessFields_createdAt_Create
+  read: CatalogPageDocAccessFields_createdAt_Read
+  update: CatalogPageDocAccessFields_createdAt_Update
+  delete: CatalogPageDocAccessFields_createdAt_Delete
+}
+
+type CatalogPageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CatalogPageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CatalogPageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -12605,6 +12843,7 @@ type Access {
   about_page: about_pageAccess
   review_page: review_pageAccess
   blog_page: blog_pageAccess
+  catalog_page: catalog_pageAccess
 }
 
 type usersAccess {
@@ -21060,6 +21299,225 @@ type BlogPageUpdateAccess {
   where: JSONObject
 }
 
+type catalog_pageAccess {
+  fields: CatalogPageFields
+  read: CatalogPageReadAccess
+  update: CatalogPageUpdateAccess
+}
+
+type CatalogPageFields {
+  seo: CatalogPageFields_seo
+  seoText: CatalogPageFields_seoText
+  updatedAt: CatalogPageFields_updatedAt
+  createdAt: CatalogPageFields_createdAt
+}
+
+type CatalogPageFields_seo {
+  create: CatalogPageFields_seo_Create
+  read: CatalogPageFields_seo_Read
+  update: CatalogPageFields_seo_Update
+  delete: CatalogPageFields_seo_Delete
+  fields: CatalogPageFields_seo_Fields
+}
+
+type CatalogPageFields_seo_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_Fields {
+  metaTitle: CatalogPageFields_seo_metaTitle
+  metaDescription: CatalogPageFields_seo_metaDescription
+}
+
+type CatalogPageFields_seo_metaTitle {
+  create: CatalogPageFields_seo_metaTitle_Create
+  read: CatalogPageFields_seo_metaTitle_Read
+  update: CatalogPageFields_seo_metaTitle_Update
+  delete: CatalogPageFields_seo_metaTitle_Delete
+}
+
+type CatalogPageFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaDescription {
+  create: CatalogPageFields_seo_metaDescription_Create
+  read: CatalogPageFields_seo_metaDescription_Read
+  update: CatalogPageFields_seo_metaDescription_Update
+  delete: CatalogPageFields_seo_metaDescription_Delete
+}
+
+type CatalogPageFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText {
+  create: CatalogPageFields_seoText_Create
+  read: CatalogPageFields_seoText_Read
+  update: CatalogPageFields_seoText_Update
+  delete: CatalogPageFields_seoText_Delete
+  fields: CatalogPageFields_seoText_Fields
+}
+
+type CatalogPageFields_seoText_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_Fields {
+  title: CatalogPageFields_seoText_title
+  description: CatalogPageFields_seoText_description
+}
+
+type CatalogPageFields_seoText_title {
+  create: CatalogPageFields_seoText_title_Create
+  read: CatalogPageFields_seoText_title_Read
+  update: CatalogPageFields_seoText_title_Update
+  delete: CatalogPageFields_seoText_title_Delete
+}
+
+type CatalogPageFields_seoText_title_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_title_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_title_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_title_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_description {
+  create: CatalogPageFields_seoText_description_Create
+  read: CatalogPageFields_seoText_description_Read
+  update: CatalogPageFields_seoText_description_Update
+  delete: CatalogPageFields_seoText_description_Delete
+}
+
+type CatalogPageFields_seoText_description_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_description_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_description_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_seoText_description_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_updatedAt {
+  create: CatalogPageFields_updatedAt_Create
+  read: CatalogPageFields_updatedAt_Read
+  update: CatalogPageFields_updatedAt_Update
+  delete: CatalogPageFields_updatedAt_Delete
+}
+
+type CatalogPageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageFields_createdAt {
+  create: CatalogPageFields_createdAt_Create
+  read: CatalogPageFields_createdAt_Read
+  update: CatalogPageFields_createdAt_Update
+  delete: CatalogPageFields_createdAt_Delete
+}
+
+type CatalogPageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CatalogPageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CatalogPageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CatalogPageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CatalogPageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CatalogPageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean, locale: LocaleInputType): User
   updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): User
@@ -21146,6 +21604,7 @@ type Mutation {
   updateAboutPage(data: mutationAboutPageInput!, draft: Boolean, locale: LocaleInputType): AboutPage
   updateReviewPage(data: mutationReviewPageInput!, draft: Boolean, locale: LocaleInputType): ReviewPage
   updateBlogPage(data: mutationBlogPageInput!, draft: Boolean, locale: LocaleInputType): BlogPage
+  updateCatalogPage(data: mutationCatalogPageInput!, draft: Boolean, locale: LocaleInputType): CatalogPage
 }
 
 input mutationUserInput {
@@ -22246,4 +22705,21 @@ input mutationBlogPageInput {
 input mutationBlogPage_SeoInput {
   metaTitle: String
   metaDescription: String
+}
+
+input mutationCatalogPageInput {
+  seo: mutationCatalogPage_SeoInput
+  seoText: mutationCatalogPage_SeoTextInput
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationCatalogPage_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
+input mutationCatalogPage_SeoTextInput {
+  title: String
+  description: String
 }

@@ -121,6 +121,7 @@ export interface Config {
     'about-page': AboutPage;
     'review-page': ReviewPage;
     'blog-page': BlogPage;
+    'catalog-page': CatalogPage;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -130,6 +131,7 @@ export interface Config {
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
     'review-page': ReviewPageSelect<false> | ReviewPageSelect<true>;
     'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
+    'catalog-page': CatalogPageSelect<false> | CatalogPageSelect<true>;
   };
   locale: 'uk' | 'en';
   widgets: {
@@ -1294,6 +1296,25 @@ export interface BlogPage {
   createdAt?: string | null;
 }
 /**
+ * Налаштування SEO та текстового блоку загальної сторінки каталогу.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catalog-page".
+ */
+export interface CatalogPage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  seoText?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
@@ -1529,6 +1550,27 @@ export interface BlogPageSelect<T extends boolean = true> {
     | {
         metaTitle?: T;
         metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catalog-page_select".
+ */
+export interface CatalogPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  seoText?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;

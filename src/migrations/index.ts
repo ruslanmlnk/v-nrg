@@ -15,6 +15,7 @@ import * as migration_20260722_080000_site_settings_topbar from './20260722_0800
 import * as migration_20260722_090000_product_catalog_poster from './20260722_090000_product_catalog_poster'
 import * as migration_20260723_080000_remove_product_list_features from './20260723_080000_remove_product_list_features'
 import * as migration_20260723_090000_remove_product_compare_features from './20260723_090000_remove_product_compare_features'
+import * as migration_20260819_010000_catalog_page from './20260819_010000_catalog_page'
 
 export const migrations = [
   {
@@ -101,5 +102,10 @@ export const migrations = [
     up: migration_20260723_090000_remove_product_compare_features.up,
     down: migration_20260723_090000_remove_product_compare_features.down,
     name: '20260723_090000_remove_product_compare_features',
+  },
+  {
+    up: migration_20260819_010000_catalog_page.up,
+    down: migration_20260819_010000_catalog_page.down,
+    name: '20260819_010000_catalog_page',
   },
 ]

@@ -1,12 +1,16 @@
 'use client'
 
-import type { ProductCategoryData } from '../../data/products'
-
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import readMoreArrowIconAsset from '@public/icon/generated/catalog-read-more-arrow.svg'
 
-export function CatalogInfoSection({ category }: { category?: ProductCategoryData | null }) {
-  if (!category?.description) {
+export function CatalogInfoSection({
+  description,
+  title,
+}: {
+  description?: null | string
+  title?: null | string
+}) {
+  if (!description) {
     return null
   }
 
@@ -15,14 +19,14 @@ export function CatalogInfoSection({ category }: { category?: ProductCategoryDat
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">
-            {category.title}
+            {title}
           </h2>
           <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-            {category.description}
+            {description}
           </p>
         </div>
 
-        <button type="button" className="flex items-center self-start">
+        <button type="button" className="flex items-center self-center">
           <span className="rounded-[40px] bg-[#22354A] px-6 py-3 text-[18px] font-medium leading-[165%] text-white">
             Читати все
           </span>
