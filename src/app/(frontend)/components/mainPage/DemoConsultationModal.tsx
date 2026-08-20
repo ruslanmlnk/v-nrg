@@ -49,7 +49,7 @@ export default function DemoConsultationModal({
     setError('')
     setIsSubmitting(true)
     const formData = new FormData(event.currentTarget)
-    const response = await fetch('/api/applications', {
+    const response = await fetch('/api/forms/applications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

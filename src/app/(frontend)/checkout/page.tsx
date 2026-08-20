@@ -405,7 +405,7 @@ export default function CheckoutPage() {
 }
 
 async function createCheckoutOrder(payload: Record<string, unknown>) {
-  const response = await fetch('/api/orders', {
+  const response = await fetch('/api/forms/orders', {
     body: JSON.stringify(payload),
     credentials: 'include',
     headers: {

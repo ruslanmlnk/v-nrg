@@ -556,7 +556,7 @@ function CommerceOverlays() {
     event.preventDefault()
     setDealerSubmitError('')
     setIsDealerSubmitting(true)
-    const response = await fetch('/api/dealer-applications', {
+    const response = await fetch('/api/forms/dealer-applications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dealerFormState),

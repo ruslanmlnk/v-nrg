@@ -35,7 +35,7 @@ export function ContactRequestSection({
     event.preventDefault()
     setError('')
     setIsSubmitting(true)
-    const response = await fetch('/api/applications', {
+    const response = await fetch('/api/forms/applications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...formState, source: 'contacts' }),
