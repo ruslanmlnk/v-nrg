@@ -51,7 +51,7 @@ export function CatalogGrid({
                   isCompared(product.id) ? 'text-[#4FACF5]' : 'text-[#22354A]'
                 }`}
               >
-                <Image src={compareIcon} alt="" aria-hidden="true" className="h-[18px] w-[18px]" />
+                <IconAsset src={compareIcon} width={18} height={18} />
               </button>
 
               <button
