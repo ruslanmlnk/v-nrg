@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -36,6 +37,19 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_FROM || '',
+    defaultFromName: 'Belivery',
+    transportOptions: {
+      auth: {
+        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER,
+      },
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 465),
+      secure: process.env.SMTP_SECURE === 'true',
+    },
+  }),
   admin: {
     user: Users.slug,
     importMap: {
