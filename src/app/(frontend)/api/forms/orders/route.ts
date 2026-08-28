@@ -3,6 +3,7 @@ import { getPayload, type Where } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import type { User } from '@/payload-types'
+import { sendOrderNotification } from '@/lib/applicationNotifications'
 
 type CheckoutOrderItem = {
   id?: string
@@ -90,6 +91,10 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     )
   }
+
+  await sendOrderNotification(order).catch((error) => {
+    console.error('Failed to send order notification', error)
+  })
 
   return NextResponse.json({
     id: order.id,

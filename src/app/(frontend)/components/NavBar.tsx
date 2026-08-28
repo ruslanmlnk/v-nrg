@@ -109,6 +109,12 @@ export default function NavBar({ phone }: { phone: string }) {
 
         <div className="hidden flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[16px] font-medium uppercase leading-[165%] lg:order-3 lg:flex lg:justify-self-end">
           <Link
+            href="/warranty"
+            className="whitespace-nowrap transition-colors duration-200 hover:text-[#4FACF5]"
+          >
+            {translate(locale, 'warranty')}
+          </Link>
+          <Link
             href="/contacts"
             className="whitespace-nowrap transition-colors duration-200 hover:text-[#4FACF5]"
           >
@@ -194,6 +200,9 @@ export default function NavBar({ phone }: { phone: string }) {
                 {translateNavLink(locale, link.href, link.label)}
               </Link>
             ))}
+            <Link href="/warranty" className="text-[#22354A]" onClick={closeMobileMenu}>
+              {translate(locale, 'warranty')}
+            </Link>
             <Link href="/contacts" className="text-[#22354A]" onClick={closeMobileMenu}>
               {translate(locale, 'contacts')}
             </Link>

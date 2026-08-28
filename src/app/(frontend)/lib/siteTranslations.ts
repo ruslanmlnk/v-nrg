@@ -15,6 +15,7 @@ const translations = {
     main: 'Головна',
     reviews: 'Відгуки',
     training: 'Навчання',
+    warranty: 'Гарантія та сервіс',
   },
   en: {
     about: 'About',
@@ -30,6 +31,7 @@ const translations = {
     main: 'Main',
     reviews: 'Reviews',
     training: 'Training',
+    warranty: 'Warranty and service',
   },
 } as const
 

@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer'
 
+import type { Order } from '@/payload-types'
+
 type ApplicationNotification = {
   email: string
   message: string
@@ -55,26 +57,72 @@ export async function sendDealerApplicationNotification(application: DealerAppli
   })
 }
 
+export async function sendOrderNotification(order: Order, to?: string) {
+  const items = order.items
+    .map(
+      (item) =>
+        `${item.title} — ${item.quantity} × ${formatMoney(item.price)} = ${formatMoney(item.total)}`,
+    )
+    .join('\n')
+
+  await sendNotification({
+    fields: [
+      ['Номер замовлення', order.orderNumber],
+      ["Ім'я", `${order.firstName} ${order.lastName}`.trim()],
+      ['Телефон', order.phone],
+      ['Email', order.customerEmail],
+      ['Товари', items],
+      ['Загальна сума', formatMoney(order.total)],
+      ['Спосіб оплати', paymentMethodLabels[order.paymentMethod]],
+      ['Спосіб доставки', deliveryMethodLabels[order.delivery?.method ?? ''] ?? 'Не вказано'],
+      ['Відділення / адреса', order.delivery?.pickupPoint ?? ''],
+      ['Коментар', order.comment ?? ''],
+    ],
+    subject: `Нове замовлення №${order.orderNumber}`,
+    title: 'Нове замовлення з сайту',
+    to,
+  })
+}
+
 async function sendNotification({
   fields,
   subject,
   title,
+  to,
 }: {
   fields: [string, string][]
   subject: string
   title: string
+  to?: string
 }) {
   const mailer = getTransporter()
   const from = requiredEnvironmentVariable('SMTP_FROM')
-  const to = requiredEnvironmentVariable('ORDER_NOTIFICATION_EMAIL')
+  const recipient = to?.trim() || requiredEnvironmentVariable('ORDER_NOTIFICATION_EMAIL')
 
   await mailer.sendMail({
     from,
     html: createHtml(title, fields),
     subject,
     text: createText(title, fields),
-    to,
+    to: recipient,
   })
+}
+
+const paymentMethodLabels: Record<Order['paymentMethod'], string> = {
+  'card-online': 'Оплата карткою онлайн',
+  'cash-on-delivery': 'Накладений платіж',
+  invoice: 'Безготівковий розрахунок',
+  'monobank-parts': 'Оплата частинами Monobank',
+}
+
+const deliveryMethodLabels: Record<string, string> = {
+  courier: "Кур'єр",
+  'nova-poshta': 'Нова пошта',
+  pickup: 'Самовивіз',
+}
+
+function formatMoney(value: number) {
+  return `${new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 }).format(value)} грн`
 }
 
 function getTransporter() {
