@@ -66,7 +66,7 @@ export default function NavBar({ phone }: { phone: string }) {
               >
                 <Link
                   href={link.href}
-                  className="flex items-center gap-2 whitespace-nowrap"
+                  className="flex items-center gap-2 whitespace-nowrap transition-colors duration-200 hover:text-[#4FACF5]"
                   onFocus={() => setOpenDropdown(dropdownLinks?.length ? link.label : null)}
                 >
                   <span>{translateNavLink(locale, link.href, link.label)}</span>
@@ -108,14 +108,17 @@ export default function NavBar({ phone }: { phone: string }) {
         </ul>
 
         <div className="hidden flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[16px] font-medium uppercase leading-[165%] lg:order-3 lg:flex lg:justify-self-end">
+          <Link
+            href="/contacts"
+            className="whitespace-nowrap transition-colors duration-200 hover:text-[#4FACF5]"
+          >
+            {translate(locale, 'contacts')}
+          </Link>
           <div className="flex items-center gap-6">
             <ActionIcon href={isLoggedIn ? '/account' : '/login'} label={translate(locale, 'account')} icon={profileIcon} />
             <ActionIcon href="/compare" label={translate(locale, 'compare')} badge={compareCount} icon={compareIcon} />
             <ActionIcon onClick={openCart} label={translate(locale, 'cart')} badge={cartCount} icon={cartIcon} />
           </div>
-          <Link href="/contacts" className="whitespace-nowrap">
-            {translate(locale, 'contacts')}
-          </Link>
         </div>
 
         <div className="flex items-center gap-6 lg:hidden">
