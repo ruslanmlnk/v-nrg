@@ -1,9 +1,14 @@
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from 'lexical'
 import Image from 'next/image'
+
+import type { AboutPage } from '@/payload-types'
 import aboutTeam1 from '@public/assets/about/about-team-1.jpg'
 import aboutTeam2 from '@public/assets/about/about-team-2.jpg'
-import { aboutHighlights } from './data'
 
-export function AboutStorySection() {
+import styles from './AboutStorySection.module.css'
+
+export function AboutStorySection({ content }: { content?: AboutPage['storySection'] }) {
   return (
     <section className="grid items-center gap-12 lg:grid-cols-[500px_minmax(0,1fr)]">
       <div className="relative order-2 mx-auto aspect-[312/298.896] w-full max-w-[312px] md:hidden">
@@ -56,32 +61,88 @@ export function AboutStorySection() {
       <div className="order-1 flex flex-col gap-6 lg:order-2">
         <div className="flex flex-col gap-4">
           <div className="text-[16px] font-bold uppercase leading-[145%] text-[#4FACF5]">
-            Про нас
+            {content?.topTitle || 'Про нас'}
           </div>
           <h2 className="text-[36px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">
-            Наша мета це розвивати професійну вакуумну терапію
+            {content?.title || 'Наша мета це розвивати професійну вакуумну терапію'}
           </h2>
         </div>
 
-        <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-          V-NRG створює інноваційні апарати вакуумного масажу для професійного використання. Ми
-          поєднуємо технології та практичний досвід, щоб допомогти спеціалістам працювати
-          ефективніше і безпечніше.
-        </p>
-
-        <ul className="flex flex-col gap-4">
-          {aboutHighlights.map((item, index) => (
-            <li key={item} className="flex items-center gap-4">
-              <span className="flex h-[22px] min-w-[22px] items-center justify-center rounded-full bg-[#4FACF5] text-[11px] font-semibold leading-[165%] text-white">
-                {index + 1}
-              </span>
-              <span className="text-[18px] font-medium leading-[165%] text-[#22354A]">{item}</span>
-            </li>
-          ))}
-        </ul>
+        <RichText
+          className={styles.content}
+          data={(content?.content || defaultStoryContent) as SerializedEditorState}
+        />
       </div>
     </section>
   )
+}
+
+const defaultStoryContent = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'V-NRG створює інноваційні апарати вакуумного масажу для професійного використання. Ми поєднуємо технології та практичний досвід, щоб допомогти спеціалістам працювати ефективніше і безпечніше.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        type: 'paragraph',
+        version: 1,
+      },
+      {
+        children: [
+          createDefaultListItem('Власні розробки та інженерні рішення', 1),
+          createDefaultListItem('Сертифіковане виробництво', 2),
+          createDefaultListItem('Підтримка спеціалістів та навчання', 3),
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        listType: 'number',
+        start: 1,
+        tag: 'ol',
+        type: 'list',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+}
+
+function createDefaultListItem(text: string, value: number) {
+  return {
+    children: [
+      {
+        children: [
+          { detail: 0, format: 0, mode: 'normal', style: '', text, type: 'text', version: 1 },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'listitem',
+    value,
+    version: 1,
+  }
 }
 
 function AboutStatCard({

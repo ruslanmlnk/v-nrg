@@ -12145,6 +12145,7 @@ type SiteSettingsUpdateDocAccess {
 
 type AboutPage {
   seo: AboutPage_Seo
+  storySection: AboutPage_StorySection
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -12152,6 +12153,12 @@ type AboutPage {
 type AboutPage_Seo {
   metaTitle: String
   metaDescription: String
+}
+
+type AboutPage_StorySection {
+  topTitle: String
+  title: String
+  content(depth: Int): JSON
 }
 
 type about_pageDocAccess {
@@ -12162,6 +12169,7 @@ type about_pageDocAccess {
 
 type AboutPageDocAccessFields {
   seo: AboutPageDocAccessFields_seo
+  storySection: AboutPageDocAccessFields_storySection
   updatedAt: AboutPageDocAccessFields_updatedAt
   createdAt: AboutPageDocAccessFields_createdAt
 }
@@ -12238,6 +12246,105 @@ type AboutPageDocAccessFields_seo_metaDescription_Update {
 }
 
 type AboutPageDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection {
+  create: AboutPageDocAccessFields_storySection_Create
+  read: AboutPageDocAccessFields_storySection_Read
+  update: AboutPageDocAccessFields_storySection_Update
+  delete: AboutPageDocAccessFields_storySection_Delete
+  fields: AboutPageDocAccessFields_storySection_Fields
+}
+
+type AboutPageDocAccessFields_storySection_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_Fields {
+  topTitle: AboutPageDocAccessFields_storySection_topTitle
+  title: AboutPageDocAccessFields_storySection_title
+  content: AboutPageDocAccessFields_storySection_content
+}
+
+type AboutPageDocAccessFields_storySection_topTitle {
+  create: AboutPageDocAccessFields_storySection_topTitle_Create
+  read: AboutPageDocAccessFields_storySection_topTitle_Read
+  update: AboutPageDocAccessFields_storySection_topTitle_Update
+  delete: AboutPageDocAccessFields_storySection_topTitle_Delete
+}
+
+type AboutPageDocAccessFields_storySection_topTitle_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_topTitle_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_topTitle_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_topTitle_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_title {
+  create: AboutPageDocAccessFields_storySection_title_Create
+  read: AboutPageDocAccessFields_storySection_title_Read
+  update: AboutPageDocAccessFields_storySection_title_Update
+  delete: AboutPageDocAccessFields_storySection_title_Delete
+}
+
+type AboutPageDocAccessFields_storySection_title_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_title_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_title_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_title_Delete {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_content {
+  create: AboutPageDocAccessFields_storySection_content_Create
+  read: AboutPageDocAccessFields_storySection_content_Read
+  update: AboutPageDocAccessFields_storySection_content_Update
+  delete: AboutPageDocAccessFields_storySection_content_Delete
+}
+
+type AboutPageDocAccessFields_storySection_content_Create {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_content_Read {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_content_Update {
+  permission: Boolean!
+}
+
+type AboutPageDocAccessFields_storySection_content_Delete {
   permission: Boolean!
 }
 
@@ -20927,6 +21034,7 @@ type about_pageAccess {
 
 type AboutPageFields {
   seo: AboutPageFields_seo
+  storySection: AboutPageFields_storySection
   updatedAt: AboutPageFields_updatedAt
   createdAt: AboutPageFields_createdAt
 }
@@ -21003,6 +21111,105 @@ type AboutPageFields_seo_metaDescription_Update {
 }
 
 type AboutPageFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection {
+  create: AboutPageFields_storySection_Create
+  read: AboutPageFields_storySection_Read
+  update: AboutPageFields_storySection_Update
+  delete: AboutPageFields_storySection_Delete
+  fields: AboutPageFields_storySection_Fields
+}
+
+type AboutPageFields_storySection_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_Fields {
+  topTitle: AboutPageFields_storySection_topTitle
+  title: AboutPageFields_storySection_title
+  content: AboutPageFields_storySection_content
+}
+
+type AboutPageFields_storySection_topTitle {
+  create: AboutPageFields_storySection_topTitle_Create
+  read: AboutPageFields_storySection_topTitle_Read
+  update: AboutPageFields_storySection_topTitle_Update
+  delete: AboutPageFields_storySection_topTitle_Delete
+}
+
+type AboutPageFields_storySection_topTitle_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_topTitle_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_topTitle_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_topTitle_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_title {
+  create: AboutPageFields_storySection_title_Create
+  read: AboutPageFields_storySection_title_Read
+  update: AboutPageFields_storySection_title_Update
+  delete: AboutPageFields_storySection_title_Delete
+}
+
+type AboutPageFields_storySection_title_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_title_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_title_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_title_Delete {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_content {
+  create: AboutPageFields_storySection_content_Create
+  read: AboutPageFields_storySection_content_Read
+  update: AboutPageFields_storySection_content_Update
+  delete: AboutPageFields_storySection_content_Delete
+}
+
+type AboutPageFields_storySection_content_Create {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_content_Read {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_content_Update {
+  permission: Boolean!
+}
+
+type AboutPageFields_storySection_content_Delete {
   permission: Boolean!
 }
 
@@ -22726,6 +22933,7 @@ input mutationSiteSetting_FooterInput {
 
 input mutationAboutPageInput {
   seo: mutationAboutPage_SeoInput
+  storySection: mutationAboutPage_StorySectionInput!
   updatedAt: String
   createdAt: String
 }
@@ -22733,6 +22941,12 @@ input mutationAboutPageInput {
 input mutationAboutPage_SeoInput {
   metaTitle: String
   metaDescription: String
+}
+
+input mutationAboutPage_StorySectionInput {
+  topTitle: String
+  title: String
+  content: JSON
 }
 
 input mutationReviewPageInput {

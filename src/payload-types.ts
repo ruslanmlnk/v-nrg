@@ -1266,6 +1266,25 @@ export interface AboutPage {
     metaTitle?: string | null;
     metaDescription?: string | null;
   };
+  storySection: {
+    topTitle: string;
+    title: string;
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1525,6 +1544,13 @@ export interface AboutPageSelect<T extends boolean = true> {
     | {
         metaTitle?: T;
         metaDescription?: T;
+      };
+  storySection?:
+    | T
+    | {
+        topTitle?: T;
+        title?: T;
+        content?: T;
       };
   updatedAt?: T;
   createdAt?: T;

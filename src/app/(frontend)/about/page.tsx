@@ -21,12 +21,18 @@ export async function generateMetadata() {
   return createSeoMetadata(aboutPage.seo, 'Про бренд V-NRG', '/about')
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const payload = await getPayload({ config: configPromise })
+  const aboutPage = await payload.findGlobal({
+    slug: 'about-page',
+    locale: await getSiteLocale(),
+  })
+
   return (
     <div className="pt-12">
       <div className="mx-auto flex max-w-[1288px] flex-col gap-12 px-6 lg:gap-24">
         <AboutHeroSection />
-        <AboutStorySection />
+        <AboutStorySection content={aboutPage.storySection} />
       </div>
 
       <AboutCertificatesSection />

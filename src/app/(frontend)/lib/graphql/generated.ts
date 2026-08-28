@@ -14922,6 +14922,7 @@ export type SiteSettingsUpdateDocAccess = {
 export type AboutPage = {
   __typename?: 'AboutPage';
   seo?: Maybe<AboutPage_Seo>;
+  storySection?: Maybe<AboutPage_StorySection>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -14930,6 +14931,18 @@ export type AboutPage_Seo = {
   __typename?: 'AboutPage_Seo';
   metaTitle?: Maybe<Scalars['String']['output']>;
   metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutPage_StorySection = {
+  __typename?: 'AboutPage_StorySection';
+  topTitle?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<Scalars['JSON']['output']>;
+};
+
+
+export type AboutPage_StorySectionContentArgs = {
+  depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type About_PageDocAccess = {
@@ -14942,6 +14955,7 @@ export type About_PageDocAccess = {
 export type AboutPageDocAccessFields = {
   __typename?: 'AboutPageDocAccessFields';
   seo?: Maybe<AboutPageDocAccessFields_Seo>;
+  storySection?: Maybe<AboutPageDocAccessFields_StorySection>;
   updatedAt?: Maybe<AboutPageDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<AboutPageDocAccessFields_CreatedAt>;
 };
@@ -15034,6 +15048,126 @@ export type AboutPageDocAccessFields_Seo_MetaDescription_Update = {
 
 export type AboutPageDocAccessFields_Seo_MetaDescription_Delete = {
   __typename?: 'AboutPageDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection = {
+  __typename?: 'AboutPageDocAccessFields_storySection';
+  create?: Maybe<AboutPageDocAccessFields_StorySection_Create>;
+  read?: Maybe<AboutPageDocAccessFields_StorySection_Read>;
+  update?: Maybe<AboutPageDocAccessFields_StorySection_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_StorySection_Delete>;
+  fields?: Maybe<AboutPageDocAccessFields_StorySection_Fields>;
+};
+
+export type AboutPageDocAccessFields_StorySection_Create = {
+  __typename?: 'AboutPageDocAccessFields_storySection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Read = {
+  __typename?: 'AboutPageDocAccessFields_storySection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Update = {
+  __typename?: 'AboutPageDocAccessFields_storySection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Delete = {
+  __typename?: 'AboutPageDocAccessFields_storySection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Fields = {
+  __typename?: 'AboutPageDocAccessFields_storySection_Fields';
+  topTitle?: Maybe<AboutPageDocAccessFields_StorySection_TopTitle>;
+  title?: Maybe<AboutPageDocAccessFields_StorySection_Title>;
+  content?: Maybe<AboutPageDocAccessFields_StorySection_Content>;
+};
+
+export type AboutPageDocAccessFields_StorySection_TopTitle = {
+  __typename?: 'AboutPageDocAccessFields_storySection_topTitle';
+  create?: Maybe<AboutPageDocAccessFields_StorySection_TopTitle_Create>;
+  read?: Maybe<AboutPageDocAccessFields_StorySection_TopTitle_Read>;
+  update?: Maybe<AboutPageDocAccessFields_StorySection_TopTitle_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_StorySection_TopTitle_Delete>;
+};
+
+export type AboutPageDocAccessFields_StorySection_TopTitle_Create = {
+  __typename?: 'AboutPageDocAccessFields_storySection_topTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_TopTitle_Read = {
+  __typename?: 'AboutPageDocAccessFields_storySection_topTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_TopTitle_Update = {
+  __typename?: 'AboutPageDocAccessFields_storySection_topTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_TopTitle_Delete = {
+  __typename?: 'AboutPageDocAccessFields_storySection_topTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Title = {
+  __typename?: 'AboutPageDocAccessFields_storySection_title';
+  create?: Maybe<AboutPageDocAccessFields_StorySection_Title_Create>;
+  read?: Maybe<AboutPageDocAccessFields_StorySection_Title_Read>;
+  update?: Maybe<AboutPageDocAccessFields_StorySection_Title_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_StorySection_Title_Delete>;
+};
+
+export type AboutPageDocAccessFields_StorySection_Title_Create = {
+  __typename?: 'AboutPageDocAccessFields_storySection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Title_Read = {
+  __typename?: 'AboutPageDocAccessFields_storySection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Title_Update = {
+  __typename?: 'AboutPageDocAccessFields_storySection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Title_Delete = {
+  __typename?: 'AboutPageDocAccessFields_storySection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Content = {
+  __typename?: 'AboutPageDocAccessFields_storySection_content';
+  create?: Maybe<AboutPageDocAccessFields_StorySection_Content_Create>;
+  read?: Maybe<AboutPageDocAccessFields_StorySection_Content_Read>;
+  update?: Maybe<AboutPageDocAccessFields_StorySection_Content_Update>;
+  delete?: Maybe<AboutPageDocAccessFields_StorySection_Content_Delete>;
+};
+
+export type AboutPageDocAccessFields_StorySection_Content_Create = {
+  __typename?: 'AboutPageDocAccessFields_storySection_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Content_Read = {
+  __typename?: 'AboutPageDocAccessFields_storySection_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Content_Update = {
+  __typename?: 'AboutPageDocAccessFields_storySection_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageDocAccessFields_StorySection_Content_Delete = {
+  __typename?: 'AboutPageDocAccessFields_storySection_content_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -25526,6 +25660,7 @@ export type About_PageAccess = {
 export type AboutPageFields = {
   __typename?: 'AboutPageFields';
   seo?: Maybe<AboutPageFields_Seo>;
+  storySection?: Maybe<AboutPageFields_StorySection>;
   updatedAt?: Maybe<AboutPageFields_UpdatedAt>;
   createdAt?: Maybe<AboutPageFields_CreatedAt>;
 };
@@ -25618,6 +25753,126 @@ export type AboutPageFields_Seo_MetaDescription_Update = {
 
 export type AboutPageFields_Seo_MetaDescription_Delete = {
   __typename?: 'AboutPageFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection = {
+  __typename?: 'AboutPageFields_storySection';
+  create?: Maybe<AboutPageFields_StorySection_Create>;
+  read?: Maybe<AboutPageFields_StorySection_Read>;
+  update?: Maybe<AboutPageFields_StorySection_Update>;
+  delete?: Maybe<AboutPageFields_StorySection_Delete>;
+  fields?: Maybe<AboutPageFields_StorySection_Fields>;
+};
+
+export type AboutPageFields_StorySection_Create = {
+  __typename?: 'AboutPageFields_storySection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Read = {
+  __typename?: 'AboutPageFields_storySection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Update = {
+  __typename?: 'AboutPageFields_storySection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Delete = {
+  __typename?: 'AboutPageFields_storySection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Fields = {
+  __typename?: 'AboutPageFields_storySection_Fields';
+  topTitle?: Maybe<AboutPageFields_StorySection_TopTitle>;
+  title?: Maybe<AboutPageFields_StorySection_Title>;
+  content?: Maybe<AboutPageFields_StorySection_Content>;
+};
+
+export type AboutPageFields_StorySection_TopTitle = {
+  __typename?: 'AboutPageFields_storySection_topTitle';
+  create?: Maybe<AboutPageFields_StorySection_TopTitle_Create>;
+  read?: Maybe<AboutPageFields_StorySection_TopTitle_Read>;
+  update?: Maybe<AboutPageFields_StorySection_TopTitle_Update>;
+  delete?: Maybe<AboutPageFields_StorySection_TopTitle_Delete>;
+};
+
+export type AboutPageFields_StorySection_TopTitle_Create = {
+  __typename?: 'AboutPageFields_storySection_topTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_TopTitle_Read = {
+  __typename?: 'AboutPageFields_storySection_topTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_TopTitle_Update = {
+  __typename?: 'AboutPageFields_storySection_topTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_TopTitle_Delete = {
+  __typename?: 'AboutPageFields_storySection_topTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Title = {
+  __typename?: 'AboutPageFields_storySection_title';
+  create?: Maybe<AboutPageFields_StorySection_Title_Create>;
+  read?: Maybe<AboutPageFields_StorySection_Title_Read>;
+  update?: Maybe<AboutPageFields_StorySection_Title_Update>;
+  delete?: Maybe<AboutPageFields_StorySection_Title_Delete>;
+};
+
+export type AboutPageFields_StorySection_Title_Create = {
+  __typename?: 'AboutPageFields_storySection_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Title_Read = {
+  __typename?: 'AboutPageFields_storySection_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Title_Update = {
+  __typename?: 'AboutPageFields_storySection_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Title_Delete = {
+  __typename?: 'AboutPageFields_storySection_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Content = {
+  __typename?: 'AboutPageFields_storySection_content';
+  create?: Maybe<AboutPageFields_StorySection_Content_Create>;
+  read?: Maybe<AboutPageFields_StorySection_Content_Read>;
+  update?: Maybe<AboutPageFields_StorySection_Content_Update>;
+  delete?: Maybe<AboutPageFields_StorySection_Content_Delete>;
+};
+
+export type AboutPageFields_StorySection_Content_Create = {
+  __typename?: 'AboutPageFields_storySection_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Content_Read = {
+  __typename?: 'AboutPageFields_storySection_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Content_Update = {
+  __typename?: 'AboutPageFields_storySection_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AboutPageFields_StorySection_Content_Delete = {
+  __typename?: 'AboutPageFields_storySection_content_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -28068,6 +28323,7 @@ export type MutationSiteSetting_FooterInput = {
 
 export type MutationAboutPageInput = {
   seo?: InputMaybe<MutationAboutPage_SeoInput>;
+  storySection: MutationAboutPage_StorySectionInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -28075,6 +28331,12 @@ export type MutationAboutPageInput = {
 export type MutationAboutPage_SeoInput = {
   metaTitle?: InputMaybe<Scalars['String']['input']>;
   metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationAboutPage_StorySectionInput = {
+  topTitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type MutationReviewPageInput = {
