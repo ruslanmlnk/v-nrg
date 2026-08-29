@@ -61,6 +61,10 @@ type Query {
   SocialNetworks(draft: Boolean, where: SocialNetwork_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): SocialNetworks
   countSocialNetworks(draft: Boolean, trash: Boolean, where: SocialNetwork_where, locale: LocaleInputType): countSocialNetworks
   docAccessSocialNetwork(id: Int!): social_networksDocAccess
+  RegistrationVerification(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): RegistrationVerification
+  RegistrationVerifications(draft: Boolean, where: RegistrationVerification_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): RegistrationVerifications
+  countRegistrationVerifications(draft: Boolean, trash: Boolean, where: RegistrationVerification_where, locale: LocaleInputType): countRegistrationVerifications
+  docAccessRegistrationVerification(id: Int!): registration_verificationsDocAccess
   PayloadKv(id: Int!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean, trash: Boolean): PayloadKv
   PayloadKvs(draft: Boolean, where: PayloadKv_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, pagination: Boolean, select: Boolean, sort: String, trash: Boolean): PayloadKvs
   countPayloadKvs(draft: Boolean, trash: Boolean, where: PayloadKv_where, locale: LocaleInputType): countPayloadKvs
@@ -8632,6 +8636,540 @@ type SocialNetworksDeleteDocAccess {
   where: JSONObject
 }
 
+type RegistrationVerification {
+  id: Int!
+  phoneHash: String!
+  emailHash: String!
+  ipHash: String!
+  encryptedPayload: String!
+  codeHash: String!
+  expiresAt: DateTime!
+  lastSentAt: DateTime!
+  windowStartedAt: DateTime!
+  attempts: Float!
+  sendCount: Float!
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type RegistrationVerifications {
+  docs: [RegistrationVerification!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  nextPage: Int
+  offset: Int
+  page: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  totalDocs: Int!
+  totalPages: Int!
+}
+
+input RegistrationVerification_where {
+  phoneHash: RegistrationVerification_phoneHash_operator
+  emailHash: RegistrationVerification_emailHash_operator
+  ipHash: RegistrationVerification_ipHash_operator
+  encryptedPayload: RegistrationVerification_encryptedPayload_operator
+  codeHash: RegistrationVerification_codeHash_operator
+  expiresAt: RegistrationVerification_expiresAt_operator
+  lastSentAt: RegistrationVerification_lastSentAt_operator
+  windowStartedAt: RegistrationVerification_windowStartedAt_operator
+  attempts: RegistrationVerification_attempts_operator
+  sendCount: RegistrationVerification_sendCount_operator
+  updatedAt: RegistrationVerification_updatedAt_operator
+  createdAt: RegistrationVerification_createdAt_operator
+  id: RegistrationVerification_id_operator
+  AND: [RegistrationVerification_where_and]
+  OR: [RegistrationVerification_where_or]
+}
+
+input RegistrationVerification_phoneHash_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input RegistrationVerification_emailHash_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input RegistrationVerification_ipHash_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input RegistrationVerification_encryptedPayload_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input RegistrationVerification_codeHash_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input RegistrationVerification_expiresAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input RegistrationVerification_lastSentAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input RegistrationVerification_windowStartedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input RegistrationVerification_attempts_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input RegistrationVerification_sendCount_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input RegistrationVerification_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input RegistrationVerification_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input RegistrationVerification_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input RegistrationVerification_where_and {
+  phoneHash: RegistrationVerification_phoneHash_operator
+  emailHash: RegistrationVerification_emailHash_operator
+  ipHash: RegistrationVerification_ipHash_operator
+  encryptedPayload: RegistrationVerification_encryptedPayload_operator
+  codeHash: RegistrationVerification_codeHash_operator
+  expiresAt: RegistrationVerification_expiresAt_operator
+  lastSentAt: RegistrationVerification_lastSentAt_operator
+  windowStartedAt: RegistrationVerification_windowStartedAt_operator
+  attempts: RegistrationVerification_attempts_operator
+  sendCount: RegistrationVerification_sendCount_operator
+  updatedAt: RegistrationVerification_updatedAt_operator
+  createdAt: RegistrationVerification_createdAt_operator
+  id: RegistrationVerification_id_operator
+  AND: [RegistrationVerification_where_and]
+  OR: [RegistrationVerification_where_or]
+}
+
+input RegistrationVerification_where_or {
+  phoneHash: RegistrationVerification_phoneHash_operator
+  emailHash: RegistrationVerification_emailHash_operator
+  ipHash: RegistrationVerification_ipHash_operator
+  encryptedPayload: RegistrationVerification_encryptedPayload_operator
+  codeHash: RegistrationVerification_codeHash_operator
+  expiresAt: RegistrationVerification_expiresAt_operator
+  lastSentAt: RegistrationVerification_lastSentAt_operator
+  windowStartedAt: RegistrationVerification_windowStartedAt_operator
+  attempts: RegistrationVerification_attempts_operator
+  sendCount: RegistrationVerification_sendCount_operator
+  updatedAt: RegistrationVerification_updatedAt_operator
+  createdAt: RegistrationVerification_createdAt_operator
+  id: RegistrationVerification_id_operator
+  AND: [RegistrationVerification_where_and]
+  OR: [RegistrationVerification_where_or]
+}
+
+type countRegistrationVerifications {
+  totalDocs: Int
+}
+
+type registration_verificationsDocAccess {
+  fields: RegistrationVerificationsDocAccessFields
+  create: RegistrationVerificationsCreateDocAccess
+  read: RegistrationVerificationsReadDocAccess
+  update: RegistrationVerificationsUpdateDocAccess
+  delete: RegistrationVerificationsDeleteDocAccess
+}
+
+type RegistrationVerificationsDocAccessFields {
+  phoneHash: RegistrationVerificationsDocAccessFields_phoneHash
+  emailHash: RegistrationVerificationsDocAccessFields_emailHash
+  ipHash: RegistrationVerificationsDocAccessFields_ipHash
+  encryptedPayload: RegistrationVerificationsDocAccessFields_encryptedPayload
+  codeHash: RegistrationVerificationsDocAccessFields_codeHash
+  expiresAt: RegistrationVerificationsDocAccessFields_expiresAt
+  lastSentAt: RegistrationVerificationsDocAccessFields_lastSentAt
+  windowStartedAt: RegistrationVerificationsDocAccessFields_windowStartedAt
+  attempts: RegistrationVerificationsDocAccessFields_attempts
+  sendCount: RegistrationVerificationsDocAccessFields_sendCount
+  updatedAt: RegistrationVerificationsDocAccessFields_updatedAt
+  createdAt: RegistrationVerificationsDocAccessFields_createdAt
+}
+
+type RegistrationVerificationsDocAccessFields_phoneHash {
+  create: RegistrationVerificationsDocAccessFields_phoneHash_Create
+  read: RegistrationVerificationsDocAccessFields_phoneHash_Read
+  update: RegistrationVerificationsDocAccessFields_phoneHash_Update
+  delete: RegistrationVerificationsDocAccessFields_phoneHash_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_phoneHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_phoneHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_phoneHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_phoneHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_emailHash {
+  create: RegistrationVerificationsDocAccessFields_emailHash_Create
+  read: RegistrationVerificationsDocAccessFields_emailHash_Read
+  update: RegistrationVerificationsDocAccessFields_emailHash_Update
+  delete: RegistrationVerificationsDocAccessFields_emailHash_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_emailHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_emailHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_emailHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_emailHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_ipHash {
+  create: RegistrationVerificationsDocAccessFields_ipHash_Create
+  read: RegistrationVerificationsDocAccessFields_ipHash_Read
+  update: RegistrationVerificationsDocAccessFields_ipHash_Update
+  delete: RegistrationVerificationsDocAccessFields_ipHash_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_ipHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_ipHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_ipHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_ipHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_encryptedPayload {
+  create: RegistrationVerificationsDocAccessFields_encryptedPayload_Create
+  read: RegistrationVerificationsDocAccessFields_encryptedPayload_Read
+  update: RegistrationVerificationsDocAccessFields_encryptedPayload_Update
+  delete: RegistrationVerificationsDocAccessFields_encryptedPayload_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_encryptedPayload_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_encryptedPayload_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_encryptedPayload_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_encryptedPayload_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_codeHash {
+  create: RegistrationVerificationsDocAccessFields_codeHash_Create
+  read: RegistrationVerificationsDocAccessFields_codeHash_Read
+  update: RegistrationVerificationsDocAccessFields_codeHash_Update
+  delete: RegistrationVerificationsDocAccessFields_codeHash_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_codeHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_codeHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_codeHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_codeHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_expiresAt {
+  create: RegistrationVerificationsDocAccessFields_expiresAt_Create
+  read: RegistrationVerificationsDocAccessFields_expiresAt_Read
+  update: RegistrationVerificationsDocAccessFields_expiresAt_Update
+  delete: RegistrationVerificationsDocAccessFields_expiresAt_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_expiresAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_expiresAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_expiresAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_expiresAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_lastSentAt {
+  create: RegistrationVerificationsDocAccessFields_lastSentAt_Create
+  read: RegistrationVerificationsDocAccessFields_lastSentAt_Read
+  update: RegistrationVerificationsDocAccessFields_lastSentAt_Update
+  delete: RegistrationVerificationsDocAccessFields_lastSentAt_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_lastSentAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_lastSentAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_lastSentAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_lastSentAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_windowStartedAt {
+  create: RegistrationVerificationsDocAccessFields_windowStartedAt_Create
+  read: RegistrationVerificationsDocAccessFields_windowStartedAt_Read
+  update: RegistrationVerificationsDocAccessFields_windowStartedAt_Update
+  delete: RegistrationVerificationsDocAccessFields_windowStartedAt_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_windowStartedAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_windowStartedAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_windowStartedAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_windowStartedAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_attempts {
+  create: RegistrationVerificationsDocAccessFields_attempts_Create
+  read: RegistrationVerificationsDocAccessFields_attempts_Read
+  update: RegistrationVerificationsDocAccessFields_attempts_Update
+  delete: RegistrationVerificationsDocAccessFields_attempts_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_attempts_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_attempts_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_attempts_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_attempts_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_sendCount {
+  create: RegistrationVerificationsDocAccessFields_sendCount_Create
+  read: RegistrationVerificationsDocAccessFields_sendCount_Read
+  update: RegistrationVerificationsDocAccessFields_sendCount_Update
+  delete: RegistrationVerificationsDocAccessFields_sendCount_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_sendCount_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_sendCount_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_sendCount_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_sendCount_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_updatedAt {
+  create: RegistrationVerificationsDocAccessFields_updatedAt_Create
+  read: RegistrationVerificationsDocAccessFields_updatedAt_Read
+  update: RegistrationVerificationsDocAccessFields_updatedAt_Update
+  delete: RegistrationVerificationsDocAccessFields_updatedAt_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_createdAt {
+  create: RegistrationVerificationsDocAccessFields_createdAt_Create
+  read: RegistrationVerificationsDocAccessFields_createdAt_Read
+  update: RegistrationVerificationsDocAccessFields_createdAt_Update
+  delete: RegistrationVerificationsDocAccessFields_createdAt_Delete
+}
+
+type RegistrationVerificationsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RegistrationVerificationsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RegistrationVerificationsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RegistrationVerificationsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadKv {
   id: Int!
   key: String!
@@ -8818,9 +9356,10 @@ enum PayloadLockedDocument_Document_RelationTo {
   dealer_applications
   currencies
   social_networks
+  registration_verifications
 }
 
-union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency | SocialNetwork
+union PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency | SocialNetwork | RegistrationVerification
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -8879,6 +9418,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   dealer_applications
   currencies
   social_networks
+  registration_verifications
 }
 
 input PayloadLockedDocument_globalSlug_operator {
@@ -13179,6 +13719,7 @@ type Access {
   dealer_applications: dealer_applicationsAccess
   currencies: currenciesAccess
   social_networks: social_networksAccess
+  registration_verifications: registration_verificationsAccess
   payload_kv: payload_kvAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
@@ -18291,6 +18832,325 @@ type SocialNetworksDeleteAccess {
   where: JSONObject
 }
 
+type registration_verificationsAccess {
+  fields: RegistrationVerificationsFields
+  create: RegistrationVerificationsCreateAccess
+  read: RegistrationVerificationsReadAccess
+  update: RegistrationVerificationsUpdateAccess
+  delete: RegistrationVerificationsDeleteAccess
+}
+
+type RegistrationVerificationsFields {
+  phoneHash: RegistrationVerificationsFields_phoneHash
+  emailHash: RegistrationVerificationsFields_emailHash
+  ipHash: RegistrationVerificationsFields_ipHash
+  encryptedPayload: RegistrationVerificationsFields_encryptedPayload
+  codeHash: RegistrationVerificationsFields_codeHash
+  expiresAt: RegistrationVerificationsFields_expiresAt
+  lastSentAt: RegistrationVerificationsFields_lastSentAt
+  windowStartedAt: RegistrationVerificationsFields_windowStartedAt
+  attempts: RegistrationVerificationsFields_attempts
+  sendCount: RegistrationVerificationsFields_sendCount
+  updatedAt: RegistrationVerificationsFields_updatedAt
+  createdAt: RegistrationVerificationsFields_createdAt
+}
+
+type RegistrationVerificationsFields_phoneHash {
+  create: RegistrationVerificationsFields_phoneHash_Create
+  read: RegistrationVerificationsFields_phoneHash_Read
+  update: RegistrationVerificationsFields_phoneHash_Update
+  delete: RegistrationVerificationsFields_phoneHash_Delete
+}
+
+type RegistrationVerificationsFields_phoneHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_phoneHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_phoneHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_phoneHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_emailHash {
+  create: RegistrationVerificationsFields_emailHash_Create
+  read: RegistrationVerificationsFields_emailHash_Read
+  update: RegistrationVerificationsFields_emailHash_Update
+  delete: RegistrationVerificationsFields_emailHash_Delete
+}
+
+type RegistrationVerificationsFields_emailHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_emailHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_emailHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_emailHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_ipHash {
+  create: RegistrationVerificationsFields_ipHash_Create
+  read: RegistrationVerificationsFields_ipHash_Read
+  update: RegistrationVerificationsFields_ipHash_Update
+  delete: RegistrationVerificationsFields_ipHash_Delete
+}
+
+type RegistrationVerificationsFields_ipHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_ipHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_ipHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_ipHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_encryptedPayload {
+  create: RegistrationVerificationsFields_encryptedPayload_Create
+  read: RegistrationVerificationsFields_encryptedPayload_Read
+  update: RegistrationVerificationsFields_encryptedPayload_Update
+  delete: RegistrationVerificationsFields_encryptedPayload_Delete
+}
+
+type RegistrationVerificationsFields_encryptedPayload_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_encryptedPayload_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_encryptedPayload_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_encryptedPayload_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_codeHash {
+  create: RegistrationVerificationsFields_codeHash_Create
+  read: RegistrationVerificationsFields_codeHash_Read
+  update: RegistrationVerificationsFields_codeHash_Update
+  delete: RegistrationVerificationsFields_codeHash_Delete
+}
+
+type RegistrationVerificationsFields_codeHash_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_codeHash_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_codeHash_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_codeHash_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_expiresAt {
+  create: RegistrationVerificationsFields_expiresAt_Create
+  read: RegistrationVerificationsFields_expiresAt_Read
+  update: RegistrationVerificationsFields_expiresAt_Update
+  delete: RegistrationVerificationsFields_expiresAt_Delete
+}
+
+type RegistrationVerificationsFields_expiresAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_expiresAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_expiresAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_expiresAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_lastSentAt {
+  create: RegistrationVerificationsFields_lastSentAt_Create
+  read: RegistrationVerificationsFields_lastSentAt_Read
+  update: RegistrationVerificationsFields_lastSentAt_Update
+  delete: RegistrationVerificationsFields_lastSentAt_Delete
+}
+
+type RegistrationVerificationsFields_lastSentAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_lastSentAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_lastSentAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_lastSentAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_windowStartedAt {
+  create: RegistrationVerificationsFields_windowStartedAt_Create
+  read: RegistrationVerificationsFields_windowStartedAt_Read
+  update: RegistrationVerificationsFields_windowStartedAt_Update
+  delete: RegistrationVerificationsFields_windowStartedAt_Delete
+}
+
+type RegistrationVerificationsFields_windowStartedAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_windowStartedAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_windowStartedAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_windowStartedAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_attempts {
+  create: RegistrationVerificationsFields_attempts_Create
+  read: RegistrationVerificationsFields_attempts_Read
+  update: RegistrationVerificationsFields_attempts_Update
+  delete: RegistrationVerificationsFields_attempts_Delete
+}
+
+type RegistrationVerificationsFields_attempts_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_attempts_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_attempts_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_attempts_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_sendCount {
+  create: RegistrationVerificationsFields_sendCount_Create
+  read: RegistrationVerificationsFields_sendCount_Read
+  update: RegistrationVerificationsFields_sendCount_Update
+  delete: RegistrationVerificationsFields_sendCount_Delete
+}
+
+type RegistrationVerificationsFields_sendCount_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_sendCount_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_sendCount_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_sendCount_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_updatedAt {
+  create: RegistrationVerificationsFields_updatedAt_Create
+  read: RegistrationVerificationsFields_updatedAt_Read
+  update: RegistrationVerificationsFields_updatedAt_Update
+  delete: RegistrationVerificationsFields_updatedAt_Delete
+}
+
+type RegistrationVerificationsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_createdAt {
+  create: RegistrationVerificationsFields_createdAt_Create
+  read: RegistrationVerificationsFields_createdAt_Read
+  update: RegistrationVerificationsFields_createdAt_Update
+  delete: RegistrationVerificationsFields_createdAt_Delete
+}
+
+type RegistrationVerificationsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type RegistrationVerificationsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RegistrationVerificationsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RegistrationVerificationsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RegistrationVerificationsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_kvAccess {
   fields: PayloadKvFields
   create: PayloadKvCreateAccess
@@ -22255,6 +23115,10 @@ type Mutation {
   updateSocialNetwork(id: Int!, autosave: Boolean, data: mutationSocialNetworkUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): SocialNetwork
   deleteSocialNetwork(id: Int!, trash: Boolean): SocialNetwork
   duplicateSocialNetwork(id: Int!, data: mutationSocialNetworkInput!): SocialNetwork
+  createRegistrationVerification(data: mutationRegistrationVerificationInput!, draft: Boolean, locale: LocaleInputType): RegistrationVerification
+  updateRegistrationVerification(id: Int!, autosave: Boolean, data: mutationRegistrationVerificationUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): RegistrationVerification
+  deleteRegistrationVerification(id: Int!, trash: Boolean): RegistrationVerification
+  duplicateRegistrationVerification(id: Int!, data: mutationRegistrationVerificationInput!): RegistrationVerification
   createPayloadKv(data: mutationPayloadKvInput!, draft: Boolean, locale: LocaleInputType): PayloadKv
   updatePayloadKv(id: Int!, autosave: Boolean, data: mutationPayloadKvUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): PayloadKv
   deletePayloadKv(id: Int!, trash: Boolean): PayloadKv
@@ -23040,6 +23904,36 @@ enum SocialNetworkUpdate_type_MutationInput {
   custom
 }
 
+input mutationRegistrationVerificationInput {
+  phoneHash: String!
+  emailHash: String!
+  ipHash: String!
+  encryptedPayload: String!
+  codeHash: String!
+  expiresAt: String!
+  lastSentAt: String!
+  windowStartedAt: String!
+  attempts: Float!
+  sendCount: Float!
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationRegistrationVerificationUpdateInput {
+  phoneHash: String
+  emailHash: String
+  ipHash: String
+  encryptedPayload: String
+  codeHash: String
+  expiresAt: String
+  lastSentAt: String
+  windowStartedAt: String
+  attempts: Float
+  sendCount: Float
+  updatedAt: String
+  createdAt: String
+}
+
 input mutationPayloadKvInput {
   key: String!
   data: JSON!
@@ -23079,6 +23973,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   dealer_applications
   currencies
   social_networks
+  registration_verifications
 }
 
 input PayloadLockedDocument_UserRelationshipInput {
@@ -23119,6 +24014,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   dealer_applications
   currencies
   social_networks
+  registration_verifications
 }
 
 input PayloadLockedDocumentUpdate_UserRelationshipInput {

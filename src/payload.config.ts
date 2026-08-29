@@ -23,6 +23,7 @@ import { Applications } from './collections/Applications'
 import { DealerApplications } from './collections/DealerApplications'
 import { Currencies } from './collections/Currencies'
 import { SocialNetworks } from './collections/SocialNetworks'
+import { RegistrationVerifications } from './collections/RegistrationVerifications'
 import { Home } from './globals/Home'
 import { Training } from './globals/Training'
 import { Contacts } from './globals/Contacts'
@@ -72,6 +73,7 @@ export default buildConfig({
     DealerApplications,
     Currencies,
     SocialNetworks,
+    RegistrationVerifications,
   ],
   i18n: {
     fallbackLanguage: 'uk',

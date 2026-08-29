@@ -82,6 +82,7 @@ export interface Config {
     'dealer-applications': DealerApplication;
     currencies: Currency;
     'social-networks': SocialNetwork;
+    'registration-verifications': RegistrationVerification;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -104,6 +105,7 @@ export interface Config {
     'dealer-applications': DealerApplicationsSelect<false> | DealerApplicationsSelect<true>;
     currencies: CurrenciesSelect<false> | CurrenciesSelect<true>;
     'social-networks': SocialNetworksSelect<false> | SocialNetworksSelect<true>;
+    'registration-verifications': RegistrationVerificationsSelect<false> | RegistrationVerificationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -553,6 +555,9 @@ export interface Currency {
   name: string;
   code: string;
   symbol: string;
+  /**
+   * Enter how many units of this currency equal 1 EUR. For EUR use 1.
+   */
   rate: number;
   active?: boolean | null;
   sortOrder?: number | null;
@@ -569,6 +574,25 @@ export interface SocialNetwork {
   type: 'instagram' | 'facebook' | 'telegram' | 'whatsapp' | 'custom';
   url: string;
   icon: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "registration-verifications".
+ */
+export interface RegistrationVerification {
+  id: number;
+  phoneHash: string;
+  emailHash: string;
+  ipHash: string;
+  encryptedPayload: string;
+  codeHash: string;
+  expiresAt: string;
+  lastSentAt: string;
+  windowStartedAt: string;
+  attempts: number;
+  sendCount: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -655,6 +679,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'social-networks';
         value: number | SocialNetwork;
+      } | null)
+    | ({
+        relationTo: 'registration-verifications';
+        value: number | RegistrationVerification;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1037,6 +1065,24 @@ export interface SocialNetworksSelect<T extends boolean = true> {
   type?: T;
   url?: T;
   icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "registration-verifications_select".
+ */
+export interface RegistrationVerificationsSelect<T extends boolean = true> {
+  phoneHash?: T;
+  emailHash?: T;
+  ipHash?: T;
+  encryptedPayload?: T;
+  codeHash?: T;
+  expiresAt?: T;
+  lastSentAt?: T;
+  windowStartedAt?: T;
+  attempts?: T;
+  sendCount?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -2,6 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Turnstile } from '../security/Turnstile'
 
 type DemoConsultationModalProps = {
   actionLabel?: string
@@ -22,6 +23,8 @@ export default function DemoConsultationModal({
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
   const handleClose = useCallback(() => {
     setIsSubmitted(false)
     onClose()
@@ -46,6 +49,10 @@ export default function DemoConsultationModal({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!turnstileToken) {
+      setError('Підтвердьте, що ви не робот.')
+      return
+    }
     setError('')
     setIsSubmitting(true)
     const formData = new FormData(event.currentTarget)
@@ -59,8 +66,10 @@ export default function DemoConsultationModal({
         phone: formData.get('phone'),
         source: 'hero-popup',
         website: formData.get('website'),
+        turnstileToken,
       }),
     }).catch(() => null)
+    setTurnstileResetKey((current) => current + 1)
     setIsSubmitting(false)
     if (!response?.ok) {
       setError('Не вдалося надіслати заявку. Спробуйте ще раз.')
@@ -190,6 +199,8 @@ export default function DemoConsultationModal({
                 placeholder="Зручний час для зв’язку, додаткові побажання..."
               />
             </label>
+
+            <Turnstile onTokenChange={setTurnstileToken} resetKey={turnstileResetKey} />
 
             <button
               disabled={isSubmitting}

@@ -7,6 +7,7 @@ import { useState, type FormEvent } from 'react'
 import { loginUser } from '../../lib/authClient'
 import { authInputClasses } from '../auth/styles'
 import { useCommerce } from '../providers/CommerceProvider'
+import { Turnstile } from '../security/Turnstile'
 import ArrowPillButton from '../ui/ArrowPillButton'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import eyeCrossedIconAsset from '@public/icon/generated/common-eye-crossed.svg'
@@ -18,6 +19,8 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
   const [formState, setFormState] = useState({
     email: '',
     password: '',
@@ -30,13 +33,21 @@ export default function LoginForm() {
       return
     }
 
+    if (!turnstileToken) {
+      setError('Підтвердьте, що ви не робот.')
+      return
+    }
+
     setError('')
     setIsSubmitting(true)
 
     const result = await loginUser({
       email: formState.email.trim(),
       password: formState.password,
+      turnstileToken,
     })
+
+    setTurnstileResetKey((current) => current + 1)
 
     setIsSubmitting(false)
 
@@ -106,6 +117,11 @@ export default function LoginForm() {
             Забули пароль?
           </Link>
         </div>
+
+        <Turnstile
+          onTokenChange={setTurnstileToken}
+          resetKey={turnstileResetKey}
+        />
 
         <ArrowPillButton
           type="submit"

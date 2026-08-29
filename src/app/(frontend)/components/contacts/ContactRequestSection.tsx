@@ -7,6 +7,7 @@ import { contactFieldClasses } from './contactFieldClasses'
 import { ContactsFormSection } from './ContactsFormSection'
 import { ContactsInfoSection } from './ContactsInfoSection'
 import type { ContactSocialNetwork } from './ContactsInfoSection'
+import { Turnstile } from '../security/Turnstile'
 
 type ContactRequestSectionProps = {
   className?: string
@@ -24,6 +25,8 @@ export function ContactRequestSection({
   const [error, setError] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
   const [formState, setFormState] = useState({
     email: '',
     message: '',
@@ -33,13 +36,18 @@ export function ContactRequestSection({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!turnstileToken) {
+      setError('Підтвердьте, що ви не робот.')
+      return
+    }
     setError('')
     setIsSubmitting(true)
     const response = await fetch('/api/forms/applications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...formState, source: 'contacts' }),
+      body: JSON.stringify({ ...formState, source: 'contacts', turnstileToken }),
     }).catch(() => null)
+    setTurnstileResetKey((current) => current + 1)
     setIsSubmitting(false)
     if (!response?.ok) {
       setError('Не вдалося надіслати заявку. Спробуйте ще раз.')
@@ -106,6 +114,11 @@ export function ContactRequestSection({
             className={`${contactFieldClasses} min-h-[116px] resize-none py-4`}
           />
         </ContactField>
+        <Turnstile
+          onTokenChange={setTurnstileToken}
+          resetKey={turnstileResetKey}
+          theme="dark"
+        />
         <input className="hidden" name="website" tabIndex={-1} autoComplete="off" />
       </ContactsFormSection>
     </section>

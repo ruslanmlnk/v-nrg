@@ -4,6 +4,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 import type { User } from '@/payload-types'
 import { sendOrderNotification } from '@/lib/applicationNotifications'
+import { verifyTurnstile } from '@/lib/turnstile'
 
 type CheckoutOrderItem = {
   id?: string
@@ -25,6 +26,7 @@ type CheckoutOrderBody = {
   paymentMethod?: string
   phone?: string
   total?: number
+  turnstileToken?: unknown
 }
 
 const paymentMethods = ['card-online', 'monobank-parts', 'invoice', 'cash-on-delivery'] as const
@@ -33,7 +35,7 @@ const deliveryMethods = ['nova-poshta', 'courier', 'pickup'] as const
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as CheckoutOrderBody | null
 
-  if (!body) {
+  if (!body || !(await verifyTurnstile(request, body.turnstileToken))) {
     return NextResponse.json({ error: 'Invalid order payload' }, { status: 400 })
   }
 
@@ -50,7 +52,18 @@ export async function POST(request: NextRequest) {
 
   const payload = await getPayload({ config: configPromise })
   const user = await getRequestUser(payload, request)
-  const items = await getServerPricedItems(payload, body.items, getDealerDiscountPercent(user))
+  const uahPerEuro = await getUahPerEuro(payload)
+
+  if (!uahPerEuro) {
+    return NextResponse.json({ error: 'Курс EUR/UAH не налаштовано' }, { status: 503 })
+  }
+
+  const items = await getServerPricedItems(
+    payload,
+    body.items,
+    getDealerDiscountPercent(user),
+    uahPerEuro,
+  )
   const total = normalizeMoney(items.reduce((sum, item) => sum + item.total, 0))
 
   if (!total || items.length === 0) {
@@ -137,6 +150,7 @@ async function getServerPricedItems(
   payload: Awaited<ReturnType<typeof getPayload>>,
   requestedItems: CheckoutOrderItem[] | undefined,
   discountPercent: number,
+  uahPerEuro: number,
 ) {
   const requestedQuantities = new Map<string, number>()
 
@@ -188,7 +202,7 @@ async function getServerPricedItems(
       return []
     }
 
-    const price = normalizeMoney(basePrice * discountMultiplier)
+    const price = normalizeMoney(basePrice * discountMultiplier * uahPerEuro)
 
     return [
       {
@@ -200,6 +214,18 @@ async function getServerPricedItems(
       },
     ]
   })
+}
+
+async function getUahPerEuro(payload: Awaited<ReturnType<typeof getPayload>>) {
+  const result = await payload.find({
+    collection: 'currencies',
+    depth: 0,
+    limit: 1,
+    where: { and: [{ code: { equals: 'UAH' } }, { active: { equals: true } }] },
+  })
+  const rate = result.docs[0]?.rate
+
+  return typeof rate === 'number' && Number.isFinite(rate) && rate > 0 ? rate : null
 }
 
 function getDealerDiscountPercent(user: User | null) {

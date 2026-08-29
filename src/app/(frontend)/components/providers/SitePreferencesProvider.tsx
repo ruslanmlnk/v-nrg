@@ -15,16 +15,16 @@ export type SiteCurrency = {
 type SitePreferencesContextValue = {
   currencies: SiteCurrency[]
   currency: SiteCurrency
-  formatPrice: (valueInUAH: number) => string
+  formatPrice: (valueInEUR: number) => string
   locale: SiteLocale
   setCurrency: (code: string) => void
   setLocale: (locale: SiteLocale) => void
 }
 
 const fallbackCurrencies: SiteCurrency[] = [
-  { code: 'UAH', name: 'Гривня', rate: 1, symbol: '₴' },
-  { code: 'USD', name: 'US Dollar', rate: 41.5, symbol: '$' },
-  { code: 'EUR', name: 'Euro', rate: 48, symbol: '€' },
+  { code: 'UAH', name: 'Гривня', rate: 48, symbol: '₴' },
+  { code: 'USD', name: 'US Dollar', rate: 1.15, symbol: '$' },
+  { code: 'EUR', name: 'Euro', rate: 1, symbol: '€' },
 ]
 
 const SitePreferencesContext = createContext<SitePreferencesContextValue | null>(null)
@@ -56,8 +56,8 @@ export function SitePreferencesProvider({
     () => ({
       currencies,
       currency,
-      formatPrice: (valueInUAH) => {
-        const convertedValue = valueInUAH / currency.rate
+      formatPrice: (valueInEUR) => {
+        const convertedValue = valueInEUR * currency.rate
         return new Intl.NumberFormat(locale === 'uk' ? 'uk-UA' : 'en-US', {
           currency: currency.code,
           currencyDisplay: 'narrowSymbol',

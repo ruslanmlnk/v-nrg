@@ -38,7 +38,9 @@ export const Users: CollectionConfig = {
   auth: true,
   access: {
     admin: canAccessAdmin,
-    create: () => true,
+    create: ({ req }) =>
+      (req.user?.collection === 'users' && req.user.role === 'admin') ||
+      isFirstAdminBootstrapRequest(req),
     delete: isAdmin,
     read: isAdminOrSelf,
     update: isAdminOrSelf,
@@ -73,6 +75,15 @@ export const Users: CollectionConfig = {
 
         const isRequestFromAdmin = req.user?.collection === 'users' && req.user.role === 'admin'
         const isFirstRegisterRequest = isFirstAdminBootstrapRequest(req)
+
+        if (
+          operation === 'create' &&
+          !isRequestFromAdmin &&
+          !isFirstRegisterRequest &&
+          context.phoneVerified !== true
+        ) {
+          throw new APIError('Потрібно підтвердити номер телефону.', 403)
+        }
         const canManageRole =
           context.allowRoleManagement === true || isRequestFromAdmin || isFirstRegisterRequest
 
@@ -123,6 +134,8 @@ export const Users: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
+      index: true,
+      unique: true,
     },
     {
       name: 'role',

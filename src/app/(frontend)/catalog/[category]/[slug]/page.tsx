@@ -62,7 +62,7 @@ export default async function ProductDetails({ params }: ProductDetailsProps) {
       offers: {
         '@type': 'Offer',
         price: product.price,
-        priceCurrency: 'UAH',
+        priceCurrency: 'EUR',
         url,
       },
       sku: String(product.cmsId),

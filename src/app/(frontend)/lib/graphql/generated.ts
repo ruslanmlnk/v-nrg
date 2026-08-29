@@ -89,6 +89,10 @@ export type Query = {
   SocialNetworks?: Maybe<SocialNetworks>;
   countSocialNetworks?: Maybe<CountSocialNetworks>;
   docAccessSocialNetwork?: Maybe<Social_NetworksDocAccess>;
+  RegistrationVerification?: Maybe<RegistrationVerification>;
+  RegistrationVerifications?: Maybe<RegistrationVerifications>;
+  countRegistrationVerifications?: Maybe<CountRegistrationVerifications>;
+  docAccessRegistrationVerification?: Maybe<Registration_VerificationsDocAccess>;
   PayloadKv?: Maybe<PayloadKv>;
   PayloadKvs?: Maybe<PayloadKvs>;
   countPayloadKvs?: Maybe<CountPayloadKvs>;
@@ -672,6 +676,43 @@ export type QueryCountSocialNetworksArgs = {
 
 
 export type QueryDocAccessSocialNetworkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryRegistrationVerificationArgs = {
+  id: Scalars['Int']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryRegistrationVerificationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<RegistrationVerification_Where>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCountRegistrationVerificationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<RegistrationVerification_Where>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryDocAccessRegistrationVerificationArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -10638,6 +10679,609 @@ export type SocialNetworksDeleteDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type RegistrationVerification = {
+  __typename?: 'RegistrationVerification';
+  id: Scalars['Int']['output'];
+  phoneHash: Scalars['String']['output'];
+  emailHash: Scalars['String']['output'];
+  ipHash: Scalars['String']['output'];
+  encryptedPayload: Scalars['String']['output'];
+  codeHash: Scalars['String']['output'];
+  expiresAt: Scalars['DateTime']['output'];
+  lastSentAt: Scalars['DateTime']['output'];
+  windowStartedAt: Scalars['DateTime']['output'];
+  attempts: Scalars['Float']['output'];
+  sendCount: Scalars['Float']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type RegistrationVerifications = {
+  __typename?: 'RegistrationVerifications';
+  docs: Array<RegistrationVerification>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type RegistrationVerification_Where = {
+  phoneHash?: InputMaybe<RegistrationVerification_PhoneHash_Operator>;
+  emailHash?: InputMaybe<RegistrationVerification_EmailHash_Operator>;
+  ipHash?: InputMaybe<RegistrationVerification_IpHash_Operator>;
+  encryptedPayload?: InputMaybe<RegistrationVerification_EncryptedPayload_Operator>;
+  codeHash?: InputMaybe<RegistrationVerification_CodeHash_Operator>;
+  expiresAt?: InputMaybe<RegistrationVerification_ExpiresAt_Operator>;
+  lastSentAt?: InputMaybe<RegistrationVerification_LastSentAt_Operator>;
+  windowStartedAt?: InputMaybe<RegistrationVerification_WindowStartedAt_Operator>;
+  attempts?: InputMaybe<RegistrationVerification_Attempts_Operator>;
+  sendCount?: InputMaybe<RegistrationVerification_SendCount_Operator>;
+  updatedAt?: InputMaybe<RegistrationVerification_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<RegistrationVerification_CreatedAt_Operator>;
+  id?: InputMaybe<RegistrationVerification_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<RegistrationVerification_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<RegistrationVerification_Where_Or>>>;
+};
+
+export type RegistrationVerification_PhoneHash_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RegistrationVerification_EmailHash_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RegistrationVerification_IpHash_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RegistrationVerification_EncryptedPayload_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type RegistrationVerification_CodeHash_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RegistrationVerification_ExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type RegistrationVerification_LastSentAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type RegistrationVerification_WindowStartedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type RegistrationVerification_Attempts_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type RegistrationVerification_SendCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type RegistrationVerification_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type RegistrationVerification_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type RegistrationVerification_Id_Operator = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  not_equals?: InputMaybe<Scalars['Int']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  greater_than?: InputMaybe<Scalars['Int']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Int']['input']>;
+  less_than?: InputMaybe<Scalars['Int']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type RegistrationVerification_Where_And = {
+  phoneHash?: InputMaybe<RegistrationVerification_PhoneHash_Operator>;
+  emailHash?: InputMaybe<RegistrationVerification_EmailHash_Operator>;
+  ipHash?: InputMaybe<RegistrationVerification_IpHash_Operator>;
+  encryptedPayload?: InputMaybe<RegistrationVerification_EncryptedPayload_Operator>;
+  codeHash?: InputMaybe<RegistrationVerification_CodeHash_Operator>;
+  expiresAt?: InputMaybe<RegistrationVerification_ExpiresAt_Operator>;
+  lastSentAt?: InputMaybe<RegistrationVerification_LastSentAt_Operator>;
+  windowStartedAt?: InputMaybe<RegistrationVerification_WindowStartedAt_Operator>;
+  attempts?: InputMaybe<RegistrationVerification_Attempts_Operator>;
+  sendCount?: InputMaybe<RegistrationVerification_SendCount_Operator>;
+  updatedAt?: InputMaybe<RegistrationVerification_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<RegistrationVerification_CreatedAt_Operator>;
+  id?: InputMaybe<RegistrationVerification_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<RegistrationVerification_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<RegistrationVerification_Where_Or>>>;
+};
+
+export type RegistrationVerification_Where_Or = {
+  phoneHash?: InputMaybe<RegistrationVerification_PhoneHash_Operator>;
+  emailHash?: InputMaybe<RegistrationVerification_EmailHash_Operator>;
+  ipHash?: InputMaybe<RegistrationVerification_IpHash_Operator>;
+  encryptedPayload?: InputMaybe<RegistrationVerification_EncryptedPayload_Operator>;
+  codeHash?: InputMaybe<RegistrationVerification_CodeHash_Operator>;
+  expiresAt?: InputMaybe<RegistrationVerification_ExpiresAt_Operator>;
+  lastSentAt?: InputMaybe<RegistrationVerification_LastSentAt_Operator>;
+  windowStartedAt?: InputMaybe<RegistrationVerification_WindowStartedAt_Operator>;
+  attempts?: InputMaybe<RegistrationVerification_Attempts_Operator>;
+  sendCount?: InputMaybe<RegistrationVerification_SendCount_Operator>;
+  updatedAt?: InputMaybe<RegistrationVerification_UpdatedAt_Operator>;
+  createdAt?: InputMaybe<RegistrationVerification_CreatedAt_Operator>;
+  id?: InputMaybe<RegistrationVerification_Id_Operator>;
+  AND?: InputMaybe<Array<InputMaybe<RegistrationVerification_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<RegistrationVerification_Where_Or>>>;
+};
+
+export type CountRegistrationVerifications = {
+  __typename?: 'countRegistrationVerifications';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Registration_VerificationsDocAccess = {
+  __typename?: 'registration_verificationsDocAccess';
+  fields?: Maybe<RegistrationVerificationsDocAccessFields>;
+  create?: Maybe<RegistrationVerificationsCreateDocAccess>;
+  read?: Maybe<RegistrationVerificationsReadDocAccess>;
+  update?: Maybe<RegistrationVerificationsUpdateDocAccess>;
+  delete?: Maybe<RegistrationVerificationsDeleteDocAccess>;
+};
+
+export type RegistrationVerificationsDocAccessFields = {
+  __typename?: 'RegistrationVerificationsDocAccessFields';
+  phoneHash?: Maybe<RegistrationVerificationsDocAccessFields_PhoneHash>;
+  emailHash?: Maybe<RegistrationVerificationsDocAccessFields_EmailHash>;
+  ipHash?: Maybe<RegistrationVerificationsDocAccessFields_IpHash>;
+  encryptedPayload?: Maybe<RegistrationVerificationsDocAccessFields_EncryptedPayload>;
+  codeHash?: Maybe<RegistrationVerificationsDocAccessFields_CodeHash>;
+  expiresAt?: Maybe<RegistrationVerificationsDocAccessFields_ExpiresAt>;
+  lastSentAt?: Maybe<RegistrationVerificationsDocAccessFields_LastSentAt>;
+  windowStartedAt?: Maybe<RegistrationVerificationsDocAccessFields_WindowStartedAt>;
+  attempts?: Maybe<RegistrationVerificationsDocAccessFields_Attempts>;
+  sendCount?: Maybe<RegistrationVerificationsDocAccessFields_SendCount>;
+  updatedAt?: Maybe<RegistrationVerificationsDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<RegistrationVerificationsDocAccessFields_CreatedAt>;
+};
+
+export type RegistrationVerificationsDocAccessFields_PhoneHash = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_phoneHash';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_PhoneHash_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_PhoneHash_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_PhoneHash_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_PhoneHash_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_PhoneHash_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_phoneHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_PhoneHash_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_phoneHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_PhoneHash_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_phoneHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_PhoneHash_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_phoneHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EmailHash = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_emailHash';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_EmailHash_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_EmailHash_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_EmailHash_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_EmailHash_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_EmailHash_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_emailHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EmailHash_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_emailHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EmailHash_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_emailHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EmailHash_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_emailHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_IpHash = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_ipHash';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_IpHash_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_IpHash_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_IpHash_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_IpHash_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_IpHash_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_ipHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_IpHash_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_ipHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_IpHash_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_ipHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_IpHash_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_ipHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EncryptedPayload = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_encryptedPayload';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_EncryptedPayload_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_EncryptedPayload_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_EncryptedPayload_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_EncryptedPayload_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_EncryptedPayload_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_encryptedPayload_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EncryptedPayload_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_encryptedPayload_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EncryptedPayload_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_encryptedPayload_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_EncryptedPayload_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_encryptedPayload_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CodeHash = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_codeHash';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_CodeHash_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_CodeHash_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_CodeHash_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_CodeHash_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_CodeHash_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_codeHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CodeHash_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_codeHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CodeHash_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_codeHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CodeHash_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_codeHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_ExpiresAt = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_expiresAt';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_ExpiresAt_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_ExpiresAt_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_ExpiresAt_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_ExpiresAt_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_ExpiresAt_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_expiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_ExpiresAt_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_expiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_ExpiresAt_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_expiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_ExpiresAt_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_expiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_LastSentAt = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_lastSentAt';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_LastSentAt_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_LastSentAt_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_LastSentAt_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_LastSentAt_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_LastSentAt_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_lastSentAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_LastSentAt_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_lastSentAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_LastSentAt_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_lastSentAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_LastSentAt_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_lastSentAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_WindowStartedAt = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_windowStartedAt';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_WindowStartedAt_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_WindowStartedAt_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_WindowStartedAt_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_WindowStartedAt_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_WindowStartedAt_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_windowStartedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_WindowStartedAt_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_windowStartedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_WindowStartedAt_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_windowStartedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_WindowStartedAt_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_windowStartedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_Attempts = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_attempts';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_Attempts_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_Attempts_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_Attempts_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_Attempts_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_Attempts_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_attempts_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_Attempts_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_attempts_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_Attempts_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_attempts_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_Attempts_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_attempts_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_SendCount = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_sendCount';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_SendCount_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_SendCount_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_SendCount_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_SendCount_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_SendCount_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_sendCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_SendCount_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_sendCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_SendCount_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_sendCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_SendCount_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_sendCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_UpdatedAt = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_updatedAt';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CreatedAt = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_createdAt';
+  create?: Maybe<RegistrationVerificationsDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<RegistrationVerificationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<RegistrationVerificationsDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<RegistrationVerificationsDocAccessFields_CreatedAt_Delete>;
+};
+
+export type RegistrationVerificationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'RegistrationVerificationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsCreateDocAccess = {
+  __typename?: 'RegistrationVerificationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type RegistrationVerificationsReadDocAccess = {
+  __typename?: 'RegistrationVerificationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type RegistrationVerificationsUpdateDocAccess = {
+  __typename?: 'RegistrationVerificationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type RegistrationVerificationsDeleteDocAccess = {
+  __typename?: 'RegistrationVerificationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type PayloadKv = {
   __typename?: 'PayloadKv';
   id: Scalars['Int']['output'];
@@ -10856,10 +11500,11 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
   Currencies = 'currencies',
-  SocialNetworks = 'social_networks'
+  SocialNetworks = 'social_networks',
+  RegistrationVerifications = 'registration_verifications'
 }
 
-export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency | SocialNetwork;
+export type PayloadLockedDocument_Document = User | Media | Review | Product | Category | Article | Order | LegalPage | Location | TrainingCategory | TrainingVideo | Application | DealerApplication | Currency | SocialNetwork | RegistrationVerification;
 
 export type PayloadLockedDocument_User_Relationship = {
   __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -10919,7 +11564,8 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
   Currencies = 'currencies',
-  SocialNetworks = 'social_networks'
+  SocialNetworks = 'social_networks',
+  RegistrationVerifications = 'registration_verifications'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -16178,6 +16824,7 @@ export type Access = {
   dealer_applications?: Maybe<Dealer_ApplicationsAccess>;
   currencies?: Maybe<CurrenciesAccess>;
   social_networks?: Maybe<Social_NetworksAccess>;
+  registration_verifications?: Maybe<Registration_VerificationsAccess>;
   payload_kv?: Maybe<Payload_KvAccess>;
   payload_locked_documents?: Maybe<Payload_Locked_DocumentsAccess>;
   payload_preferences?: Maybe<Payload_PreferencesAccess>;
@@ -22348,6 +22995,391 @@ export type SocialNetworksDeleteAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Registration_VerificationsAccess = {
+  __typename?: 'registration_verificationsAccess';
+  fields?: Maybe<RegistrationVerificationsFields>;
+  create?: Maybe<RegistrationVerificationsCreateAccess>;
+  read?: Maybe<RegistrationVerificationsReadAccess>;
+  update?: Maybe<RegistrationVerificationsUpdateAccess>;
+  delete?: Maybe<RegistrationVerificationsDeleteAccess>;
+};
+
+export type RegistrationVerificationsFields = {
+  __typename?: 'RegistrationVerificationsFields';
+  phoneHash?: Maybe<RegistrationVerificationsFields_PhoneHash>;
+  emailHash?: Maybe<RegistrationVerificationsFields_EmailHash>;
+  ipHash?: Maybe<RegistrationVerificationsFields_IpHash>;
+  encryptedPayload?: Maybe<RegistrationVerificationsFields_EncryptedPayload>;
+  codeHash?: Maybe<RegistrationVerificationsFields_CodeHash>;
+  expiresAt?: Maybe<RegistrationVerificationsFields_ExpiresAt>;
+  lastSentAt?: Maybe<RegistrationVerificationsFields_LastSentAt>;
+  windowStartedAt?: Maybe<RegistrationVerificationsFields_WindowStartedAt>;
+  attempts?: Maybe<RegistrationVerificationsFields_Attempts>;
+  sendCount?: Maybe<RegistrationVerificationsFields_SendCount>;
+  updatedAt?: Maybe<RegistrationVerificationsFields_UpdatedAt>;
+  createdAt?: Maybe<RegistrationVerificationsFields_CreatedAt>;
+};
+
+export type RegistrationVerificationsFields_PhoneHash = {
+  __typename?: 'RegistrationVerificationsFields_phoneHash';
+  create?: Maybe<RegistrationVerificationsFields_PhoneHash_Create>;
+  read?: Maybe<RegistrationVerificationsFields_PhoneHash_Read>;
+  update?: Maybe<RegistrationVerificationsFields_PhoneHash_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_PhoneHash_Delete>;
+};
+
+export type RegistrationVerificationsFields_PhoneHash_Create = {
+  __typename?: 'RegistrationVerificationsFields_phoneHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_PhoneHash_Read = {
+  __typename?: 'RegistrationVerificationsFields_phoneHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_PhoneHash_Update = {
+  __typename?: 'RegistrationVerificationsFields_phoneHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_PhoneHash_Delete = {
+  __typename?: 'RegistrationVerificationsFields_phoneHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EmailHash = {
+  __typename?: 'RegistrationVerificationsFields_emailHash';
+  create?: Maybe<RegistrationVerificationsFields_EmailHash_Create>;
+  read?: Maybe<RegistrationVerificationsFields_EmailHash_Read>;
+  update?: Maybe<RegistrationVerificationsFields_EmailHash_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_EmailHash_Delete>;
+};
+
+export type RegistrationVerificationsFields_EmailHash_Create = {
+  __typename?: 'RegistrationVerificationsFields_emailHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EmailHash_Read = {
+  __typename?: 'RegistrationVerificationsFields_emailHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EmailHash_Update = {
+  __typename?: 'RegistrationVerificationsFields_emailHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EmailHash_Delete = {
+  __typename?: 'RegistrationVerificationsFields_emailHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_IpHash = {
+  __typename?: 'RegistrationVerificationsFields_ipHash';
+  create?: Maybe<RegistrationVerificationsFields_IpHash_Create>;
+  read?: Maybe<RegistrationVerificationsFields_IpHash_Read>;
+  update?: Maybe<RegistrationVerificationsFields_IpHash_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_IpHash_Delete>;
+};
+
+export type RegistrationVerificationsFields_IpHash_Create = {
+  __typename?: 'RegistrationVerificationsFields_ipHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_IpHash_Read = {
+  __typename?: 'RegistrationVerificationsFields_ipHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_IpHash_Update = {
+  __typename?: 'RegistrationVerificationsFields_ipHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_IpHash_Delete = {
+  __typename?: 'RegistrationVerificationsFields_ipHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EncryptedPayload = {
+  __typename?: 'RegistrationVerificationsFields_encryptedPayload';
+  create?: Maybe<RegistrationVerificationsFields_EncryptedPayload_Create>;
+  read?: Maybe<RegistrationVerificationsFields_EncryptedPayload_Read>;
+  update?: Maybe<RegistrationVerificationsFields_EncryptedPayload_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_EncryptedPayload_Delete>;
+};
+
+export type RegistrationVerificationsFields_EncryptedPayload_Create = {
+  __typename?: 'RegistrationVerificationsFields_encryptedPayload_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EncryptedPayload_Read = {
+  __typename?: 'RegistrationVerificationsFields_encryptedPayload_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EncryptedPayload_Update = {
+  __typename?: 'RegistrationVerificationsFields_encryptedPayload_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_EncryptedPayload_Delete = {
+  __typename?: 'RegistrationVerificationsFields_encryptedPayload_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CodeHash = {
+  __typename?: 'RegistrationVerificationsFields_codeHash';
+  create?: Maybe<RegistrationVerificationsFields_CodeHash_Create>;
+  read?: Maybe<RegistrationVerificationsFields_CodeHash_Read>;
+  update?: Maybe<RegistrationVerificationsFields_CodeHash_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_CodeHash_Delete>;
+};
+
+export type RegistrationVerificationsFields_CodeHash_Create = {
+  __typename?: 'RegistrationVerificationsFields_codeHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CodeHash_Read = {
+  __typename?: 'RegistrationVerificationsFields_codeHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CodeHash_Update = {
+  __typename?: 'RegistrationVerificationsFields_codeHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CodeHash_Delete = {
+  __typename?: 'RegistrationVerificationsFields_codeHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_ExpiresAt = {
+  __typename?: 'RegistrationVerificationsFields_expiresAt';
+  create?: Maybe<RegistrationVerificationsFields_ExpiresAt_Create>;
+  read?: Maybe<RegistrationVerificationsFields_ExpiresAt_Read>;
+  update?: Maybe<RegistrationVerificationsFields_ExpiresAt_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_ExpiresAt_Delete>;
+};
+
+export type RegistrationVerificationsFields_ExpiresAt_Create = {
+  __typename?: 'RegistrationVerificationsFields_expiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_ExpiresAt_Read = {
+  __typename?: 'RegistrationVerificationsFields_expiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_ExpiresAt_Update = {
+  __typename?: 'RegistrationVerificationsFields_expiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_ExpiresAt_Delete = {
+  __typename?: 'RegistrationVerificationsFields_expiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_LastSentAt = {
+  __typename?: 'RegistrationVerificationsFields_lastSentAt';
+  create?: Maybe<RegistrationVerificationsFields_LastSentAt_Create>;
+  read?: Maybe<RegistrationVerificationsFields_LastSentAt_Read>;
+  update?: Maybe<RegistrationVerificationsFields_LastSentAt_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_LastSentAt_Delete>;
+};
+
+export type RegistrationVerificationsFields_LastSentAt_Create = {
+  __typename?: 'RegistrationVerificationsFields_lastSentAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_LastSentAt_Read = {
+  __typename?: 'RegistrationVerificationsFields_lastSentAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_LastSentAt_Update = {
+  __typename?: 'RegistrationVerificationsFields_lastSentAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_LastSentAt_Delete = {
+  __typename?: 'RegistrationVerificationsFields_lastSentAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_WindowStartedAt = {
+  __typename?: 'RegistrationVerificationsFields_windowStartedAt';
+  create?: Maybe<RegistrationVerificationsFields_WindowStartedAt_Create>;
+  read?: Maybe<RegistrationVerificationsFields_WindowStartedAt_Read>;
+  update?: Maybe<RegistrationVerificationsFields_WindowStartedAt_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_WindowStartedAt_Delete>;
+};
+
+export type RegistrationVerificationsFields_WindowStartedAt_Create = {
+  __typename?: 'RegistrationVerificationsFields_windowStartedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_WindowStartedAt_Read = {
+  __typename?: 'RegistrationVerificationsFields_windowStartedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_WindowStartedAt_Update = {
+  __typename?: 'RegistrationVerificationsFields_windowStartedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_WindowStartedAt_Delete = {
+  __typename?: 'RegistrationVerificationsFields_windowStartedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_Attempts = {
+  __typename?: 'RegistrationVerificationsFields_attempts';
+  create?: Maybe<RegistrationVerificationsFields_Attempts_Create>;
+  read?: Maybe<RegistrationVerificationsFields_Attempts_Read>;
+  update?: Maybe<RegistrationVerificationsFields_Attempts_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_Attempts_Delete>;
+};
+
+export type RegistrationVerificationsFields_Attempts_Create = {
+  __typename?: 'RegistrationVerificationsFields_attempts_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_Attempts_Read = {
+  __typename?: 'RegistrationVerificationsFields_attempts_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_Attempts_Update = {
+  __typename?: 'RegistrationVerificationsFields_attempts_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_Attempts_Delete = {
+  __typename?: 'RegistrationVerificationsFields_attempts_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_SendCount = {
+  __typename?: 'RegistrationVerificationsFields_sendCount';
+  create?: Maybe<RegistrationVerificationsFields_SendCount_Create>;
+  read?: Maybe<RegistrationVerificationsFields_SendCount_Read>;
+  update?: Maybe<RegistrationVerificationsFields_SendCount_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_SendCount_Delete>;
+};
+
+export type RegistrationVerificationsFields_SendCount_Create = {
+  __typename?: 'RegistrationVerificationsFields_sendCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_SendCount_Read = {
+  __typename?: 'RegistrationVerificationsFields_sendCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_SendCount_Update = {
+  __typename?: 'RegistrationVerificationsFields_sendCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_SendCount_Delete = {
+  __typename?: 'RegistrationVerificationsFields_sendCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_UpdatedAt = {
+  __typename?: 'RegistrationVerificationsFields_updatedAt';
+  create?: Maybe<RegistrationVerificationsFields_UpdatedAt_Create>;
+  read?: Maybe<RegistrationVerificationsFields_UpdatedAt_Read>;
+  update?: Maybe<RegistrationVerificationsFields_UpdatedAt_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_UpdatedAt_Delete>;
+};
+
+export type RegistrationVerificationsFields_UpdatedAt_Create = {
+  __typename?: 'RegistrationVerificationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_UpdatedAt_Read = {
+  __typename?: 'RegistrationVerificationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_UpdatedAt_Update = {
+  __typename?: 'RegistrationVerificationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_UpdatedAt_Delete = {
+  __typename?: 'RegistrationVerificationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CreatedAt = {
+  __typename?: 'RegistrationVerificationsFields_createdAt';
+  create?: Maybe<RegistrationVerificationsFields_CreatedAt_Create>;
+  read?: Maybe<RegistrationVerificationsFields_CreatedAt_Read>;
+  update?: Maybe<RegistrationVerificationsFields_CreatedAt_Update>;
+  delete?: Maybe<RegistrationVerificationsFields_CreatedAt_Delete>;
+};
+
+export type RegistrationVerificationsFields_CreatedAt_Create = {
+  __typename?: 'RegistrationVerificationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CreatedAt_Read = {
+  __typename?: 'RegistrationVerificationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CreatedAt_Update = {
+  __typename?: 'RegistrationVerificationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsFields_CreatedAt_Delete = {
+  __typename?: 'RegistrationVerificationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type RegistrationVerificationsCreateAccess = {
+  __typename?: 'RegistrationVerificationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type RegistrationVerificationsReadAccess = {
+  __typename?: 'RegistrationVerificationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type RegistrationVerificationsUpdateAccess = {
+  __typename?: 'RegistrationVerificationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type RegistrationVerificationsDeleteAccess = {
+  __typename?: 'RegistrationVerificationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Payload_KvAccess = {
   __typename?: 'payload_kvAccess';
   fields?: Maybe<PayloadKvFields>;
@@ -27129,6 +28161,10 @@ export type Mutation = {
   updateSocialNetwork?: Maybe<SocialNetwork>;
   deleteSocialNetwork?: Maybe<SocialNetwork>;
   duplicateSocialNetwork?: Maybe<SocialNetwork>;
+  createRegistrationVerification?: Maybe<RegistrationVerification>;
+  updateRegistrationVerification?: Maybe<RegistrationVerification>;
+  deleteRegistrationVerification?: Maybe<RegistrationVerification>;
+  duplicateRegistrationVerification?: Maybe<RegistrationVerification>;
   createPayloadKv?: Maybe<PayloadKv>;
   updatePayloadKv?: Maybe<PayloadKv>;
   deletePayloadKv?: Maybe<PayloadKv>;
@@ -27610,6 +28646,35 @@ export type MutationDeleteSocialNetworkArgs = {
 export type MutationDuplicateSocialNetworkArgs = {
   id: Scalars['Int']['input'];
   data: MutationSocialNetworkInput;
+};
+
+
+export type MutationCreateRegistrationVerificationArgs = {
+  data: MutationRegistrationVerificationInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateRegistrationVerificationArgs = {
+  id: Scalars['Int']['input'];
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationRegistrationVerificationUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteRegistrationVerificationArgs = {
+  id: Scalars['Int']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateRegistrationVerificationArgs = {
+  id: Scalars['Int']['input'];
+  data: MutationRegistrationVerificationInput;
 };
 
 
@@ -28522,6 +29587,36 @@ export enum SocialNetworkUpdate_Type_MutationInput {
   Custom = 'custom'
 }
 
+export type MutationRegistrationVerificationInput = {
+  phoneHash: Scalars['String']['input'];
+  emailHash: Scalars['String']['input'];
+  ipHash: Scalars['String']['input'];
+  encryptedPayload: Scalars['String']['input'];
+  codeHash: Scalars['String']['input'];
+  expiresAt: Scalars['String']['input'];
+  lastSentAt: Scalars['String']['input'];
+  windowStartedAt: Scalars['String']['input'];
+  attempts: Scalars['Float']['input'];
+  sendCount: Scalars['Float']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationRegistrationVerificationUpdateInput = {
+  phoneHash?: InputMaybe<Scalars['String']['input']>;
+  emailHash?: InputMaybe<Scalars['String']['input']>;
+  ipHash?: InputMaybe<Scalars['String']['input']>;
+  encryptedPayload?: InputMaybe<Scalars['String']['input']>;
+  codeHash?: InputMaybe<Scalars['String']['input']>;
+  expiresAt?: InputMaybe<Scalars['String']['input']>;
+  lastSentAt?: InputMaybe<Scalars['String']['input']>;
+  windowStartedAt?: InputMaybe<Scalars['String']['input']>;
+  attempts?: InputMaybe<Scalars['Float']['input']>;
+  sendCount?: InputMaybe<Scalars['Float']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationPayloadKvInput = {
   key: Scalars['String']['input'];
   data: Scalars['JSON']['input'];
@@ -28560,7 +29655,8 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
   Currencies = 'currencies',
-  SocialNetworks = 'social_networks'
+  SocialNetworks = 'social_networks',
+  RegistrationVerifications = 'registration_verifications'
 }
 
 export type PayloadLockedDocument_UserRelationshipInput = {
@@ -28600,7 +29696,8 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Applications = 'applications',
   DealerApplications = 'dealer_applications',
   Currencies = 'currencies',
-  SocialNetworks = 'social_networks'
+  SocialNetworks = 'social_networks',
+  RegistrationVerifications = 'registration_verifications'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {

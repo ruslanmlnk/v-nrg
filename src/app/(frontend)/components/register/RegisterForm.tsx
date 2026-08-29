@@ -4,9 +4,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
-import { registerUser } from '../../lib/authClient'
+import {
+  requestRegistrationCode,
+  verifyRegistrationCode,
+  type RegisterInput,
+} from '../../lib/authClient'
 import { authInputClasses } from '../auth/styles'
-import { useCommerce } from '../providers/CommerceProvider'
+import { Turnstile } from '../security/Turnstile'
 import ArrowPillButton from '../ui/ArrowPillButton'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import eyeCrossedIconAsset from '@public/icon/generated/common-eye-crossed.svg'
@@ -14,11 +18,15 @@ import eyeIconAsset from '@public/icon/generated/common-eye.svg'
 
 export default function RegisterForm() {
   const router = useRouter()
-  const { signIn } = useCommerce()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
+  const [verificationCode, setVerificationCode] = useState('')
+  const [verificationId, setVerificationId] = useState<number | null>(null)
+  const [pendingRegistration, setPendingRegistration] = useState<RegisterInput | null>(null)
   const [formState, setFormState] = useState({
     email: '',
     firstName: '',
@@ -35,6 +43,29 @@ export default function RegisterForm() {
       return
     }
 
+    if (verificationId && pendingRegistration) {
+      if (!/^\d{6}$/.test(verificationCode)) {
+        setError('Введіть шестизначний код із SMS')
+        return
+      }
+
+      setError('')
+      setIsSubmitting(true)
+      const result = await verifyRegistrationCode({
+        code: verificationCode,
+        verificationId,
+      })
+      setIsSubmitting(false)
+
+      if (!result.data) {
+        setError(result.error || 'Не вдалося підтвердити номер телефону.')
+        return
+      }
+
+      router.push('/login?registered=1')
+      return
+    }
+
     const normalizedPhone = normalizePhone(formState.phone)
 
     if (formState.password !== formState.passwordConfirmation) {
@@ -47,26 +78,55 @@ export default function RegisterForm() {
       return
     }
 
+    if (!turnstileToken) {
+      setError('Підтвердьте, що ви не робот.')
+      return
+    }
+
     setError('')
     setIsSubmitting(true)
 
-    const result = await registerUser({
+    const registration: RegisterInput = {
       email: formState.email.trim(),
       firstName: formState.firstName.trim(),
       lastName: formState.lastName.trim(),
       password: formState.password,
       phone: normalizedPhone,
-    })
+    }
+    const result = await requestRegistrationCode(registration, turnstileToken)
+
+    setTurnstileResetKey((current) => current + 1)
 
     setIsSubmitting(false)
 
     if (!result.data) {
-      setError(result.error || 'Не вдалося зареєструватися. Спробуйте ще раз.')
+      setError(result.error || 'Не вдалося надіслати SMS. Спробуйте ще раз.')
       return
     }
 
-    signIn(result.data)
-    router.push('/account')
+    setPendingRegistration(registration)
+    setVerificationId(result.data.verificationId)
+  }
+
+  const resendCode = async () => {
+    if (!pendingRegistration || isSubmitting) return
+    if (!turnstileToken) {
+      setError('Пройдіть перевірку CAPTCHA для повторного SMS.')
+      return
+    }
+    setError('')
+    setIsSubmitting(true)
+    const result = await requestRegistrationCode(pendingRegistration, turnstileToken)
+    setTurnstileResetKey((current) => current + 1)
+    setIsSubmitting(false)
+
+    if (!result.data) {
+      setError(result.error || 'Не вдалося повторно надіслати SMS.')
+      return
+    }
+
+    setVerificationId(result.data.verificationId)
+    setVerificationCode('')
   }
 
   return (
@@ -213,13 +273,56 @@ export default function RegisterForm() {
           </span>
         </label>
 
+        {verificationId ? (
+          <label className="flex flex-col gap-3">
+            <span className="text-[16px] font-medium leading-[165%] text-[#22354A]">
+              Код підтвердження з SMS *
+            </span>
+            <input
+              required
+              autoComplete="one-time-code"
+              className={`${authInputClasses} text-center tracking-[0.35em]`}
+              inputMode="numeric"
+              maxLength={6}
+              placeholder="000000"
+              type="text"
+              value={verificationCode}
+              onChange={(event) =>
+                setVerificationCode(event.target.value.replace(/\D/g, '').slice(0, 6))
+              }
+            />
+            <p className="text-[14px] font-medium leading-[165%] text-[#5C7288]">
+              Код надіслано на номер {pendingRegistration?.phone}
+            </p>
+            <button
+              type="button"
+              className="self-start text-[14px] font-medium text-[#4FACF5] disabled:opacity-60"
+              disabled={isSubmitting}
+              onClick={resendCode}
+            >
+              Надіслати код повторно
+            </button>
+          </label>
+        ) : null}
+
+        <Turnstile
+          onTokenChange={setTurnstileToken}
+          resetKey={turnstileResetKey}
+        />
+
         <ArrowPillButton
           type="submit"
           disabled={isSubmitting}
           isDark
           className="mr-[50px] mt-2 justify-center disabled:cursor-not-allowed disabled:opacity-70 md:mr-[54px]"
         >
-          {isSubmitting ? 'Створюємо акаунт...' : 'Зареєструватися'}
+          {isSubmitting
+            ? verificationId
+              ? 'Перевіряємо код...'
+              : 'Надсилаємо SMS...'
+            : verificationId
+              ? 'Підтвердити номер'
+              : 'Зареєструватися'}
         </ArrowPillButton>
 
         {error ? (

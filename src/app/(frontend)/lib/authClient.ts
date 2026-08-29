@@ -3,9 +3,10 @@ import { toFrontendUser, type FrontendUser } from '../../../lib/frontendUser'
 type LoginInput = {
   email: string
   password: string
+  turnstileToken?: string
 }
 
-type RegisterInput = LoginInput & {
+export type RegisterInput = LoginInput & {
   firstName: string
   lastName: string
   phone: string
@@ -26,9 +27,12 @@ type AuthActionResult<T> = {
 }
 
 type ApiResponsePayload = {
+  expiresIn?: unknown
   errors?: unknown
   message?: unknown
   user?: unknown
+  verificationId?: unknown
+  verified?: unknown
 }
 
 export async function fetchCurrentUser() {
@@ -47,7 +51,7 @@ export async function fetchCurrentUser() {
 }
 
 export async function loginUser(input: LoginInput): Promise<AuthActionResult<FrontendUser>> {
-  const response = await fetch('/api/users/login', {
+  const response = await fetch('/api/auth/login', {
     body: JSON.stringify(input),
     credentials: 'include',
     headers: {
@@ -71,35 +75,60 @@ export async function loginUser(input: LoginInput): Promise<AuthActionResult<Fro
   }
 }
 
-export async function registerUser(input: RegisterInput): Promise<AuthActionResult<FrontendUser>> {
-  const createResponse = await fetch('/api/users', {
-    body: JSON.stringify({
-      ...input,
-      role: 'user',
-    }),
+export async function requestRegistrationCode(
+  input: RegisterInput,
+  turnstileToken: string,
+): Promise<AuthActionResult<{ expiresIn: number; verificationId: number }>> {
+  const response = await fetch('/api/auth/register/request-code', {
+    body: JSON.stringify({ ...input, turnstileToken }),
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
     method: 'POST',
   })
+  const payload = await parseJson(response)
 
-  const createPayload = await parseJson(createResponse)
-
-  if (!createResponse.ok) {
+  if (
+    !response.ok ||
+    typeof payload?.verificationId !== 'number' ||
+    typeof payload.expiresIn !== 'number'
+  ) {
     return {
       data: null,
-      error: extractErrorMessage(
-        createPayload,
-        'Не вдалося створити акаунт. Перевірте введені дані.',
-      ),
+      error: extractErrorMessage(payload, 'Не вдалося надіслати код підтвердження.'),
     }
   }
 
-  return loginUser({
-    email: input.email,
-    password: input.password,
+  return {
+    data: { expiresIn: payload.expiresIn, verificationId: payload.verificationId },
+    error: null,
+  }
+}
+
+export async function verifyRegistrationCode({
+  code,
+  verificationId,
+}: {
+  code: string
+  verificationId: number
+}): Promise<AuthActionResult<boolean>> {
+  const response = await fetch('/api/auth/register/verify-code', {
+    body: JSON.stringify({ code, verificationId }),
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
   })
+  const payload = await parseJson(response)
+
+  if (!response.ok || payload?.verified !== true) {
+    return {
+      data: null,
+      error: extractErrorMessage(payload, 'Не вдалося підтвердити номер телефону.'),
+    }
+  }
+
+  return { data: true, error: null }
 }
 
 export async function logoutUser() {

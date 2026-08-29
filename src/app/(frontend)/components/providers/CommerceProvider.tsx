@@ -20,6 +20,7 @@ import {
 } from '../../data/products'
 import { dealerFieldClasses, initialDealerFormState, type DealerFormState } from '../dealer/data'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
+import { Turnstile } from '../security/Turnstile'
 import ArrowPillButton from '../ui/ArrowPillButton'
 import type { FrontendUser } from '../../../../lib/frontendUser'
 import { useSitePreferences } from './SitePreferencesProvider'
@@ -551,16 +552,23 @@ function CommerceOverlays() {
   }))
   const [dealerSubmitError, setDealerSubmitError] = useState('')
   const [isDealerSubmitting, setIsDealerSubmitting] = useState(false)
+  const [dealerTurnstileToken, setDealerTurnstileToken] = useState('')
+  const [dealerTurnstileResetKey, setDealerTurnstileResetKey] = useState(0)
 
   const handleDealerSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!dealerTurnstileToken) {
+      setDealerSubmitError('Підтвердьте, що ви не робот.')
+      return
+    }
     setDealerSubmitError('')
     setIsDealerSubmitting(true)
     const response = await fetch('/api/forms/dealer-applications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dealerFormState),
+      body: JSON.stringify({ ...dealerFormState, turnstileToken: dealerTurnstileToken }),
     }).catch(() => null)
+    setDealerTurnstileResetKey((current) => current + 1)
     setIsDealerSubmitting(false)
     if (!response?.ok) {
       setDealerSubmitError(
@@ -743,6 +751,11 @@ function CommerceOverlays() {
                   className={`${dealerFieldClasses} min-h-[132px] resize-none py-5`}
                 />
               </DealerField>
+
+              <Turnstile
+                onTokenChange={setDealerTurnstileToken}
+                resetKey={dealerTurnstileResetKey}
+              />
 
               <button
                 disabled={isDealerSubmitting}
@@ -1049,7 +1062,7 @@ function applyDealerDiscountToProducts(products: ProductData[], discountPercent:
 
   return products.map((product) => ({
     ...product,
-    price: Math.round(product.price * multiplier),
+    price: Math.round((product.price * multiplier + Number.EPSILON) * 100) / 100,
     regularPrice: product.regularPrice ?? product.price,
   }))
 }

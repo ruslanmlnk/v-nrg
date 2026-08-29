@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState, type FormEvent } from 'react'
 
 import { useCommerce } from '../components/providers/CommerceProvider'
+import { Turnstile } from '../components/security/Turnstile'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import cardIconAsset from '@public/icon/generated/checkout-checkout-page-card.svg'
 import truckIconAsset from '@public/icon/generated/checkout-checkout-page-truck.svg'
@@ -42,6 +43,8 @@ export default function CheckoutPage() {
   const [isPartsModalOpen, setIsPartsModalOpen] = useState(false)
   const [partsCount, setPartsCount] = useState(8)
   const [paymentError, setPaymentError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
   const [formState, setFormState] = useState({
     comment: '',
     deliveryMethod: 'nova-poshta',
@@ -101,6 +104,11 @@ export default function CheckoutPage() {
       return
     }
 
+    if (!turnstileToken) {
+      setPaymentError('Підтвердьте, що ви не робот.')
+      return
+    }
+
     setIsSubmitting(true)
     setPaymentError('')
 
@@ -128,6 +136,7 @@ export default function CheckoutPage() {
         paymentMethod: formState.paymentMethod,
         phone: formState.phone,
         total: cartTotal,
+        turnstileToken,
       })
       const orderNumber = createdOrder.orderNumber
 
@@ -141,6 +150,7 @@ export default function CheckoutPage() {
 
       router.push('/checkout/success')
     } catch (error) {
+      setTurnstileResetKey((current) => current + 1)
       setPaymentError(
         error instanceof Error
           ? error.message
@@ -369,6 +379,11 @@ export default function CheckoutPage() {
                       className={`${checkoutFieldClasses} min-h-[128px] resize-none py-5`}
                     />
                   </CheckoutField>
+
+                  <Turnstile
+                    onTokenChange={setTurnstileToken}
+                    resetKey={turnstileResetKey}
+                  />
 
                   {paymentError ? (
                     <div className="rounded-[20px] border border-[#F4B8B8] bg-[#FFF4F4] px-6 py-4 text-[16px] font-medium leading-[145%] text-[#D94E4E]">

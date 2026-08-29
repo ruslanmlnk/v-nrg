@@ -39,7 +39,13 @@ export const Currencies: CollectionConfig = {
     {
       name: 'rate',
       type: 'number',
-      label: { en: 'UAH per 1 currency unit', uk: 'Курс: гривень за 1 одиницю валюти' },
+      label: { en: 'Currency units per 1 EUR', uk: 'Курс: одиниць валюти за 1 EUR' },
+      admin: {
+        description: {
+          en: 'Enter how many units of this currency equal 1 EUR. For EUR use 1.',
+          uk: 'Вкажіть, скільки одиниць цієї валюти дорівнює 1 EUR. Для EUR вкажіть 1.',
+        },
+      },
       min: 0.000001,
       required: true,
     },

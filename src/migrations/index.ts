@@ -18,6 +18,9 @@ import * as migration_20260723_090000_remove_product_compare_features from './20
 import * as migration_20260819_010000_catalog_page from './20260819_010000_catalog_page'
 import * as migration_20260829_010000_about_story_section from './20260829_010000_about_story_section'
 import * as migration_20260829_020000_about_principles_section from './20260829_020000_about_principles_section'
+import * as migration_20260829_030000_registration_verifications from './20260829_030000_registration_verifications'
+import * as migration_20260829_040000_unique_user_phone from './20260829_040000_unique_user_phone'
+import * as migration_20260829_050000_eur_base_currency from './20260829_050000_eur_base_currency'
 
 export const migrations = [
   {
@@ -119,5 +122,20 @@ export const migrations = [
     up: migration_20260829_020000_about_principles_section.up,
     down: migration_20260829_020000_about_principles_section.down,
     name: '20260829_020000_about_principles_section',
+  },
+  {
+    up: migration_20260829_030000_registration_verifications.up,
+    down: migration_20260829_030000_registration_verifications.down,
+    name: '20260829_030000_registration_verifications',
+  },
+  {
+    up: migration_20260829_040000_unique_user_phone.up,
+    down: migration_20260829_040000_unique_user_phone.down,
+    name: '20260829_040000_unique_user_phone',
+  },
+  {
+    up: migration_20260829_050000_eur_base_currency.up,
+    down: migration_20260829_050000_eur_base_currency.down,
+    name: '20260829_050000_eur_base_currency',
   },
 ]

@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import { sendApplicationNotification } from '@/lib/applicationNotifications'
+import { verifyTurnstile } from '@/lib/turnstile'
 
 type ApplicationBody = {
   email?: unknown
@@ -11,11 +12,12 @@ type ApplicationBody = {
   phone?: unknown
   source?: unknown
   website?: unknown
+  turnstileToken?: unknown
 }
 
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as ApplicationBody | null
-  if (!body || normalizeText(body.website, 200)) {
+  if (!body || normalizeText(body.website, 200) || !(await verifyTurnstile(request, body.turnstileToken))) {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
   }
 
