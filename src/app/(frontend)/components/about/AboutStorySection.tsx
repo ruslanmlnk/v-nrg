@@ -68,81 +68,12 @@ export function AboutStorySection({ content }: { content?: AboutPage['storySecti
           </h2>
         </div>
 
-        <RichText
-          className={styles.content}
-          data={(content?.content || defaultStoryContent) as SerializedEditorState}
-        />
+        {content?.content ? (
+          <RichText className={styles.content} data={content.content as SerializedEditorState} />
+        ) : null}
       </div>
     </section>
   )
-}
-
-const defaultStoryContent = {
-  root: {
-    children: [
-      {
-        children: [
-          {
-            detail: 0,
-            format: 0,
-            mode: 'normal',
-            style: '',
-            text: 'V-NRG створює інноваційні апарати вакуумного масажу для професійного використання. Ми поєднуємо технології та практичний досвід, щоб допомогти спеціалістам працювати ефективніше і безпечніше.',
-            type: 'text',
-            version: 1,
-          },
-        ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        type: 'paragraph',
-        version: 1,
-      },
-      {
-        children: [
-          createDefaultListItem('Власні розробки та інженерні рішення', 1),
-          createDefaultListItem('Сертифіковане виробництво', 2),
-          createDefaultListItem('Підтримка спеціалістів та навчання', 3),
-        ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        listType: 'number',
-        start: 1,
-        tag: 'ol',
-        type: 'list',
-        version: 1,
-      },
-    ],
-    direction: 'ltr',
-    format: '',
-    indent: 0,
-    type: 'root',
-    version: 1,
-  },
-}
-
-function createDefaultListItem(text: string, value: number) {
-  return {
-    children: [
-      {
-        children: [
-          { detail: 0, format: 0, mode: 'normal', style: '', text, type: 'text', version: 1 },
-        ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        type: 'paragraph',
-        version: 1,
-      },
-    ],
-    direction: 'ltr',
-    format: '',
-    indent: 0,
-    type: 'listitem',
-    value,
-    version: 1,
-  }
 }
 
 function AboutStatCard({

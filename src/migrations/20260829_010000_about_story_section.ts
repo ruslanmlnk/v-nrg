@@ -44,7 +44,9 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "about_page_locales" ADD COLUMN IF NOT EXISTS "story_section_top_title" varchar;
     ALTER TABLE "about_page_locales" ADD COLUMN IF NOT EXISTS "story_section_title" varchar;
     ALTER TABLE "about_page_locales" ADD COLUMN IF NOT EXISTS "story_section_content" jsonb;
+  `)
 
+  await db.execute(sql`
     UPDATE "about_page_locales"
     SET
       "story_section_top_title" = COALESCE("story_section_top_title", 'Про нас'),

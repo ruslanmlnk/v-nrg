@@ -1269,7 +1269,7 @@ export interface AboutPage {
   storySection: {
     topTitle: string;
     title: string;
-    content: {
+    content?: {
       root: {
         type: string;
         children: {
@@ -1283,7 +1283,7 @@ export interface AboutPage {
         version: number;
       };
       [k: string]: unknown;
-    };
+    } | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
