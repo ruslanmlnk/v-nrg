@@ -7,6 +7,9 @@ export const Products: CollectionConfig = {
   slug: 'products',
   labels: { plural: 'Товари', singular: 'Товар' },
   admin: {
+    components: {
+      beforeList: ['/components/admin/ProductBulkActions'],
+    },
     defaultColumns: ['title', 'category', 'price', 'updatedAt'],
     useAsTitle: 'title',
   },
