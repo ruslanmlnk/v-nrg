@@ -21,6 +21,7 @@ import * as migration_20260829_020000_about_principles_section from './20260829_
 import * as migration_20260829_030000_registration_verifications from './20260829_030000_registration_verifications'
 import * as migration_20260829_040000_unique_user_phone from './20260829_040000_unique_user_phone'
 import * as migration_20260829_050000_eur_base_currency from './20260829_050000_eur_base_currency'
+import * as migration_20260829_060000_registration_verifications_lock_relation from './20260829_060000_registration_verifications_lock_relation'
 
 export const migrations = [
   {
@@ -137,5 +138,10 @@ export const migrations = [
     up: migration_20260829_050000_eur_base_currency.up,
     down: migration_20260829_050000_eur_base_currency.down,
     name: '20260829_050000_eur_base_currency',
+  },
+  {
+    up: migration_20260829_060000_registration_verifications_lock_relation.up,
+    down: migration_20260829_060000_registration_verifications_lock_relation.down,
+    name: '20260829_060000_registration_verifications_lock_relation',
   },
 ]
