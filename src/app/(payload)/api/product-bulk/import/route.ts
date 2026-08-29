@@ -2,7 +2,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import type { NextRequest } from 'next/server'
 
-import { parseProductCsv } from '@/lib/productBulkCsv'
+import { parseProductWorkbook } from '@/lib/productBulkExcel'
 import type { User } from '@/payload-types'
 
 export async function POST(request: NextRequest) {
@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     const file = formData.get('file')
     if (!(file instanceof File) || file.size > 5 * 1024 * 1024) {
-      return Response.json({ error: 'Оберіть CSV-файл розміром до 5 МБ' }, { status: 400 })
+      return Response.json({ error: 'Оберіть XLSX-файл розміром до 5 МБ' }, { status: 400 })
     }
 
-    const rows = parseProductCsv(await file.text())
+    const rows = await parseProductWorkbook(Buffer.from(await file.arrayBuffer()))
     if (!rows.length) return Response.json({ error: 'Файл не містить товарів' }, { status: 400 })
     if (new Set(rows.map((row) => row.id)).size !== rows.length) {
       return Response.json({ error: 'У файлі повторюються ID товарів' }, { status: 400 })

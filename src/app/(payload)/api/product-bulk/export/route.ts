@@ -2,7 +2,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import type { NextRequest } from 'next/server'
 
-import { createProductCsv } from '@/lib/productBulkCsv'
+import { createProductWorkbook } from '@/lib/productBulkExcel'
 import type { User } from '@/payload-types'
 
 export async function GET(request: NextRequest) {
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     overrideAccess: false,
     select: { advantages: true, characteristics: true, title: true },
   })
-  const csv = createProductCsv(result.docs.map((product) => ({
+  const workbook = await createProductWorkbook(result.docs.map((product) => ({
     advantages: product.advantages?.items?.flatMap((item) => item?.item ? [item.item] : []) ?? [],
     characteristics: product.characteristics?.items?.flatMap((item) =>
       item?.label && item.value ? [{ label: item.label, value: item.value }] : [],
@@ -29,10 +29,10 @@ export async function GET(request: NextRequest) {
     title: product.title,
   })))
 
-  return new Response(csv, {
+  return new Response(workbook, {
     headers: {
-      'Content-Disposition': `attachment; filename="products-${new Date().toISOString().slice(0, 10)}.csv"`,
-      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="products-${new Date().toISOString().slice(0, 10)}.xlsx"`,
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     },
   })
 }

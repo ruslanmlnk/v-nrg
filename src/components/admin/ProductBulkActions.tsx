@@ -37,14 +37,14 @@ export default function ProductBulkActions() {
   return (
     <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
       <Button buttonStyle="secondary" onClick={() => window.location.assign('/api/product-bulk/export')}>
-        Експорт CSV
+        Експорт Excel
       </Button>
       <Button disabled={isImporting} onClick={() => fileInputRef.current?.click()}>
-        {isImporting ? 'Імпортуємо…' : 'Імпорт CSV'}
+        {isImporting ? 'Імпортуємо…' : 'Імпорт Excel'}
       </Button>
       <input
         ref={fileInputRef}
-        accept=".csv,text/csv"
+        accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         hidden
         onChange={importFile}
         type="file"
