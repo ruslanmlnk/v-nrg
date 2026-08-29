@@ -17,6 +17,7 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "seed:articles": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/articles.ts",
+    "seed:about": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/about.ts",
     "seed:home": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/home.ts",
     "seed:locations": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/locations.ts",
     "seed:training": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/training.ts",

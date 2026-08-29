@@ -1,6 +1,8 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
+import type { Media } from '@/payload-types'
+
 import {
   AboutCertificatesSection,
   AboutHeroSection,
@@ -36,8 +38,20 @@ export default async function AboutPage() {
       </div>
 
       <AboutCertificatesSection />
-      <AboutPrinciplesSection />
+      <AboutPrinciplesSection
+        cards={(aboutPage.principlesSection.cards ?? []).flatMap((card) => {
+          const icon = getMedia(card.icon)
+
+          return icon?.url ? [{ ...card, icon: icon.url }] : []
+        })}
+        subtitle={aboutPage.principlesSection.subtitle}
+        title={aboutPage.principlesSection.title}
+      />
       <AboutMapSectionBlock />
     </div>
   )
+}
+
+function getMedia(value: number | Media | null | undefined): Media | null {
+  return typeof value === 'object' && value ? value : null
 }

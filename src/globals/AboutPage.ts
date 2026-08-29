@@ -45,5 +45,50 @@ export const AboutPage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'principlesSection',
+      type: 'group',
+      label: { en: 'Our principles', uk: 'Наші принципи' },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Title',
+          required: true,
+        },
+        {
+          name: 'subtitle',
+          type: 'text',
+          label: 'SubTitle',
+          required: true,
+        },
+        {
+          name: 'cards',
+          type: 'array',
+          label: 'Cards',
+          fields: [
+            {
+              name: 'icon',
+              type: 'upload',
+              label: 'Icon',
+              relationTo: 'media',
+              required: true,
+            },
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+              required: true,
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Description',
+              required: true,
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

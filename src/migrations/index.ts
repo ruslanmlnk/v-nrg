@@ -17,6 +17,7 @@ import * as migration_20260723_080000_remove_product_list_features from './20260
 import * as migration_20260723_090000_remove_product_compare_features from './20260723_090000_remove_product_compare_features'
 import * as migration_20260819_010000_catalog_page from './20260819_010000_catalog_page'
 import * as migration_20260829_010000_about_story_section from './20260829_010000_about_story_section'
+import * as migration_20260829_020000_about_principles_section from './20260829_020000_about_principles_section'
 
 export const migrations = [
   {
@@ -113,5 +114,10 @@ export const migrations = [
     up: migration_20260829_010000_about_story_section.up,
     down: migration_20260829_010000_about_story_section.down,
     name: '20260829_010000_about_story_section',
+  },
+  {
+    up: migration_20260829_020000_about_principles_section.up,
+    down: migration_20260829_020000_about_principles_section.down,
+    name: '20260829_020000_about_principles_section',
   },
 ]

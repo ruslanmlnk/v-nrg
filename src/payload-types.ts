@@ -1285,6 +1285,18 @@ export interface AboutPage {
       [k: string]: unknown;
     } | null;
   };
+  principlesSection: {
+    title: string;
+    subtitle: string;
+    cards?:
+      | {
+          icon: number | Media;
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1551,6 +1563,20 @@ export interface AboutPageSelect<T extends boolean = true> {
         topTitle?: T;
         title?: T;
         content?: T;
+      };
+  principlesSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
