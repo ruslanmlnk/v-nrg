@@ -1,5 +1,9 @@
 type TurboSmsResponse = {
   response_code?: number
+  response_result?: Array<{
+    response_code?: number
+    response_status?: string
+  }>
   response_status?: string
 }
 
@@ -23,8 +27,12 @@ export async function sendRegistrationCode(phone: string, code: string) {
     }),
   })
   const result = (await response.json().catch(() => null)) as TurboSmsResponse | null
+  const messageAccepted =
+    result?.response_code === 801 &&
+    result.response_result?.length === 1 &&
+    result.response_result[0]?.response_code === 0
 
-  if (!response.ok || result?.response_code !== 0) {
+  if (!response.ok || !messageAccepted) {
     console.error('TurboSMS request failed', {
       responseCode: result?.response_code,
       responseStatus: result?.response_status,

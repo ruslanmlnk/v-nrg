@@ -196,7 +196,7 @@ export default function RegisterForm() {
               }
               placeholder="XX XXX XX XX"
               className={`${authInputClasses} pl-[68px]`}
-              autoComplete="tel-national"
+              autoComplete="tel"
               inputMode="numeric"
             />
           </span>
@@ -343,7 +343,7 @@ export default function RegisterForm() {
 function normalizePhone(value: string) {
   const digits = value.replace(/\D/g, '')
 
-  if (digits.length !== 8) {
+  if (digits.length !== 9) {
     return null
   }
 
