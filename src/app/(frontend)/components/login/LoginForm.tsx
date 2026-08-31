@@ -42,7 +42,7 @@ export default function LoginForm() {
     setIsSubmitting(true)
 
     const result = await loginUser({
-      email: formState.email.trim(),
+      email: formState.email.trim().toLowerCase(),
       password: formState.password,
       turnstileToken,
     })

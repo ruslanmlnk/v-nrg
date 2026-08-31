@@ -9,8 +9,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Підтвердьте, що ви не робот.' }, { status: 400 })
   }
 
+  const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
+  const password = typeof body.password === 'string' ? body.password : ''
+
+  if (!email || !password) {
+    return NextResponse.json({ message: 'Введіть email і пароль.' }, { status: 400 })
+  }
+
   const response = await fetch(new URL('/api/users/login', request.url), {
-    body: JSON.stringify({ email: body.email, password: body.password }),
+    body: JSON.stringify({ email, password }),
     cache: 'no-store',
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
