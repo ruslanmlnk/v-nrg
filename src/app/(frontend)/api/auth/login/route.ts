@@ -1,3 +1,5 @@
+import configPromise from '@payload-config'
+import { generatePayloadCookie, getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import { verifyTurnstile } from '@/lib/turnstile'
@@ -16,12 +18,39 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Введіть email і пароль.' }, { status: 400 })
   }
 
-  const response = await fetch(new URL('/api/users/login', request.url), {
-    body: JSON.stringify({ email, password }),
-    cache: 'no-store',
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-  })
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.login({
+      collection: 'users',
+      data: { email, password },
+      depth: 0,
+    })
 
-  return response
+    if (!result.token) {
+      throw new Error('Payload did not return an authentication token')
+    }
+
+    const authConfig = payload.collections.users.config.auth
+
+    if (!authConfig) {
+      throw new Error('Users authentication is not configured')
+    }
+
+    const cookie = generatePayloadCookie({
+      collectionAuthConfig: authConfig,
+      cookiePrefix: payload.config.cookiePrefix,
+      token: result.token,
+    })
+
+    return NextResponse.json(
+      { exp: result.exp, message: 'Вхід виконано успішно.', user: result.user },
+      { headers: { 'Set-Cookie': cookie } },
+    )
+  } catch (error) {
+    console.error('Frontend login failed', error)
+    return NextResponse.json(
+      { message: 'Не вдалося увійти. Перевірте email і пароль.' },
+      { status: 401 },
+    )
+  }
 }
