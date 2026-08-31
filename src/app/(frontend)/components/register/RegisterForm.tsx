@@ -343,7 +343,7 @@ export default function RegisterForm() {
 function normalizePhone(value: string) {
   const digits = value.replace(/\D/g, '')
 
-  if (digits.length !== 9) {
+  if (digits.length !== 8) {
     return null
   }
 
