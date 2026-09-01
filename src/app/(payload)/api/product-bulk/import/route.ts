@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
         data: {
           advantages: { items: row.advantages.map((item) => ({ item })) },
           characteristics: { items: row.characteristics },
+          price: row.price,
           title: row.title,
         },
         depth: 0,

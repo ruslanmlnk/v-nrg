@@ -1,11 +1,12 @@
 import ExcelJS from 'exceljs'
 
-export const PRODUCT_EXCEL_HEADERS = ['ID', 'Назва', 'Характеристики', 'Переваги'] as const
+export const PRODUCT_EXCEL_HEADERS = ['ID', 'Назва', 'Ціна', 'Характеристики', 'Переваги'] as const
 
 export type ProductExcelRow = {
   advantages: string[]
   characteristics: Array<{ label: string; value: string }>
   id: string
+  price: number
   title: string
 }
 
@@ -19,10 +20,11 @@ export async function createProductWorkbook(rows: ProductExcelRow[]) {
   sheet.columns = [
     { header: PRODUCT_EXCEL_HEADERS[0], key: 'id', width: 14 },
     { header: PRODUCT_EXCEL_HEADERS[1], key: 'title', width: 42 },
-    { header: PRODUCT_EXCEL_HEADERS[2], key: 'characteristics', width: 55 },
-    { header: PRODUCT_EXCEL_HEADERS[3], key: 'advantages', width: 55 },
+    { header: PRODUCT_EXCEL_HEADERS[2], key: 'price', width: 16 },
+    { header: PRODUCT_EXCEL_HEADERS[3], key: 'characteristics', width: 55 },
+    { header: PRODUCT_EXCEL_HEADERS[4], key: 'advantages', width: 55 },
   ]
-  sheet.autoFilter = 'A1:D1'
+  sheet.autoFilter = 'A1:E1'
   sheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } }
   sheet.getRow(1).fill = {
     pattern: 'solid',
@@ -35,6 +37,7 @@ export async function createProductWorkbook(rows: ProductExcelRow[]) {
       advantages: row.advantages.join('\n'),
       characteristics: row.characteristics.map((item) => `${item.label} = ${item.value}`).join('\n'),
       id: row.id,
+      price: row.price,
       title: row.title,
     })
     excelRow.alignment = { vertical: 'top', wrapText: true }
@@ -58,10 +61,14 @@ export async function parseProductWorkbook(buffer: Buffer): Promise<ProductExcel
   const rows: ProductExcelRow[] = []
   for (let rowNumber = 2; rowNumber <= sheet.rowCount; rowNumber += 1) {
     const row = sheet.getRow(rowNumber)
-    const values = [1, 2, 3, 4].map((column) => row.getCell(column).text.trim())
+    const values = [1, 2, 3, 4, 5].map((column) => row.getCell(column).text.trim())
     if (values.every((value) => !value)) continue
 
-    const [id, title, characteristicsValue, advantagesValue] = values
+    const [id, title, priceValue, characteristicsValue, advantagesValue] = values
+    const price = Number(priceValue.replace(/\s/g, '').replace(',', '.'))
+    if (!priceValue || !Number.isFinite(price)) {
+      throw new Error(`Рядок ${rowNumber}: ціна має бути числом`)
+    }
     if (!id || !title) throw new Error(`Рядок ${rowNumber}: ID і Назва обов'язкові`)
 
     rows.push({
@@ -77,6 +84,7 @@ export async function parseProductWorkbook(buffer: Buffer): Promise<ProductExcel
         }
       }),
       id,
+      price,
       title,
     })
   }

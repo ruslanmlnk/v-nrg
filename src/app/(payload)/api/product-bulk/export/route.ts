@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     sort: 'id',
     user,
     overrideAccess: false,
-    select: { advantages: true, characteristics: true, title: true },
+    select: { advantages: true, characteristics: true, price: true, title: true },
   })
   const workbook = await createProductWorkbook(result.docs.map((product) => ({
     advantages: product.advantages?.items?.flatMap((item) => item?.item ? [item.item] : []) ?? [],
@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
       item?.label && item.value ? [{ label: item.label, value: item.value }] : [],
     ) ?? [],
     id: String(product.id),
+    price: product.price,
     title: product.title,
   })))
 
