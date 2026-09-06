@@ -429,7 +429,6 @@ export const generatedEnglishTranslations: Record<string, string> = {
   "Статей немає": "There are no articles",
   "Стати дилером": "Become a dealer",
   "Стати дилером V-NRG": "Become a V-NRG dealer",
-  "Стати ділером": "Become a dealer",
   "статтей": "of articles",
   "Стаття | V-NRG": "Article | V-NRG",
   "Створіть акаунт, щоб подати заявку та стати дилером": "Create an account to apply and become a dealer",

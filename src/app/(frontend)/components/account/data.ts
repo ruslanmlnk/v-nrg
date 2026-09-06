@@ -24,25 +24,25 @@ export const accountSidebarItems: Array<{
   id: AccountSection
   label: string
 }> = [
-  {
-    iconKey: 'orders',
-    id: 'orders',
-    label: 'Мої замовлення',
-  },
-  {
-    iconKey: 'profile',
-    id: 'profile',
-    label: 'Профіль',
-  },
-  {
-    iconKey: 'addresses',
-    id: 'addresses',
-    label: 'Адреси доставки',
-  },
-]
+    {
+      iconKey: 'orders',
+      id: 'orders',
+      label: 'Мої замовлення',
+    },
+    {
+      iconKey: 'profile',
+      id: 'profile',
+      label: 'Профіль',
+    },
+    {
+      iconKey: 'addresses',
+      id: 'addresses',
+      label: 'Адреси доставки',
+    },
+  ]
 
 export const dealerCta = {
-  label: 'Стати ділером',
+  label: 'Стати дилером',
 } as const
 
 export const accountFallbacks = {

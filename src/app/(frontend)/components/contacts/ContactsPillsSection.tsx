@@ -51,7 +51,7 @@ export function ContactsPillsSection({
 function SocialNetworksPill({ socialNetworks }: { socialNetworks: ContactSocialNetwork[] }) {
   return (
     <div className="flex min-h-[175px] flex-col items-center justify-center gap-3 bg-[#4FACF5] px-8 py-8 text-center text-white">
-      <span className="text-[16px] font-medium leading-[165%] text-[#D5E0E8]">Соцмережі</span>
+      <span className="text-[16px] font-medium leading-[165%] text-[#D5E0E8]">Месенджери</span>
       {socialNetworks.length > 0 ? (
         <div className="flex flex-wrap items-center justify-center gap-3">
           {socialNetworks.map((social) => (
