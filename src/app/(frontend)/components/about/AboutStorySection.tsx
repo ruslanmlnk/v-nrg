@@ -19,7 +19,7 @@ export function AboutStorySection({ content }: { content?: AboutPage['storySecti
         />
         <AboutStatCard
           className="absolute left-[51.923%] top-0 h-[37.472%] w-[43.91%] rounded-[20px] bg-[#4FACF5] p-4"
-          value="15+"
+          value="5+"
           label="років досвіду"
         />
         <AboutStatCard
@@ -42,7 +42,7 @@ export function AboutStorySection({ content }: { content?: AboutPage['storySecti
         />
         <AboutStatCard
           className="absolute right-5 top-0 h-[179px] w-[220px] rounded-[20px] bg-[#4FACF5] p-8"
-          value="15+"
+          value="5+"
           label="років досвіду"
         />
 

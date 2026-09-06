@@ -224,7 +224,7 @@ export const generatedEnglishTranslations: Record<string, string> = {
   "Ми обробляємо персональні дані лише для комунікації, оформлення замовлень і супроводу клієнтів. За деталями звертайтеся до нашої команди.": "We process personal data only for communication, order processing and customer support. Contact our team for details.",
   "Ми отримали ваш запит і зв’яжемося з вами найближчим часом.": "We have received your request and will contact you shortly.",
   "Ми порівнювали кілька варіантів і зупинились на V-NRG через якість консультації та зрозумілу комплектацію. Після запуску рішення себе виправдало.": "We compared several options and settled on V-NRG because of the quality of the consultation and the clear configuration. After the launch, the decision paid off.",
-  "Міжнародний виробник професійного обладнання для вакуумного масажу з понад 15-річним досвідом.": "International manufacturer of professional vacuum massage equipment with over 15 years of experience.",
+  "Міжнародний виробник професійного обладнання для вакуумного масажу з понад 5-річним досвідом.": "International manufacturer of professional vacuum massage equipment with over 5 years of experience.",
   "Мій кабінет": "My office",
   "Місія": "Mission",
   "Місто *": "City *",
