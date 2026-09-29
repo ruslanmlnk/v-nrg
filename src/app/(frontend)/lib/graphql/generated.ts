@@ -2553,7 +2553,7 @@ export type Category = {
   seo?: Maybe<Category_Seo>;
   image?: Maybe<Media>;
   title?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['JSON']['output']>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2564,6 +2564,11 @@ export type Category = {
 export type CategoryImageArgs = {
   locale?: InputMaybe<LocaleInputType>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+};
+
+
+export type CategoryDescriptionArgs = {
+  depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Category_Seo = {
@@ -4579,13 +4584,10 @@ export type Category_Title_Operator = {
 };
 
 export type Category_Description_Operator = {
-  equals?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  like?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['JSON']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -29135,7 +29137,7 @@ export type MutationCategoryInput = {
   seo?: InputMaybe<MutationCategory_SeoInput>;
   image?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -29151,7 +29153,7 @@ export type MutationCategoryUpdateInput = {
   seo?: InputMaybe<MutationCategoryUpdate_SeoInput>;
   image?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -30000,7 +30002,7 @@ export type GetLayoutDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null, beforeafter?: Array<{ __typename?: 'Product_Beforeafter', before?: { __typename?: 'Media', url?: string | null } | null, after?: { __typename?: 'Media', url?: string | null } | null }> | null, reviews?: Array<{ __typename?: 'Review', name?: string | null, text?: string | null }> | null, certificates?: Array<{ __typename?: 'Media', url?: string | null }> | null, moreProducts?: Array<{ __typename?: 'Product', id: number }> | null, recommendedTogether?: Array<{ __typename?: 'Product', id: number }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null, beforeafter?: Array<{ __typename?: 'Product_Beforeafter', before?: { __typename?: 'Media', url?: string | null } | null, after?: { __typename?: 'Media', url?: string | null } | null }> | null, reviews?: Array<{ __typename?: 'Review', name?: string | null, text?: string | null }> | null, certificates?: Array<{ __typename?: 'Media', url?: string | null }> | null, moreProducts?: Array<{ __typename?: 'Product', id: number }> | null, recommendedTogether?: Array<{ __typename?: 'Product', id: number }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: unknown | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];

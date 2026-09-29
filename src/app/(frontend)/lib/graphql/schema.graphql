@@ -1551,7 +1551,7 @@ type Category {
   seo: Category_Seo
   image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
-  description: String
+  description(depth: Int): JSON
   generateSlug: Boolean
   slug: String!
   updatedAt: DateTime
@@ -3302,13 +3302,10 @@ input Category_title_operator {
 }
 
 input Category_description_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
   exists: Boolean
 }
 
@@ -23452,7 +23449,7 @@ input mutationCategoryInput {
   seo: mutationCategory_SeoInput
   image: Int
   title: String
-  description: String
+  description: JSON
   generateSlug: Boolean
   slug: String!
   updatedAt: String
@@ -23468,7 +23465,7 @@ input mutationCategoryUpdateInput {
   seo: mutationCategoryUpdate_SeoInput
   image: Int
   title: String
-  description: String
+  description: JSON
   generateSlug: Boolean
   slug: String
   updatedAt: String

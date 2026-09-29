@@ -22,10 +22,16 @@ const richTextClassName = [
   '[&_th]:border [&_th]:border-[#D5E0E8] [&_th]:bg-[#F5F8F9] [&_th]:p-3 [&_th]:text-left [&_th]:font-bold',
 ].join(' ')
 
-export function ProductRichTextContent({ content }: { content: ProductRichTextContentData }) {
+export function ProductRichTextContent({
+  content,
+  className = '',
+}: {
+  content: ProductRichTextContentData
+  className?: string
+}) {
   return (
     <RichText
-      className={richTextClassName}
+      className={`${richTextClassName} ${className}`}
       converters={({ defaultConverters }) => ({
         ...defaultConverters,
         ...LinkJSXConverter({ internalDocToHref }),

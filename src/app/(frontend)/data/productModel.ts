@@ -3,7 +3,7 @@ export type ProductImage = string | null
 export type ProductCategory = string
 
 export type ProductCategoryData = {
-  description: string
+  description: ProductRichTextContent | string
   href: string
   id: string
   image: ProductImage
@@ -17,7 +17,7 @@ export type ProductCategorySource = {
 }
 
 export type CatalogCategorySource = ProductCategorySource & {
-  description?: string | null
+  description?: ProductRichTextContent | string | null
   id?: number | string | null
   imageUrl?: string | null
 }
@@ -229,7 +229,7 @@ export function unwrapCatalogCategory(category: CatalogCategorySource): ProductC
   const title = unwrapText(category.title) ?? slug
 
   return {
-    description: unwrapText(category.description) ?? '',
+    description: category.description ?? '',
     href: `/${slug}`,
     id: String(category.id ?? slug),
     image: unwrapText(category.imageUrl) ?? null,

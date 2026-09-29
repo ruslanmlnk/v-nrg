@@ -23,6 +23,8 @@ import * as migration_20260829_040000_unique_user_phone from './20260829_040000_
 import * as migration_20260829_050000_eur_base_currency from './20260829_050000_eur_base_currency'
 import * as migration_20260829_060000_registration_verifications_lock_relation from './20260829_060000_registration_verifications_lock_relation'
 
+import * as migration_20260929_010000_category_description_lexical from './20260929_010000_category_description_lexical'
+
 export const migrations = [
   {
     up: migration_20260420_084925_products_cms_fields.up,
@@ -143,5 +145,10 @@ export const migrations = [
     up: migration_20260829_060000_registration_verifications_lock_relation.up,
     down: migration_20260829_060000_registration_verifications_lock_relation.down,
     name: '20260829_060000_registration_verifications_lock_relation',
+  },
+  {
+    up: migration_20260929_010000_category_description_lexical.up,
+    down: migration_20260929_010000_category_description_lexical.down,
+    name: '20260929_010000_category_description_lexical',
   },
 ]

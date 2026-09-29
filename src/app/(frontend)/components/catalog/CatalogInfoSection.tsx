@@ -2,12 +2,14 @@
 
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import readMoreArrowIconAsset from '@public/icon/generated/catalog-read-more-arrow.svg'
+import type { ProductCategoryData } from '../../data/products'
+import { ProductRichTextContent } from '../productDetail/ProductRichTextContent'
 
 export function CatalogInfoSection({
   description,
   title,
 }: {
-  description?: null | string
+  description?: null | ProductCategoryData['description']
   title?: null | string
 }) {
   if (!description) {
@@ -21,9 +23,13 @@ export function CatalogInfoSection({
           <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">
             {title}
           </h2>
-          <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-            {description}
-          </p>
+          {typeof description === 'string' ? (
+            <p className="whitespace-pre-line text-[18px] font-medium leading-[165%] text-[#22354A]">
+              {description}
+            </p>
+          ) : (
+            <ProductRichTextContent content={description} className="!pt-0" />
+          )}
         </div>
 
         <button type="button" className="flex items-center self-center">

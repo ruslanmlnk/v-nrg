@@ -24,7 +24,7 @@ export const Category: CollectionConfig = {
     },
     {
       name: 'description',
-      type: 'text',
+      type: 'richText',
     },
     slugField({
       useAsSlug: 'title',
