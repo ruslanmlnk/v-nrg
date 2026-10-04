@@ -121,6 +121,8 @@ export type Query = {
   docAccessBlogPage?: Maybe<Blog_PageDocAccess>;
   CatalogPage?: Maybe<CatalogPage>;
   docAccessCatalogPage?: Maybe<Catalog_PageDocAccess>;
+  DealerPage?: Maybe<DealerPage>;
+  docAccessDealerPage?: Maybe<Dealer_PageDocAccess>;
   Access?: Maybe<Access>;
 };
 
@@ -885,6 +887,14 @@ export type QueryBlogPageArgs = {
 
 
 export type QueryCatalogPageArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
+  locale?: InputMaybe<LocaleInputType>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryDealerPageArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale?: InputMaybe<FallbackLocaleInputType>;
   locale?: InputMaybe<LocaleInputType>;
@@ -16852,6 +16862,519 @@ export type CatalogPageUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type DealerPage = {
+  __typename?: 'DealerPage';
+  seo?: Maybe<DealerPage_Seo>;
+  hero?: Maybe<DealerPage_Hero>;
+  benefits?: Maybe<Array<DealerPage_Benefits>>;
+  applicationIntro?: Maybe<DealerPage_ApplicationIntro>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type DealerPage_Seo = {
+  __typename?: 'DealerPage_Seo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+};
+
+export type DealerPage_Hero = {
+  __typename?: 'DealerPage_Hero';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+};
+
+export type DealerPage_Benefits = {
+  __typename?: 'DealerPage_Benefits';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type DealerPage_ApplicationIntro = {
+  __typename?: 'DealerPage_ApplicationIntro';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+};
+
+export type Dealer_PageDocAccess = {
+  __typename?: 'dealer_pageDocAccess';
+  fields?: Maybe<DealerPageDocAccessFields>;
+  read?: Maybe<DealerPageReadDocAccess>;
+  update?: Maybe<DealerPageUpdateDocAccess>;
+};
+
+export type DealerPageDocAccessFields = {
+  __typename?: 'DealerPageDocAccessFields';
+  seo?: Maybe<DealerPageDocAccessFields_Seo>;
+  hero?: Maybe<DealerPageDocAccessFields_Hero>;
+  benefits?: Maybe<DealerPageDocAccessFields_Benefits>;
+  applicationIntro?: Maybe<DealerPageDocAccessFields_ApplicationIntro>;
+  updatedAt?: Maybe<DealerPageDocAccessFields_UpdatedAt>;
+  createdAt?: Maybe<DealerPageDocAccessFields_CreatedAt>;
+};
+
+export type DealerPageDocAccessFields_Seo = {
+  __typename?: 'DealerPageDocAccessFields_seo';
+  create?: Maybe<DealerPageDocAccessFields_Seo_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Seo_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Seo_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Seo_Delete>;
+  fields?: Maybe<DealerPageDocAccessFields_Seo_Fields>;
+};
+
+export type DealerPageDocAccessFields_Seo_Create = {
+  __typename?: 'DealerPageDocAccessFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_Read = {
+  __typename?: 'DealerPageDocAccessFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_Update = {
+  __typename?: 'DealerPageDocAccessFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_Delete = {
+  __typename?: 'DealerPageDocAccessFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_Fields = {
+  __typename?: 'DealerPageDocAccessFields_seo_Fields';
+  metaTitle?: Maybe<DealerPageDocAccessFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<DealerPageDocAccessFields_Seo_MetaDescription>;
+};
+
+export type DealerPageDocAccessFields_Seo_MetaTitle = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaTitle';
+  create?: Maybe<DealerPageDocAccessFields_Seo_MetaTitle_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Seo_MetaTitle_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Seo_MetaTitle_Delete>;
+};
+
+export type DealerPageDocAccessFields_Seo_MetaTitle_Create = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaTitle_Read = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaTitle_Update = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaTitle_Delete = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaDescription = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaDescription';
+  create?: Maybe<DealerPageDocAccessFields_Seo_MetaDescription_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Seo_MetaDescription_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Seo_MetaDescription_Delete>;
+};
+
+export type DealerPageDocAccessFields_Seo_MetaDescription_Create = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaDescription_Read = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaDescription_Update = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Seo_MetaDescription_Delete = {
+  __typename?: 'DealerPageDocAccessFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero = {
+  __typename?: 'DealerPageDocAccessFields_hero';
+  create?: Maybe<DealerPageDocAccessFields_Hero_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Hero_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Hero_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Hero_Delete>;
+  fields?: Maybe<DealerPageDocAccessFields_Hero_Fields>;
+};
+
+export type DealerPageDocAccessFields_Hero_Create = {
+  __typename?: 'DealerPageDocAccessFields_hero_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Read = {
+  __typename?: 'DealerPageDocAccessFields_hero_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Update = {
+  __typename?: 'DealerPageDocAccessFields_hero_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Delete = {
+  __typename?: 'DealerPageDocAccessFields_hero_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Fields = {
+  __typename?: 'DealerPageDocAccessFields_hero_Fields';
+  title?: Maybe<DealerPageDocAccessFields_Hero_Title>;
+  description?: Maybe<DealerPageDocAccessFields_Hero_Description>;
+};
+
+export type DealerPageDocAccessFields_Hero_Title = {
+  __typename?: 'DealerPageDocAccessFields_hero_title';
+  create?: Maybe<DealerPageDocAccessFields_Hero_Title_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Hero_Title_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Hero_Title_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Hero_Title_Delete>;
+};
+
+export type DealerPageDocAccessFields_Hero_Title_Create = {
+  __typename?: 'DealerPageDocAccessFields_hero_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Title_Read = {
+  __typename?: 'DealerPageDocAccessFields_hero_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Title_Update = {
+  __typename?: 'DealerPageDocAccessFields_hero_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Title_Delete = {
+  __typename?: 'DealerPageDocAccessFields_hero_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Description = {
+  __typename?: 'DealerPageDocAccessFields_hero_description';
+  create?: Maybe<DealerPageDocAccessFields_Hero_Description_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Hero_Description_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Hero_Description_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Hero_Description_Delete>;
+};
+
+export type DealerPageDocAccessFields_Hero_Description_Create = {
+  __typename?: 'DealerPageDocAccessFields_hero_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Description_Read = {
+  __typename?: 'DealerPageDocAccessFields_hero_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Description_Update = {
+  __typename?: 'DealerPageDocAccessFields_hero_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Hero_Description_Delete = {
+  __typename?: 'DealerPageDocAccessFields_hero_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits = {
+  __typename?: 'DealerPageDocAccessFields_benefits';
+  create?: Maybe<DealerPageDocAccessFields_Benefits_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Benefits_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Benefits_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Benefits_Delete>;
+  fields?: Maybe<DealerPageDocAccessFields_Benefits_Fields>;
+};
+
+export type DealerPageDocAccessFields_Benefits_Create = {
+  __typename?: 'DealerPageDocAccessFields_benefits_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Read = {
+  __typename?: 'DealerPageDocAccessFields_benefits_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Update = {
+  __typename?: 'DealerPageDocAccessFields_benefits_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Delete = {
+  __typename?: 'DealerPageDocAccessFields_benefits_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Fields = {
+  __typename?: 'DealerPageDocAccessFields_benefits_Fields';
+  title?: Maybe<DealerPageDocAccessFields_Benefits_Title>;
+  description?: Maybe<DealerPageDocAccessFields_Benefits_Description>;
+  id?: Maybe<DealerPageDocAccessFields_Benefits_Id>;
+};
+
+export type DealerPageDocAccessFields_Benefits_Title = {
+  __typename?: 'DealerPageDocAccessFields_benefits_title';
+  create?: Maybe<DealerPageDocAccessFields_Benefits_Title_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Benefits_Title_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Benefits_Title_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Benefits_Title_Delete>;
+};
+
+export type DealerPageDocAccessFields_Benefits_Title_Create = {
+  __typename?: 'DealerPageDocAccessFields_benefits_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Title_Read = {
+  __typename?: 'DealerPageDocAccessFields_benefits_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Title_Update = {
+  __typename?: 'DealerPageDocAccessFields_benefits_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Title_Delete = {
+  __typename?: 'DealerPageDocAccessFields_benefits_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Description = {
+  __typename?: 'DealerPageDocAccessFields_benefits_description';
+  create?: Maybe<DealerPageDocAccessFields_Benefits_Description_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Benefits_Description_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Benefits_Description_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Benefits_Description_Delete>;
+};
+
+export type DealerPageDocAccessFields_Benefits_Description_Create = {
+  __typename?: 'DealerPageDocAccessFields_benefits_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Description_Read = {
+  __typename?: 'DealerPageDocAccessFields_benefits_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Description_Update = {
+  __typename?: 'DealerPageDocAccessFields_benefits_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Description_Delete = {
+  __typename?: 'DealerPageDocAccessFields_benefits_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Id = {
+  __typename?: 'DealerPageDocAccessFields_benefits_id';
+  create?: Maybe<DealerPageDocAccessFields_Benefits_Id_Create>;
+  read?: Maybe<DealerPageDocAccessFields_Benefits_Id_Read>;
+  update?: Maybe<DealerPageDocAccessFields_Benefits_Id_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_Benefits_Id_Delete>;
+};
+
+export type DealerPageDocAccessFields_Benefits_Id_Create = {
+  __typename?: 'DealerPageDocAccessFields_benefits_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Id_Read = {
+  __typename?: 'DealerPageDocAccessFields_benefits_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Id_Update = {
+  __typename?: 'DealerPageDocAccessFields_benefits_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_Benefits_Id_Delete = {
+  __typename?: 'DealerPageDocAccessFields_benefits_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro';
+  create?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Create>;
+  read?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Read>;
+  update?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Delete>;
+  fields?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Fields>;
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Create = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Read = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Update = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Delete = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Fields = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_Fields';
+  title?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Title>;
+  description?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Description>;
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Title = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_title';
+  create?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Title_Create>;
+  read?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Title_Read>;
+  update?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Title_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Title_Delete>;
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Title_Create = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Title_Read = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Title_Update = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Title_Delete = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Description = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_description';
+  create?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Description_Create>;
+  read?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Description_Read>;
+  update?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Description_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_ApplicationIntro_Description_Delete>;
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Description_Create = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Description_Read = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Description_Update = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_ApplicationIntro_Description_Delete = {
+  __typename?: 'DealerPageDocAccessFields_applicationIntro_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_UpdatedAt = {
+  __typename?: 'DealerPageDocAccessFields_updatedAt';
+  create?: Maybe<DealerPageDocAccessFields_UpdatedAt_Create>;
+  read?: Maybe<DealerPageDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<DealerPageDocAccessFields_UpdatedAt_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_UpdatedAt_Delete>;
+};
+
+export type DealerPageDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'DealerPageDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'DealerPageDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'DealerPageDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'DealerPageDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_CreatedAt = {
+  __typename?: 'DealerPageDocAccessFields_createdAt';
+  create?: Maybe<DealerPageDocAccessFields_CreatedAt_Create>;
+  read?: Maybe<DealerPageDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<DealerPageDocAccessFields_CreatedAt_Update>;
+  delete?: Maybe<DealerPageDocAccessFields_CreatedAt_Delete>;
+};
+
+export type DealerPageDocAccessFields_CreatedAt_Create = {
+  __typename?: 'DealerPageDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_CreatedAt_Read = {
+  __typename?: 'DealerPageDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_CreatedAt_Update = {
+  __typename?: 'DealerPageDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'DealerPageDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageReadDocAccess = {
+  __typename?: 'DealerPageReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerPageUpdateDocAccess = {
+  __typename?: 'DealerPageUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Access = {
   __typename?: 'Access';
   canAccessAdmin: Scalars['Boolean']['output'];
@@ -16882,6 +17405,7 @@ export type Access = {
   review_page?: Maybe<Review_PageAccess>;
   blog_page?: Maybe<Blog_PageAccess>;
   catalog_page?: Maybe<Catalog_PageAccess>;
+  dealer_page?: Maybe<Dealer_PageAccess>;
 };
 
 export type UsersAccess = {
@@ -28168,6 +28692,484 @@ export type CatalogPageUpdateAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Dealer_PageAccess = {
+  __typename?: 'dealer_pageAccess';
+  fields?: Maybe<DealerPageFields>;
+  read?: Maybe<DealerPageReadAccess>;
+  update?: Maybe<DealerPageUpdateAccess>;
+};
+
+export type DealerPageFields = {
+  __typename?: 'DealerPageFields';
+  seo?: Maybe<DealerPageFields_Seo>;
+  hero?: Maybe<DealerPageFields_Hero>;
+  benefits?: Maybe<DealerPageFields_Benefits>;
+  applicationIntro?: Maybe<DealerPageFields_ApplicationIntro>;
+  updatedAt?: Maybe<DealerPageFields_UpdatedAt>;
+  createdAt?: Maybe<DealerPageFields_CreatedAt>;
+};
+
+export type DealerPageFields_Seo = {
+  __typename?: 'DealerPageFields_seo';
+  create?: Maybe<DealerPageFields_Seo_Create>;
+  read?: Maybe<DealerPageFields_Seo_Read>;
+  update?: Maybe<DealerPageFields_Seo_Update>;
+  delete?: Maybe<DealerPageFields_Seo_Delete>;
+  fields?: Maybe<DealerPageFields_Seo_Fields>;
+};
+
+export type DealerPageFields_Seo_Create = {
+  __typename?: 'DealerPageFields_seo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_Read = {
+  __typename?: 'DealerPageFields_seo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_Update = {
+  __typename?: 'DealerPageFields_seo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_Delete = {
+  __typename?: 'DealerPageFields_seo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_Fields = {
+  __typename?: 'DealerPageFields_seo_Fields';
+  metaTitle?: Maybe<DealerPageFields_Seo_MetaTitle>;
+  metaDescription?: Maybe<DealerPageFields_Seo_MetaDescription>;
+};
+
+export type DealerPageFields_Seo_MetaTitle = {
+  __typename?: 'DealerPageFields_seo_metaTitle';
+  create?: Maybe<DealerPageFields_Seo_MetaTitle_Create>;
+  read?: Maybe<DealerPageFields_Seo_MetaTitle_Read>;
+  update?: Maybe<DealerPageFields_Seo_MetaTitle_Update>;
+  delete?: Maybe<DealerPageFields_Seo_MetaTitle_Delete>;
+};
+
+export type DealerPageFields_Seo_MetaTitle_Create = {
+  __typename?: 'DealerPageFields_seo_metaTitle_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaTitle_Read = {
+  __typename?: 'DealerPageFields_seo_metaTitle_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaTitle_Update = {
+  __typename?: 'DealerPageFields_seo_metaTitle_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaTitle_Delete = {
+  __typename?: 'DealerPageFields_seo_metaTitle_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaDescription = {
+  __typename?: 'DealerPageFields_seo_metaDescription';
+  create?: Maybe<DealerPageFields_Seo_MetaDescription_Create>;
+  read?: Maybe<DealerPageFields_Seo_MetaDescription_Read>;
+  update?: Maybe<DealerPageFields_Seo_MetaDescription_Update>;
+  delete?: Maybe<DealerPageFields_Seo_MetaDescription_Delete>;
+};
+
+export type DealerPageFields_Seo_MetaDescription_Create = {
+  __typename?: 'DealerPageFields_seo_metaDescription_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaDescription_Read = {
+  __typename?: 'DealerPageFields_seo_metaDescription_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaDescription_Update = {
+  __typename?: 'DealerPageFields_seo_metaDescription_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Seo_MetaDescription_Delete = {
+  __typename?: 'DealerPageFields_seo_metaDescription_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero = {
+  __typename?: 'DealerPageFields_hero';
+  create?: Maybe<DealerPageFields_Hero_Create>;
+  read?: Maybe<DealerPageFields_Hero_Read>;
+  update?: Maybe<DealerPageFields_Hero_Update>;
+  delete?: Maybe<DealerPageFields_Hero_Delete>;
+  fields?: Maybe<DealerPageFields_Hero_Fields>;
+};
+
+export type DealerPageFields_Hero_Create = {
+  __typename?: 'DealerPageFields_hero_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Read = {
+  __typename?: 'DealerPageFields_hero_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Update = {
+  __typename?: 'DealerPageFields_hero_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Delete = {
+  __typename?: 'DealerPageFields_hero_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Fields = {
+  __typename?: 'DealerPageFields_hero_Fields';
+  title?: Maybe<DealerPageFields_Hero_Title>;
+  description?: Maybe<DealerPageFields_Hero_Description>;
+};
+
+export type DealerPageFields_Hero_Title = {
+  __typename?: 'DealerPageFields_hero_title';
+  create?: Maybe<DealerPageFields_Hero_Title_Create>;
+  read?: Maybe<DealerPageFields_Hero_Title_Read>;
+  update?: Maybe<DealerPageFields_Hero_Title_Update>;
+  delete?: Maybe<DealerPageFields_Hero_Title_Delete>;
+};
+
+export type DealerPageFields_Hero_Title_Create = {
+  __typename?: 'DealerPageFields_hero_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Title_Read = {
+  __typename?: 'DealerPageFields_hero_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Title_Update = {
+  __typename?: 'DealerPageFields_hero_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Title_Delete = {
+  __typename?: 'DealerPageFields_hero_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Description = {
+  __typename?: 'DealerPageFields_hero_description';
+  create?: Maybe<DealerPageFields_Hero_Description_Create>;
+  read?: Maybe<DealerPageFields_Hero_Description_Read>;
+  update?: Maybe<DealerPageFields_Hero_Description_Update>;
+  delete?: Maybe<DealerPageFields_Hero_Description_Delete>;
+};
+
+export type DealerPageFields_Hero_Description_Create = {
+  __typename?: 'DealerPageFields_hero_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Description_Read = {
+  __typename?: 'DealerPageFields_hero_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Description_Update = {
+  __typename?: 'DealerPageFields_hero_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Hero_Description_Delete = {
+  __typename?: 'DealerPageFields_hero_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits = {
+  __typename?: 'DealerPageFields_benefits';
+  create?: Maybe<DealerPageFields_Benefits_Create>;
+  read?: Maybe<DealerPageFields_Benefits_Read>;
+  update?: Maybe<DealerPageFields_Benefits_Update>;
+  delete?: Maybe<DealerPageFields_Benefits_Delete>;
+  fields?: Maybe<DealerPageFields_Benefits_Fields>;
+};
+
+export type DealerPageFields_Benefits_Create = {
+  __typename?: 'DealerPageFields_benefits_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Read = {
+  __typename?: 'DealerPageFields_benefits_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Update = {
+  __typename?: 'DealerPageFields_benefits_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Delete = {
+  __typename?: 'DealerPageFields_benefits_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Fields = {
+  __typename?: 'DealerPageFields_benefits_Fields';
+  title?: Maybe<DealerPageFields_Benefits_Title>;
+  description?: Maybe<DealerPageFields_Benefits_Description>;
+  id?: Maybe<DealerPageFields_Benefits_Id>;
+};
+
+export type DealerPageFields_Benefits_Title = {
+  __typename?: 'DealerPageFields_benefits_title';
+  create?: Maybe<DealerPageFields_Benefits_Title_Create>;
+  read?: Maybe<DealerPageFields_Benefits_Title_Read>;
+  update?: Maybe<DealerPageFields_Benefits_Title_Update>;
+  delete?: Maybe<DealerPageFields_Benefits_Title_Delete>;
+};
+
+export type DealerPageFields_Benefits_Title_Create = {
+  __typename?: 'DealerPageFields_benefits_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Title_Read = {
+  __typename?: 'DealerPageFields_benefits_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Title_Update = {
+  __typename?: 'DealerPageFields_benefits_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Title_Delete = {
+  __typename?: 'DealerPageFields_benefits_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Description = {
+  __typename?: 'DealerPageFields_benefits_description';
+  create?: Maybe<DealerPageFields_Benefits_Description_Create>;
+  read?: Maybe<DealerPageFields_Benefits_Description_Read>;
+  update?: Maybe<DealerPageFields_Benefits_Description_Update>;
+  delete?: Maybe<DealerPageFields_Benefits_Description_Delete>;
+};
+
+export type DealerPageFields_Benefits_Description_Create = {
+  __typename?: 'DealerPageFields_benefits_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Description_Read = {
+  __typename?: 'DealerPageFields_benefits_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Description_Update = {
+  __typename?: 'DealerPageFields_benefits_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Description_Delete = {
+  __typename?: 'DealerPageFields_benefits_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Id = {
+  __typename?: 'DealerPageFields_benefits_id';
+  create?: Maybe<DealerPageFields_Benefits_Id_Create>;
+  read?: Maybe<DealerPageFields_Benefits_Id_Read>;
+  update?: Maybe<DealerPageFields_Benefits_Id_Update>;
+  delete?: Maybe<DealerPageFields_Benefits_Id_Delete>;
+};
+
+export type DealerPageFields_Benefits_Id_Create = {
+  __typename?: 'DealerPageFields_benefits_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Id_Read = {
+  __typename?: 'DealerPageFields_benefits_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Id_Update = {
+  __typename?: 'DealerPageFields_benefits_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_Benefits_Id_Delete = {
+  __typename?: 'DealerPageFields_benefits_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro = {
+  __typename?: 'DealerPageFields_applicationIntro';
+  create?: Maybe<DealerPageFields_ApplicationIntro_Create>;
+  read?: Maybe<DealerPageFields_ApplicationIntro_Read>;
+  update?: Maybe<DealerPageFields_ApplicationIntro_Update>;
+  delete?: Maybe<DealerPageFields_ApplicationIntro_Delete>;
+  fields?: Maybe<DealerPageFields_ApplicationIntro_Fields>;
+};
+
+export type DealerPageFields_ApplicationIntro_Create = {
+  __typename?: 'DealerPageFields_applicationIntro_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Read = {
+  __typename?: 'DealerPageFields_applicationIntro_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Update = {
+  __typename?: 'DealerPageFields_applicationIntro_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Delete = {
+  __typename?: 'DealerPageFields_applicationIntro_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Fields = {
+  __typename?: 'DealerPageFields_applicationIntro_Fields';
+  title?: Maybe<DealerPageFields_ApplicationIntro_Title>;
+  description?: Maybe<DealerPageFields_ApplicationIntro_Description>;
+};
+
+export type DealerPageFields_ApplicationIntro_Title = {
+  __typename?: 'DealerPageFields_applicationIntro_title';
+  create?: Maybe<DealerPageFields_ApplicationIntro_Title_Create>;
+  read?: Maybe<DealerPageFields_ApplicationIntro_Title_Read>;
+  update?: Maybe<DealerPageFields_ApplicationIntro_Title_Update>;
+  delete?: Maybe<DealerPageFields_ApplicationIntro_Title_Delete>;
+};
+
+export type DealerPageFields_ApplicationIntro_Title_Create = {
+  __typename?: 'DealerPageFields_applicationIntro_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Title_Read = {
+  __typename?: 'DealerPageFields_applicationIntro_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Title_Update = {
+  __typename?: 'DealerPageFields_applicationIntro_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Title_Delete = {
+  __typename?: 'DealerPageFields_applicationIntro_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Description = {
+  __typename?: 'DealerPageFields_applicationIntro_description';
+  create?: Maybe<DealerPageFields_ApplicationIntro_Description_Create>;
+  read?: Maybe<DealerPageFields_ApplicationIntro_Description_Read>;
+  update?: Maybe<DealerPageFields_ApplicationIntro_Description_Update>;
+  delete?: Maybe<DealerPageFields_ApplicationIntro_Description_Delete>;
+};
+
+export type DealerPageFields_ApplicationIntro_Description_Create = {
+  __typename?: 'DealerPageFields_applicationIntro_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Description_Read = {
+  __typename?: 'DealerPageFields_applicationIntro_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Description_Update = {
+  __typename?: 'DealerPageFields_applicationIntro_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_ApplicationIntro_Description_Delete = {
+  __typename?: 'DealerPageFields_applicationIntro_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_UpdatedAt = {
+  __typename?: 'DealerPageFields_updatedAt';
+  create?: Maybe<DealerPageFields_UpdatedAt_Create>;
+  read?: Maybe<DealerPageFields_UpdatedAt_Read>;
+  update?: Maybe<DealerPageFields_UpdatedAt_Update>;
+  delete?: Maybe<DealerPageFields_UpdatedAt_Delete>;
+};
+
+export type DealerPageFields_UpdatedAt_Create = {
+  __typename?: 'DealerPageFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_UpdatedAt_Read = {
+  __typename?: 'DealerPageFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_UpdatedAt_Update = {
+  __typename?: 'DealerPageFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_UpdatedAt_Delete = {
+  __typename?: 'DealerPageFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_CreatedAt = {
+  __typename?: 'DealerPageFields_createdAt';
+  create?: Maybe<DealerPageFields_CreatedAt_Create>;
+  read?: Maybe<DealerPageFields_CreatedAt_Read>;
+  update?: Maybe<DealerPageFields_CreatedAt_Update>;
+  delete?: Maybe<DealerPageFields_CreatedAt_Delete>;
+};
+
+export type DealerPageFields_CreatedAt_Create = {
+  __typename?: 'DealerPageFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_CreatedAt_Read = {
+  __typename?: 'DealerPageFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_CreatedAt_Update = {
+  __typename?: 'DealerPageFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageFields_CreatedAt_Delete = {
+  __typename?: 'DealerPageFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type DealerPageReadAccess = {
+  __typename?: 'DealerPageReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type DealerPageUpdateAccess = {
+  __typename?: 'DealerPageUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
@@ -28260,6 +29262,7 @@ export type Mutation = {
   updateReviewPage?: Maybe<ReviewPage>;
   updateBlogPage?: Maybe<BlogPage>;
   updateCatalogPage?: Maybe<CatalogPage>;
+  updateDealerPage?: Maybe<DealerPage>;
 };
 
 
@@ -28891,6 +29894,13 @@ export type MutationUpdateBlogPageArgs = {
 
 export type MutationUpdateCatalogPageArgs = {
   data: MutationCatalogPageInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateDealerPageArgs = {
+  data: MutationDealerPageInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   locale?: InputMaybe<LocaleInputType>;
 };
@@ -30068,6 +31078,36 @@ export type MutationCatalogPage_SeoInput = {
 };
 
 export type MutationCatalogPage_SeoTextInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDealerPageInput = {
+  seo?: InputMaybe<MutationDealerPage_SeoInput>;
+  hero?: InputMaybe<MutationDealerPage_HeroInput>;
+  benefits?: InputMaybe<Array<InputMaybe<MutationDealerPage_BenefitsInput>>>;
+  applicationIntro?: InputMaybe<MutationDealerPage_ApplicationIntroInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDealerPage_SeoInput = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDealerPage_HeroInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDealerPage_BenefitsInput = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDealerPage_ApplicationIntroInput = {
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
 };

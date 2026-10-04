@@ -27,6 +27,8 @@ import * as migration_20260929_010000_category_description_lexical from './20260
 
 import * as migration_20261004_010000_category_seo_text from './20261004_010000_category_seo_text'
 
+import * as migration_20261005_010000_dealer_page from './20261005_010000_dealer_page'
+
 export const migrations = [
   {
     up: migration_20260420_084925_products_cms_fields.up,
@@ -157,5 +159,10 @@ export const migrations = [
     up: migration_20261004_010000_category_seo_text.up,
     down: migration_20261004_010000_category_seo_text.down,
     name: '20261004_010000_category_seo_text',
+  },
+  {
+    up: migration_20261005_010000_dealer_page.up,
+    down: migration_20261005_010000_dealer_page.down,
+    name: '20261005_010000_dealer_page',
   },
 ]

@@ -93,6 +93,8 @@ type Query {
   docAccessBlogPage: blog_pageDocAccess
   CatalogPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): CatalogPage
   docAccessCatalogPage: catalog_pageDocAccess
+  DealerPage(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, select: Boolean): DealerPage
+  docAccessDealerPage: dealer_pageDocAccess
   Access: Access
 }
 
@@ -13738,6 +13740,431 @@ type CatalogPageUpdateDocAccess {
   where: JSONObject
 }
 
+type DealerPage {
+  seo: DealerPage_Seo
+  hero: DealerPage_Hero
+  benefits: [DealerPage_Benefits!]
+  applicationIntro: DealerPage_ApplicationIntro
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type DealerPage_Seo {
+  metaTitle: String
+  metaDescription: String
+}
+
+type DealerPage_Hero {
+  title: String
+  description: String
+}
+
+type DealerPage_Benefits {
+  title: String
+  description: String
+  id: String
+}
+
+type DealerPage_ApplicationIntro {
+  title: String
+  description: String
+}
+
+type dealer_pageDocAccess {
+  fields: DealerPageDocAccessFields
+  read: DealerPageReadDocAccess
+  update: DealerPageUpdateDocAccess
+}
+
+type DealerPageDocAccessFields {
+  seo: DealerPageDocAccessFields_seo
+  hero: DealerPageDocAccessFields_hero
+  benefits: DealerPageDocAccessFields_benefits
+  applicationIntro: DealerPageDocAccessFields_applicationIntro
+  updatedAt: DealerPageDocAccessFields_updatedAt
+  createdAt: DealerPageDocAccessFields_createdAt
+}
+
+type DealerPageDocAccessFields_seo {
+  create: DealerPageDocAccessFields_seo_Create
+  read: DealerPageDocAccessFields_seo_Read
+  update: DealerPageDocAccessFields_seo_Update
+  delete: DealerPageDocAccessFields_seo_Delete
+  fields: DealerPageDocAccessFields_seo_Fields
+}
+
+type DealerPageDocAccessFields_seo_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_Fields {
+  metaTitle: DealerPageDocAccessFields_seo_metaTitle
+  metaDescription: DealerPageDocAccessFields_seo_metaDescription
+}
+
+type DealerPageDocAccessFields_seo_metaTitle {
+  create: DealerPageDocAccessFields_seo_metaTitle_Create
+  read: DealerPageDocAccessFields_seo_metaTitle_Read
+  update: DealerPageDocAccessFields_seo_metaTitle_Update
+  delete: DealerPageDocAccessFields_seo_metaTitle_Delete
+}
+
+type DealerPageDocAccessFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaDescription {
+  create: DealerPageDocAccessFields_seo_metaDescription_Create
+  read: DealerPageDocAccessFields_seo_metaDescription_Read
+  update: DealerPageDocAccessFields_seo_metaDescription_Update
+  delete: DealerPageDocAccessFields_seo_metaDescription_Delete
+}
+
+type DealerPageDocAccessFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero {
+  create: DealerPageDocAccessFields_hero_Create
+  read: DealerPageDocAccessFields_hero_Read
+  update: DealerPageDocAccessFields_hero_Update
+  delete: DealerPageDocAccessFields_hero_Delete
+  fields: DealerPageDocAccessFields_hero_Fields
+}
+
+type DealerPageDocAccessFields_hero_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_Fields {
+  title: DealerPageDocAccessFields_hero_title
+  description: DealerPageDocAccessFields_hero_description
+}
+
+type DealerPageDocAccessFields_hero_title {
+  create: DealerPageDocAccessFields_hero_title_Create
+  read: DealerPageDocAccessFields_hero_title_Read
+  update: DealerPageDocAccessFields_hero_title_Update
+  delete: DealerPageDocAccessFields_hero_title_Delete
+}
+
+type DealerPageDocAccessFields_hero_title_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_title_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_title_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_title_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_description {
+  create: DealerPageDocAccessFields_hero_description_Create
+  read: DealerPageDocAccessFields_hero_description_Read
+  update: DealerPageDocAccessFields_hero_description_Update
+  delete: DealerPageDocAccessFields_hero_description_Delete
+}
+
+type DealerPageDocAccessFields_hero_description_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_description_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_description_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_hero_description_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits {
+  create: DealerPageDocAccessFields_benefits_Create
+  read: DealerPageDocAccessFields_benefits_Read
+  update: DealerPageDocAccessFields_benefits_Update
+  delete: DealerPageDocAccessFields_benefits_Delete
+  fields: DealerPageDocAccessFields_benefits_Fields
+}
+
+type DealerPageDocAccessFields_benefits_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_Fields {
+  title: DealerPageDocAccessFields_benefits_title
+  description: DealerPageDocAccessFields_benefits_description
+  id: DealerPageDocAccessFields_benefits_id
+}
+
+type DealerPageDocAccessFields_benefits_title {
+  create: DealerPageDocAccessFields_benefits_title_Create
+  read: DealerPageDocAccessFields_benefits_title_Read
+  update: DealerPageDocAccessFields_benefits_title_Update
+  delete: DealerPageDocAccessFields_benefits_title_Delete
+}
+
+type DealerPageDocAccessFields_benefits_title_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_title_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_title_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_title_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_description {
+  create: DealerPageDocAccessFields_benefits_description_Create
+  read: DealerPageDocAccessFields_benefits_description_Read
+  update: DealerPageDocAccessFields_benefits_description_Update
+  delete: DealerPageDocAccessFields_benefits_description_Delete
+}
+
+type DealerPageDocAccessFields_benefits_description_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_description_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_description_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_description_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_id {
+  create: DealerPageDocAccessFields_benefits_id_Create
+  read: DealerPageDocAccessFields_benefits_id_Read
+  update: DealerPageDocAccessFields_benefits_id_Update
+  delete: DealerPageDocAccessFields_benefits_id_Delete
+}
+
+type DealerPageDocAccessFields_benefits_id_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_id_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_id_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_benefits_id_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro {
+  create: DealerPageDocAccessFields_applicationIntro_Create
+  read: DealerPageDocAccessFields_applicationIntro_Read
+  update: DealerPageDocAccessFields_applicationIntro_Update
+  delete: DealerPageDocAccessFields_applicationIntro_Delete
+  fields: DealerPageDocAccessFields_applicationIntro_Fields
+}
+
+type DealerPageDocAccessFields_applicationIntro_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_Fields {
+  title: DealerPageDocAccessFields_applicationIntro_title
+  description: DealerPageDocAccessFields_applicationIntro_description
+}
+
+type DealerPageDocAccessFields_applicationIntro_title {
+  create: DealerPageDocAccessFields_applicationIntro_title_Create
+  read: DealerPageDocAccessFields_applicationIntro_title_Read
+  update: DealerPageDocAccessFields_applicationIntro_title_Update
+  delete: DealerPageDocAccessFields_applicationIntro_title_Delete
+}
+
+type DealerPageDocAccessFields_applicationIntro_title_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_title_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_title_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_title_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_description {
+  create: DealerPageDocAccessFields_applicationIntro_description_Create
+  read: DealerPageDocAccessFields_applicationIntro_description_Read
+  update: DealerPageDocAccessFields_applicationIntro_description_Update
+  delete: DealerPageDocAccessFields_applicationIntro_description_Delete
+}
+
+type DealerPageDocAccessFields_applicationIntro_description_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_description_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_description_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_applicationIntro_description_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_updatedAt {
+  create: DealerPageDocAccessFields_updatedAt_Create
+  read: DealerPageDocAccessFields_updatedAt_Read
+  update: DealerPageDocAccessFields_updatedAt_Update
+  delete: DealerPageDocAccessFields_updatedAt_Delete
+}
+
+type DealerPageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_createdAt {
+  create: DealerPageDocAccessFields_createdAt_Create
+  read: DealerPageDocAccessFields_createdAt_Read
+  update: DealerPageDocAccessFields_createdAt_Update
+  delete: DealerPageDocAccessFields_createdAt_Delete
+}
+
+type DealerPageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type DealerPageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type DealerPageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerPageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -13767,6 +14194,7 @@ type Access {
   review_page: review_pageAccess
   blog_page: blog_pageAccess
   catalog_page: catalog_pageAccess
+  dealer_page: dealer_pageAccess
 }
 
 type usersAccess {
@@ -23108,6 +23536,401 @@ type CatalogPageUpdateAccess {
   where: JSONObject
 }
 
+type dealer_pageAccess {
+  fields: DealerPageFields
+  read: DealerPageReadAccess
+  update: DealerPageUpdateAccess
+}
+
+type DealerPageFields {
+  seo: DealerPageFields_seo
+  hero: DealerPageFields_hero
+  benefits: DealerPageFields_benefits
+  applicationIntro: DealerPageFields_applicationIntro
+  updatedAt: DealerPageFields_updatedAt
+  createdAt: DealerPageFields_createdAt
+}
+
+type DealerPageFields_seo {
+  create: DealerPageFields_seo_Create
+  read: DealerPageFields_seo_Read
+  update: DealerPageFields_seo_Update
+  delete: DealerPageFields_seo_Delete
+  fields: DealerPageFields_seo_Fields
+}
+
+type DealerPageFields_seo_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_Fields {
+  metaTitle: DealerPageFields_seo_metaTitle
+  metaDescription: DealerPageFields_seo_metaDescription
+}
+
+type DealerPageFields_seo_metaTitle {
+  create: DealerPageFields_seo_metaTitle_Create
+  read: DealerPageFields_seo_metaTitle_Read
+  update: DealerPageFields_seo_metaTitle_Update
+  delete: DealerPageFields_seo_metaTitle_Delete
+}
+
+type DealerPageFields_seo_metaTitle_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaTitle_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaTitle_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaTitle_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaDescription {
+  create: DealerPageFields_seo_metaDescription_Create
+  read: DealerPageFields_seo_metaDescription_Read
+  update: DealerPageFields_seo_metaDescription_Update
+  delete: DealerPageFields_seo_metaDescription_Delete
+}
+
+type DealerPageFields_seo_metaDescription_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaDescription_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaDescription_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_seo_metaDescription_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero {
+  create: DealerPageFields_hero_Create
+  read: DealerPageFields_hero_Read
+  update: DealerPageFields_hero_Update
+  delete: DealerPageFields_hero_Delete
+  fields: DealerPageFields_hero_Fields
+}
+
+type DealerPageFields_hero_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_Fields {
+  title: DealerPageFields_hero_title
+  description: DealerPageFields_hero_description
+}
+
+type DealerPageFields_hero_title {
+  create: DealerPageFields_hero_title_Create
+  read: DealerPageFields_hero_title_Read
+  update: DealerPageFields_hero_title_Update
+  delete: DealerPageFields_hero_title_Delete
+}
+
+type DealerPageFields_hero_title_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_title_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_title_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_title_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_description {
+  create: DealerPageFields_hero_description_Create
+  read: DealerPageFields_hero_description_Read
+  update: DealerPageFields_hero_description_Update
+  delete: DealerPageFields_hero_description_Delete
+}
+
+type DealerPageFields_hero_description_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_description_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_description_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_hero_description_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits {
+  create: DealerPageFields_benefits_Create
+  read: DealerPageFields_benefits_Read
+  update: DealerPageFields_benefits_Update
+  delete: DealerPageFields_benefits_Delete
+  fields: DealerPageFields_benefits_Fields
+}
+
+type DealerPageFields_benefits_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_Fields {
+  title: DealerPageFields_benefits_title
+  description: DealerPageFields_benefits_description
+  id: DealerPageFields_benefits_id
+}
+
+type DealerPageFields_benefits_title {
+  create: DealerPageFields_benefits_title_Create
+  read: DealerPageFields_benefits_title_Read
+  update: DealerPageFields_benefits_title_Update
+  delete: DealerPageFields_benefits_title_Delete
+}
+
+type DealerPageFields_benefits_title_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_title_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_title_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_title_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_description {
+  create: DealerPageFields_benefits_description_Create
+  read: DealerPageFields_benefits_description_Read
+  update: DealerPageFields_benefits_description_Update
+  delete: DealerPageFields_benefits_description_Delete
+}
+
+type DealerPageFields_benefits_description_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_description_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_description_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_description_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_id {
+  create: DealerPageFields_benefits_id_Create
+  read: DealerPageFields_benefits_id_Read
+  update: DealerPageFields_benefits_id_Update
+  delete: DealerPageFields_benefits_id_Delete
+}
+
+type DealerPageFields_benefits_id_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_id_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_id_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_benefits_id_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro {
+  create: DealerPageFields_applicationIntro_Create
+  read: DealerPageFields_applicationIntro_Read
+  update: DealerPageFields_applicationIntro_Update
+  delete: DealerPageFields_applicationIntro_Delete
+  fields: DealerPageFields_applicationIntro_Fields
+}
+
+type DealerPageFields_applicationIntro_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_Fields {
+  title: DealerPageFields_applicationIntro_title
+  description: DealerPageFields_applicationIntro_description
+}
+
+type DealerPageFields_applicationIntro_title {
+  create: DealerPageFields_applicationIntro_title_Create
+  read: DealerPageFields_applicationIntro_title_Read
+  update: DealerPageFields_applicationIntro_title_Update
+  delete: DealerPageFields_applicationIntro_title_Delete
+}
+
+type DealerPageFields_applicationIntro_title_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_title_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_title_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_title_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_description {
+  create: DealerPageFields_applicationIntro_description_Create
+  read: DealerPageFields_applicationIntro_description_Read
+  update: DealerPageFields_applicationIntro_description_Update
+  delete: DealerPageFields_applicationIntro_description_Delete
+}
+
+type DealerPageFields_applicationIntro_description_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_description_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_description_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_applicationIntro_description_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_updatedAt {
+  create: DealerPageFields_updatedAt_Create
+  read: DealerPageFields_updatedAt_Read
+  update: DealerPageFields_updatedAt_Update
+  delete: DealerPageFields_updatedAt_Delete
+}
+
+type DealerPageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type DealerPageFields_createdAt {
+  create: DealerPageFields_createdAt_Create
+  read: DealerPageFields_createdAt_Read
+  update: DealerPageFields_createdAt_Update
+  delete: DealerPageFields_createdAt_Delete
+}
+
+type DealerPageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type DealerPageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type DealerPageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type DealerPageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type DealerPageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type DealerPageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean, locale: LocaleInputType): User
   updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, locale: LocaleInputType, trash: Boolean): User
@@ -23199,6 +24022,7 @@ type Mutation {
   updateReviewPage(data: mutationReviewPageInput!, draft: Boolean, locale: LocaleInputType): ReviewPage
   updateBlogPage(data: mutationBlogPageInput!, draft: Boolean, locale: LocaleInputType): BlogPage
   updateCatalogPage(data: mutationCatalogPageInput!, draft: Boolean, locale: LocaleInputType): CatalogPage
+  updateDealerPage(data: mutationDealerPageInput!, draft: Boolean, locale: LocaleInputType): DealerPage
 }
 
 input mutationUserInput {
@@ -24370,6 +25194,36 @@ input mutationCatalogPage_SeoInput {
 }
 
 input mutationCatalogPage_SeoTextInput {
+  title: String
+  description: String
+}
+
+input mutationDealerPageInput {
+  seo: mutationDealerPage_SeoInput
+  hero: mutationDealerPage_HeroInput
+  benefits: [mutationDealerPage_BenefitsInput]
+  applicationIntro: mutationDealerPage_ApplicationIntroInput
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationDealerPage_SeoInput {
+  metaTitle: String
+  metaDescription: String
+}
+
+input mutationDealerPage_HeroInput {
+  title: String
+  description: String
+}
+
+input mutationDealerPage_BenefitsInput {
+  title: String
+  description: String
+  id: String
+}
+
+input mutationDealerPage_ApplicationIntroInput {
   title: String
   description: String
 }

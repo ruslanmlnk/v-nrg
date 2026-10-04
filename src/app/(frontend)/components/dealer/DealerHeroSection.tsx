@@ -2,12 +2,18 @@
 
 import PageHero from '../shared/PageHero'
 
-export function DealerHeroSection() {
+export function DealerHeroSection({
+  title,
+  description,
+}: {
+  title?: string | null
+  description?: string | null
+}) {
   return (
     <PageHero
       currentLabel="Стати дилером"
-      title="Стати дилером V-NRG"
-      description="Бажаєте співпрацювати з нами? Заповніть заявку на дилерство — ми зв'яжемося з вами найближчим часом"
+      title={title ?? ''}
+      description={description ?? ''}
       sectionClassName="pb-[91px] pt-14"
       contentClassName="max-w-[920px]"
     />

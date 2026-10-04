@@ -1,3 +1,9 @@
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+import { cache } from 'react'
+import { getSiteLocale } from '../lib/getSiteLocale'
+import { createSeoMetadata } from '../lib/seo'
+
 import Link from 'next/link'
 
 import IconAsset from '../components/ui/IconAsset'
@@ -9,25 +15,15 @@ import whatsappIconAsset from '@public/icon/generated/components-site-footer-wha
 import { DealerHeroSection } from '../components/dealer/DealerHeroSection'
 import ArrowPillButton from '../components/ui/ArrowPillButton'
 
-export const metadata = {
-  alternates: { canonical: '/dealer' },
-  title: 'Стати дилером V-NRG',
-}
+const getDealerPage = cache(async () => {
+  const payload = await getPayload({ config: configPromise })
+  return payload.findGlobal({ slug: 'dealer-page', locale: await getSiteLocale(), depth: 0 })
+})
 
-const benefits = [
-  {
-    title: 'Партнерські умови',
-    description: 'Прозора система співпраці та індивідуальний підхід',
-  },
-  {
-    title: 'Маркетингова підтримка',
-    description: 'Матеріали, консультації та допомога в запуску',
-  },
-  {
-    title: 'Дилерські ціни',
-    description: 'Спеціальні умови закупівлі та персональні знижки',
-  },
-]
+export async function generateMetadata() {
+  const page = await getDealerPage()
+  return createSeoMetadata(page.seo, 'Стати дилером V-NRG', '/dealer')
+}
 
 const socialLinks = [
   { href: '#', icon: telegramIconAsset, label: 'Telegram' },
@@ -36,40 +32,41 @@ const socialLinks = [
   { href: '#', icon: facebookIconAsset, label: 'Facebook' },
 ]
 
-export default function DealerPage() {
+export default async function DealerPage() {
+  const page = await getDealerPage()
+  const benefits = page.benefits ?? []
   return (
     <main className="pt-5">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col px-4 pb-[100px] sm:px-6 xl:px-0">
         <section className="flex flex-col items-center">
           <div className="w-full">
-            <DealerHeroSection />
+            <DealerHeroSection title={page.hero?.title} description={page.hero?.description} />
           </div>
 
-          <div className="-mt-[35px] flex w-[calc(100%-32px)] max-w-[1100px] flex-col rounded-[20px] bg-[#4FACF5] p-8 text-white lg:w-full lg:flex-row lg:items-center lg:justify-between">
-            {benefits.map((benefit, index) => (
-              <div key={benefit.title} className="flex flex-col lg:flex-row lg:items-center">
-                <div className="flex w-full max-w-[287px] flex-col gap-4 py-2 lg:py-0">
-                  <h2 className="text-[24px] font-medium leading-[145%]">{benefit.title}</h2>
-                  <p className="text-[18px] font-medium leading-[165%]">{benefit.description}</p>
+          {benefits.length > 0 ? (
+            <div className="-mt-[35px] grid w-[calc(100%-32px)] max-w-[1100px] grid-cols-1 gap-8 rounded-[20px] bg-[#4FACF5] p-8 text-white md:grid-cols-2 lg:w-full lg:grid-cols-3">
+              {benefits.map((benefit) => (
+                <div key={benefit.id} className="flex min-w-0 flex-col gap-4">
+                  <h2 className="break-words text-[24px] font-medium leading-[145%]">
+                    {benefit.title}
+                  </h2>
+                  <p className="whitespace-pre-line break-words text-[18px] font-medium leading-[165%]">
+                    {benefit.description}
+                  </p>
                 </div>
-                {index < benefits.length - 1 ? (
-                  <span className="my-6 h-px w-full bg-white lg:mx-[34px] lg:my-0 lg:h-[111px] lg:w-px" />
-                ) : null}
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : null}
         </section>
 
         <section className="grid items-start gap-12 pt-12 lg:grid-cols-[minmax(0,1fr)_610px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-6 border-b border-[#D5E0E8] pb-6">
               <h2 className="text-[38px] font-medium leading-[125%] text-[#22354A] md:text-[48px]">
-                Стати дилером
+                {page.applicationIntro?.title}
               </h2>
-              <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                Щоб отримати статус офіційного дилера V-NRG, заповніть форму заявки.
-                Після перевірки даних наш менеджер зв’яжеться з вами для уточнення
-                деталей співпраці
+              <p className="whitespace-pre-line text-[18px] font-medium leading-[165%] text-[#22354A]">
+                {page.applicationIntro?.description}
               </p>
             </div>
 

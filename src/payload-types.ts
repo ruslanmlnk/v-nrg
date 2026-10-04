@@ -124,6 +124,7 @@ export interface Config {
     'review-page': ReviewPage;
     'blog-page': BlogPage;
     'catalog-page': CatalogPage;
+    'dealer-page': DealerPage;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -134,6 +135,7 @@ export interface Config {
     'review-page': ReviewPageSelect<false> | ReviewPageSelect<true>;
     'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
     'catalog-page': CatalogPageSelect<false> | CatalogPageSelect<true>;
+    'dealer-page': DealerPageSelect<false> | DealerPageSelect<true>;
   };
   locale: 'uk' | 'en';
   widgets: {
@@ -1413,6 +1415,37 @@ export interface CatalogPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dealer-page".
+ */
+export interface DealerPage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  hero?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
+   * Додавайте, видаляйте й перетягуйте картки для зміни порядку.
+   */
+  benefits?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  applicationIntro?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -1686,6 +1719,40 @@ export interface CatalogPageSelect<T extends boolean = true> {
         metaDescription?: T;
       };
   seoText?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dealer-page_select".
+ */
+export interface DealerPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  benefits?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  applicationIntro?:
     | T
     | {
         title?: T;
