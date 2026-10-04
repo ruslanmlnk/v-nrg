@@ -5,7 +5,7 @@ export function AboutHeroSection() {
     <PageHero
       currentLabel="Про бренд"
       title="Про бренд V-NRG"
-      description="Міжнародний виробник професійного обладнання для вакуумного масажу з понад 15-річним досвідом."
+      description="Міжнародний виробник професійного обладнання для вакуумного масажу з понад 5-річним досвідом."
       contentClassName="max-w-[845px]"
     />
   )

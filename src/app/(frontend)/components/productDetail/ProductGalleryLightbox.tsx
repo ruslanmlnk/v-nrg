@@ -57,21 +57,25 @@ export function ProductGalleryLightbox({
     <div
       aria-label="Перегляд галереї товару"
       aria-modal="true"
-      className="fixed inset-0 z-[200] flex flex-col bg-[#142233]/95 px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-[max(12px,env(safe-area-inset-top))] backdrop-blur-sm sm:px-6"
-      onMouseDown={(event) => {
-        if (event.currentTarget === event.target) onClose()
-      }}
+      className="fixed inset-0 z-[200] isolate flex flex-col px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-[max(12px,env(safe-area-inset-top))] sm:px-6"
       role="dialog"
     >
-      <div className="flex min-h-12 items-center justify-between gap-4 text-white">
-        <span className="text-sm font-medium sm:text-base">
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-label="Закрити галерею кліком по фону"
+        className="absolute inset-0 z-0 cursor-default border-0 bg-[#142233]/95 p-0 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div className="pointer-events-none relative z-10 flex min-h-12 items-center justify-between gap-4 text-white">
+        <span className="pointer-events-auto text-sm font-medium sm:text-base">
           {activeIndex + 1} / {items.length}
         </span>
         <button
           autoFocus
           type="button"
           aria-label="Закрити галерею"
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-[34px] font-light leading-none transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#4FACF5]"
+          className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-[34px] font-light leading-none transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#4FACF5]"
           onClick={onClose}
         >
           ×
@@ -79,7 +83,7 @@ export function ProductGalleryLightbox({
       </div>
 
       <div
-        className="pointer-events-none relative flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center"
+        className="pointer-events-none relative z-10 flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center"
         onTouchStart={(event) => {
           touchStartX.current = event.touches[0]?.clientX ?? null
         }}
@@ -111,7 +115,7 @@ export function ProductGalleryLightbox({
       </div>
 
       {hasMultipleItems ? (
-        <div className="mx-auto flex max-w-full gap-2 overflow-x-auto px-1 pb-1 pt-3 sm:gap-3">
+        <div className="pointer-events-none relative z-10 mx-auto flex max-w-full gap-2 overflow-x-auto px-1 pb-1 pt-3 sm:gap-3">
           {items.map((item, index) => (
             <button
               type="button"
@@ -119,7 +123,7 @@ export function ProductGalleryLightbox({
               aria-label={`Відкрити зображення ${index + 1}`}
               aria-current={index === activeIndex ? 'true' : undefined}
               onClick={() => onSelect(index)}
-              className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-white/10 sm:h-20 sm:w-20 ${
+              className={`pointer-events-auto relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-white/10 sm:h-20 sm:w-20 ${
                 index === activeIndex
                   ? 'ring-2 ring-[#4FACF5] ring-offset-2 ring-offset-[#142233]'
                   : 'opacity-65 hover:opacity-100'
@@ -148,7 +152,7 @@ function LightboxArrow({
       type="button"
       aria-label={isPrevious ? 'Попереднє зображення' : 'Наступне зображення'}
       onClick={onClick}
-      className={`absolute top-1/2 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[38px] leading-none text-[#22354A] shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#4FACF5] sm:flex ${
+      className={`pointer-events-auto absolute top-1/2 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[38px] leading-none text-[#22354A] shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#4FACF5] sm:flex ${
         isPrevious ? 'left-2 lg:left-6' : 'right-2 lg:right-6'
       }`}
     >

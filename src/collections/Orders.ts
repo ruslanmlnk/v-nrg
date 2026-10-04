@@ -1,4 +1,7 @@
 import type { Access, CollectionConfig, PayloadRequest } from 'payload'
+import { sql } from '@payloadcms/db-postgres'
+import { cancelOrder } from '@/lib/cancelOrder'
+import { getAccountOrders } from '@/lib/getAccountOrders'
 
 import { createCardPaymentForOrder, createPartsPaymentForOrder } from '@/lib/monobankOrderPayments'
 import type { Order } from '@/payload-types'
@@ -35,6 +38,8 @@ export const Orders: CollectionConfig = {
     update: isAdmin,
   },
   endpoints: [
+    { path: '/my-orders', method: 'get', handler: getAccountOrders },
+    { path: '/:orderNumber/cancel', method: 'post', handler: cancelOrder },
     {
       path: '/:id/confirm-payment',
       method: 'post',
@@ -342,6 +347,27 @@ async function confirmOrderPayment(req: PayloadRequest) {
   }
 
   const origin = getRequestOrigin(req)
+  if (order.paymentMethod !== 'card-online' && order.paymentMethod !== 'monobank-parts') {
+    return Response.json(
+      { error: 'This payment method does not need confirmation' },
+      { status: 400 },
+    )
+  }
+  // Claim the order before contacting the payment provider. Cancellation and
+  // confirmation cannot both win the transition out of the new state.
+  const claimed = await req.payload.db.drizzle.execute(sql`
+    UPDATE orders SET order_status = 'processing', updated_at = now()
+    WHERE id = ${order.id} AND order_status IN ('new', 'processing')
+      AND payment_approval_status = 'pending_admin'
+      AND payment_status NOT IN ('paid', 'refunded')
+    RETURNING id
+  `)
+  if (claimed.rows.length === 0) {
+    return Response.json(
+      { error: 'Order cannot be confirmed in its current state' },
+      { status: 409 },
+    )
+  }
   const result =
     order.paymentMethod === 'card-online'
       ? await createCardPaymentForOrder(order, origin)

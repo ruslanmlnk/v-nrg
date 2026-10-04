@@ -55,7 +55,6 @@ type PersistedStore = {
   compareIds: ProductId[]
   deliveryAddress: DeliveryAddress | null
   lastOrder: LastOrder | null
-  orderHistory: LastOrder[]
 }
 
 type DetailedCartItem = {
@@ -98,6 +97,7 @@ type CommerceContextValue = {
   compareIds: ProductId[]
   compareProducts: ProductData[]
   completeOrder: (input: CompleteOrderInput) => LastOrder
+  cancelOrder: (orderNumber: string) => Promise<void>
   currentUser: FrontendUser | null
   deliveryAddress: DeliveryAddress | null
   getProductById: (productId: ProductId) => ProductData | undefined
@@ -108,7 +108,6 @@ type CommerceContextValue = {
   isUserLoading: boolean
   isLogoutModalOpen: boolean
   lastOrder: LastOrder | null
-  orderHistory: LastOrder[]
   openCart: () => void
   openDealerModal: () => void
   openLogoutModal: () => void
@@ -136,7 +135,6 @@ const defaultStore: PersistedStore = {
   compareIds: [],
   deliveryAddress: null,
   lastOrder: null,
-  orderHistory: [],
 }
 
 const CommerceContext = createContext<CommerceContextValue | null>(null)
@@ -428,7 +426,6 @@ export function CommerceProvider({
         ...currentStore,
         cartItems: [],
         lastOrder: order,
-        orderHistory: [order, ...currentStore.orderHistory],
       }
 
       persistStore(nextStore)
@@ -438,6 +435,18 @@ export function CommerceProvider({
 
     setIsCartOpen(false)
     return order
+  }
+
+  const cancelOrder: CommerceContextValue['cancelOrder'] = async (orderNumber) => {
+    const response = await fetch(`/api/orders/${encodeURIComponent(orderNumber)}/cancel`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{}',
+    })
+    const result = await response.json().catch(() => null)
+    if (!response.ok)
+      throw new Error(result?.error || 'Не вдалося скасувати замовлення. Спробуйте ще раз.')
   }
 
   const saveDeliveryAddress: CommerceContextValue['saveDeliveryAddress'] = (address) => {
@@ -487,6 +496,7 @@ export function CommerceProvider({
     compareIds: store.compareIds,
     compareProducts,
     completeOrder,
+    cancelOrder,
     currentUser,
     deliveryAddress: store.deliveryAddress,
     getProductById,
@@ -497,7 +507,6 @@ export function CommerceProvider({
     isUserLoading,
     isLogoutModalOpen,
     lastOrder: store.lastOrder,
-    orderHistory: store.orderHistory,
     openCart: () => setIsCartOpen(true),
     openDealerModal: () => setIsDealerModalOpen(true),
     openLogoutModal: () => setIsLogoutModalOpen(true),
@@ -1009,9 +1018,6 @@ function normalizePersistedStore(store: Partial<PersistedStore>): PersistedStore
     compareIds: store.compareIds ?? [],
     deliveryAddress: normalizeDeliveryAddress(store.deliveryAddress),
     lastOrder: store.lastOrder ? normalizeStoredOrder(store.lastOrder) : null,
-    orderHistory:
-      store.orderHistory?.map(normalizeStoredOrder) ??
-      (store.lastOrder ? [normalizeStoredOrder(store.lastOrder)] : []),
   }
 }
 

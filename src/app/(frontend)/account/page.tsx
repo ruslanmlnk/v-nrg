@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { motion } from 'motion/react'
-import { type FormEvent, type ReactNode, useMemo, useState } from 'react'
+import { type FormEvent, type ReactNode, useEffect, useState } from 'react'
+import { useAccountOrders } from '../components/account/useAccountOrders'
 
 import { useCommerce, type DeliveryAddress } from '../components/providers/CommerceProvider'
 import ArrowPillButton from '../components/ui/ArrowPillButton'
@@ -71,10 +72,8 @@ export default function AccountPage() {
     deliveryAddress,
     currentUser,
     isLoggedIn,
-    lastOrder,
     openDealerModal,
     openLogoutModal,
-    orderHistory,
     saveDeliveryAddress,
     updateProfile,
   } = useCommerce()
@@ -82,19 +81,27 @@ export default function AccountPage() {
   const [activeSection, setActiveSection] = useState<AccountSection>('orders')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const totalPages = Math.max(1, Math.ceil(orderHistory.length / ORDERS_PER_PAGE))
+  const {
+    orders: visibleOrders,
+    totalDocs,
+    totalPages,
+    loading,
+    error,
+    refresh,
+  } = useAccountOrders(currentUser?.id, currentPage)
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [currentUser?.id])
+  useEffect(() => {
+    if (!loading && !error && currentPage > totalPages) setCurrentPage(totalPages)
+  }, [currentPage, totalPages, loading, error])
   const safePage = Math.min(currentPage, totalPages)
-  const visibleOrders = useMemo(
-    () => orderHistory.slice((safePage - 1) * ORDERS_PER_PAGE, safePage * ORDERS_PER_PAGE),
-    [orderHistory, safePage],
-  )
 
   const userFullName = `${currentUser?.firstName ?? ''} ${currentUser?.lastName ?? ''}`.trim()
-  const customerName =
-    userFullName || lastOrder?.customerName?.trim() || accountFallbacks.customerName
-  const customerEmail = currentUser?.email || lastOrder?.email || accountFallbacks.customerEmail
-  const ordersStart = orderHistory.length === 0 ? 0 : (safePage - 1) * ORDERS_PER_PAGE + 1
-  const ordersEnd = Math.min(safePage * ORDERS_PER_PAGE, orderHistory.length)
+  const customerName = userFullName || accountFallbacks.customerName
+  const customerEmail = currentUser?.email || accountFallbacks.customerEmail
+  const ordersStart = totalDocs === 0 ? 0 : (safePage - 1) * ORDERS_PER_PAGE + 1
+  const ordersEnd = Math.min(safePage * ORDERS_PER_PAGE, totalDocs)
   const avatarLetter = customerName[0]?.toUpperCase() ?? accountFallbacks.avatarLetter
   const isDealer = currentUser?.role === 'dealer'
 
@@ -228,7 +235,16 @@ export default function AccountPage() {
                   icon={<IconAsset src={historyIconAsset} width={24} height={24} />}
                   title={accountSectionTitles.orders}
                 >
-                  {orderHistory.length === 0 ? (
+                  {error ? (
+                    <div role="alert" className="flex flex-col gap-3 text-[#C70036]">
+                      <p>{error}</p>
+                      <button type="button" onClick={refresh} className="self-start underline">
+                        Спробувати ще раз
+                      </button>
+                    </div>
+                  ) : loading && visibleOrders.length === 0 ? (
+                    <p role="status">Завантаження замовлень…</p>
+                  ) : totalDocs === 0 ? (
                     <EmptyState
                       actionHref={accountEmptyStates.orders.actionHref}
                       actionLabel={accountEmptyStates.orders.actionLabel}
@@ -238,18 +254,18 @@ export default function AccountPage() {
                   ) : (
                     <div className="flex flex-col gap-6">
                       {visibleOrders.map((order) => (
-                        <OrderCard key={order.id} order={order} />
+                        <OrderCard key={order.id} order={order} onCancelled={refresh} />
                       ))}
                     </div>
                   )}
                 </SectionCard>
 
-                {orderHistory.length > 0 ? (
+                {totalDocs > 0 ? (
                   <section className="rounded-[24px] bg-white px-8 py-6 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
                     <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                       <div className="text-[18px] font-medium leading-[165%] text-[#22354A]">
                         {orderLabels.shownPrefix} {ordersStart}-{ordersEnd}{' '}
-                        {orderLabels.shownSeparator} {orderHistory.length} замовлень
+                        {orderLabels.shownSeparator} {totalDocs} замовлень
                       </div>
 
                       <div className="flex items-center gap-[10px]">

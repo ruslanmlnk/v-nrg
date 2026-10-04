@@ -18,7 +18,7 @@ export function mapGraphQLCategories(categories: GraphQLCategory[]): ProductCate
   return categories
     .map((category) =>
       unwrapCatalogCategory({
-        description: category.description,
+        description: category.description as ProductRichTextContent | string | null | undefined,
         id: category.id,
         imageUrl: category.image?.url,
         slug: category.slug,

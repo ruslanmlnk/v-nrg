@@ -1,4 +1,4 @@
-export const ORDERS_PER_PAGE = 5
+export { ACCOUNT_ORDERS_PAGE_SIZE as ORDERS_PER_PAGE } from '@/lib/accountOrders'
 
 export type AccountSection = 'orders' | 'profile' | 'addresses' | 'price-list'
 
@@ -24,22 +24,22 @@ export const accountSidebarItems: Array<{
   id: AccountSection
   label: string
 }> = [
-    {
-      iconKey: 'orders',
-      id: 'orders',
-      label: 'Мої замовлення',
-    },
-    {
-      iconKey: 'profile',
-      id: 'profile',
-      label: 'Профіль',
-    },
-    {
-      iconKey: 'addresses',
-      id: 'addresses',
-      label: 'Адреси доставки',
-    },
-  ]
+  {
+    iconKey: 'orders',
+    id: 'orders',
+    label: 'Мої замовлення',
+  },
+  {
+    iconKey: 'profile',
+    id: 'profile',
+    label: 'Профіль',
+  },
+  {
+    iconKey: 'addresses',
+    id: 'addresses',
+    label: 'Адреси доставки',
+  },
+]
 
 export const dealerCta = {
   label: 'Стати дилером',
@@ -103,6 +103,11 @@ export const orderLabels = {
 } as const
 
 export const orderStatusMeta = {
+  new: {
+    colorClassName: 'bg-[#FCF5DC] text-[#BB7A00]',
+    iconKey: 'pending',
+    label: 'Нове',
+  },
   'awaiting-payment': {
     colorClassName: 'bg-[#FCF5DC] text-[#BB7A00]',
     iconKey: 'pending',
