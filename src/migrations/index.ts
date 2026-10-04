@@ -25,6 +25,8 @@ import * as migration_20260829_060000_registration_verifications_lock_relation f
 
 import * as migration_20260929_010000_category_description_lexical from './20260929_010000_category_description_lexical'
 
+import * as migration_20261004_010000_category_seo_text from './20261004_010000_category_seo_text'
+
 export const migrations = [
   {
     up: migration_20260420_084925_products_cms_fields.up,
@@ -150,5 +152,10 @@ export const migrations = [
     up: migration_20260929_010000_category_description_lexical.up,
     down: migration_20260929_010000_category_description_lexical.down,
     name: '20260929_010000_category_description_lexical',
+  },
+  {
+    up: migration_20261004_010000_category_seo_text.up,
+    down: migration_20261004_010000_category_seo_text.down,
+    name: '20261004_010000_category_seo_text',
   },
 ]

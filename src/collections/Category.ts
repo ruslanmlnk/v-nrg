@@ -24,7 +24,13 @@ export const Category: CollectionConfig = {
     },
     {
       name: 'description',
+      type: 'text',
+    },
+    {
+      name: 'seoText',
+      label: 'SEO-текст знизу сторінки',
       type: 'richText',
+      localized: true,
     },
     slugField({
       useAsSlug: 'title',

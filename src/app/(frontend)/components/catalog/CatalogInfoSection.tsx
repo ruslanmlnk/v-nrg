@@ -2,14 +2,14 @@
 
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import readMoreArrowIconAsset from '@public/icon/generated/catalog-read-more-arrow.svg'
-import type { ProductCategoryData } from '../../data/products'
+import type { ProductRichTextContent as RichTextContent } from '../../data/products'
 import { ProductRichTextContent } from '../productDetail/ProductRichTextContent'
 
 export function CatalogInfoSection({
   description,
   title,
 }: {
-  description?: null | ProductCategoryData['description']
+  description?: null | RichTextContent | string
   title?: null | string
 }) {
   if (!description) {

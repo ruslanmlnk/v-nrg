@@ -338,7 +338,8 @@ export interface Category {
   };
   image: number | Media;
   title?: string | null;
-  description?: {
+  description?: string | null;
+  seoText?: {
     root: {
       type: string;
       children: {
@@ -897,6 +898,7 @@ export interface CategorySelect<T extends boolean = true> {
   image?: T;
   title?: T;
   description?: T;
+  seoText?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;

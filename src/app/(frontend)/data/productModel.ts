@@ -3,7 +3,8 @@ export type ProductImage = string | null
 export type ProductCategory = string
 
 export type ProductCategoryData = {
-  description: ProductRichTextContent | string
+  description: string
+  seoText?: ProductRichTextContent | null
   href: string
   id: string
   image: ProductImage
@@ -17,7 +18,8 @@ export type ProductCategorySource = {
 }
 
 export type CatalogCategorySource = ProductCategorySource & {
-  description?: ProductRichTextContent | string | null
+  description?: string | null
+  seoText?: ProductRichTextContent | null
   id?: number | string | null
   imageUrl?: string | null
 }
@@ -230,6 +232,7 @@ export function unwrapCatalogCategory(category: CatalogCategorySource): ProductC
 
   return {
     description: category.description ?? '',
+    seoText: category.seoText,
     href: `/${slug}`,
     id: String(category.id ?? slug),
     image: unwrapText(category.imageUrl) ?? null,

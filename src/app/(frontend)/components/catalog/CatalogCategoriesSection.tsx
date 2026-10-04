@@ -5,7 +5,6 @@ import Link from 'next/link'
 
 import { useCommerce } from '../providers/CommerceProvider'
 import ProductImagePlaceholder from '../shared/ProductImagePlaceholder'
-import { categoryDescriptionText } from '../../data/categoryDescription'
 
 export function CatalogCategoriesSection() {
   const { categories } = useCommerce()
@@ -42,7 +41,7 @@ export function CatalogCategoriesSection() {
             </h2>
             {category.description ? (
               <p className="text-[18px] font-medium leading-[165%] text-[#22354A]">
-                {categoryDescriptionText(category.description)}
+                {category.description}
               </p>
             ) : null}
           </div>

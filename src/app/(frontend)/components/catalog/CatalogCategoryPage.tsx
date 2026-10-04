@@ -303,7 +303,7 @@ export function CatalogCategoryPage({ routeCategory }: { routeCategory: string }
         </section>
 
         <CatalogInfoSection
-          description={activeCategory?.description}
+          description={activeCategory?.seoText}
           title={activeCategory?.title}
         />
       </div>

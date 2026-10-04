@@ -2553,7 +2553,8 @@ export type Category = {
   seo?: Maybe<Category_Seo>;
   image?: Maybe<Media>;
   title?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['JSON']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  seoText?: Maybe<Scalars['JSON']['output']>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2567,7 +2568,7 @@ export type CategoryImageArgs = {
 };
 
 
-export type CategoryDescriptionArgs = {
+export type CategorySeoTextArgs = {
   depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -4536,6 +4537,7 @@ export type Category_Where = {
   image?: InputMaybe<Category_Image_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
   description?: InputMaybe<Category_Description_Operator>;
+  seoText?: InputMaybe<Category_SeoText_Operator>;
   generateSlug?: InputMaybe<Category_GenerateSlug_Operator>;
   slug?: InputMaybe<Category_Slug_Operator>;
   updatedAt?: InputMaybe<Category_UpdatedAt_Operator>;
@@ -4584,6 +4586,17 @@ export type Category_Title_Operator = {
 };
 
 export type Category_Description_Operator = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Category_SeoText_Operator = {
   equals?: InputMaybe<Scalars['JSON']['input']>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   like?: InputMaybe<Scalars['JSON']['input']>;
@@ -4645,6 +4658,7 @@ export type Category_Where_And = {
   image?: InputMaybe<Category_Image_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
   description?: InputMaybe<Category_Description_Operator>;
+  seoText?: InputMaybe<Category_SeoText_Operator>;
   generateSlug?: InputMaybe<Category_GenerateSlug_Operator>;
   slug?: InputMaybe<Category_Slug_Operator>;
   updatedAt?: InputMaybe<Category_UpdatedAt_Operator>;
@@ -4660,6 +4674,7 @@ export type Category_Where_Or = {
   image?: InputMaybe<Category_Image_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
   description?: InputMaybe<Category_Description_Operator>;
+  seoText?: InputMaybe<Category_SeoText_Operator>;
   generateSlug?: InputMaybe<Category_GenerateSlug_Operator>;
   slug?: InputMaybe<Category_Slug_Operator>;
   updatedAt?: InputMaybe<Category_UpdatedAt_Operator>;
@@ -4689,6 +4704,7 @@ export type CategoryDocAccessFields = {
   image?: Maybe<CategoryDocAccessFields_Image>;
   title?: Maybe<CategoryDocAccessFields_Title>;
   description?: Maybe<CategoryDocAccessFields_Description>;
+  seoText?: Maybe<CategoryDocAccessFields_SeoText>;
   generateSlug?: Maybe<CategoryDocAccessFields_GenerateSlug>;
   slug?: Maybe<CategoryDocAccessFields_Slug>;
   updatedAt?: Maybe<CategoryDocAccessFields_UpdatedAt>;
@@ -4867,6 +4883,34 @@ export type CategoryDocAccessFields_Description_Update = {
 
 export type CategoryDocAccessFields_Description_Delete = {
   __typename?: 'CategoryDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_SeoText = {
+  __typename?: 'CategoryDocAccessFields_seoText';
+  create?: Maybe<CategoryDocAccessFields_SeoText_Create>;
+  read?: Maybe<CategoryDocAccessFields_SeoText_Read>;
+  update?: Maybe<CategoryDocAccessFields_SeoText_Update>;
+  delete?: Maybe<CategoryDocAccessFields_SeoText_Delete>;
+};
+
+export type CategoryDocAccessFields_SeoText_Create = {
+  __typename?: 'CategoryDocAccessFields_seoText_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_SeoText_Read = {
+  __typename?: 'CategoryDocAccessFields_seoText_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_SeoText_Update = {
+  __typename?: 'CategoryDocAccessFields_seoText_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryDocAccessFields_SeoText_Delete = {
+  __typename?: 'CategoryDocAccessFields_seoText_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -19158,6 +19202,7 @@ export type CategoryFields = {
   image?: Maybe<CategoryFields_Image>;
   title?: Maybe<CategoryFields_Title>;
   description?: Maybe<CategoryFields_Description>;
+  seoText?: Maybe<CategoryFields_SeoText>;
   generateSlug?: Maybe<CategoryFields_GenerateSlug>;
   slug?: Maybe<CategoryFields_Slug>;
   updatedAt?: Maybe<CategoryFields_UpdatedAt>;
@@ -19336,6 +19381,34 @@ export type CategoryFields_Description_Update = {
 
 export type CategoryFields_Description_Delete = {
   __typename?: 'CategoryFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_SeoText = {
+  __typename?: 'CategoryFields_seoText';
+  create?: Maybe<CategoryFields_SeoText_Create>;
+  read?: Maybe<CategoryFields_SeoText_Read>;
+  update?: Maybe<CategoryFields_SeoText_Update>;
+  delete?: Maybe<CategoryFields_SeoText_Delete>;
+};
+
+export type CategoryFields_SeoText_Create = {
+  __typename?: 'CategoryFields_seoText_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_SeoText_Read = {
+  __typename?: 'CategoryFields_seoText_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_SeoText_Update = {
+  __typename?: 'CategoryFields_seoText_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoryFields_SeoText_Delete = {
+  __typename?: 'CategoryFields_seoText_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -29137,7 +29210,8 @@ export type MutationCategoryInput = {
   seo?: InputMaybe<MutationCategory_SeoInput>;
   image?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['JSON']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  seoText?: InputMaybe<Scalars['JSON']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -29153,7 +29227,8 @@ export type MutationCategoryUpdateInput = {
   seo?: InputMaybe<MutationCategoryUpdate_SeoInput>;
   image?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['JSON']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  seoText?: InputMaybe<Scalars['JSON']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -30002,7 +30077,7 @@ export type GetLayoutDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null, beforeafter?: Array<{ __typename?: 'Product_Beforeafter', before?: { __typename?: 'Media', url?: string | null } | null, after?: { __typename?: 'Media', url?: string | null } | null }> | null, reviews?: Array<{ __typename?: 'Review', name?: string | null, text?: string | null }> | null, certificates?: Array<{ __typename?: 'Media', url?: string | null }> | null, moreProducts?: Array<{ __typename?: 'Product', id: number }> | null, recommendedTogether?: Array<{ __typename?: 'Product', id: number }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: unknown | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type GetLayoutDataQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: number, email: string, firstName?: string | null, lastName?: string | null, phone?: string | null, role: User_Role, dealerDiscountPercent?: number | null } | null } | null, Products?: { __typename?: 'Products', docs: Array<{ __typename?: 'Product', id: number, title?: string | null, price: number, rating?: number | null, slug: string, details?: string | null, shortDescription?: string | null, maniples?: number | null, oldprice?: number | null, powerWatts?: number | null, seo?: { __typename?: 'Product_Seo', metaTitle?: string | null, metaDescription?: string | null } | null, category?: Array<{ __typename?: 'Category', slug: string, title?: string | null }> | null, gallery?: Array<{ __typename?: 'Media', url?: string | null }> | null, poster?: { __typename?: 'Media', url?: string | null } | null, description?: { __typename?: 'Product_Description', content?: unknown | null } | null, characteristics?: { __typename?: 'Product_Characteristics', items?: Array<{ __typename?: 'Product_Characteristics_Items', label?: string | null, value?: string | null }> | null } | null, equipment?: { __typename?: 'Product_Equipment', items?: Array<{ __typename?: 'Product_Equipment_Items', item?: string | null }> | null } | null, advantages?: { __typename?: 'Product_Advantages', items?: Array<{ __typename?: 'Product_Advantages_Items', item?: string | null }> | null } | null, video?: { __typename?: 'Product_Video', description?: string | null, items?: Array<{ __typename?: 'Media', alt: string, mimeType?: string | null, thumbnailURL?: string | null, url?: string | null }> | null } | null, faq?: Array<{ __typename?: 'Product_Faq', question?: string | null, answer?: string | null }> | null, beforeafter?: Array<{ __typename?: 'Product_Beforeafter', before?: { __typename?: 'Media', url?: string | null } | null, after?: { __typename?: 'Media', url?: string | null } | null }> | null, reviews?: Array<{ __typename?: 'Review', name?: string | null, text?: string | null }> | null, certificates?: Array<{ __typename?: 'Media', url?: string | null }> | null, moreProducts?: Array<{ __typename?: 'Product', id: number }> | null, recommendedTogether?: Array<{ __typename?: 'Product', id: number }> | null }> } | null, Categories?: { __typename?: 'Categories', docs: Array<{ __typename?: 'Category', id: number, title?: string | null, description?: string | null, seoText?: unknown | null, slug: string, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type GetProductBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -30123,6 +30198,7 @@ export const GetLayoutDataDocument = gql`
       id
       title
       description
+      seoText
       slug
       image {
         url

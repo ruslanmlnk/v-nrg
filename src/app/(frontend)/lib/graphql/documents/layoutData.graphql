@@ -20,6 +20,7 @@ query GetLayoutData($locale: LocaleInputType) {
       id
       title
       description
+      seoText
       slug
       image {
         url

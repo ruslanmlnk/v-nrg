@@ -1551,7 +1551,8 @@ type Category {
   seo: Category_Seo
   image(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Media
   title: String
-  description(depth: Int): JSON
+  description: String
+  seoText(depth: Int): JSON
   generateSlug: Boolean
   slug: String!
   updatedAt: DateTime
@@ -3254,6 +3255,7 @@ input Category_where {
   image: Category_image_operator
   title: Category_title_operator
   description: Category_description_operator
+  seoText: Category_seoText_operator
   generateSlug: Category_generateSlug_operator
   slug: Category_slug_operator
   updatedAt: Category_updatedAt_operator
@@ -3302,6 +3304,17 @@ input Category_title_operator {
 }
 
 input Category_description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Category_seoText_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
@@ -3363,6 +3376,7 @@ input Category_where_and {
   image: Category_image_operator
   title: Category_title_operator
   description: Category_description_operator
+  seoText: Category_seoText_operator
   generateSlug: Category_generateSlug_operator
   slug: Category_slug_operator
   updatedAt: Category_updatedAt_operator
@@ -3378,6 +3392,7 @@ input Category_where_or {
   image: Category_image_operator
   title: Category_title_operator
   description: Category_description_operator
+  seoText: Category_seoText_operator
   generateSlug: Category_generateSlug_operator
   slug: Category_slug_operator
   updatedAt: Category_updatedAt_operator
@@ -3404,6 +3419,7 @@ type CategoryDocAccessFields {
   image: CategoryDocAccessFields_image
   title: CategoryDocAccessFields_title
   description: CategoryDocAccessFields_description
+  seoText: CategoryDocAccessFields_seoText
   generateSlug: CategoryDocAccessFields_generateSlug
   slug: CategoryDocAccessFields_slug
   updatedAt: CategoryDocAccessFields_updatedAt
@@ -3551,6 +3567,29 @@ type CategoryDocAccessFields_description_Update {
 }
 
 type CategoryDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seoText {
+  create: CategoryDocAccessFields_seoText_Create
+  read: CategoryDocAccessFields_seoText_Read
+  update: CategoryDocAccessFields_seoText_Update
+  delete: CategoryDocAccessFields_seoText_Delete
+}
+
+type CategoryDocAccessFields_seoText_Create {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seoText_Read {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seoText_Update {
+  permission: Boolean!
+}
+
+type CategoryDocAccessFields_seoText_Delete {
   permission: Boolean!
 }
 
@@ -15649,6 +15688,7 @@ type CategoryFields {
   image: CategoryFields_image
   title: CategoryFields_title
   description: CategoryFields_description
+  seoText: CategoryFields_seoText
   generateSlug: CategoryFields_generateSlug
   slug: CategoryFields_slug
   updatedAt: CategoryFields_updatedAt
@@ -15796,6 +15836,29 @@ type CategoryFields_description_Update {
 }
 
 type CategoryFields_description_Delete {
+  permission: Boolean!
+}
+
+type CategoryFields_seoText {
+  create: CategoryFields_seoText_Create
+  read: CategoryFields_seoText_Read
+  update: CategoryFields_seoText_Update
+  delete: CategoryFields_seoText_Delete
+}
+
+type CategoryFields_seoText_Create {
+  permission: Boolean!
+}
+
+type CategoryFields_seoText_Read {
+  permission: Boolean!
+}
+
+type CategoryFields_seoText_Update {
+  permission: Boolean!
+}
+
+type CategoryFields_seoText_Delete {
   permission: Boolean!
 }
 
@@ -23449,7 +23512,8 @@ input mutationCategoryInput {
   seo: mutationCategory_SeoInput
   image: Int
   title: String
-  description: JSON
+  description: String
+  seoText: JSON
   generateSlug: Boolean
   slug: String!
   updatedAt: String
@@ -23465,7 +23529,8 @@ input mutationCategoryUpdateInput {
   seo: mutationCategoryUpdate_SeoInput
   image: Int
   title: String
-  description: JSON
+  description: String
+  seoText: JSON
   generateSlug: Boolean
   slug: String
   updatedAt: String
