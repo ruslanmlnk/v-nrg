@@ -13506,7 +13506,7 @@ type BlogPageUpdateDocAccess {
 
 type CatalogPage {
   seo: CatalogPage_Seo
-  seoText: CatalogPage_SeoText
+  seoText(depth: Int): JSON
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -13514,11 +13514,6 @@ type CatalogPage {
 type CatalogPage_Seo {
   metaTitle: String
   metaDescription: String
-}
-
-type CatalogPage_SeoText {
-  title: String
-  description: String
 }
 
 type catalog_pageDocAccess {
@@ -13614,7 +13609,6 @@ type CatalogPageDocAccessFields_seoText {
   read: CatalogPageDocAccessFields_seoText_Read
   update: CatalogPageDocAccessFields_seoText_Update
   delete: CatalogPageDocAccessFields_seoText_Delete
-  fields: CatalogPageDocAccessFields_seoText_Fields
 }
 
 type CatalogPageDocAccessFields_seoText_Create {
@@ -13630,57 +13624,6 @@ type CatalogPageDocAccessFields_seoText_Update {
 }
 
 type CatalogPageDocAccessFields_seoText_Delete {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_Fields {
-  title: CatalogPageDocAccessFields_seoText_title
-  description: CatalogPageDocAccessFields_seoText_description
-}
-
-type CatalogPageDocAccessFields_seoText_title {
-  create: CatalogPageDocAccessFields_seoText_title_Create
-  read: CatalogPageDocAccessFields_seoText_title_Read
-  update: CatalogPageDocAccessFields_seoText_title_Update
-  delete: CatalogPageDocAccessFields_seoText_title_Delete
-}
-
-type CatalogPageDocAccessFields_seoText_title_Create {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_title_Read {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_title_Update {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_title_Delete {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_description {
-  create: CatalogPageDocAccessFields_seoText_description_Create
-  read: CatalogPageDocAccessFields_seoText_description_Read
-  update: CatalogPageDocAccessFields_seoText_description_Update
-  delete: CatalogPageDocAccessFields_seoText_description_Delete
-}
-
-type CatalogPageDocAccessFields_seoText_description_Create {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_description_Read {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_description_Update {
-  permission: Boolean!
-}
-
-type CatalogPageDocAccessFields_seoText_description_Delete {
   permission: Boolean!
 }
 
@@ -23410,7 +23353,6 @@ type CatalogPageFields_seoText {
   read: CatalogPageFields_seoText_Read
   update: CatalogPageFields_seoText_Update
   delete: CatalogPageFields_seoText_Delete
-  fields: CatalogPageFields_seoText_Fields
 }
 
 type CatalogPageFields_seoText_Create {
@@ -23426,57 +23368,6 @@ type CatalogPageFields_seoText_Update {
 }
 
 type CatalogPageFields_seoText_Delete {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_Fields {
-  title: CatalogPageFields_seoText_title
-  description: CatalogPageFields_seoText_description
-}
-
-type CatalogPageFields_seoText_title {
-  create: CatalogPageFields_seoText_title_Create
-  read: CatalogPageFields_seoText_title_Read
-  update: CatalogPageFields_seoText_title_Update
-  delete: CatalogPageFields_seoText_title_Delete
-}
-
-type CatalogPageFields_seoText_title_Create {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_title_Read {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_title_Update {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_title_Delete {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_description {
-  create: CatalogPageFields_seoText_description_Create
-  read: CatalogPageFields_seoText_description_Read
-  update: CatalogPageFields_seoText_description_Update
-  delete: CatalogPageFields_seoText_description_Delete
-}
-
-type CatalogPageFields_seoText_description_Create {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_description_Read {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_description_Update {
-  permission: Boolean!
-}
-
-type CatalogPageFields_seoText_description_Delete {
   permission: Boolean!
 }
 
@@ -25183,7 +25074,7 @@ input mutationBlogPage_SeoInput {
 
 input mutationCatalogPageInput {
   seo: mutationCatalogPage_SeoInput
-  seoText: mutationCatalogPage_SeoTextInput
+  seoText: JSON
   updatedAt: String
   createdAt: String
 }
@@ -25191,11 +25082,6 @@ input mutationCatalogPageInput {
 input mutationCatalogPage_SeoInput {
   metaTitle: String
   metaDescription: String
-}
-
-input mutationCatalogPage_SeoTextInput {
-  title: String
-  description: String
 }
 
 input mutationDealerPageInput {

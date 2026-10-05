@@ -18,12 +18,12 @@ export const CatalogPage: GlobalConfig = {
     Seo,
     {
       name: 'seoText',
-      type: 'group',
+      type: 'richText',
+      localized: true,
       label: 'SEO-текст',
-      fields: [
-        { name: 'title', type: 'text', label: 'Заголовок' },
-        { name: 'description', type: 'textarea', label: 'Текст' },
-      ],
+      admin: {
+        description: 'Текст унизу сторінки каталогу. Заголовки додавайте безпосередньо в редакторі.',
+      },
     },
   ],
 }

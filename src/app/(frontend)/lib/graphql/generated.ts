@@ -16580,21 +16580,20 @@ export type BlogPageUpdateDocAccess = {
 export type CatalogPage = {
   __typename?: 'CatalogPage';
   seo?: Maybe<CatalogPage_Seo>;
-  seoText?: Maybe<CatalogPage_SeoText>;
+  seoText?: Maybe<Scalars['JSON']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type CatalogPageSeoTextArgs = {
+  depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CatalogPage_Seo = {
   __typename?: 'CatalogPage_Seo';
   metaTitle?: Maybe<Scalars['String']['output']>;
   metaDescription?: Maybe<Scalars['String']['output']>;
-};
-
-export type CatalogPage_SeoText = {
-  __typename?: 'CatalogPage_SeoText';
-  title?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
 };
 
 export type Catalog_PageDocAccess = {
@@ -16709,7 +16708,6 @@ export type CatalogPageDocAccessFields_SeoText = {
   read?: Maybe<CatalogPageDocAccessFields_SeoText_Read>;
   update?: Maybe<CatalogPageDocAccessFields_SeoText_Update>;
   delete?: Maybe<CatalogPageDocAccessFields_SeoText_Delete>;
-  fields?: Maybe<CatalogPageDocAccessFields_SeoText_Fields>;
 };
 
 export type CatalogPageDocAccessFields_SeoText_Create = {
@@ -16729,68 +16727,6 @@ export type CatalogPageDocAccessFields_SeoText_Update = {
 
 export type CatalogPageDocAccessFields_SeoText_Delete = {
   __typename?: 'CatalogPageDocAccessFields_seoText_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Fields = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_Fields';
-  title?: Maybe<CatalogPageDocAccessFields_SeoText_Title>;
-  description?: Maybe<CatalogPageDocAccessFields_SeoText_Description>;
-};
-
-export type CatalogPageDocAccessFields_SeoText_Title = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_title';
-  create?: Maybe<CatalogPageDocAccessFields_SeoText_Title_Create>;
-  read?: Maybe<CatalogPageDocAccessFields_SeoText_Title_Read>;
-  update?: Maybe<CatalogPageDocAccessFields_SeoText_Title_Update>;
-  delete?: Maybe<CatalogPageDocAccessFields_SeoText_Title_Delete>;
-};
-
-export type CatalogPageDocAccessFields_SeoText_Title_Create = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_title_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Title_Read = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_title_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Title_Update = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_title_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Title_Delete = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_title_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Description = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_description';
-  create?: Maybe<CatalogPageDocAccessFields_SeoText_Description_Create>;
-  read?: Maybe<CatalogPageDocAccessFields_SeoText_Description_Read>;
-  update?: Maybe<CatalogPageDocAccessFields_SeoText_Description_Update>;
-  delete?: Maybe<CatalogPageDocAccessFields_SeoText_Description_Delete>;
-};
-
-export type CatalogPageDocAccessFields_SeoText_Description_Create = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_description_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Description_Read = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_description_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Description_Update = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_description_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageDocAccessFields_SeoText_Description_Delete = {
-  __typename?: 'CatalogPageDocAccessFields_seoText_description_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -28539,7 +28475,6 @@ export type CatalogPageFields_SeoText = {
   read?: Maybe<CatalogPageFields_SeoText_Read>;
   update?: Maybe<CatalogPageFields_SeoText_Update>;
   delete?: Maybe<CatalogPageFields_SeoText_Delete>;
-  fields?: Maybe<CatalogPageFields_SeoText_Fields>;
 };
 
 export type CatalogPageFields_SeoText_Create = {
@@ -28559,68 +28494,6 @@ export type CatalogPageFields_SeoText_Update = {
 
 export type CatalogPageFields_SeoText_Delete = {
   __typename?: 'CatalogPageFields_seoText_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Fields = {
-  __typename?: 'CatalogPageFields_seoText_Fields';
-  title?: Maybe<CatalogPageFields_SeoText_Title>;
-  description?: Maybe<CatalogPageFields_SeoText_Description>;
-};
-
-export type CatalogPageFields_SeoText_Title = {
-  __typename?: 'CatalogPageFields_seoText_title';
-  create?: Maybe<CatalogPageFields_SeoText_Title_Create>;
-  read?: Maybe<CatalogPageFields_SeoText_Title_Read>;
-  update?: Maybe<CatalogPageFields_SeoText_Title_Update>;
-  delete?: Maybe<CatalogPageFields_SeoText_Title_Delete>;
-};
-
-export type CatalogPageFields_SeoText_Title_Create = {
-  __typename?: 'CatalogPageFields_seoText_title_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Title_Read = {
-  __typename?: 'CatalogPageFields_seoText_title_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Title_Update = {
-  __typename?: 'CatalogPageFields_seoText_title_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Title_Delete = {
-  __typename?: 'CatalogPageFields_seoText_title_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Description = {
-  __typename?: 'CatalogPageFields_seoText_description';
-  create?: Maybe<CatalogPageFields_SeoText_Description_Create>;
-  read?: Maybe<CatalogPageFields_SeoText_Description_Read>;
-  update?: Maybe<CatalogPageFields_SeoText_Description_Update>;
-  delete?: Maybe<CatalogPageFields_SeoText_Description_Delete>;
-};
-
-export type CatalogPageFields_SeoText_Description_Create = {
-  __typename?: 'CatalogPageFields_seoText_description_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Description_Read = {
-  __typename?: 'CatalogPageFields_seoText_description_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Description_Update = {
-  __typename?: 'CatalogPageFields_seoText_description_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CatalogPageFields_SeoText_Description_Delete = {
-  __typename?: 'CatalogPageFields_seoText_description_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -31067,7 +30940,7 @@ export type MutationBlogPage_SeoInput = {
 
 export type MutationCatalogPageInput = {
   seo?: InputMaybe<MutationCatalogPage_SeoInput>;
-  seoText?: InputMaybe<MutationCatalogPage_SeoTextInput>;
+  seoText?: InputMaybe<Scalars['JSON']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -31075,11 +30948,6 @@ export type MutationCatalogPageInput = {
 export type MutationCatalogPage_SeoInput = {
   metaTitle?: InputMaybe<Scalars['String']['input']>;
   metaDescription?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationCatalogPage_SeoTextInput = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationDealerPageInput = {

@@ -1406,10 +1406,24 @@ export interface CatalogPage {
     metaTitle?: string | null;
     metaDescription?: string | null;
   };
+  /**
+   * Текст унизу сторінки каталогу. Заголовки додавайте безпосередньо в редакторі.
+   */
   seoText?: {
-    title?: string | null;
-    description?: string | null;
-  };
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1718,12 +1732,7 @@ export interface CatalogPageSelect<T extends boolean = true> {
         metaTitle?: T;
         metaDescription?: T;
       };
-  seoText?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-      };
+  seoText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

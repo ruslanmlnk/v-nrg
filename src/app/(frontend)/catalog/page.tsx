@@ -31,10 +31,7 @@ export default async function CatalogPage() {
       <div className="mx-auto flex max-w-[1288px] flex-col gap-5 px-6 pb-[100px]">
         <CatalogHeroSection />
         <CatalogCategoriesSection />
-        <CatalogInfoSection
-          description={catalogPage.seoText?.description}
-          title={catalogPage.seoText?.title}
-        />
+        <CatalogInfoSection description={catalogPage.seoText} />
       </div>
     </div>
   )

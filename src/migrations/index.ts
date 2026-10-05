@@ -1,3 +1,4 @@
+import * as migration_20261005_020000_catalog_seo_lexical from './20261005_020000_catalog_seo_lexical'
 import * as migration_20260420_084925_products_cms_fields from './20260420_084925_products_cms_fields'
 import * as migration_20260603_000000_users_dealer_discount from './20260603_000000_users_dealer_discount'
 import * as migration_20260603_010000_orders_collection from './20260603_010000_orders_collection'
@@ -164,5 +165,10 @@ export const migrations = [
     up: migration_20261005_010000_dealer_page.up,
     down: migration_20261005_010000_dealer_page.down,
     name: '20261005_010000_dealer_page',
+  },
+  {
+    up: migration_20261005_020000_catalog_seo_lexical.up,
+    down: migration_20261005_020000_catalog_seo_lexical.down,
+    name: '20261005_020000_catalog_seo_lexical',
   },
 ]

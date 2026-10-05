@@ -20,9 +20,11 @@ export function CatalogInfoSection({
     <section className="rounded-[20px] bg-white px-8 py-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
-          <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">
-            {title}
-          </h2>
+          {title && (
+            <h2 className="text-[32px] font-medium leading-[125%] tracking-[-0.64px] text-[#22354A]">
+              {title}
+            </h2>
+          )}
           {typeof description === 'string' ? (
             <p className="whitespace-pre-line text-[18px] font-medium leading-[165%] text-[#22354A]">
               {description}
