@@ -20,6 +20,7 @@ beforeEach(() => {
 afterEach(async () => {
   await act(async () => root.unmount())
   vi.unstubAllGlobals()
+  vi.useRealTimers()
 })
 
 it('loads server history and refreshes it after a change', async () => {
@@ -66,4 +67,30 @@ it('reports request errors instead of falling back to local history', async () =
   expect(latest.error).toBeTruthy()
   expect(latest.loading).toBe(false)
   expect(latest.orders).toEqual([])
+})
+
+it('loads confirmation on reopening the account without polling or focus refreshes', async () => {
+  vi.useFakeTimers()
+  const pending = { ...data('order'), orders: [{ id: 'order', paymentUrl: null }] }
+  const confirmed = {
+    ...data('order'),
+    orders: [{ id: 'order', paymentUrl: 'https://example.com/pay' }],
+  }
+  const fetch = vi
+    .fn()
+    .mockResolvedValueOnce(Response.json(pending))
+    .mockResolvedValueOnce(Response.json(confirmed))
+  vi.stubGlobal('fetch', fetch)
+  await act(async () => root.render(React.createElement(Harness, { userId: 12 })))
+  expect(latest.orders[0].paymentUrl).toBeNull()
+  await act(async () => {
+    await vi.advanceTimersByTimeAsync(60000)
+    window.dispatchEvent(new Event('focus'))
+    document.dispatchEvent(new Event('visibilitychange'))
+  })
+  expect(fetch).toHaveBeenCalledTimes(1)
+  expect(latest.orders[0].paymentUrl).toBeNull()
+  await act(async () => root.render(null))
+  await act(async () => root.render(React.createElement(Harness, { userId: 12 })))
+  expect(latest.orders[0].paymentUrl).toBe('https://example.com/pay')
 })

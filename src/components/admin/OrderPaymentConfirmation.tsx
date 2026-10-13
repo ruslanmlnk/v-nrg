@@ -1,17 +1,19 @@
 'use client'
 
 import { useState } from 'react'
-import { Button, useDocumentInfo } from '@payloadcms/ui'
+import { Button, useDocumentInfo, useForm } from '@payloadcms/ui'
 
 type ConfirmPaymentResponse = {
   error?: string
   ok?: boolean
+  emailSent?: boolean
   order?: Record<string, unknown>
   redirectUrl?: string
 }
 
 export default function OrderPaymentConfirmation() {
   const { data, id, setData } = useDocumentInfo()
+  const { dispatchFields } = useForm()
   const [isConfirming, setIsConfirming] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -48,12 +50,26 @@ export default function OrderPaymentConfirmation() {
 
       if (result.order) {
         setData({ ...(data || {}), ...result.order })
+        // DocumentInfo does not update form inputs. Keep a later Save from
+        // overwriting the confirmed payment with the values loaded before it.
+        for (const path of [
+          'orderStatus',
+          'paymentApprovalStatus',
+          'paymentStatus',
+          'confirmedPaymentAt',
+          'monobank',
+        ]) {
+          dispatchFields({ type: 'UPDATE', path, value: result.order[path] })
+        }
       }
 
       setMessage(
-        result.redirectUrl
+        (result.redirectUrl
           ? `Оплату створено. Посилання: ${result.redirectUrl}`
-          : 'Оплату створено.',
+          : 'Оплату створено.') +
+          (result.emailSent
+            ? ' Лист клієнту надіслано.'
+            : ' Не вдалося надіслати лист клієнту. Передайте посилання вручну.'),
       )
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Не вдалося підтвердити оплату')

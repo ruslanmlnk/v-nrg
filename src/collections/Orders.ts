@@ -2,6 +2,7 @@ import type { Access, CollectionConfig, PayloadRequest } from 'payload'
 import { sql } from '@payloadcms/db-postgres'
 import { cancelOrder } from '@/lib/cancelOrder'
 import { getAccountOrders } from '@/lib/getAccountOrders'
+import { sendOrderPaymentNotification } from '@/lib/applicationNotifications'
 
 import { createCardPaymentForOrder, createPartsPaymentForOrder } from '@/lib/monobankOrderPayments'
 import type { Order } from '@/payload-types'
@@ -394,8 +395,19 @@ async function confirmOrderPayment(req: PayloadRequest) {
     req,
   })
 
+  // The payment is already saved. A mail failure must not prompt creation of
+  // another invoice or hide the existing payment link from the administrator.
+  let emailSent = false
+  try {
+    await sendOrderPaymentNotification(updatedOrder, result.redirectUrl)
+    emailSent = true
+  } catch (error) {
+    req.payload.logger.error({ err: error, orderId: order.id }, 'Payment email failed')
+  }
+
   return Response.json({
     ok: true,
+    emailSent,
     order: updatedOrder,
     redirectUrl: result.redirectUrl,
   })

@@ -99,6 +99,22 @@ export function OrderCard({
           </div>
         </div>
 
+        {['card-online', 'monobank-parts'].includes(order.paymentMethod) &&
+        statusKey !== 'cancelled' &&
+        order.paymentStatus === 'awaiting_payment' ? (
+          <p role="status" className="text-[16px] leading-[165%] text-[#22354A]">
+            {order.paymentApprovalStatus === 'pending_admin'
+              ? 'Очікуємо підтвердження замовлення менеджером. Після підтвердження тут з’явиться можливість оплати.'
+              : order.paymentApprovalStatus === 'rejected'
+                ? 'Оплату відхилено менеджером. Зв’яжіться з нами для уточнення.'
+                : order.paymentUrl
+                  ? 'Замовлення підтверджено. Можна перейти до оплати.'
+                  : order.paymentMethod === 'monobank-parts'
+                    ? 'Замовлення підтверджено. Перевірте запит на оплату частинами в застосунку monobank.'
+                    : 'Замовлення підтверджено, але посилання на оплату недоступне. Зв’яжіться з менеджером.'}
+          </p>
+        ) : null}
+
         <div className="rounded-[20px] bg-[#F5F8F9] p-4">
           <div className="mb-4 text-[18px] font-bold leading-[165%] text-[#22354A]">
             {orderLabels.products}

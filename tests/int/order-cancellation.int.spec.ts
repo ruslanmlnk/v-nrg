@@ -21,6 +21,8 @@ const order: AccountOrder = {
   total: 100,
   status: 'new',
   paymentStatus: 'awaiting_payment',
+  paymentApprovalStatus: 'pending_admin',
+  paymentMethod: 'card-online',
   createdAt: '2026-10-04T10:00:00Z',
   canCancel: true,
   paymentUrl: null,
@@ -48,6 +50,27 @@ afterEach(async () => {
 })
 
 describe('Customer order cancellation', () => {
+  it('shows confirmation and the payment link after the server order changes', async () => {
+    expect(container.textContent).toContain('Очікуємо підтвердження')
+    expect(container.querySelector('a')).toBeNull()
+    await act(async () =>
+      root.render(
+        React.createElement(OrderCard, {
+          order: {
+            ...order,
+            status: 'processing',
+            paymentApprovalStatus: 'confirmed',
+            paymentUrl: 'https://example.com/pay',
+            canCancel: false,
+          },
+        }),
+      ),
+    )
+    expect(container.textContent).toContain('Замовлення підтверджено. Можна перейти до оплати.')
+    expect(container.querySelector('a')?.href).toBe('https://example.com/pay')
+    expect(container.textContent).not.toContain('Очікуємо підтвердження')
+  })
+
   it('requires confirmation and lets the customer keep the order', async () => {
     await click('Скасувати замовлення')
     expect(cancelOrder).not.toHaveBeenCalled()

@@ -17,11 +17,8 @@ export function useAccountOrders(userId: number | undefined, page: number) {
   useEffect(() => {
     if (userId === undefined) return
     let disposed = false
-    let controller: AbortController | undefined
+    const request = new AbortController()
     const load = async () => {
-      controller?.abort()
-      const request = new AbortController()
-      controller = request
       setState((current) => ({
         userId,
         page,
@@ -47,19 +44,10 @@ export function useAccountOrders(userId: number | undefined, page: number) {
           })
       }
     }
-    const reloadVisible = () => {
-      if (document.visibilityState === 'visible') void load()
-    }
     void load()
-    window.addEventListener('focus', reloadVisible)
-    document.addEventListener('visibilitychange', reloadVisible)
-    const timer = window.setInterval(reloadVisible, 30000)
     return () => {
       disposed = true
-      controller?.abort()
-      window.clearInterval(timer)
-      window.removeEventListener('focus', reloadVisible)
-      document.removeEventListener('visibilitychange', reloadVisible)
+      request.abort()
     }
   }, [userId, page, revision])
 

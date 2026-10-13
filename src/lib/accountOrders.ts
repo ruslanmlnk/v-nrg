@@ -10,6 +10,8 @@ export type AccountOrder = {
   phone: string
   status: Order['orderStatus']
   paymentStatus: Order['paymentStatus']
+  paymentApprovalStatus: Order['paymentApprovalStatus']
+  paymentMethod: Order['paymentMethod']
   canCancel: boolean
   paymentUrl: string | null
   total: number
@@ -51,6 +53,8 @@ export function toAccountOrder(order: Order): AccountOrder {
     phone: order.phone,
     status: order.orderStatus,
     paymentStatus: order.paymentStatus,
+    paymentApprovalStatus: order.paymentApprovalStatus,
+    paymentMethod: order.paymentMethod,
     canCancel:
       order.orderStatus === 'new' &&
       ['awaiting_payment', 'processing', 'failed'].includes(order.paymentStatus) &&

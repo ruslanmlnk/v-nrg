@@ -40,7 +40,9 @@ export async function sendApplicationNotification(application: ApplicationNotifi
   })
 }
 
-export async function sendDealerApplicationNotification(application: DealerApplicationNotification) {
+export async function sendDealerApplicationNotification(
+  application: DealerApplicationNotification,
+) {
   await sendNotification({
     fields: [
       ['Компанія', application.companyName],
@@ -84,16 +86,45 @@ export async function sendOrderNotification(order: Order, to?: string) {
   })
 }
 
+export async function sendOrderPaymentNotification(order: Order, paymentUrl?: string) {
+  if (!order.customerEmail?.trim()) throw new Error('Order has no customer email')
+  if (paymentUrl && new URL(paymentUrl).protocol !== 'https:') {
+    throw new Error('Invalid payment URL')
+  }
+  if (!paymentUrl && order.paymentMethod !== 'monobank-parts') {
+    throw new Error('Order has no payment URL')
+  }
+  await sendNotification({
+    to: order.customerEmail,
+    subject: `V-NRG: замовлення №${order.orderNumber} підтверджено — оплата`,
+    title: 'Ваше замовлення підтверджено',
+    fields: [
+      ['Номер замовлення', order.orderNumber],
+      ['Ім’я', `${order.firstName} ${order.lastName}`.trim()],
+      ['Сума до оплати', formatMoney(order.total)],
+      [
+        'Оплата',
+        paymentUrl
+          ? 'Перейдіть за посиланням нижче, щоб оплатити замовлення.'
+          : 'Перевірте запит на оплату частинами в застосунку monobank.',
+      ],
+    ],
+    paymentUrl,
+  })
+}
+
 async function sendNotification({
   fields,
   subject,
   title,
   to,
+  paymentUrl,
 }: {
   fields: [string, string][]
   subject: string
   title: string
   to?: string
+  paymentUrl?: string
 }) {
   const mailer = getTransporter()
   const from = requiredEnvironmentVariable('SMTP_FROM')
@@ -101,9 +132,13 @@ async function sendNotification({
 
   await mailer.sendMail({
     from,
-    html: createHtml(title, fields),
+    html:
+      createHtml(title, fields) +
+      (paymentUrl
+        ? `<p><a href="${escapeHtml(paymentUrl)}" style="display:inline-block;padding:14px 24px;background:#4FACF5;color:#ffffff;border-radius:24px;text-decoration:none">Оплатити замовлення</a></p><p>${escapeHtml(paymentUrl)}</p>`
+        : ''),
     subject,
-    text: createText(title, fields),
+    text: createText(title, fields) + (paymentUrl ? `\n\nОплатити замовлення: ${paymentUrl}` : ''),
     to: recipient,
   })
 }

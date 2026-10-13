@@ -91,6 +91,8 @@ describe('Server account orders', () => {
       monobank: { pageUrl: 'https://example.com/payment', raw: { private: true } },
     }
     expect(toAccountOrder(confirmed).paymentUrl).toBe('https://example.com/payment')
+    expect(toAccountOrder(confirmed).paymentApprovalStatus).toBe('confirmed')
+    expect(toAccountOrder(confirmed).paymentMethod).toBe('card-online')
     expect(toAccountOrder({ ...confirmed, paymentStatus: 'paid' }).paymentUrl).toBeNull()
     expect(toAccountOrder({ ...confirmed, orderStatus: 'cancelled' }).paymentUrl).toBeNull()
     expect(
