@@ -24,6 +24,7 @@ import { Turnstile } from '../security/Turnstile'
 import ArrowPillButton from '../ui/ArrowPillButton'
 import type { FrontendUser } from '../../../../lib/frontendUser'
 import { useSitePreferences } from './SitePreferencesProvider'
+import { toggleComparedProduct } from '../compare/toggleComparedProduct'
 
 type CartItem = {
   productId: ProductId
@@ -123,7 +124,6 @@ type CommerceContextValue = {
 }
 
 const STORAGE_KEY = 'v-nrg-front-store'
-const MAX_COMPARE_PRODUCTS = 3
 const orderDateFormatter = new Intl.DateTimeFormat('uk-UA', {
   day: '2-digit',
   month: '2-digit',
@@ -349,22 +349,10 @@ export function CommerceProvider({
       return
     }
 
-    setStore((currentStore) => {
-      if (currentStore.compareIds.includes(productId)) {
-        return {
-          ...currentStore,
-          compareIds: currentStore.compareIds.filter((id) => id !== productId),
-        }
-      }
-
-      return {
-        ...currentStore,
-        compareIds:
-          currentStore.compareIds.length >= MAX_COMPARE_PRODUCTS
-            ? [...currentStore.compareIds.slice(1), productId]
-            : [...currentStore.compareIds, productId],
-      }
-    })
+    setStore((currentStore) => ({
+      ...currentStore,
+      compareIds: toggleComparedProduct(currentStore.compareIds, productId, productsMap),
+    }))
   }
 
   const removeFromCompare: CommerceContextValue['removeFromCompare'] = (productId) => {
