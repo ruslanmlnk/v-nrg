@@ -58,7 +58,6 @@ export default function CheckoutPage() {
   })
 
   const isCartEmpty = cartItemsDetailed.length === 0
-  const partsMonthlyPayment = getMonthlyPayment(cartTotal, partsCount)
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search)
@@ -380,10 +379,7 @@ export default function CheckoutPage() {
                     />
                   </CheckoutField>
 
-                  <Turnstile
-                    onTokenChange={setTurnstileToken}
-                    resetKey={turnstileResetKey}
-                  />
+                  <Turnstile onTokenChange={setTurnstileToken} resetKey={turnstileResetKey} />
 
                   {paymentError ? (
                     <div className="rounded-[20px] border border-[#F4B8B8] bg-[#FFF4F4] px-6 py-4 text-[16px] font-medium leading-[145%] text-[#D94E4E]">
@@ -406,7 +402,7 @@ export default function CheckoutPage() {
 
       <PartsPaymentModal
         isOpen={isPartsModalOpen}
-        monthlyPayment={partsMonthlyPayment}
+        totalInEUR={cartTotal}
         onClose={() => setIsPartsModalOpen(false)}
         onSelect={(nextPartsCount) => {
           setPartsCount(nextPartsCount)
@@ -441,14 +437,6 @@ function getFinancialPhone(financialPhone: string, phone: string) {
   const digits = financialPhone.replace(/\D/g, '')
 
   return digits.length >= 12 ? financialPhone : phone
-}
-
-function getMonthlyPayment(total: number, partsCount: number) {
-  if (!Number.isFinite(total) || total <= 0) {
-    return 0
-  }
-
-  return Math.ceil(total / Math.max(1, partsCount))
 }
 
 function formatDeliveryAddress(address: {

@@ -1,8 +1,10 @@
 'use client'
 
+import { useSitePreferences } from '../providers/SitePreferencesProvider'
+
 type PartsPaymentModalProps = {
   isOpen: boolean
-  monthlyPayment: number
+  totalInEUR: number
   onClose: () => void
   onSelect: (partsCount: number) => void
   onUpdatePartsCount: (partsCount: number) => void
@@ -11,12 +13,25 @@ type PartsPaymentModalProps = {
 
 export function PartsPaymentModal({
   isOpen,
-  monthlyPayment,
+  totalInEUR,
   onClose,
   onSelect,
   onUpdatePartsCount,
   partsCount,
 }: PartsPaymentModalProps) {
+  const { currencies } = useSitePreferences()
+  const uahRate = currencies.find((currency) => currency.code === 'UAH')?.rate
+  const monthlyPayment =
+    typeof uahRate === 'number' &&
+    Number.isFinite(uahRate) &&
+    uahRate > 0 &&
+    Number.isFinite(totalInEUR) &&
+    totalInEUR >= 0 &&
+    partsCount > 0
+      ? Math.round((totalInEUR * uahRate * 100) / partsCount) / 100
+      : null
+  const paymentLabel =
+    monthlyPayment === null ? 'Курс гривні недоступний' : `${formatMoney(monthlyPayment)} / місяць`
   if (!isOpen) {
     return null
   }
@@ -52,7 +67,7 @@ export function PartsPaymentModal({
               Покупка частинами monobank
             </h3>
             <div className="mt-[8px] text-[14px] font-medium leading-[145%] text-[#B7CAD1]">
-              Від {formatMoney(monthlyPayment)} / місяць
+              {paymentLabel}
             </div>
             <div className="mt-[8px] text-[14px] font-medium leading-[145%] text-[#B7CAD1]">
               3 - 8 платежів
@@ -71,12 +86,11 @@ export function PartsPaymentModal({
             ))}
           </select>
 
-          <div className="text-[20px] font-bold leading-[145%] text-[#22354A]">
-            {formatMoney(monthlyPayment)} / місяць
-          </div>
+          <div className="text-[20px] font-bold leading-[145%] text-[#22354A]">{paymentLabel}</div>
 
           <button
             type="button"
+            disabled={monthlyPayment === null}
             onClick={() => onSelect(partsCount)}
             className="flex h-[46px] items-center justify-center rounded-full bg-[#4FACF5] text-[15px] font-bold leading-[145%] text-white"
           >
@@ -89,5 +103,5 @@ export function PartsPaymentModal({
 }
 
 function formatMoney(value: number) {
-  return `${new Intl.NumberFormat('uk-UA').format(value)} ₴`
+  return `${new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 }).format(value)} ₴`
 }

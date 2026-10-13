@@ -75,7 +75,6 @@ export default function ProductDetailView({
   const reviewPages = chunkItems(displayProduct.reviews, 2)
   const visibleReviews = reviewPages[activeReviewPage] ?? reviewPages[0] ?? []
   const deliveryHref = '/deliverypayment'
-  const partsMonthlyPayment = getMonthlyPayment(displayProduct.price * quantity, partsCount)
 
   useEffect(() => {
     setActiveGalleryIndex(0)
@@ -181,7 +180,7 @@ export default function ProductDetailView({
 
       <PartsPaymentModal
         isOpen={isPartsModalOpen}
-        monthlyPayment={partsMonthlyPayment}
+        totalInEUR={displayProduct.price * quantity}
         onClose={() => setIsPartsModalOpen(false)}
         onSelect={(nextPartsCount) => {
           setIsPartsModalOpen(false)
@@ -195,12 +194,4 @@ export default function ProductDetailView({
       />
     </div>
   )
-}
-
-function getMonthlyPayment(total: number, partsCount: number) {
-  if (!Number.isFinite(total) || total <= 0) {
-    return 0
-  }
-
-  return Math.ceil(total / Math.max(1, partsCount))
 }
