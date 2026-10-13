@@ -4,14 +4,14 @@ import { expect, it, vi } from 'vitest'
 import { PartsPaymentModal } from '@/app/(frontend)/components/checkout/PartsPaymentModal'
 
 const preferences = vi.hoisted(() => ({
-  currencies: [{ code: 'UAH', rate: 50 }],
-  currency: { code: 'EUR', rate: 1 },
+  locale: 'uk',
+  currency: { code: 'UAH', rate: 50 },
 }))
 vi.mock('@/app/(frontend)/components/providers/SitePreferencesProvider', () => ({
   useSitePreferences: () => preferences,
 }))
 
-it('converts the EUR total to UAH before dividing, regardless of display currency', async () => {
+it('recalculates installments in the selected site currency when it changes', async () => {
   Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })
   const container = document.createElement('div')
   const root = createRoot(container)
@@ -39,9 +39,19 @@ it('converts the EUR total to UAH before dividing, regardless of display currenc
     expect(paymentText()).toContain('1 750 ₴ / місяць')
     await render(280.01, 3)
     expect(paymentText()).toContain('4 666,83 ₴ / місяць')
-    preferences.currencies = []
+    preferences.currency = { code: 'EUR', rate: 1 }
     await render(280, 5)
-    expect(paymentText()).toContain('Курс гривні недоступний')
+    expect(paymentText()).toContain('56 € / місяць')
+    expect(paymentText()).not.toContain('₴')
+    preferences.currency = { code: 'USD', rate: 1.15 }
+    await render(280, 5)
+    expect(paymentText()).toContain('64,4 $ / місяць')
+    preferences.currency = { code: 'UAH', rate: 50 }
+    await render(280, 5)
+    expect(paymentText()).toContain('2 800 ₴ / місяць')
+    preferences.currency = { code: 'UAH', rate: 0 }
+    await render(280, 5)
+    expect(paymentText()).toContain('Курс валюти недоступний')
     expect(
       Array.from(container.querySelectorAll('button')).find(
         (button) => button.textContent === 'Вибрати',
@@ -49,6 +59,6 @@ it('converts the EUR total to UAH before dividing, regardless of display currenc
     ).toBe(true)
   } finally {
     await act(async () => root.unmount())
-    preferences.currencies = [{ code: 'UAH', rate: 50 }]
+    preferences.currency = { code: 'UAH', rate: 50 }
   }
 })

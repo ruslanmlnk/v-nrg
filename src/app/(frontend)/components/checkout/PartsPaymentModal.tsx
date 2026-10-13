@@ -19,19 +19,25 @@ export function PartsPaymentModal({
   onUpdatePartsCount,
   partsCount,
 }: PartsPaymentModalProps) {
-  const { currencies } = useSitePreferences()
-  const uahRate = currencies.find((currency) => currency.code === 'UAH')?.rate
+  const { currency, locale } = useSitePreferences()
   const monthlyPayment =
-    typeof uahRate === 'number' &&
-    Number.isFinite(uahRate) &&
-    uahRate > 0 &&
+    Number.isFinite(currency.rate) &&
+    currency.rate > 0 &&
     Number.isFinite(totalInEUR) &&
     totalInEUR >= 0 &&
     partsCount > 0
-      ? Math.round((totalInEUR * uahRate * 100) / partsCount) / 100
+      ? Math.round((totalInEUR * currency.rate * 100) / partsCount) / 100
       : null
   const paymentLabel =
-    monthlyPayment === null ? 'Курс гривні недоступний' : `${formatMoney(monthlyPayment)} / місяць`
+    monthlyPayment === null
+      ? 'Курс валюти недоступний'
+      : `${new Intl.NumberFormat(locale === 'uk' ? 'uk-UA' : 'en-US', {
+          style: 'currency',
+          currency: currency.code,
+          currencyDisplay: 'narrowSymbol',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }).format(monthlyPayment)} / місяць`
   if (!isOpen) {
     return null
   }
@@ -100,8 +106,4 @@ export function PartsPaymentModal({
       </div>
     </div>
   )
-}
-
-function formatMoney(value: number) {
-  return `${new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 }).format(value)} ₴`
 }
