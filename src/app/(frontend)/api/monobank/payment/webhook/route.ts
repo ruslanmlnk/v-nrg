@@ -1,4 +1,5 @@
 import { createVerify } from 'crypto'
+import { getCardPaymentStatus, getPaymentWebhookUpdate } from '@/lib/orderPaymentWebhook'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -85,35 +86,15 @@ async function updateOrderPaymentStatus(orderNumber: string, monobank: Record<st
     return
   }
 
+  const paymentStatus = getCardPaymentStatus(monobank.status)
+  if (!paymentStatus) return
+  const data = getPaymentWebhookUpdate(order, monobank, paymentStatus)
+  if (!data) return
   await payload.update({
     collection: 'orders',
-    data: {
-      monobank,
-      orderStatus: getOrderStatusFromPayment(monobank.status),
-      paymentStatus: getPaymentStatus(monobank.status),
-    },
+    data,
     id: order.id,
   })
-}
-
-function getPaymentStatus(status: unknown) {
-  if (status === 'success') {
-    return 'paid'
-  }
-
-  if (status === 'failure' || status === 'expired') {
-    return 'failed'
-  }
-
-  if (status === 'reversed') {
-    return 'refunded'
-  }
-
-  return 'processing'
-}
-
-function getOrderStatusFromPayment(status: unknown) {
-  return status === 'success' ? 'processing' : 'new'
 }
 
 function getStringValue(payload: unknown, key: string) {

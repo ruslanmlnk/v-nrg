@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from 'crypto'
+import { getPaymentWebhookUpdate } from '@/lib/orderPaymentWebhook'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -70,13 +71,11 @@ async function updateOrderPaymentStatus(orderNumber: string, monobank: Record<st
     return
   }
 
+  const data = getPaymentWebhookUpdate(order, monobank, getPaymentStatus(monobank.status))
+  if (!data) return
   await payload.update({
     collection: 'orders',
-    data: {
-      monobank,
-      orderStatus: getOrderStatusFromPayment(monobank.status),
-      paymentStatus: getPaymentStatus(monobank.status),
-    },
+    data,
     id: order.id,
   })
 }
@@ -95,10 +94,6 @@ function getPaymentStatus(status: unknown) {
   }
 
   return 'processing'
-}
-
-function getOrderStatusFromPayment(status: unknown) {
-  return getPaymentStatus(status) === 'paid' ? 'processing' : 'new'
 }
 
 function getStringValue(payload: unknown, key: string) {

@@ -35,7 +35,7 @@ export function toAccountOrder(order: Order): AccountOrder {
   if (
     typeof rawUrl === 'string' &&
     order.paymentApprovalStatus === 'confirmed' &&
-    order.paymentStatus === 'awaiting_payment' &&
+    ['awaiting_payment', 'processing'].includes(order.paymentStatus) &&
     ['new', 'processing'].includes(order.orderStatus)
   ) {
     try {
