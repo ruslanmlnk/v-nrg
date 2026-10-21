@@ -5427,7 +5427,6 @@ type LegalPage {
   generateSlug: Boolean
   slug: String!
   content(depth: Int): JSON
-  contentMarkdown: String
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -5458,7 +5457,6 @@ input LegalPage_where {
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
   content: LegalPage_content_operator
-  contentMarkdown: LegalPage_contentMarkdown_operator
   updatedAt: LegalPage_updatedAt_operator
   createdAt: LegalPage_createdAt_operator
   id: LegalPage_id_operator
@@ -5519,14 +5517,6 @@ input LegalPage_content_operator {
   exists: Boolean
 }
 
-input LegalPage_contentMarkdown_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  exists: Boolean
-}
-
 input LegalPage_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -5566,7 +5556,6 @@ input LegalPage_where_and {
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
   content: LegalPage_content_operator
-  contentMarkdown: LegalPage_contentMarkdown_operator
   updatedAt: LegalPage_updatedAt_operator
   createdAt: LegalPage_createdAt_operator
   id: LegalPage_id_operator
@@ -5581,7 +5570,6 @@ input LegalPage_where_or {
   generateSlug: LegalPage_generateSlug_operator
   slug: LegalPage_slug_operator
   content: LegalPage_content_operator
-  contentMarkdown: LegalPage_contentMarkdown_operator
   updatedAt: LegalPage_updatedAt_operator
   createdAt: LegalPage_createdAt_operator
   id: LegalPage_id_operator
@@ -5607,7 +5595,6 @@ type LegalPagesDocAccessFields {
   generateSlug: LegalPagesDocAccessFields_generateSlug
   slug: LegalPagesDocAccessFields_slug
   content: LegalPagesDocAccessFields_content
-  contentMarkdown: LegalPagesDocAccessFields_contentMarkdown
   updatedAt: LegalPagesDocAccessFields_updatedAt
   createdAt: LegalPagesDocAccessFields_createdAt
 }
@@ -5776,29 +5763,6 @@ type LegalPagesDocAccessFields_content_Update {
 }
 
 type LegalPagesDocAccessFields_content_Delete {
-  permission: Boolean!
-}
-
-type LegalPagesDocAccessFields_contentMarkdown {
-  create: LegalPagesDocAccessFields_contentMarkdown_Create
-  read: LegalPagesDocAccessFields_contentMarkdown_Read
-  update: LegalPagesDocAccessFields_contentMarkdown_Update
-  delete: LegalPagesDocAccessFields_contentMarkdown_Delete
-}
-
-type LegalPagesDocAccessFields_contentMarkdown_Create {
-  permission: Boolean!
-}
-
-type LegalPagesDocAccessFields_contentMarkdown_Read {
-  permission: Boolean!
-}
-
-type LegalPagesDocAccessFields_contentMarkdown_Update {
-  permission: Boolean!
-}
-
-type LegalPagesDocAccessFields_contentMarkdown_Delete {
   permission: Boolean!
 }
 
@@ -17393,7 +17357,6 @@ type LegalPagesFields {
   generateSlug: LegalPagesFields_generateSlug
   slug: LegalPagesFields_slug
   content: LegalPagesFields_content
-  contentMarkdown: LegalPagesFields_contentMarkdown
   updatedAt: LegalPagesFields_updatedAt
   createdAt: LegalPagesFields_createdAt
 }
@@ -17562,29 +17525,6 @@ type LegalPagesFields_content_Update {
 }
 
 type LegalPagesFields_content_Delete {
-  permission: Boolean!
-}
-
-type LegalPagesFields_contentMarkdown {
-  create: LegalPagesFields_contentMarkdown_Create
-  read: LegalPagesFields_contentMarkdown_Read
-  update: LegalPagesFields_contentMarkdown_Update
-  delete: LegalPagesFields_contentMarkdown_Delete
-}
-
-type LegalPagesFields_contentMarkdown_Create {
-  permission: Boolean!
-}
-
-type LegalPagesFields_contentMarkdown_Read {
-  permission: Boolean!
-}
-
-type LegalPagesFields_contentMarkdown_Update {
-  permission: Boolean!
-}
-
-type LegalPagesFields_contentMarkdown_Delete {
   permission: Boolean!
 }
 
@@ -24443,7 +24383,6 @@ input mutationLegalPageInput {
   generateSlug: Boolean
   slug: String!
   content: JSON
-  contentMarkdown: String
   updatedAt: String
   createdAt: String
 }
@@ -24459,7 +24398,6 @@ input mutationLegalPageUpdateInput {
   generateSlug: Boolean
   slug: String
   content: JSON
-  contentMarkdown: String
   updatedAt: String
   createdAt: String
 }

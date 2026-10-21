@@ -7034,7 +7034,6 @@ export type LegalPage = {
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   slug: Scalars['String']['output'];
   content?: Maybe<Scalars['JSON']['output']>;
-  contentMarkdown?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -7072,7 +7071,6 @@ export type LegalPage_Where = {
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
   content?: InputMaybe<LegalPage_Content_Operator>;
-  contentMarkdown?: InputMaybe<LegalPage_ContentMarkdown_Operator>;
   updatedAt?: InputMaybe<LegalPage_UpdatedAt_Operator>;
   createdAt?: InputMaybe<LegalPage_CreatedAt_Operator>;
   id?: InputMaybe<LegalPage_Id_Operator>;
@@ -7133,14 +7131,6 @@ export type LegalPage_Content_Operator = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type LegalPage_ContentMarkdown_Operator = {
-  equals?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type LegalPage_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
@@ -7180,7 +7170,6 @@ export type LegalPage_Where_And = {
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
   content?: InputMaybe<LegalPage_Content_Operator>;
-  contentMarkdown?: InputMaybe<LegalPage_ContentMarkdown_Operator>;
   updatedAt?: InputMaybe<LegalPage_UpdatedAt_Operator>;
   createdAt?: InputMaybe<LegalPage_CreatedAt_Operator>;
   id?: InputMaybe<LegalPage_Id_Operator>;
@@ -7195,7 +7184,6 @@ export type LegalPage_Where_Or = {
   generateSlug?: InputMaybe<LegalPage_GenerateSlug_Operator>;
   slug?: InputMaybe<LegalPage_Slug_Operator>;
   content?: InputMaybe<LegalPage_Content_Operator>;
-  contentMarkdown?: InputMaybe<LegalPage_ContentMarkdown_Operator>;
   updatedAt?: InputMaybe<LegalPage_UpdatedAt_Operator>;
   createdAt?: InputMaybe<LegalPage_CreatedAt_Operator>;
   id?: InputMaybe<LegalPage_Id_Operator>;
@@ -7224,7 +7212,6 @@ export type LegalPagesDocAccessFields = {
   generateSlug?: Maybe<LegalPagesDocAccessFields_GenerateSlug>;
   slug?: Maybe<LegalPagesDocAccessFields_Slug>;
   content?: Maybe<LegalPagesDocAccessFields_Content>;
-  contentMarkdown?: Maybe<LegalPagesDocAccessFields_ContentMarkdown>;
   updatedAt?: Maybe<LegalPagesDocAccessFields_UpdatedAt>;
   createdAt?: Maybe<LegalPagesDocAccessFields_CreatedAt>;
 };
@@ -7429,34 +7416,6 @@ export type LegalPagesDocAccessFields_Content_Update = {
 
 export type LegalPagesDocAccessFields_Content_Delete = {
   __typename?: 'LegalPagesDocAccessFields_content_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesDocAccessFields_ContentMarkdown = {
-  __typename?: 'LegalPagesDocAccessFields_contentMarkdown';
-  create?: Maybe<LegalPagesDocAccessFields_ContentMarkdown_Create>;
-  read?: Maybe<LegalPagesDocAccessFields_ContentMarkdown_Read>;
-  update?: Maybe<LegalPagesDocAccessFields_ContentMarkdown_Update>;
-  delete?: Maybe<LegalPagesDocAccessFields_ContentMarkdown_Delete>;
-};
-
-export type LegalPagesDocAccessFields_ContentMarkdown_Create = {
-  __typename?: 'LegalPagesDocAccessFields_contentMarkdown_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesDocAccessFields_ContentMarkdown_Read = {
-  __typename?: 'LegalPagesDocAccessFields_contentMarkdown_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesDocAccessFields_ContentMarkdown_Update = {
-  __typename?: 'LegalPagesDocAccessFields_contentMarkdown_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesDocAccessFields_ContentMarkdown_Delete = {
-  __typename?: 'LegalPagesDocAccessFields_contentMarkdown_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -21273,7 +21232,6 @@ export type LegalPagesFields = {
   generateSlug?: Maybe<LegalPagesFields_GenerateSlug>;
   slug?: Maybe<LegalPagesFields_Slug>;
   content?: Maybe<LegalPagesFields_Content>;
-  contentMarkdown?: Maybe<LegalPagesFields_ContentMarkdown>;
   updatedAt?: Maybe<LegalPagesFields_UpdatedAt>;
   createdAt?: Maybe<LegalPagesFields_CreatedAt>;
 };
@@ -21478,34 +21436,6 @@ export type LegalPagesFields_Content_Update = {
 
 export type LegalPagesFields_Content_Delete = {
   __typename?: 'LegalPagesFields_content_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesFields_ContentMarkdown = {
-  __typename?: 'LegalPagesFields_contentMarkdown';
-  create?: Maybe<LegalPagesFields_ContentMarkdown_Create>;
-  read?: Maybe<LegalPagesFields_ContentMarkdown_Read>;
-  update?: Maybe<LegalPagesFields_ContentMarkdown_Update>;
-  delete?: Maybe<LegalPagesFields_ContentMarkdown_Delete>;
-};
-
-export type LegalPagesFields_ContentMarkdown_Create = {
-  __typename?: 'LegalPagesFields_contentMarkdown_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesFields_ContentMarkdown_Read = {
-  __typename?: 'LegalPagesFields_contentMarkdown_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesFields_ContentMarkdown_Update = {
-  __typename?: 'LegalPagesFields_contentMarkdown_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type LegalPagesFields_ContentMarkdown_Delete = {
-  __typename?: 'LegalPagesFields_contentMarkdown_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -30309,7 +30239,6 @@ export type MutationLegalPageInput = {
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug: Scalars['String']['input'];
   content?: InputMaybe<Scalars['JSON']['input']>;
-  contentMarkdown?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -30325,7 +30254,6 @@ export type MutationLegalPageUpdateInput = {
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   content?: InputMaybe<Scalars['JSON']['input']>;
-  contentMarkdown?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
 };

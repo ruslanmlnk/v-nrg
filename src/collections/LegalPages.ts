@@ -26,7 +26,7 @@ export const LegalPages: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
-      label: 'Контент Lexical',
+      label: 'Контент',
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
@@ -35,15 +35,6 @@ export const LegalPages: CollectionConfig = {
           }),
         ],
       }),
-    },
-    {
-      name: 'contentMarkdown',
-      type: 'textarea',
-      label: 'Контент Markdown',
-      admin: {
-        description: 'Fallback. Якщо заповнений Lexical-контент, на фронті використовується він.',
-        rows: 24,
-      },
     },
   ],
 }

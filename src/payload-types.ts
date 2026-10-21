@@ -477,10 +477,6 @@ export interface LegalPage {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * Fallback. Якщо заповнений Lexical-контент, на фронті використовується він.
-   */
-  contentMarkdown?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -982,7 +978,6 @@ export interface LegalPagesSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   content?: T;
-  contentMarkdown?: T;
   updatedAt?: T;
   createdAt?: T;
 }

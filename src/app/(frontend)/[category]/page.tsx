@@ -96,13 +96,7 @@ export default async function RootCatalogCategoryPage({
   })
 
   if (legalPage.docs[0]) {
-    return (
-      <LegalPageView
-        content={legalPage.docs[0].content}
-        contentMarkdown={legalPage.docs[0].contentMarkdown}
-        title={legalPage.docs[0].title}
-      />
-    )
+    return <LegalPageView content={legalPage.docs[0].content} title={legalPage.docs[0].title} />
   }
 
   const result = await payload.find({
