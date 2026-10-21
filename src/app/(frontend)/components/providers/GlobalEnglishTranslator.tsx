@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from 'react'
 
-import { generatedEnglishTranslations } from '../../lib/generatedEnglishTranslations'
+import { translateStaticEnglish } from '../../lib/translateStaticEnglish'
 import { useSitePreferences } from './SitePreferencesProvider'
 
-const translatedAttributes = ['aria-label', 'placeholder', 'title']
+const translatedAttributes = ['aria-label', 'placeholder', 'title', 'alt']
 
 type TranslationRecord = {
   original: string
@@ -45,7 +45,7 @@ export function GlobalEnglishTranslator() {
       if (existing) textTranslations.current.delete(node)
 
       const value = node.data.trim()
-      const translation = generatedEnglishTranslations[value]
+      const translation = translateStaticEnglish(value)
       if (!value || !translation) return
 
       const translated = node.data.replace(value, translation)
@@ -61,7 +61,7 @@ export function GlobalEnglishTranslator() {
       const existing = elementTranslations?.get(attribute)
       if (existing?.translated === value) return
 
-      const translation = generatedEnglishTranslations[value]
+      const translation = translateStaticEnglish(value)
       if (!translation) return
 
       const translations = elementTranslations ?? new Map<string, TranslationRecord>()
