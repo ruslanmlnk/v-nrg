@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState, type FormEvent } from 'react'
 
 import { useCommerce } from '../components/providers/CommerceProvider'
+import { useSitePreferences } from '../components/providers/SitePreferencesProvider'
 import { Turnstile } from '../components/security/Turnstile'
 import IconAsset from '@/app/(frontend)/components/ui/IconAsset'
 import cardIconAsset from '@public/icon/generated/checkout-checkout-page-card.svg'
@@ -39,6 +40,12 @@ export default function CheckoutPage() {
     isLoggedIn,
     isUserLoading,
   } = useCommerce()
+  const { locale } = useSitePreferences()
+  const [verificationId, setVerificationId] = useState('')
+  const [verificationCode, setVerificationCode] = useState('')
+  const [verifiedEmail, setVerifiedEmail] = useState('')
+  const [isSendingCode, setIsSendingCode] = useState(false)
+  const [resendAt, setResendAt] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPartsModalOpen, setIsPartsModalOpen] = useState(false)
   const [partsCount, setPartsCount] = useState(8)
@@ -96,15 +103,57 @@ export default function CheckoutPage() {
     }))
   }, [deliveryAddress])
 
+  const requestCode = async () => {
+    if (isSendingCode || isSubmitting) return
+    if (Date.now() < resendAt) {
+      setPaymentError(
+        locale === 'en'
+          ? 'Wait 60 seconds before requesting another code.'
+          : 'Зачекайте 60 секунд перед повторним запитом коду.',
+      )
+      return
+    }
+    setIsSendingCode(true)
+    setPaymentError('')
+    const email = formState.email.trim().toLowerCase()
+    try {
+      const response = await fetch('/api/forms/orders/request-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, turnstileToken, locale }),
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error)
+      setVerificationId(data.verificationId)
+      setVerifiedEmail(email)
+      setVerificationCode('')
+      setResendAt(Date.now() + 60000)
+    } catch (error) {
+      setPaymentError(error instanceof Error ? error.message : 'Unable to send code')
+    } finally {
+      setIsSendingCode(false)
+      setTurnstileToken('')
+      setTurnstileResetKey((value) => value + 1)
+    }
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (isCartEmpty || isSubmitting) {
+    if (isCartEmpty || isSubmitting || isSendingCode) {
       return
     }
 
-    if (!turnstileToken) {
-      setPaymentError('Підтвердьте, що ви не робот.')
+    if (
+      !verificationId ||
+      verifiedEmail !== formState.email.trim().toLowerCase() ||
+      !/^\d{6}$/.test(verificationCode)
+    ) {
+      setPaymentError(
+        locale === 'en'
+          ? 'Confirm your email with the six-digit code first.'
+          : 'Спершу підтвердьте email шестизначним кодом.',
+      )
       return
     }
 
@@ -135,7 +184,8 @@ export default function CheckoutPage() {
         paymentMethod: formState.paymentMethod,
         phone: formState.phone,
         total: cartTotal,
-        turnstileToken,
+        verificationId,
+        verificationCode,
       })
       const orderNumber = createdOrder.orderNumber
 
@@ -379,6 +429,53 @@ export default function CheckoutPage() {
                     />
                   </CheckoutField>
 
+                  <div className="flex flex-col gap-3">
+                    <p>
+                      {locale === 'en'
+                        ? 'Verify your email before placing the order.'
+                        : 'Підтвердьте email перед оформленням замовлення.'}
+                    </p>
+                    <button
+                      type="button"
+                      disabled={
+                        isSendingCode || isSubmitting || !turnstileToken || !formState.email
+                      }
+                      onClick={requestCode}
+                      className="rounded-full bg-[#4FACF5] px-6 py-3 text-white disabled:opacity-50"
+                    >
+                      {isSendingCode
+                        ? locale === 'en'
+                          ? 'Sending…'
+                          : 'Надсилаємо…'
+                        : locale === 'en'
+                          ? 'Send email verification code'
+                          : 'Надіслати код на email'}
+                    </button>
+                    {verificationId && verifiedEmail === formState.email.trim().toLowerCase() ? (
+                      <CheckoutField
+                        label={locale === 'en' ? 'Email verification code *' : 'Код із листа *'}
+                      >
+                        <p role="status">
+                          {locale === 'en' ? 'Code sent to' : 'Код надіслано на'} {verifiedEmail}.{' '}
+                          {locale === 'en'
+                            ? 'Valid for 10 minutes. Check your spam folder too.'
+                            : 'Діє 10 хвилин. Перевірте також папку «Спам».'}
+                        </p>
+                        <input
+                          required
+                          inputMode="numeric"
+                          autoComplete="one-time-code"
+                          pattern="[0-9]{6}"
+                          maxLength={6}
+                          value={verificationCode}
+                          onChange={(event) =>
+                            setVerificationCode(event.target.value.replace(/\D/g, ''))
+                          }
+                          className={checkoutFieldClasses}
+                        />
+                      </CheckoutField>
+                    ) : null}
+                  </div>
                   <Turnstile onTokenChange={setTurnstileToken} resetKey={turnstileResetKey} />
 
                   {paymentError ? (

@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 import type { User } from '@/payload-types'
 import { sendOrderNotification } from '@/lib/applicationNotifications'
-import { verifyTurnstile } from '@/lib/turnstile'
+import { consumeCheckoutCode, normalizeCheckoutEmail } from '@/lib/checkoutEmailVerification'
 
 type CheckoutOrderItem = {
   id?: string
@@ -26,7 +26,8 @@ type CheckoutOrderBody = {
   paymentMethod?: string
   phone?: string
   total?: number
-  turnstileToken?: unknown
+  verificationId?: unknown
+  verificationCode?: unknown
 }
 
 const paymentMethods = ['card-online', 'monobank-parts', 'invoice', 'cash-on-delivery'] as const
@@ -35,7 +36,7 @@ const deliveryMethods = ['nova-poshta', 'courier', 'pickup'] as const
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as CheckoutOrderBody | null
 
-  if (!body || !(await verifyTurnstile(request, body.turnstileToken))) {
+  if (!body) {
     return NextResponse.json({ error: 'Invalid order payload' }, { status: 400 })
   }
 
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
   const firstName = normalizeText(body.firstName)
   const lastName = normalizeText(body.lastName)
   const phone = normalizeText(body.phone)
-  const customerEmail = normalizeText(body.customerEmail)
+  const customerEmail = normalizeCheckoutEmail(body.customerEmail)
   const paymentMethod = normalizePaymentMethod(body.paymentMethod)
 
   if (!orderNumber || !firstName || !lastName || !phone || !customerEmail || !paymentMethod) {
@@ -70,12 +71,36 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Order items are invalid' }, { status: 400 })
   }
 
+  if (
+    !(await consumeCheckoutCode(payload, customerEmail, body.verificationId, body.verificationCode))
+  ) {
+    return NextResponse.json(
+      {
+        error:
+          'Невірний або прострочений код. Перевірте код або запросіть новий. / Invalid or expired code. Check it or request a new one.',
+      },
+      { status: 400 },
+    )
+  }
+  // Ownership of the email is proven. Guest checkout never inherits dealer discounts.
+  const customer =
+    user ??
+    (
+      await payload.find({
+        collection: 'users',
+        where: { email: { equals: customerEmail } },
+        limit: 1,
+        depth: 0,
+        overrideAccess: true,
+      })
+    ).docs[0]
+
   const order = await payload
     .create({
       collection: 'orders',
       data: {
         comment: normalizeText(body.comment),
-        customer: user?.collection === 'users' ? user.id : undefined,
+        customer: customer?.id,
         customerEmail,
         delivery: normalizeDelivery(body.delivery),
         firstName,
@@ -100,7 +125,7 @@ export async function POST(request: NextRequest) {
 
   if (!order) {
     return NextResponse.json(
-      { error: 'Не вдалося створити замовлення. Оновіть сторінку та спробуйте ще раз.' },
+      { error: 'Не вдалося створити замовлення. Запросіть новий код та спробуйте ще раз.' },
       { status: 500 },
     )
   }

@@ -1,3 +1,4 @@
+import * as migration_20261024_010000_checkout_email_codes from './20261024_010000_checkout_email_codes'
 import * as migration_20261005_020000_catalog_seo_lexical from './20261005_020000_catalog_seo_lexical'
 import * as migration_20260420_084925_products_cms_fields from './20260420_084925_products_cms_fields'
 import * as migration_20260603_000000_users_dealer_discount from './20260603_000000_users_dealer_discount'
@@ -170,5 +171,10 @@ export const migrations = [
     up: migration_20261005_020000_catalog_seo_lexical.up,
     down: migration_20261005_020000_catalog_seo_lexical.down,
     name: '20261005_020000_catalog_seo_lexical',
+  },
+  {
+    up: migration_20261024_010000_checkout_email_codes.up,
+    down: migration_20261024_010000_checkout_email_codes.down,
+    name: '20261024_010000_checkout_email_codes',
   },
 ]

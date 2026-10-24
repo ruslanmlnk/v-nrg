@@ -44,14 +44,16 @@ export function OrderCard({
       setIsCancelling(false)
     }
   }
-  const { locale } = useSitePreferences()
+  const { locale, currencies, currency } = useSitePreferences()
+  const uahRate = currencies.find((item) => item.code === 'UAH')?.rate
+  const canConvert = !!uahRate && Number.isFinite(uahRate) && uahRate > 0
   // Checkout stores historical amounts in UAH; catalog prices use EUR.
   const formatPrice = (value: number) =>
     new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'uk-UA', {
       style: 'currency',
-      currency: 'UAH',
+      currency: canConvert ? currency.code : 'UAH',
       maximumFractionDigits: 2,
-    }).format(value)
+    }).format(canConvert && currency.code !== 'UAH' ? (value / uahRate!) * currency.rate : value)
   const statusKey = order.status ?? 'processing'
   const status = orderStatusMeta[statusKey]
   const statusIcon = orderStatusIconMap[status.iconKey]

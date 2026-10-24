@@ -221,3 +221,20 @@ function requiredEnvironmentVariable(name: string) {
 
   return value
 }
+
+export async function sendCheckoutVerificationEmail(email: string, code: string, english: boolean) {
+  await sendNotification({
+    to: email,
+    subject: english ? 'V-NRG: verify your email' : 'V-NRG: підтвердження email',
+    title: english ? 'Confirm your order email' : 'Підтвердьте email для замовлення',
+    fields: [
+      [english ? 'Verification code' : 'Код підтвердження', code],
+      [
+        english ? 'Validity' : 'Термін дії',
+        english
+          ? '10 minutes. Do not share this code.'
+          : '10 хвилин. Нікому не повідомляйте цей код.',
+      ],
+    ],
+  })
+}

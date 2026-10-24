@@ -3,12 +3,19 @@ import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { OrderCard, type AccountOrder } from '@/app/(frontend)/components/account/OrderCard'
 
-const { cancelOrder } = vi.hoisted(() => ({ cancelOrder: vi.fn() }))
+const { cancelOrder, preferences } = vi.hoisted(() => ({
+  cancelOrder: vi.fn(),
+  preferences: {
+    locale: 'uk',
+    currency: { code: 'UAH', rate: 48 },
+    currencies: [{ code: 'UAH', rate: 48 }],
+  },
+}))
 vi.mock('@/app/(frontend)/components/providers/CommerceProvider', () => ({
   useCommerce: () => ({ cancelOrder, checkoutOrder: vi.fn(), getProductById: vi.fn() }),
 }))
 vi.mock('@/app/(frontend)/components/providers/SitePreferencesProvider', () => ({
-  useSitePreferences: () => ({ formatPrice: (value: number) => String(value) }),
+  useSitePreferences: () => preferences,
 }))
 vi.mock('@/app/(frontend)/components/ui/IconAsset', () => ({ default: () => null }))
 
@@ -38,6 +45,7 @@ const click = async (label: string) => {
 
 beforeEach(async () => {
   Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })
+  preferences.currency = { code: 'UAH', rate: 48 }
   container = document.createElement('div')
   document.body.append(container)
   root = createRoot(container)
@@ -103,4 +111,29 @@ describe('Customer order cancellation', () => {
     expect(container.querySelector('[role="alert"]')?.textContent).toBe('Зверніться до менеджера.')
     expect(button('Так, скасувати')?.disabled).toBe(false)
   })
+})
+
+it('updates historical UAH totals when the selected display currency changes', async () => {
+  preferences.currency = { code: 'EUR', rate: 1 }
+  await act(async () =>
+    root.render(React.createElement(OrderCard, { order: { ...order, total: 4800 } })),
+  )
+  expect(container.textContent).toContain(
+    new Intl.NumberFormat('uk-UA', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 2,
+    }).format(100),
+  )
+  preferences.currency = { code: 'UAH', rate: 48 }
+  await act(async () =>
+    root.render(React.createElement(OrderCard, { order: { ...order, total: 4800 } })),
+  )
+  expect(container.textContent).toContain(
+    new Intl.NumberFormat('uk-UA', {
+      style: 'currency',
+      currency: 'UAH',
+      maximumFractionDigits: 2,
+    }).format(4800),
+  )
 })

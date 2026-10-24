@@ -33,7 +33,7 @@ export const Orders: CollectionConfig = {
     useAsTitle: 'orderNumber',
   },
   access: {
-    create: () => true,
+    create: isAdmin,
     delete: isAdmin,
     read: adminOrOrderCustomer,
     update: isAdmin,
