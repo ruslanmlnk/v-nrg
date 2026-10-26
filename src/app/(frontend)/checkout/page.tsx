@@ -43,6 +43,8 @@ export default function CheckoutPage() {
   const { locale } = useSitePreferences()
   const [verificationId, setVerificationId] = useState('')
   const [verificationCode, setVerificationCode] = useState('')
+  const [confirmedCodeKey, setConfirmedCodeKey] = useState('')
+  const [isVerifyingCode, setIsVerifyingCode] = useState(false)
   const [verifiedEmail, setVerifiedEmail] = useState('')
   const [isSendingCode, setIsSendingCode] = useState(false)
   const [resendAt, setResendAt] = useState(0)
@@ -137,14 +139,46 @@ export default function CheckoutPage() {
     }
   }
 
+  const codeKey = `${formState.email.trim().toLowerCase()}:${verificationId}:${verificationCode}`
+  const isEmailVerified = confirmedCodeKey === codeKey
+
+  const verifyCode = async () => {
+    if (isVerifyingCode || isSubmitting || isSendingCode) return
+    setIsVerifyingCode(true)
+    setPaymentError('')
+    setConfirmedCodeKey('')
+    try {
+      const response = await fetch('/api/forms/orders/verify-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formState.email, verificationId, code: verificationCode }),
+      })
+      if (!response.ok) throw new Error(response.status === 400 ? 'invalid_code' : 'unavailable')
+      setConfirmedCodeKey(codeKey)
+    } catch (error) {
+      setPaymentError(
+        error instanceof Error && error.message === 'invalid_code'
+          ? locale === 'en'
+            ? 'Invalid or expired code. Check it or request a new one.'
+            : 'Невірний або прострочений код. Запросіть новий.'
+          : locale === 'en'
+            ? 'Unable to verify the code. Please try again.'
+            : 'Не вдалося перевірити код. Спробуйте ще раз.',
+      )
+    } finally {
+      setIsVerifyingCode(false)
+    }
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (isCartEmpty || isSubmitting || isSendingCode) {
+    if (isCartEmpty || isSubmitting || isSendingCode || isVerifyingCode) {
       return
     }
 
     if (
+      !isEmailVerified ||
       !verificationId ||
       verifiedEmail !== formState.email.trim().toLowerCase() ||
       !/^\d{6}$/.test(verificationCode)
@@ -274,9 +308,10 @@ export default function CheckoutPage() {
                       required
                       type="email"
                       value={formState.email}
-                      onChange={(event) =>
+                      onChange={(event) => {
+                        setConfirmedCodeKey('')
                         setFormState((current) => ({ ...current, email: event.target.value }))
-                      }
+                      }}
                       placeholder="user@example.com"
                       className={`${checkoutFieldClasses} h-[64px]`}
                     />
@@ -461,18 +496,58 @@ export default function CheckoutPage() {
                             ? 'Valid for 10 minutes. Check your spam folder too.'
                             : 'Діє 10 хвилин. Перевірте також папку «Спам».'}
                         </p>
-                        <input
-                          required
-                          inputMode="numeric"
-                          autoComplete="one-time-code"
-                          pattern="[0-9]{6}"
-                          maxLength={6}
-                          value={verificationCode}
-                          onChange={(event) =>
-                            setVerificationCode(event.target.value.replace(/\D/g, ''))
-                          }
-                          className={checkoutFieldClasses}
-                        />
+                        <div className="flex w-full items-center gap-3">
+                          <input
+                            required
+                            aria-label={
+                              locale === 'en'
+                                ? 'Email verification code'
+                                : 'Код підтвердження email'
+                            }
+                            disabled={isVerifyingCode || isSubmitting}
+                            inputMode="numeric"
+                            autoComplete="one-time-code"
+                            pattern="[0-9]{6}"
+                            maxLength={6}
+                            value={verificationCode}
+                            onChange={(event) => {
+                              setConfirmedCodeKey('')
+                              setVerificationCode(event.target.value.replace(/\D/g, ''))
+                            }}
+                            className={`${checkoutFieldClasses} h-[64px] min-w-0 flex-1`}
+                          />
+                          <button
+                            type="button"
+                            onClick={verifyCode}
+                            disabled={
+                              isVerifyingCode ||
+                              isSubmitting ||
+                              isSendingCode ||
+                              isEmailVerified ||
+                              !/^\d{6}$/.test(verificationCode)
+                            }
+                            className="h-[64px] shrink-0 rounded-full bg-[#4FACF5] px-4 text-[16px] font-medium text-white disabled:opacity-50 sm:px-6"
+                          >
+                            {isVerifyingCode
+                              ? locale === 'en'
+                                ? 'Checking…'
+                                : 'Перевіряємо…'
+                              : isEmailVerified
+                                ? locale === 'en'
+                                  ? 'Verified'
+                                  : 'Підтверджено'
+                                : locale === 'en'
+                                  ? 'Verify'
+                                  : 'Перевірити'}
+                          </button>
+                        </div>
+                        {isEmailVerified ? (
+                          <p role="status" className="text-green-700">
+                            {locale === 'en'
+                              ? 'Email verified. You can now place your order.'
+                              : 'Email підтверджено. Тепер можна оформити замовлення.'}
+                          </p>
+                        ) : null}
                       </CheckoutField>
                     ) : null}
                   </div>

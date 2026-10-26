@@ -1,6 +1,7 @@
 ﻿import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 import { POST } from '@/app/(frontend)/api/forms/orders/route'
+import { POST as verifyCode } from '@/app/(frontend)/api/forms/orders/verify-code/route'
 
 const mocks = vi.hoisted(() => ({
   find: vi.fn(),
@@ -50,6 +51,15 @@ beforeEach(() => {
   mocks.create.mockImplementation(async ({ data }) => ({ id: 12, ...data }))
 })
 describe('Verified checkout ownership', () => {
+  it('verifies the code separately without creating an order or consuming the code', async () => {
+    const response = await verifyCode(new NextRequest('https://example.com/api/forms/orders/verify-code', {
+      method: 'POST', body: JSON.stringify({ email: body.customerEmail, verificationId: 'challenge', code: '123456' }),
+    }))
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual({ verified: true })
+    expect(mocks.consume).toHaveBeenCalledWith(mocks, 'guest@example.com', 'challenge', '123456', false)
+    expect(mocks.create).not.toHaveBeenCalled()
+  })
   it('links a guest to the verified email account without granting dealer discounts', async () => {
     expect((await submit()).status).toBe(200)
     expect(mocks.consume).toHaveBeenCalledWith(mocks, 'guest@example.com', 'challenge', '123456')

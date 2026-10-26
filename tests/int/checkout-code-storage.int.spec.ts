@@ -1,4 +1,4 @@
-﻿import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Payload } from 'payload'
 import {
   consumeCheckoutCode,
@@ -12,6 +12,15 @@ beforeEach(() => {
   vi.stubEnv('PAYLOAD_SECRET', 'test-only-secret')
 })
 describe('Checkout code storage', () => {
+  it('checks a code without consuming it before the order is placed', async () => {
+    const query = vi.fn().mockResolvedValue({ rows: [{ valid: true }] })
+    const payload = { db: { pool: { query } } } as unknown as Payload
+    const id = '12345678-1234-1234-1234-123456789abc'
+    expect(await consumeCheckoutCode(payload, 'user@example.com', id, '123456', false)).toBe(true)
+    expect(query.mock.calls[0][1][3]).toBe(false)
+    expect(await consumeCheckoutCode(payload, 'user@example.com', id, '123456')).toBe(true)
+    expect(query.mock.calls[1][1][3]).toBe(true)
+  })
   it('normalizes email and rejects malformed values', () => {
     expect(normalizeCheckoutEmail(' User@Example.com ')).toBe('user@example.com')
     for (const value of [null, {}, 'a@b', 'a b@example.com'])
@@ -26,7 +35,7 @@ describe('Checkout code storage', () => {
   it('binds verification to email and rejects consumed/missing rows', async () => {
     const query = vi
       .fn()
-      .mockResolvedValueOnce({ rows: [{ consumed: true }] })
+      .mockResolvedValueOnce({ rows: [{ valid: true }] })
       .mockResolvedValue({ rows: [] })
     const payload = { db: { pool: { query } } } as unknown as Payload
     const id = '12345678-1234-1234-1234-123456789abc'

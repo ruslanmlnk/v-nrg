@@ -69,6 +69,7 @@ export async function consumeCheckoutCode(
   email: string,
   id: unknown,
   code: unknown,
+  consume = true,
 ) {
   if (
     typeof id !== 'string' ||
@@ -78,14 +79,15 @@ export async function consumeCheckoutCode(
   )
     return false
   // One atomic update: failed attempts count even under concurrency; success can only be used once.
-  const result = await payload.db.pool.query<{ consumed: boolean }>(
+  const result = await payload.db.pool.query<{ valid: boolean }>(
     `
-    UPDATE checkout_email_codes SET attempts = attempts + 1, consumed = (code_hash = $3)
+    UPDATE checkout_email_codes SET attempts = attempts + CASE WHEN code_hash = $3 THEN 0 ELSE 1 END,
+      consumed = (code_hash = $3 AND $4)
     WHERE id = $1 AND email_hash = $2 AND consumed = false AND attempts < 5
       AND created_at > now() - interval '10 minutes'
-    RETURNING consumed
+    RETURNING (code_hash = $3) AS valid
   `,
-    [id, hash(email), hash(`${id}:${email}:${code}`)],
+    [id, hash(email), hash(`${id}:${email}:${code}`), consume],
   )
-  return result.rows[0]?.consumed === true
+  return result.rows[0]?.valid === true
 }
