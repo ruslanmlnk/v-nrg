@@ -8,6 +8,14 @@ type TurboSmsResponse = {
 }
 
 export async function sendRegistrationCode(phone: string, code: string) {
+  return sendVerificationSms(phone, code, 5, false)
+}
+
+export async function sendCheckoutCode(phone: string, code: string, english: boolean) {
+  return sendVerificationSms(phone, code, 10, english)
+}
+
+async function sendVerificationSms(phone: string, code: string, minutes: number, english: boolean) {
   const token = requiredEnvironmentVariable('TURBOSMS_API_TOKEN')
   const sender = requiredEnvironmentVariable('TURBOSMS_SENDER')
   const endpoint =
@@ -22,7 +30,9 @@ export async function sendRegistrationCode(phone: string, code: string) {
       recipients: [phone.replace(/\D/g, '')],
       sms: {
         sender,
-        text: `Код підтвердження V-NRG: ${code}. Код дійсний 5 хвилин.`,
+        text: english
+          ? `V-NRG verification code: ${code}. Valid for ${minutes} minutes.`
+          : `Код підтвердження V-NRG: ${code}. Код дійсний ${minutes} хвилин.`,
       },
     }),
   })

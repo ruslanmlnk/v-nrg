@@ -1,27 +1,35 @@
-﻿import config from '@payload-config'
+﻿import { normalizeCheckoutPhone } from '@/lib/checkoutPhone'
+import config from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 import { verifyTurnstile } from '@/lib/turnstile'
-import { normalizeCheckoutEmail, requestCheckoutCode } from '@/lib/checkoutEmailVerification'
+import { requestCheckoutCode } from '@/lib/checkoutVerification'
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null)
-  const email = normalizeCheckoutEmail(body?.email)
-  if (!email || !(await verifyTurnstile(request, body?.turnstileToken))) {
+  const phone = normalizeCheckoutPhone(body?.phone)
+  if (!phone || !(await verifyTurnstile(request, body?.turnstileToken))) {
     return NextResponse.json(
-      { error: 'Перевірте email і підтвердьте, що ви не робот. / Check your email and CAPTCHA.' },
+      {
+        error:
+          body?.locale === 'en'
+            ? 'Enter a Ukrainian phone number (+380…) and complete the CAPTCHA.'
+            : 'Введіть український номер телефону (+380…) та підтвердьте, що ви не робот.',
+      },
       { status: 400 },
     )
   }
   try {
     const payload = await getPayload({ config })
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
-    const verificationId = await requestCheckoutCode(payload, email, ip, body.locale === 'en')
+    const verificationId = await requestCheckoutCode(payload, phone, ip, body.locale === 'en')
     if (!verificationId)
       return NextResponse.json(
         {
           error:
-            'Забагато запитів. Зачекайте перед повторною спробою. / Too many requests. Please wait.',
+            body.locale === 'en'
+              ? 'Too many requests. Please wait.'
+              : 'Забагато запитів. Зачекайте перед повторною спробою.',
         },
         { status: 429 },
       )
@@ -30,7 +38,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error:
-          'Не вдалося надіслати код. Спробуйте пізніше. / Unable to send the code. Try again later.',
+          body.locale === 'en'
+            ? 'Unable to send the SMS code. Try again later.'
+            : 'Не вдалося надіслати SMS-код. Спробуйте пізніше.',
       },
       { status: 503 },
     )

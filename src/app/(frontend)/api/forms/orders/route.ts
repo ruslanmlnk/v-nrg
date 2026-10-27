@@ -1,10 +1,11 @@
+import { normalizeCheckoutPhone } from '@/lib/checkoutPhone'
 import configPromise from '@payload-config'
 import { getPayload, type Where } from 'payload'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import type { User } from '@/payload-types'
 import { sendOrderNotification } from '@/lib/applicationNotifications'
-import { consumeCheckoutCode, normalizeCheckoutEmail } from '@/lib/checkoutEmailVerification'
+import { consumeCheckoutCode, normalizeCheckoutEmail } from '@/lib/checkoutVerification'
 
 type CheckoutOrderItem = {
   id?: string
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
   const orderNumber = normalizeOrderNumber(body.orderNumber)
   const firstName = normalizeText(body.firstName)
   const lastName = normalizeText(body.lastName)
-  const phone = normalizeText(body.phone)
+  const phone = normalizeCheckoutPhone(body.phone)
   const customerEmail = normalizeCheckoutEmail(body.customerEmail)
   const paymentMethod = normalizePaymentMethod(body.paymentMethod)
 
@@ -71,9 +72,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Order items are invalid' }, { status: 400 })
   }
 
-  if (
-    !(await consumeCheckoutCode(payload, customerEmail, body.verificationId, body.verificationCode))
-  ) {
+  if (!(await consumeCheckoutCode(payload, phone, body.verificationId, body.verificationCode))) {
     return NextResponse.json(
       {
         error:
@@ -82,18 +81,20 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     )
   }
-  // Ownership of the email is proven. Guest checkout never inherits dealer discounts.
-  const customer =
-    user ??
-    (
-      await payload.find({
-        collection: 'users',
-        where: { email: { equals: customerEmail } },
-        limit: 1,
-        depth: 0,
-        overrideAccess: true,
-      })
-    ).docs[0]
+  // Only the SMS-verified phone can link guest orders. Do not choose an arbitrary
+  // account if legacy data contains duplicate phone numbers.
+  const matchingCustomers = user
+    ? []
+    : (
+        await payload.find({
+          collection: 'users',
+          where: { phone: { equals: phone } },
+          limit: 2,
+          depth: 0,
+          overrideAccess: true,
+        })
+      ).docs
+  const customer = user ?? (matchingCustomers.length === 1 ? matchingCustomers[0] : undefined)
 
   const order = await payload
     .create({

@@ -13,7 +13,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock('@payload-config', () => ({ default: {} }))
 vi.mock('payload', () => ({ getPayload: async () => mocks }))
 vi.mock('@/lib/applicationNotifications', () => ({ sendOrderNotification: mocks.notify }))
-vi.mock('@/lib/checkoutEmailVerification', async (original) => ({
+vi.mock('@/lib/checkoutVerification', async (original) => ({
   ...(await original<object>()),
   consumeCheckoutCode: mocks.consume,
 }))
@@ -51,18 +51,35 @@ beforeEach(() => {
   mocks.create.mockImplementation(async ({ data }) => ({ id: 12, ...data }))
 })
 describe('Verified checkout ownership', () => {
+  it('finds the guest account by verified phone, never by the supplied email', async () => {
+    await submit({ customerEmail: 'different@example.com', phone: '380 (12) 345-67-89' })
+    expect(mocks.find).toHaveBeenCalledWith(
+      expect.objectContaining({
+        collection: 'users',
+        where: { phone: { equals: '+380123456789' } },
+      }),
+    )
+    expect(mocks.create.mock.calls[0][0].data.customer).toBe(7)
+  })
+  it('rejects a malformed phone before checking the code', async () => {
+    expect((await submit({ phone: '123' })).status).toBe(400)
+    expect(mocks.consume).not.toHaveBeenCalled()
+  })
   it('verifies the code separately without creating an order or consuming the code', async () => {
-    const response = await verifyCode(new NextRequest('https://example.com/api/forms/orders/verify-code', {
-      method: 'POST', body: JSON.stringify({ email: body.customerEmail, verificationId: 'challenge', code: '123456' }),
-    }))
+    const response = await verifyCode(
+      new NextRequest('https://example.com/api/forms/orders/verify-code', {
+        method: 'POST',
+        body: JSON.stringify({ phone: body.phone, verificationId: 'challenge', code: '123456' }),
+      }),
+    )
     expect(response.status).toBe(200)
     expect(await response.json()).toEqual({ verified: true })
-    expect(mocks.consume).toHaveBeenCalledWith(mocks, 'guest@example.com', 'challenge', '123456', false)
+    expect(mocks.consume).toHaveBeenCalledWith(mocks, '+380123456789', 'challenge', '123456', false)
     expect(mocks.create).not.toHaveBeenCalled()
   })
-  it('links a guest to the verified email account without granting dealer discounts', async () => {
+  it('links a guest to the verified phone account without granting dealer discounts', async () => {
     expect((await submit()).status).toBe(200)
-    expect(mocks.consume).toHaveBeenCalledWith(mocks, 'guest@example.com', 'challenge', '123456')
+    expect(mocks.consume).toHaveBeenCalledWith(mocks, '+380123456789', 'challenge', '123456')
     expect(mocks.create.mock.calls[0][0].data).toMatchObject({
       customer: 7,
       customerEmail: 'guest@example.com',

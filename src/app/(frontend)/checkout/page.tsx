@@ -1,5 +1,6 @@
 ﻿'use client'
 
+import { normalizeCheckoutPhone } from '@/lib/checkoutPhone'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState, type FormEvent } from 'react'
@@ -45,7 +46,7 @@ export default function CheckoutPage() {
   const [verificationCode, setVerificationCode] = useState('')
   const [confirmedCodeKey, setConfirmedCodeKey] = useState('')
   const [isVerifyingCode, setIsVerifyingCode] = useState(false)
-  const [verifiedEmail, setVerifiedEmail] = useState('')
+  const [verificationPhone, setVerificationPhone] = useState('')
   const [isSendingCode, setIsSendingCode] = useState(false)
   const [resendAt, setResendAt] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -117,17 +118,17 @@ export default function CheckoutPage() {
     }
     setIsSendingCode(true)
     setPaymentError('')
-    const email = formState.email.trim().toLowerCase()
+    const phone = normalizeCheckoutPhone(formState.phone)
     try {
       const response = await fetch('/api/forms/orders/request-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, turnstileToken, locale }),
+        body: JSON.stringify({ phone, turnstileToken, locale }),
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error)
       setVerificationId(data.verificationId)
-      setVerifiedEmail(email)
+      setVerificationPhone(phone ?? '')
       setVerificationCode('')
       setResendAt(Date.now() + 60000)
     } catch (error) {
@@ -139,8 +140,8 @@ export default function CheckoutPage() {
     }
   }
 
-  const codeKey = `${formState.email.trim().toLowerCase()}:${verificationId}:${verificationCode}`
-  const isEmailVerified = confirmedCodeKey === codeKey
+  const codeKey = `${normalizeCheckoutPhone(formState.phone)}:${verificationId}:${verificationCode}`
+  const isPhoneVerified = confirmedCodeKey === codeKey
 
   const verifyCode = async () => {
     if (isVerifyingCode || isSubmitting || isSendingCode) return
@@ -151,7 +152,7 @@ export default function CheckoutPage() {
       const response = await fetch('/api/forms/orders/verify-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formState.email, verificationId, code: verificationCode }),
+        body: JSON.stringify({ phone: formState.phone, verificationId, code: verificationCode }),
       })
       if (!response.ok) throw new Error(response.status === 400 ? 'invalid_code' : 'unavailable')
       setConfirmedCodeKey(codeKey)
@@ -178,15 +179,15 @@ export default function CheckoutPage() {
     }
 
     if (
-      !isEmailVerified ||
+      !isPhoneVerified ||
       !verificationId ||
-      verifiedEmail !== formState.email.trim().toLowerCase() ||
+      verificationPhone !== normalizeCheckoutPhone(formState.phone) ||
       !/^\d{6}$/.test(verificationCode)
     ) {
       setPaymentError(
         locale === 'en'
-          ? 'Confirm your email with the six-digit code first.'
-          : 'Спершу підтвердьте email шестизначним кодом.',
+          ? 'Confirm your phone number with the six-digit SMS code first.'
+          : 'Спершу підтвердьте номер телефону шестизначним кодом із SMS.',
       )
       return
     }
@@ -295,9 +296,10 @@ export default function CheckoutPage() {
                     <input
                       required
                       value={formState.phone}
-                      onChange={(event) =>
+                      onChange={(event) => {
+                        setConfirmedCodeKey('')
                         setFormState((current) => ({ ...current, phone: event.target.value }))
-                      }
+                      }}
                       placeholder="+380"
                       className={`${checkoutFieldClasses} h-[64px]`}
                     />
@@ -309,7 +311,6 @@ export default function CheckoutPage() {
                       type="email"
                       value={formState.email}
                       onChange={(event) => {
-                        setConfirmedCodeKey('')
                         setFormState((current) => ({ ...current, email: event.target.value }))
                       }}
                       placeholder="user@example.com"
@@ -467,13 +468,16 @@ export default function CheckoutPage() {
                   <div className="flex flex-col gap-3">
                     <p>
                       {locale === 'en'
-                        ? 'Verify your email before placing the order.'
-                        : 'Підтвердьте email перед оформленням замовлення.'}
+                        ? 'Verify your phone number before placing the order.'
+                        : 'Підтвердьте номер телефону перед оформленням замовлення.'}
                     </p>
                     <button
                       type="button"
                       disabled={
-                        isSendingCode || isSubmitting || !turnstileToken || !formState.email
+                        isSendingCode ||
+                        isSubmitting ||
+                        !turnstileToken ||
+                        !normalizeCheckoutPhone(formState.phone)
                       }
                       onClick={requestCode}
                       className="rounded-full bg-[#4FACF5] px-6 py-3 text-white disabled:opacity-50"
@@ -483,26 +487,28 @@ export default function CheckoutPage() {
                           ? 'Sending…'
                           : 'Надсилаємо…'
                         : locale === 'en'
-                          ? 'Send email verification code'
-                          : 'Надіслати код на email'}
+                          ? 'Send SMS code'
+                          : 'Надіслати код у SMS'}
                     </button>
-                    {verificationId && verifiedEmail === formState.email.trim().toLowerCase() ? (
+                    {verificationId &&
+                    verificationPhone === normalizeCheckoutPhone(formState.phone) ? (
                       <CheckoutField
-                        label={locale === 'en' ? 'Email verification code *' : 'Код із листа *'}
+                        label={locale === 'en' ? 'SMS verification code *' : 'Код із SMS *'}
                       >
                         <p role="status">
-                          {locale === 'en' ? 'Code sent to' : 'Код надіслано на'} {verifiedEmail}.{' '}
+                          {locale === 'en' ? 'Code sent to' : 'Код надіслано на'}{' '}
+                          {verificationPhone}.{' '}
                           {locale === 'en'
-                            ? 'Valid for 10 minutes. Check your spam folder too.'
-                            : 'Діє 10 хвилин. Перевірте також папку «Спам».'}
+                            ? 'The SMS code is valid for 10 minutes.'
+                            : 'Код із SMS діє 10 хвилин.'}
                         </p>
                         <div className="flex w-full items-center gap-3">
                           <input
                             required
                             aria-label={
                               locale === 'en'
-                                ? 'Email verification code'
-                                : 'Код підтвердження email'
+                                ? 'Phone verification code'
+                                : 'Код підтвердження телефону'
                             }
                             disabled={isVerifyingCode || isSubmitting}
                             inputMode="numeric"
@@ -523,7 +529,7 @@ export default function CheckoutPage() {
                               isVerifyingCode ||
                               isSubmitting ||
                               isSendingCode ||
-                              isEmailVerified ||
+                              isPhoneVerified ||
                               !/^\d{6}$/.test(verificationCode)
                             }
                             className="h-[64px] shrink-0 rounded-full bg-[#4FACF5] px-4 text-[16px] font-medium text-white disabled:opacity-50 sm:px-6"
@@ -532,7 +538,7 @@ export default function CheckoutPage() {
                               ? locale === 'en'
                                 ? 'Checking…'
                                 : 'Перевіряємо…'
-                              : isEmailVerified
+                              : isPhoneVerified
                                 ? locale === 'en'
                                   ? 'Verified'
                                   : 'Підтверджено'
@@ -541,11 +547,11 @@ export default function CheckoutPage() {
                                   : 'Перевірити'}
                           </button>
                         </div>
-                        {isEmailVerified ? (
+                        {isPhoneVerified ? (
                           <p role="status" className="text-green-700">
                             {locale === 'en'
-                              ? 'Email verified. You can now place your order.'
-                              : 'Email підтверджено. Тепер можна оформити замовлення.'}
+                              ? 'Phone number verified. You can now place your order.'
+                              : 'Номер телефону підтверджено. Тепер можна оформити замовлення.'}
                           </p>
                         ) : null}
                       </CheckoutField>

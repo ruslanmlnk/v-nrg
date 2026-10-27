@@ -32,7 +32,7 @@ export function CheckoutOrderSummary({
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="rounded-[20px] bg-white px-6 py-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)]"
+      className="rounded-[20px] bg-white px-6 py-8 shadow-[0_20px_60px_rgba(34,53,74,0.04)] xl:sticky xl:top-6 xl:max-h-[calc(100dvh-3rem)] xl:self-start xl:overflow-y-auto"
     >
       <div className="flex flex-col gap-8">
         <h2 className="text-[24px] font-medium leading-[145%] text-[#22354A]">Ваше замовлення</h2>

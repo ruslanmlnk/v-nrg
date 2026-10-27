@@ -1,6 +1,6 @@
 ﻿import { createHmac, randomInt, randomUUID } from 'node:crypto'
 import type { Payload } from 'payload'
-import { sendCheckoutVerificationEmail } from './applicationNotifications'
+import { sendCheckoutCode } from './turboSms'
 
 export function normalizeCheckoutEmail(value: unknown): string | null {
   if (typeof value !== 'string') return null
@@ -11,16 +11,18 @@ export function normalizeCheckoutEmail(value: unknown): string | null {
 function hash(value: string) {
   const secret = process.env.PAYLOAD_SECRET
   if (!secret) throw new Error('PAYLOAD_SECRET is required')
-  return createHmac('sha256', secret).update(`checkout-email:${value}`).digest('hex')
+  return createHmac('sha256', secret).update(`checkout-phone:${value}`).digest('hex')
 }
 
+// Legacy table/column names are retained to avoid a destructive rename.
+// email_hash now stores a domain-separated phone hash; old email codes cannot verify phones.
 export async function requestCheckoutCode(
   payload: Payload,
-  email: string,
+  phone: string,
   ip: string,
   english: boolean,
 ) {
-  const emailHash = hash(email)
+  const phoneHash = hash(phone)
   const ipHash = hash(ip)
   const id = randomUUID()
   const code = randomInt(0, 1000000).toString().padStart(6, '0')
@@ -30,7 +32,7 @@ export async function requestCheckoutCode(
     // Serialize both limits across all application instances.
     await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [`checkout-ip:${ipHash}`])
     await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [
-      `checkout-email:${emailHash}`,
+      `checkout-phone:${phoneHash}`,
     ])
     const limits = await client.query<{ limited: boolean }>(
       `
@@ -39,19 +41,19 @@ export async function requestCheckoutCode(
       ) OR (SELECT count(*) FROM checkout_email_codes WHERE email_hash = $1 AND created_at > now() - interval '1 hour') >= 5
         OR (SELECT count(*) FROM checkout_email_codes WHERE ip_hash = $2 AND created_at > now() - interval '1 hour') >= 10 AS limited
     `,
-      [emailHash, ipHash],
+      [phoneHash, ipHash],
     )
     if (limits.rows[0].limited) {
       await client.query('ROLLBACK')
       return null
     }
     await client.query('UPDATE checkout_email_codes SET consumed = true WHERE email_hash = $1', [
-      emailHash,
+      phoneHash,
     ])
     await client.query(
       `INSERT INTO checkout_email_codes (id, email_hash, ip_hash, code_hash)
       VALUES ($1, $2, $3, $4)`,
-      [id, emailHash, ipHash, hash(`${id}:${email}:${code}`)],
+      [id, phoneHash, ipHash, hash(`${id}:${phone}:${code}`)],
     )
     await client.query('COMMIT')
   } catch (error) {
@@ -60,13 +62,13 @@ export async function requestCheckoutCode(
   } finally {
     client.release()
   }
-  await sendCheckoutVerificationEmail(email, code, english)
+  await sendCheckoutCode(phone, code, english)
   return id
 }
 
 export async function consumeCheckoutCode(
   payload: Payload,
-  email: string,
+  phone: string,
   id: unknown,
   code: unknown,
   consume = true,
@@ -87,7 +89,7 @@ export async function consumeCheckoutCode(
       AND created_at > now() - interval '10 minutes'
     RETURNING (code_hash = $3) AS valid
   `,
-    [id, hash(email), hash(`${id}:${email}:${code}`), consume],
+    [id, hash(phone), hash(`${id}:${phone}:${code}`), consume],
   )
   return result.rows[0]?.valid === true
 }
