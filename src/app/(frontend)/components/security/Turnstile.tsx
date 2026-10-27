@@ -36,6 +36,8 @@ export function Turnstile({
       'error-callback': () => onTokenChange(''),
       'expired-callback': () => onTokenChange(''),
       sitekey: siteKey,
+      // The normal widget is a fixed 300px wide; fall back to compact (150px) where it would be clipped.
+      size: containerRef.current.offsetWidth < 300 ? 'compact' : 'normal',
       theme,
     })
   }, [onTokenChange, siteKey, theme])
@@ -64,7 +66,9 @@ export function Turnstile({
   }
 
   return (
-    <div className="min-h-[65px] max-w-full overflow-hidden">
+    // contain: the fixed 300px iframe must not widen parent grid/flex tracks (horizontal scroll on mobile);
+    // leading-0: removes the inline-iframe baseline gap that made the box jump from 65px to 72px.
+    <div className="min-h-[65px] max-w-full overflow-hidden leading-[0] [contain:inline-size]">
       <Script
         id="cloudflare-turnstile"
         onLoad={renderWidget}
