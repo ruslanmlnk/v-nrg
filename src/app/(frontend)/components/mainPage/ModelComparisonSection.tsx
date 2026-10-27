@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import type { ProductData } from '../../data/products'
 import SectionHeading from '../shared/SectionHeading'
@@ -37,8 +38,13 @@ export default function ModelComparisonSection({
               ) : null}
               <div className="flex min-w-0 flex-1 flex-col items-start gap-5 md:gap-6">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-[20px] font-medium leading-[145%] text-[#22354A] md:text-[24px]">
-                    {product.title}
+                  <h3 className="text-[20px] font-semibold leading-[145%] text-[#22354A] md:text-[24px]">
+                    <Link
+                      href={product.href}
+                      className="transition-colors hover:text-[#4FACF5] focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4FACF5]"
+                    >
+                      {product.title}
+                    </Link>
                   </h3>
                   <p className="text-base font-medium leading-[26px] text-[#22354A] md:text-[18px] md:leading-[165%]">
                     {product.shortDescription}
